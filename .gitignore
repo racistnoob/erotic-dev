@@ -1,6 +1,8 @@
 cache
 db
 
+.replxx_history
+
 resources.cfg
 echopermissions.cfg
 server.cfg
