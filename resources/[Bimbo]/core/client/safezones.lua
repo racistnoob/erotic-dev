@@ -7,30 +7,6 @@ local safeZone = PolyZone:Create({
     name = "safezone",
 })
 
---- #DL
---[[RegisterCommand("tpm", function(source)
-    TeleportToWaypoint()
-end)
-
-TeleportToWaypoint = function()
-    local WaypointHandle = GetFirstBlipInfoId(8)
-    if DoesBlipExist(WaypointHandle) then
-        local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
-        for height = 1, 1000 do
-            SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
-            local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
-            if foundGround then
-                SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
-                break
-            end
-            Citizen.Wait(5)
-        end
-        exports['drp-notifications']:SendAlert('inform', 'Teleported To Waypoint.', 5000)
-    else
-        exports['drp-notifications']:SendAlert('inform', 'Select A Waypoint to Teleport.', 5000)
-    end
-end]]
-
 local inSafezone = false
 
 local function SetPlayerAlpha(playerPed, alphaValue)
@@ -42,30 +18,30 @@ local function DisableInSafezone(playerPed)
     
     if safeZone:isPointInside(GetEntityCoords(playerPed)) then
         print('^2[^1Entering Safezone^2]')
-        for k, otherPlayer in ipairs(GetActivePlayers()) do
-			SetCanAttackFriendly(GetPlayerPed(otherPlayer), false, false)
-			NetworkSetFriendlyFireOption(false)
-		end
-        SetEntityInvincible(playerPed, true)
-        
-        if playerVehicle then
-            SetEntityNoCollisionEntity(PlayerPedId(), playerVehicle, true)
+        for _, otherPlayer in ipairs(GetActivePlayers()) do
+            local otherPlayerPed = GetPlayerPed(otherPlayer)
+            SetCanAttackFriendly(otherPlayerPed, false, false)
+            SetEntityInvincible(otherPlayerPed, true)
+            SetEntityNoCollisionEntity(playerPed, otherPlayerPed, true)
+            NetworkSetFriendlyFireOption(false)
+        end
+        if playerVehicle and GetPedInVehicleSeat(playerVehicle, -1) == playerPed then
+            SetEntityNoCollisionEntity(playerPed, playerVehicle, true)
         end
     end
 end
 
 local function EnableOutsideSafezone(playerPed)
-    local playerCoords = GetEntityCoords(playerPed)
-
-    if not safeZone:isPointInside(playerCoords) then
+    if not safeZone:isPointInside(GetEntityCoords(playerPed)) then
         print('^2[^1Exiting Safezone^2]')
-        for k, otherPlayer in ipairs(GetActivePlayers()) do
-			SetCanAttackFriendly(GetPlayerPed(otherPlayer), true, true)
-			NetworkSetFriendlyFireOption(true)
-		end
-        SetEntityInvincible(playerPed, false)
+        for _, otherPlayer in ipairs(GetActivePlayers()) do
+            local otherPlayerPed = GetPlayerPed(otherPlayer)
+            SetCanAttackFriendly(otherPlayerPed, true, true)
+            SetEntityInvincible(otherPlayerPed, false)
+            SetEntityNoCollisionEntity(playerPed, otherPlayerPed, false)
+            NetworkSetFriendlyFireOption(true)
+        end
         SetPlayerAlpha(playerPed, 255)
-        
         local playerVehicle = GetVehiclePedIsIn(playerPed, false)
         if playerVehicle then
             SetEntityNoCollisionEntity(playerPed, playerVehicle, false)
@@ -76,28 +52,15 @@ end
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        local player = PlayerId()
-        local playerPed = GetPlayerPed(player)
+        local playerPed = PlayerPedId()
         
         local newInSafezone = safeZone:isPointInside(GetEntityCoords(playerPed))
         
         if newInSafezone and not inSafezone then
             DisableInSafezone(playerPed)
-            for _, otherPlayer in ipairs(GetActivePlayers()) do
-                local otherPlayerPed = GetPlayerPed(otherPlayer)
-                if player ~= otherPlayer then
-                    SetEntityAlpha(otherPlayerPed, 100)
-                end
-            end
             inSafezone = true
         elseif not newInSafezone and inSafezone then
             EnableOutsideSafezone(playerPed)
-            for _, otherPlayer in ipairs(GetActivePlayers()) do
-                local otherPlayerPed = GetPlayerPed(otherPlayer)
-                if player ~= otherPlayer then
-                    SetEntityAlpha(otherPlayerPed, 255)
-                end
-            end
             inSafezone = false
         end
     end
