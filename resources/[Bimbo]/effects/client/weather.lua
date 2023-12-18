@@ -1,0 +1,276 @@
+config = {}
+
+config.weather = {
+    StartWeather = GetConvar("core_startingWeather", "EXTRASUNNY"),
+    BaseTime = 8,
+    TimeOffset = 0,
+    FreezeTime = false,
+}
+
+local Weathers = {
+  ["neonsky"] = "FOGGY",
+  ["redsky"] = "OVERCAST",
+  ["noday"] = "NEUTRAL",
+  ["variable"] = "SMOG",
+  ["greysky"] = "CLEAR",
+  ["default"] = "EXTRASUNNY",
+  ["sunrise"] = "CLOUDS",
+  ["realism"] = "CLEARING",
+  ["xmas"] = "XMAS",
+  ["snow"] = "SNOWLIGHT",
+  ["blizzard"] = "BLIZZARD",
+}
+
+local weather = "EXTRASUNNY"
+local baseTime = config.weather.BaseTime
+local timeOffset = config.weather.TimeOffset
+local timer = 0
+local freezeTime = config.weather.FreezeTime
+local runTimeSync = true
+local overrideTime = { 12, 00 }
+
+function setWeather(newWeather) -- Define the setWeather function
+    if not newWeather then
+        weather = "EXTRASUNNY"
+        return
+    end
+
+    weather = newWeather
+end
+
+exports("setRunTimeSyncing", function(state, newOverrideTime)
+    runTimeSync = state
+    if newOverrideTime and #newOverrideTime == 2 then
+      overrideTime[1] = newOverrideTime[1]
+      overrideTime[2] = newOverrideTime[2]
+    end
+    -- Reset to default state
+    if runTimeSync then
+      overrideTime = { 12, 00 }
+    end
+end)
+
+exports("getWeather", function()
+    return weather
+end)
+
+exports("getTimeSyncRunning", function()
+    return runTimeSync, overrideTime
+  end)
+
+CreateThread(function()
+    while true do
+        Wait(0)
+        ClearOverrideWeather()
+        ClearWeatherTypePersist()
+        SetWeatherTypePersist(weather)
+        SetWeatherTypeNow(weather)
+        SetWeatherTypeNowPersist(weather)
+
+        SetForceVehicleTrails(weather == 'XMAS')
+        SetForcePedFootstepsTracks(weather == 'XMAS')
+    end
+end)
+
+function ChangeWeather(customName)
+  local selectedWeather = Weathers[customName]
+  
+  if selectedWeather then
+      setWeather(selectedWeather)
+      print("Weather changed to:", selectedWeather)
+  else
+      print("Invalid weather name:", customName)
+  end
+end
+
+RegisterNetEvent('set-weather')
+AddEventHandler('set-weather', function(params)
+    local customName = params.type
+    local selectedWeather = Weathers[customName]
+    
+    if selectedWeather then
+        SetResourceKvp("graphics_weather", customName)
+        print('KVP loaded:', customName)
+        ChangeWeather(customName)
+    else
+        print("Invalid weather type.")
+    end
+end)
+
+AddEventHandler('echorp:playerSpawned', function()
+    local kvpValue = GetResourceKvpString("graphics_weather")
+        
+    if kvpValue then
+        print('KVP loaded:', kvpValue)
+        ChangeWeather(kvpValue)
+    else
+        print("Player does not have KVP.")
+    end
+end)
+
+--[[AddEventHandler("onResourceStart", function(resourceName)
+    if resourceName == GetCurrentResourceName() then
+        local kvpValue = GetResourceKvpString("graphics_weather")
+            
+        if kvpValue then
+            print("Resource started. Player has KVP:", kvpValue)
+            print('KVP loaded:', kvpValue)
+            ChangeWeather(kvpValue)
+        else
+            print("Resource started. Player does not have KVP.")
+        end
+    end
+end)]]
+
+RegisterNetEvent('vSync:updateTime', function(base, offset, freeze)
+    freezeTime = freeze
+    timeOffset = offset
+    baseTime = base
+end)
+  
+CreateThread(function()
+    local hour = 0
+    local minute = 0
+    while true do
+      Wait(0)
+      if GetConvarInt("graphics_weather", 0) == 0 and runTimeSync then
+        local newBaseTime = baseTime
+        if GetGameTimer() - 500 > timer then
+          newBaseTime = newBaseTime + 0.25
+          timer = GetGameTimer()
+        end
+        if freezeTime then
+          timeOffset = timeOffset + baseTime - newBaseTime
+        end
+        baseTime = newBaseTime
+        hour = math.floor(((baseTime + timeOffset) / 60) % 24)
+        minute = math.floor((baseTime + timeOffset) % 60)
+        NetworkOverrideClockTime(hour, minute, 0)
+      elseif not runTimeSync then
+        NetworkOverrideClockTime(overrideTime[1], overrideTime[2], 0)
+      end
+    end
+end)
+  
+AddEventHandler('playerSpawned', function()
+    TriggerServerEvent('vSync:requestSync')
+end)
+  
+local submenu = {
+  {
+      id = 1,
+      header = "< Go Back",
+      txt = "",
+      params = {
+          event = "erp-context:GoBackToMainMenu"
+      }
+  },
+  {
+      id = 2,
+      header = "Default",
+      txt = "Set the weather to default",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "default",
+                number = 1,
+                id = 2
+          }
+      }
+  },
+  {
+      id = 3,
+      header = "Red Sky",
+      txt = "Set the weather to redsky",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "redsky",
+                number = 2,
+                id = 3
+          }
+      }
+  },
+  {
+      id = 4,
+      header = "Neon Sky",
+      txt = "Set the weather to Neon",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "neonsky",
+                number = 3,
+                id = 4
+          }
+      }
+  },
+  {
+      id = 5,
+      header = "No Day",
+      txt = "Set the weather to no day",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "noday",
+                number = 4,
+                id = 5
+          }
+      }
+  },
+  {
+      id = 6,
+      header = "Sunrise",
+      txt = "Set the weather to Sunrise",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "sunrise",
+                number = 5,
+                id = 6
+          }
+      }
+  },
+  {
+      id = 7,
+      header = "Nova Sky",
+      txt = "Set the weather to Nova Sky",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "variable",
+                number = 6,
+                id = 7
+          }
+      }
+  },
+  {
+      id = 8,
+      header = "Grey Sky",
+      txt = "Set the weather to greysky",
+      params = {
+          event = "set-weather",
+          args = {
+            type = "greysky",
+              number = 7,
+              id = 8
+          }
+      }
+  },
+  {
+      id = 9,
+      header = "Realism",
+      txt = "Set the weather to Realism",
+      params = {
+          event = "set-weather",
+          args = {
+                type = "realism",
+                number = 8,
+                id = 9
+          }
+      }
+  },
+}
+
+exports("getWeatherSubMenu", function()
+  return submenu
+end)

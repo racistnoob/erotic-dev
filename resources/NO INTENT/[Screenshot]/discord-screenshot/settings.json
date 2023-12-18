@@ -1,0 +1,10 @@
+{
+    "webhookUrl": "",
+    "framework": "none",
+    "commandName": "screenshot",
+    "commandPermission": "echorp.mod",
+    "screenshotOptions": {
+        "encoding": "png",
+        "quality": 0.92
+    }
+}

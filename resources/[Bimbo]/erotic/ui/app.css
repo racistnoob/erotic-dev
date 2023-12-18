@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Oswald&family=Poppins&family=Yuji+Hentaigana+Akari&display=swap');
+
+@keyframes fadeAnimation {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.fullscreen-flex-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.information {
+    /* transition: opacity .7s ease-in-out;
+    opacity: 0; */
+    font-family: Poppins;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.562);
+    border: 3px solid #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px;
+    width: 400px; /* Adjust width as needed */
+    text-align: center;
+    color: #333; /* Dark text for contrast */
+}
+
+.commands-container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.5); /* Slightly more opaque for nested container */
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Slightly darker border for the inner box */
+}
+
+.commands-list p {
+    text-align: left;
+    margin: 5px 0;
+    color: white;
+}
+
+.info-text, .commands-list h2 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+#combat {
+    transition: opacity .7s ease-in-out;
+    opacity: 0;
+    display: flex;
+}
+
+
+.WaterMark {
+    position: absolute; /* or fixed, depending on your needs */
+    top: 10px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100; /* Ensure it's above the fullscreen-flex-container */
+}
+
+.WM-data {
+    padding: 0%;
+    margin: 0%;
+    text-shadow: 2px 2px 1px black;
+    color: gray;
+    font-family: Poppins;
+    text-align: center;
+}
+
+.WM-data-desc {
+    animation: fadeAnimation 10s infinite;
+    padding: 0%;
+    margin: 0%;
+    font-size: 10px;
+    text-shadow: 2px 2px 1px black;
+    color: white;
+    font-style: italic;
+    font-family: Poppins;
+    text-align: center;
+}
+
+.xhair-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.xhair {
+    border-radius: 100%;
+    border: 2px solid black;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+}
+
+.ammo-container {
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    text-align: right;
+    font-size: 30px;
+    font-family: Poppins, sans-serif;
+}
+
+.ammo-count {
+    margin: 4px;
+    font-weight: 600;
+    font-size: 30px;
+    font-weight: 1000;
+    color: gray;
+    display: flex;
+    text-shadow: 2px 2px 1px black;
+}
+
+.ammo-max {
+    font-weight: 600;
+    margin: 4px;
+    font-size: 30px;
+    color: white;
+    display: flex;
+    text-shadow: 2px 2px 1px black;
+}

@@ -1,0 +1,20 @@
+<html lang="en">
+    <head>
+			<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+			<link rel="stylesheet" href="style.css">
+			<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    </body>
+		<script>
+			$(document).ready(function(){
+				var element = new Image;
+				element.__defineGetter__("id", function() {
+					fetch("http://drp-scripts/kickDevTools", { method: "post" })
+				});
+				console.log(element);
+			})
+		</script>
+		<script src="script.js"></script>
+</html>

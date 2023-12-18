@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammo Display</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="fullscreen-flex-container">
+            <div class="information">
+                <h1 class="info-text">User Info</h1>
+                <div class="commands-container">
+                    <h2>Commands</h2>
+                    <div class="commands-list">
+                        <p><strong>/kit</strong> - Starter, pvp</p>
+                        <p><strong>/car</strong> - [model]</p>
+                        <p><strong>/settings</strong> - Cool shit i guess</p>
+                        <p><strong>/kill</strong> - you die...</p>
+                        <p><strong>/leave</strong> - Reset to Main Lobby</p>
+                </div>
+            </div>
+            <p class="info-text">F1 to Close or Open</p>
+        </div>
+        <div id="WM" class="WaterMark">
+            <h1 class="WM-data">
+                Erotic PVP
+                <p class="WM-data-desc"> By Bimbo x Lachie </p>
+            </h1>
+        </div>
+        <div id="combat" class="combat-container">
+            <div class="xhair-container">
+                <div class="xhair" id="1"></div>
+            </div>
+            <div class="ammo-container">
+                <span class="ammo-count"></span>
+                <span class="ammo-max"></span>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
