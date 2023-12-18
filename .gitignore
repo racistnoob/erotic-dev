@@ -1,7 +1,6 @@
-.cache
+cache
+db
 
-.db
-
-.resources
-
+resources.cfg
+echopermissions.cfg
 server.cfg
