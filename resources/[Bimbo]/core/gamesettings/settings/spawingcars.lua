@@ -75,6 +75,7 @@ local BlackListedVehicles = {
     'starling',
     'strikeforce',
     'tula',
+    'trailer',
     'titan',
     'tula',
     'volatol',

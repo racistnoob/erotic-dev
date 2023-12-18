@@ -50,9 +50,33 @@ local COMBAT = {
     end,
 }
 
+-- 
+WasOnVehicle = false
+RagdollSpeed = 30.0
+
 Citizen.CreateThread(function()
-    COMBAT:PedCamera()
+    while true do
+        Citizen.Wait(0)
+        local ped = PlayerPedId()
+        local isOnVehicle = IsPedOnVehicle(ped)
+
+        if isOnVehicle then
+            SetRagdollBlockingFlags(ped, 2)
+        elseif WasOnVehicle and not isOnVehicle then
+            ClearRagdollBlockingFlags(ped, 2)
+            if GetEntitySpeed(ped) > RagdollSpeed then
+                SetPedToRagdoll(ped)
+            end
+        end
+        WasOnVehicle = isOnVehicle
+    end
+end)
+
+Citizen.CreateThread( function()
+ while true do
     Citizen.Wait(0)
+    RestorePlayerStamina(PlayerId(), 1.0)
+	end
 end)
 
 Citizen.CreateThread(function()
@@ -102,4 +126,32 @@ Citizen.CreateThread(function()
             DisableControlAction(0, 200, true)  -- Disable ESC key default action (Opening pause menu)
         end
     end
+end)
+
+WasOnVehicle = false
+RagdollSpeed = 30.0
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        local ped = PlayerPedId()
+        local isOnVehicle = IsPedOnVehicle(ped)
+
+        if isOnVehicle then
+            SetRagdollBlockingFlags(ped, 2)
+        elseif WasOnVehicle and not isOnVehicle then
+            ClearRagdollBlockingFlags(ped, 2)
+            if GetEntitySpeed(ped) > RagdollSpeed then
+                SetPedToRagdoll(ped)
+            end
+        end
+        WasOnVehicle = isOnVehicle
+    end
+end)
+
+Citizen.CreateThread( function()
+ while true do
+    Citizen.Wait(0)
+    RestorePlayerStamina(PlayerId(), 1.0)
+	end
 end)
