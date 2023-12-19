@@ -93,31 +93,36 @@ local recoilModes = {
             "roleplay3",
         }
     },
+    envy = {
+        commands = {
+            "envy",
+        }
+    },
 }
 
-RegisterCommand("recoil", function(source, args, rawCommand)
-    local player = source
+-- RegisterCommand("recoil", function(source, args, rawCommand)
+--     local player = source
 
-    if #args < 1 then
-        return
-    end
+--     if #args < 1 then
+--         return
+--     end
 
-    local mode = args[1]:lower()
+--     local mode = args[1]:lower()
 
-    if not recoilModes[mode] then
-        local modesList = table.concat(table.keys(recoilModes), ", ")
-        return
-    end
+--     if not recoilModes[mode] then
+--         local modesList = table.concat(table.keys(recoilModes), ", ")
+--         return
+--     end
 
-    Recoil:SetMode(mode)
-    print("^2Requested mode: " .. mode)
+--     Recoil:SetMode(mode)
+--     print("^2Requested mode: " .. mode)
 
-    local commands = recoilModes[mode].commands
+--     local commands = recoilModes[mode].commands
 
-    for _, command in ipairs(commands) do
+--     for _, command in ipairs(commands) do
 
-    end
-end)
+--     end
+-- end)
 
 function SetRecoilMode(player, mode)
     mode = mode:lower()

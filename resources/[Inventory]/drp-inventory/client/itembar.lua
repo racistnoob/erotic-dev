@@ -200,7 +200,7 @@ CreateThread( function()
 			currentAmmo[hash] = GetAmmoInPedWeapon(ped, hash) or 0
 		end
 
-		if hash ~= `WEAPON_SNIPERRIFLE` then HideHudComponentThisFrame(14) end
+		-- if hash ~= `WEAPON_SNIPERRIFLE` then HideHudComponentThisFrame(14) end
 
 		if IsPedShooting(ped) then
 			if hash ~= `WEAPON_SNOWBALL` then attemptToDegWeapon() end
@@ -389,14 +389,14 @@ function unholster1h(weaponHash,ItemInfo)
 		SetAmmoInClip(ped, weaponHash, 0)
 		GiveWeaponToPed(PlayerPedId(), weaponHash, math.ceil(ammo), false, true)
     SetCurrentPedWeapon(PlayerPedId(), weaponHash, true)
-		TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
+		-- TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
 		armed = weaponHash
 		currentAmmo[armed] = math.ceil(ammo)
 	else
 		SetAmmoInClip(ped, weaponHash, 0)
 		GiveWeaponToPed(PlayerPedId(), weaponHash, math.ceil(ammo), false, true)
     SetCurrentPedWeapon(PlayerPedId(), weaponHash, true)
-		TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
+		-- TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
 		armed = weaponHash
 		currentAmmo[armed] = math.ceil(ammo)
 	end
@@ -436,14 +436,14 @@ function copunholster(weaponHash, ammo)
 	Wait(600)
     GiveWeaponToPed(ped, weaponHash, math.ceil(ammo), 0, 1)
 	SetCurrentPedWeapon(ped, weaponHash, 1)
-	TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
+	-- TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
 	armed = weaponHash
 	--currentAmmo[armed] = math.ceil(ammo)
 	ClearPedTasks(ped)
 
 	if tonumber(math.ceil(GetAmmoInPedWeapon(ped, weaponHash))) ~= math.ceil(ammo) then
 		GiveWeaponToPed(ped, weaponHash, math.ceil(ammo), 0, 1)
-		TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
+		-- TriggerEvent('drp-hunting:huntingRifle', weaponHash == `weapon_sniperrifle`)
 	end
 
 	exports["drp-inventory"]:AttachmentCheck(weaponHash)

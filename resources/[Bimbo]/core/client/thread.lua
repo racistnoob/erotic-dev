@@ -92,6 +92,8 @@ Citizen.CreateThread(function()
 
         DisableControlAction(0, 37, true)
         DisableControlAction(0, 140, true)
+        DisableControlAction(0, 142, true)
+        SetPedSuffersCriticalHits(GetPlayerPed(-1), false)
         Wait(1)
 
     end

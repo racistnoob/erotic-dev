@@ -42,7 +42,7 @@ local classesStrings = {
 }
 
 local permitsStrings = {
-    ['hunting'] = "Hunting",
+    -- ['hunting'] = "Hunting",
     ['pilot'] = "Pilot",
     ['weapon'] = "Weapon"
 }
