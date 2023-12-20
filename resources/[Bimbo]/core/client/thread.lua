@@ -7,9 +7,6 @@ Citizen.CreateThread(function()
 
     while true do
         Citizen.Wait(100)
-
-        SetPoliceIgnorePlayer(playerPed, true)
-        SetDispatchCopsForPlayer(playerPed, false)
         
         --[[for k, otherPlayer in ipairs(GetActivePlayers()) do
 			-- Enable PVP.
@@ -17,33 +14,12 @@ Citizen.CreateThread(function()
 			NetworkSetFriendlyFireOption(true)
 		end]]
 
-        local pos = GetEntityCoords(playerPed)
-        RemoveVehiclesFromGeneratorsInArea(
-            pos.x - 500.0,
-            pos.y - 500.0,
-            pos.z - 500.0,
-            pos.x + 500.0,
-            pos.y + 500.0,
-            pos.z + 500.0
-        )
-
         for i = 1, 12 do
             EnableDispatchService(i, false)
         end
-
         SetPlayerWantedLevel(playerId, 0, false)
         SetPlayerWantedLevelNow(playerId, false)
         SetPlayerWantedLevelNoDrop(playerId, 0, false)
-
-        SetPedPopulationBudget(0)
-        SetPedDensityMultiplierThisFrame(0)
-        SetScenarioPedDensityMultiplierThisFrame(0, 0)
-        SetVehicleDensityMultiplierThisFrame(0)
-        SetRandomVehicleDensityMultiplierThisFrame(0)
-        SetParkedVehicleDensityMultiplierThisFrame(0)
-
-        SetPoliceIgnorePlayer(playerPed, true)
-        SetDispatchCopsForPlayer(playerPed, false)
 
         if IsPedInCover(playerId, 1) and not IsPedAimingFromCover(playerPed, 1) then 
             DisableControlAction(2, 24, true)
@@ -76,7 +52,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(500)
-        ped = PlayerPedId()
+        local ped = PlayerPedId()
         if not IsPedInAnyVehicle(ped, false) then
             if IsPedUsingActionMode(ped) then
                 SetPedUsingActionMode(ped, -1, -1, 1)

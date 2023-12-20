@@ -12,5 +12,9 @@ client_scripts {
     "@PolyZone/ComboZone.lua",
     
     "client/*.lua",
-    "client/modules/**/*.lua",
+    "client/modules/**/*.lua"
+}
+
+server_scripts {
+    "server/*.lua"
 }
