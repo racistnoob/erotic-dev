@@ -12,6 +12,7 @@ AddEventHandler('arena:useWeapon', function(weaponName)
             local ammoCount = ammoCount(bulletType)
 
             GiveWeaponToPed(PlayerPedId(), weaponHash, tonumber(ammoCount), false, true)
+            SetAmmoInClip(PlayerPedId(), weaponHash, 999) --------- I PUT THIS IS AS HOTFIX FOR NOW (GIVES MAX AMMO ON EQUIP)
             ClearPedTasks(PlayerPedId())
             ApplyWeaponComponents(weaponName)
         else

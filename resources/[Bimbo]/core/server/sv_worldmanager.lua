@@ -102,6 +102,7 @@ AddEventHandler('Multiverse:ChangeWorld', function(worldName)
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
             TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
             WorldTracker[ids.license] = worldName;
+            TriggerClientEvent("core:updateRPC", src, worldName)
                 -- Changed worlds ...
             return;
         end
