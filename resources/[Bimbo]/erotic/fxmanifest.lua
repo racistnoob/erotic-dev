@@ -11,4 +11,7 @@ files {
 	'ui/app.js',
 }
 
-client_script 'combat.lua'
+client_scripts {
+	'combat.lua',
+	'thread.lua'
+}

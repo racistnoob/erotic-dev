@@ -1,14 +1,15 @@
 window.addEventListener('message', (event) => {
     if (event.data.type === 'show') {
         let ele = document.querySelector('#combat');
-        if (event.data.value) {
-            ele.style.opacity = '1'; // Fade in
-        } else {
-            ele.style.opacity = '0'; // Fade out
-        }
+        ele.style.opacity = event.data.value ? '1' : '0';
+
+        let xhair = document.querySelector('.xhair-container');
+        xhair.style.opacity = event.data.cross ? '0' : '1';
+
     } else if (event.data.type === 'ammo') {
         updateAmmoDisplay(event.data.data);
     }
+
 });
 
 window.addEventListener('message', function(event) {
@@ -21,7 +22,6 @@ function toggleInfoDisplay() {
     var info = document.querySelector('.information');
     info.style.display = (info.style.display === 'flex' ? 'none' : 'flex');
 }
-
 const ammoCountElement = document.querySelector('.ammo-count');
 const ammoMaxElement = document.querySelector('.ammo-max');
 

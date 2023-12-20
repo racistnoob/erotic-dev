@@ -1,4 +1,5 @@
 local currentValues = { MaxAmmo = 0, ClipAmmo = 0 }
+local no_xhair = (GetResourceKvpInt("erotic_xhair") == 1) or false
 
 local COMBAT = {
     PedCamera = function()
@@ -34,9 +35,9 @@ local COMBAT = {
     
             if IsPedArmed(plyPed, 7) and pedWeapon ~= 911657153 then
                 SendNUIMessage({ type = "ammo", data = currentValues })
-                SendNUIMessage({ type = "show", value = true })
+                SendNUIMessage({ type = "show", value = true, cross = no_xhair })
             else
-                SendNUIMessage({ type = "show", value = false })
+                SendNUIMessage({ type = "show", value = false, cross = no_xhair })
             end
         end
     end,    
@@ -50,36 +51,7 @@ local COMBAT = {
     end,
 }
 
--- 
-WasOnVehicle = false
-RagdollSpeed = 30.0
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        local ped = PlayerPedId()
-        local isOnVehicle = IsPedOnVehicle(ped)
-
-        if isOnVehicle then
-            SetRagdollBlockingFlags(ped, 2)
-        elseif WasOnVehicle and not isOnVehicle then
-            ClearRagdollBlockingFlags(ped, 2)
-            if GetEntitySpeed(ped) > RagdollSpeed then
-                SetPedToRagdoll(ped)
-            end
-        end
-        WasOnVehicle = isOnVehicle
-    end
-end)
-
 Citizen.CreateThread(function() while true do N_0x4757f00bc6323cfe(-1553120962, 0.0) Wait(0) end end)
-
-Citizen.CreateThread( function()
- while true do
-    Citizen.Wait(0)
-    RestorePlayerStamina(PlayerId(), 1.0)
-	end
-end)
 
 Citizen.CreateThread(function()
     COMBAT:HideAmmo()
@@ -91,7 +63,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(250)
 end)
 
--- Lua script
+-- information menu
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
@@ -130,6 +102,7 @@ Citizen.CreateThread(function()
     end
 end)
 
+-- no ragdoll ontop of vehicle
 WasOnVehicle = false
 RagdollSpeed = 30.0
 
@@ -151,9 +124,16 @@ Citizen.CreateThread(function()
     end
 end)
 
+-- infinite stamina
 Citizen.CreateThread( function()
  while true do
     Citizen.Wait(0)
     RestorePlayerStamina(PlayerId(), 1.0)
 	end
+end)
+
+-- crosshair toggle
+RegisterCommand('cross', function(src, args)
+    no_xhair = not no_xhair
+    SetResourceKvpInt("erotic_xhair", no_xhair)
 end)
