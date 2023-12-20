@@ -207,6 +207,7 @@ Config.Weapons = {
 Config.Loadouts = {
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
     {name = "LOADOUT_G36", format = "G36 Loadout", kit = "g36"},
+    {name = "LOADOUT_AWP", format = "Awp Loadout", kit = "awp"},
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
     {name = "LOADOUT_M9", format = "M9 Beretta Loadout", kit = "m9"},
     {name = "LOADOUT_MP9", format = "MP9 Loadout", kit = "mp9"},
