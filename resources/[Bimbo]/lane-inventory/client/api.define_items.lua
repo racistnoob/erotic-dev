@@ -77,7 +77,7 @@ CreateThread(function()
 
             if (finished == 100) then
                 SetPlayerMaxArmour(PlayerId(), 100)
-                AddArmourToPed(Player.Ped(), 60)
+                AddArmourToPed(Player.Ped(), 100)
                 -- StopAnimTask(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 1.0)
                 ClearPedTasks(GetPlayerPed(-1))
                 API.RemoveItem(item, 1)
