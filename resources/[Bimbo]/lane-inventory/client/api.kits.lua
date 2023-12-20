@@ -4,25 +4,19 @@ Kits = {
             {item = "WEAPON_PISTOL50", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "50cal_rounds", amount = 150, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["heavypistol"] = {
             {item = "WEAPON_HEAVYPISTOL", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["sp"] = {
             {item = "WEAPON_SP45", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["combatpistol"] = {
             {item = "WEAPON_COMBATPISTOL", primary = true, amount = 1, slot = 1},
@@ -30,15 +24,12 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "9mm_rounds", amount = 300, slot = 15},
             {item = "radio", amount = 1, slot = 14},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["vintage"] = {
             {item = "WEAPON_VINTAGEPISTOL", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
     -- },
     -- ["ars"] = {
@@ -46,90 +37,80 @@ Kits = {
             {item = "WEAPON_ASSAULTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["762"] = {
             {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 20, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 300, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["m16"] = {
             {item = "WEAPON_TACTICALRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 300, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
+        },
+        ["m16"] = {
+            {item = "WEAPON_TACTICALRIFLE", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "556_rounds", amount = 300, slot = 15},
         },
         ["heavyrifle"] = {
             {item = "WEAPON_HEAVYRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 300, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
+        },
+        ["g36"] = {
+            {item = "WEAPON_SPECIALCARBINE", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "556_rounds", amount = 300, slot = 15},
         },
         ["mk18"] = {
             {item = "WEAPON_CARBINERIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 300, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["draco"] = {
             {item = "WEAPON_COMPACTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "556_rounds", amount = 300, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
     -- ["smgs"] = {
         ["mp5"] = {
             {item = "WEAPON_SMG_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["mpx"] = {
             {item = "WEAPON_COMBATPDW", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["uzi"] = {
             {item = "WEAPON_MICROSMG", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["tommy"] = {
             {item = "WEAPON_GUSENBERG", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
         ["magpull"] = {
             {item = "WEAPON_ASSAULTSMG", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "radio", amount = 1, slot = 6},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "repairkit", amount = 1, slot = 10}
         },
 }
 

@@ -179,6 +179,8 @@ end)
 Config.Weapons = {
     ["WEAPON_APPISTOL"] = "9mm_rounds",
     ["WEAPON_CARBINERIFLE_MK2"] = "556_rounds",
+    ["WEAPON_SPECIALCARBINE"] = "556_rounds",
+    ["WEAPON_SPECIALCARBINE_MK2"] = "556_rounds",
     ["WEAPON_ASSAULTRIFLE"] = "556_rounds",
     ["WEAPON_TACTICALRIFLE"] = "556_rounds",
     ["WEAPON_COMBATPISTOL"] = "9mm_rounds",
@@ -203,6 +205,8 @@ Config.Weapons = {
 
 
 Config.Loadouts = {
+    {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
+    {name = "LOADOUT_G36", format = "G36 Loadout", kit = "g36"},
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
     {name = "LOADOUT_M9", format = "M9 Beretta Loadout", kit = "m9"},
     {name = "LOADOUT_MP9", format = "MP9 Loadout", kit = "mp9"},
