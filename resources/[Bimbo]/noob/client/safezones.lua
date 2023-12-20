@@ -1,0 +1,50 @@
+local safezone = {
+    points = {
+        vector2(244.15701293945, -1422.8563232422), vector2(279.76284790039, -1380.4853515625),
+        vector2(318.17694091797, -1335.2751464844), vector2(311.47583007812, -1330.2349853516),
+        vector2(305.27590942383, -1327.4866943359), vector2(298.92803955078, -1325.8145751953),
+        vector2(279.16598510742, -1325.2359619141), vector2(260.20349121094, -1325.1212158203),
+        vector2(249.63441467285, -1325.2188720703), vector2(239.58494567871, -1326.6724853516),
+        vector2(234.6471862793, -1328.2790527344), vector2(230.20269775391, -1330.6145019531),
+        vector2(226.00729370117, -1333.369140625), vector2(222.21691894531, -1336.7979736328),
+        vector2(216.20751953125, -1345.5756835938), vector2(206.01206970215, -1362.3176269531),
+        vector2(199.24990844727, -1371.6348876953), vector2(194.04737854004, -1378.2598876953),
+        vector2(191.19854736328, -1382.4239501953), vector2(190.04113769531, -1387.1240234375),
+        vector2(191.89637756348, -1391.4271240234), vector2(194.80685424805, -1393.8817138672)
+    },
+    options = {
+        maxZ = 49.10112,
+        minZ = 27.08866
+    }
+}
+
+CreateThread(function()
+    exports["noob"]:AddPolyZone(
+        "southside",
+        safezone.points,
+        {
+            debugPoly = false,
+            minZ = safezone.options.minZ,
+            maxZ = safezone.options.maxZ
+        }   
+    )
+end)
+
+local inSafeZone
+AddEventHandler("polyzone:enter", function(name)
+    inSafeZone = true
+    SetLocalPlayerAsGhost(true)
+    NetworkSetPlayerIsPassive(true)
+end)
+
+AddEventHandler("polyzone:exit", function(name)
+    inSafeZone = false
+    SetLocalPlayerAsGhost(false)
+    NetworkSetPlayerIsPassive(false)
+    NetworkSetFriendlyFireOption(true)
+    SetCanAttackFriendly(playerPed, true, true)
+end)
+
+exports("inSafeZone", function()
+    return inSafeZone
+end)

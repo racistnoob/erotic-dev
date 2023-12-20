@@ -1,48 +1,9 @@
-local whitelistedVehicles = {
-    "revolter",
-    "sheava",
-    "issi7",
-    "cyclone",
-    "shotaro",
-    "toros",
-    "omnisegt",
-    "paragon",
-    "sultanrs",
-    "neon",
-    "streiter",
-    "raiden",
-    "tulip",
-    "buffalo",
-    "buffalo1",
-    "buffalo2",
-    "buffalo3",
-    "seven70",
-    "massacro",
-    "guardian",
-    "vigero2",
-    "coquette4",
-    "jester",
-    "jester3",
-    "jester4",
-    "penumbra2",
-    "schlagen",
-    "italigto",
-    "comet2",
-    "comet6",
-    "pariah",
-    "nero2",
-    "specter2",
-    "tempesta",
-    "elegy",
-    "sultan2",
-    "banshee2",
-    "cliffhanger",
-    "bati",
-    "sanchez",
-    "manchez",
-    "bf400",
-    "powersurge"
-}
+local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro", "toros", "omnisegt", "paragon",
+                             "sultanrs", "neon", "streiter", "raiden", "tulip", "buffalo", "buffalo1", "buffalo2",
+                             "buffalo3", "seven70", "massacro", "guardian", "vigero2", "coquette4", "jester", "jester3",
+                             "jester4", "penumbra2", "schlagen", "italigto", "comet2", "comet6", "pariah", "nero2",
+                             "specter2", "tempesta", "elegy", "sultan2", "banshee2", "cliffhanger", "bati", "sanchez",
+                             "manchez", "bf400", "powersurge"}
 
 local previousCar
 local spawnedCar
@@ -57,13 +18,35 @@ local function IsVehicleWhitelisted(model)
     return false
 end
 
+local function deleteVeh(vehicle)
+    SetEntityAsMissionEntity(vehicle, false, false)
+    SetVehicleHasBeenOwnedByPlayer(vehicle, false)
+    SetEntityAsMissionEntity(vehicle, false, false)
+    DeleteVehicle(vehicle)
+    if DoesEntityExist(vehicle) then
+        DeleteVehicle(vehicle)
+    end
+end
+
+local function deleteCurrentVehicle(playerPed)
+    local currentVehicle = GetVehiclePedIsIn(playerPed, false)
+    if DoesEntityExist(currentVehicle) then
+        if GetPedInVehicleSeat(currentVehicle, -1) == playerPed then
+            deleteVeh(currentVehicle)
+        else
+            exports['drp-notifications']:SendAlert('inform', 'You are not the driver.', 5000)
+            return
+        end
+    end
+end
+
 local function deletePreviousVehicle(playerPed)
     -- deletes old car to prevent spammed cars
     if not DoesEntityExist(spawnedCar) then
         spawnedCar = false
         return
     end
-  
+
     -- checks if anyone is in the car
     local shouldDelete = true
     for seatIndex = -1, 5 do
@@ -72,10 +55,10 @@ local function deletePreviousVehicle(playerPed)
             shouldDelete = false
         end
     end
-  
+
     -- deletes car
     if shouldDelete then
-        DeleteVehicle(spawnedCar)
+        deleteVeh(spawnedCar)
     end
 end
 
@@ -107,7 +90,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
             local currentVehicle = GetVehiclePedIsIn(playerPed, false)
             if DoesEntityExist(currentVehicle) then
                 if GetPedInVehicleSeat(currentVehicle, -1) == playerPed then
-                    DeleteVehicle(currentVehicle)
+                    deleteVeh(currentVehicle)
                 else
                     exports['drp-notifications']:SendAlert('inform', 'Exit your current vehicle.', 5000)
                     return
@@ -147,6 +130,13 @@ RegisterCommand("previous_vehicle", function()
     end
 end)
 RegisterKeyMapping("previous_vehicle", "Spawn your last spawned vehicle", "KEYBOARD", "F3")
+
+RegisterCommand("delveh", function()
+    if exports["noob"]:inSafeZone() then
+        deleteCurrentVehicle(PlayerPedId())
+    end
+end)
+RegisterKeyMapping("delveh", "Delete current vehicle", "KEYBOARD", "K")
 
 exports("spawningcars", function(state)
     spawningcars = state

@@ -5,7 +5,10 @@ end
 RegisterNUICallback('switchWorld', function(data, cb)
     local worldId = tonumber(data.worldId)
     if worldId then
+        NetworkSetFriendlyFireOption(true)
+        SetCanAttackFriendly(playerPed, true, true)
         TriggerServerEvent('Multiverse:ChangeWorld', tostring(worldId))
+        collectgarbage("collect")
         if worldId >= 1 and worldId <= 4 then
             exports['core']:SetRecoilMode("roleplay")
             exports['core']:setFirstPersonVehicleEnabled(true)
