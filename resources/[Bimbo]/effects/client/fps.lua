@@ -83,20 +83,6 @@ end)
 CreateThread(function()
     while true do
         if loopType == "ulow" then
-            --// Find closest ped and set the alpha
-            for _, ped in ipairs(GetGamePool('CPed')) do
-                if not IsEntityOnScreen(ped) then
-                    SetEntityAlpha(ped, 0)
-                else
-                    if GetEntityAlpha(ped) == 0 then
-                        SetEntityAlpha(ped, 255)
-                    elseif GetEntityAlpha(ped) ~= 210 then
-                        SetEntityAlpha(ped, 210)
-                    end
-                end
-                SetPedAoBlobRendering(ped, false)
-                Wait(1)
-            end
             --// Find closest object and set the alpha
             for _, obj in ipairs(GetGamePool('CObject')) do
                 if not IsEntityOnScreen(obj) then
@@ -115,20 +101,6 @@ CreateThread(function()
             SetDisableDecalRenderingThisFrame()
             RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
         elseif loopType == "low" then
-            --// Find closest ped and set the alpha
-            for _, ped in ipairs(GetGamePool('CPed')) do
-                if not IsEntityOnScreen(ped) then
-                    SetEntityAlpha(ped, 0)
-                else
-                    if GetEntityAlpha(ped) == 0 then
-                        SetEntityAlpha(ped, 255)
-                    elseif GetEntityAlpha(ped) ~= 210 then
-                        SetEntityAlpha(ped, 210)
-                    end
-                end
-                SetPedAoBlobRendering(ped, false)
-                Wait(1)
-            end
             --// Find closest object and set the alpha
             for _, obj in ipairs(GetGamePool('CObject')) do
                 if not IsEntityOnScreen(obj) then
@@ -137,8 +109,6 @@ CreateThread(function()
                 else
                     if GetEntityAlpha(obj) == 0 then
                         SetEntityAlpha(obj, 255)
-                    elseif GetEntityAlpha(ped) ~= 210 then
-                        SetEntityAlpha(ped, 210)
                     end
                 end
                 Wait(1)
@@ -146,18 +116,6 @@ CreateThread(function()
             SetDisableDecalRenderingThisFrame()
             RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
         elseif loopType == "medium" then
-            --// Find closest ped and set the alpha
-            for _, ped in ipairs(GetGamePool('CPed')) do
-                if not IsEntityOnScreen(ped) then
-                    SetEntityAlpha(ped, 0)
-                else
-                    if GetEntityAlpha(ped) == 0 then
-                        SetEntityAlpha(ped, 255)
-                    end
-                end
-                SetPedAoBlobRendering(ped, false)
-                Wait(1)
-            end
             --// Find closest object and set the alpha
             for _, obj in ipairs(GetGamePool('CObject')) do
                 if not IsEntityOnScreen(obj) then

@@ -1,0 +1,166 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+
+    <script src="dep/verte.js"></script>
+    <link rel="stylesheet" href="css/verte.css">
+
+    <script src="dep/howler.js"></script>
+    <script src="dep/vue.js"></script>
+    <script src="dep/jquery.js"></script>
+    <!-- VUEX -->
+    <script src="dep/vuex.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="dep/animate.css">
+    <link rel="stylesheet" href="dep/defaultstyle.css">
+</head>
+
+<body>
+    <template id="app">
+        <div>
+            <div class="notiparent">
+                <div class="notchild slots">
+                    <transition-group style="display: flex;"
+                        enter-active-class="animate__animated animate__fadeIn"
+                        leave-active-class="animate__animated animate__fadeOut">
+                        <div :style="{ 'backgroundImage': itembgcoloring }" class="entry" :key="a.unique"
+                            v-for="(a,index) in notifs.slots">
+                            <div :style="{ 'backgroundImage': 'url(' + getImage(a) + ')' }" class="img">
+                            </div>
+                            <div class="name">{{ a.formatname }}</div>
+                        </div>
+                    </transition-group>
+                </div>
+                <div class="notchild items">
+                    <transition-group style="display: flex;"
+                        enter-active-class="animate__animated animate__fadeIn"
+                        leave-active-class="animate__animated animate__fadeOut">
+                        <div :style="{ 'backgroundImage': itembgcoloring }" class="entry" :key="a.unique"
+                            v-for="(a,index) in notifs.items">
+                            <div :style="{ 'backgroundImage': 'url(' + getImage(a) + ')' }" class="img">
+                            </div>
+                            <div class="name">{{ a.formatname }}</div>
+                            <div v-if="a.count > 1" class="quantity">+{{ a.count }}</div>
+                        </div>
+                    </transition-group>
+                </div>
+            </div>
+
+            <transition enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut">
+                <div v-if="opened" class="kozeprehuz">
+
+                    <!-- -------------------------------------- -->
+                    <!-- MAIN -->
+                    <div id="draggedItem">
+                        <div class="entry"></div>
+                    </div>
+
+
+                    <!-- -------------------------------------- -->
+                    <!-- LEFT CONTAINER MAIN INVENTORY -->
+                    <div class="inventorycontainer left">
+                        <div class="header">
+                            <div class="name">{{ _U('main_inventory') }}</div>
+                            <div class="kiloparent">
+                                <div class="text">{{ inventoryWeight(mainInventory) }} / {{
+                                    formatMoney(playerStaticData.maxweight) }} {{ _U('weight_measure') }}
+                                </div>
+                                <div :style="{ 'background': settings.setters.weightbg_1.set }"
+                                    class="kilobar">
+                                    <div :style="{ 'background': '' , 'width': getPercentage(inventoryWeight(mainInventory), playerStaticData.maxweight) + '%' }"
+                                        class="inside"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div @mouseleave="hoveredItemMain = null"
+                                @mouseenter="isEmpty(a) == false ? hoveredItemMain = a : null"
+                                @mousedown="startDrag('main', index)" @mouseup="endDrag('main', index)"
+                                :style="{ 'backgroundImage': itembgcoloring }" class="itementry"
+                                :id="'main-' + index" v-for="(a,index) in mainInventory">
+                                <div v-if="settings_enabled('itemnames') && isEmpty(a) == false" class="name">
+                                    {{
+                                    a.itemdata.formatname }}</div>
+                                <div v-if="isEmpty(a) == false && a.quantity > 1" class="quantity">{{
+                                    formatMoney(a.quantity) }}</div>
+                                <div v-if="a.quality && isEmpty(a) == false" class="qualitybar">
+                                    <div class="inside"></div>
+                                </div>
+                                <div class="slot" v-if="settings_enabled('slots') && index < 5">{{ index +1 }}
+                                </div>
+                                <div v-if="isEmpty(a) == false"
+                                    :style="{ 'backgroundImage': 'url(' + getImage(a) + ')' }"
+                                    class="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -------------------------------------- -->
+                    <!-- MID CONTAINER CHARACTER -->
+                    <div class="centercontainer">
+                        <div v-if="settings_enabled('charactername')" class="name">
+                        </div>
+                    </div>
+                    <!-- <div class="actionpanels">
+                        <input v-model="count" placeholder="Quantity" type="text">
+                        <div @mouseup="throwItem()" class="panel throw">{{ _U('throw') }}</div>
+                        <div @mouseup="useItem()" class="panel use">{{ _U('use') }}</div>
+                    </div> -->
+                    <!-- -------------------------------------- -->
+                    <!-- RIGHT CONTAINER CHARACTER -->
+                    <div v-if="settings.opened == false && secondInventory.length > 0"
+                        class="inventorycontainer right">
+                        <div class="header">
+                            <div class="name"></div>
+                            <div class="kiloparent">
+                                <div class="text">{{ inventoryWeight(secondInventory) }} / {{
+                                    formatMoney(secondInventoryStaticData.maxweight) }} {{
+                                    _U('weight_measure') }}</div>
+                                <div :style="{ 'background': settings.setters.weightbg_1.set }"
+                                    class="kilobar">
+                                    <div :style="{ 'background': settings.setters.weightbg_2.set, 'width': getPercentage(inventoryWeight(secondInventory), secondInventoryStaticData.maxweight) + '%' }"
+                                        class="inside"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div @mouseleave="hoveredItemSecond = null"
+                                @mouseenter="isEmpty(a) == false ? hoveredItemSecond = a : null"
+                                @mousedown="startDrag('second', index)" @mouseup="endDrag('second', index)"
+                                :style="{ 'backgroundImage': itembgcoloring }" class="itementry"
+                                :id="'second-' + index" v-for="(a,index) in secondInventory">
+                                <div v-if="isEmpty(a) == false" class="name">{{ a.itemdata.formatname }}</div>
+                                <div v-if="isEmpty(a) == false && a.quantity > 1" class="quantity">{{
+                                    formatMoney(a.quantity) }}</div>
+                                <div v-if="a.quality && isEmpty(a) == false" class="qualitybar">
+                                    <div class="inside"></div>
+                                </div>
+                                <div v-if="isEmpty(a) == false"
+                                    :style="{ 'backgroundImage': 'url(' + getImage(a) + ')' }"
+                                    class="img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+
+        
+
+    </template>
+
+    <!-- itt kell lennie a végén -->
+    <script src="js/locale.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

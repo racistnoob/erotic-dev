@@ -1,0 +1,439 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+
+*,p, h1, h2 {
+  font-family: 'Oswald';
+}
+
+*::-webkit-scrollbar {
+  width: 0px;
+}
+
+.inventorybg {
+  width: 100%;
+  height: 100%;
+  background: url(../img/inventorybg.png) center/contain no-repeat;
+}
+
+.notiparent {
+  position: absolute;
+  width: 100%;
+  right: 0;
+  height: 15%;
+  bottom: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.notiparent .notchild {
+  position: relative;
+  width: 45%;
+  height: 100%;
+  margin: 0 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.notiparent .notchild.slots {
+  justify-content: center;
+}
+
+.notiparent .notchild.items {
+  justify-content: center;
+}
+
+.notiparent .notchild .entry {
+  position: relative;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notiparent .notchild .entry .quantity,
+.notiparent .notchild .entry .name,
+.notiparent .notchild .entry .img {
+  position: absolute;
+}
+
+.notiparent .notchild .entry .quantity {
+  font-size: 0.8vw;
+  color: white;
+  top: -0.5vw;
+  left: -0.5vw;
+  background: rgba(20, 20, 20, 0.75);
+  padding: 0.25vw;
+  border-radius: 100%;
+}
+
+.notiparent .notchild .entry .name {
+  bottom: 0;
+  height: 17.5%;
+  width: 100%;
+  background: #141414;
+  font-size: 0.65vw;
+  color: white;
+  border-bottom-left-radius: 0.5vw;
+  border-bottom-right-radius: 0.5vw;
+}
+
+.notiparent .notchild .entry .img {
+  width: 65%;
+  height: 65%;
+  padding: 0.5vw;
+  margin-bottom: 0.5vw;
+  background: url(../img/preselt_szilva.png) center/contain no-repeat;
+}
+
+.actionpanels {
+  position: absolute;
+  height: 20%;
+  bottom: 37.9%;
+  right: 16.5%;
+}
+
+.actionpanels input {
+  position: absolute;
+  border: none;
+  outline: none;
+  top: -22.15%;
+  background: rgba(20, 20, 20, 0.35);
+  font-size: 1.75vw;
+  color: white;
+  text-align: center;
+}
+
+.actionpanels input::placeholder {
+  color: grey;
+}
+
+.actionpanels .panel {
+  position: relative;
+  font-size: 1.3vw;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(20, 20, 20, 0.35);
+}
+
+.actionpanels .panel:hover {
+  background: #0d0e13;
+  border: 0.15vw solid #464646;
+}
+
+.actionpanels .panel.throw,
+.actionpanels .panel.give,
+.actionpanels .panel.use,
+.actionpanels input {
+  height: 2.5vw;
+  width: 5.5vw;
+}
+
+.centercontainer {
+  position: absolute;
+  width: 5vw;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.1s ease;
+}
+
+.centercontainer .characterimg {
+  position: absolute;
+  top: 15%;
+  width: 70%;
+  height: 75%;
+  background: url(../img/char.png) center/contain no-repeat;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.centercontainer .name {
+  position: absolute;
+  top: 8%;
+  font-size: 1.5vw;
+  color: white;
+  text-shadow: 0.05vw 0.05vw 0.025vw black;
+  padding: 0.1vw 0.8vw;
+}
+
+.centercontainer .content {
+  position: absolute;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.centercontainer .content .entry {
+  position: relative;
+  width: 3vw;
+  height: 3vw;
+  background: rgba(60, 60, 60, 0.45);
+  margin: 0.25vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: 20px groove rgba(78, 78, 78, 0.45);
+}
+
+.centercontainer .content .entry:hover {
+  animation: pulse 1s ease infinite;
+}
+
+.centercontainer .content .entry .img {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.centercontainer .content.left {
+  left: 5%;
+}
+
+.centercontainer .content.right {
+  right: 5%;
+}
+
+.inventorycontainer {
+  position: absolute;
+  justify-content: center;
+  width: 30vw;
+  height: 40.5vw;
+  transition: all 0.5s ease;
+}
+
+.inventorycontainer.left {
+  right: inherit;
+}
+
+.inventorycontainer.right {
+  right: 5%;
+}
+
+.inventorycontainer .hoverdata {
+  position: absolute;
+  bottom: -7.5vw;
+  width: 100%;
+  height: 6vw;
+  background: rgba(40, 40, 40, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventorycontainer .hoverdata .itemname {
+  top: 8%;
+  font-size: 1.1vw;
+  font-variant: small-caps;
+}
+
+.inventorycontainer .hoverdata .description {
+  top: 35%;
+  width: 75%;
+  height: 60%;
+  overflow: auto;
+  font-size: 0.85vw;
+  color: gainsboro;
+}
+
+.inventorycontainer .hoverdata .imgentry {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 20%;
+  /* background: rgba(20, 20, 20, 0.35); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 0.1vw solid #ff7b00;
+}
+
+.inventorycontainer .hoverdata .imgentry .img {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background: url(../img/preselt_szilva.png) center/contain no-repeat;
+}
+
+.inventorycontainer .header {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventorycontainer .header .kiloparent {
+  position: absolute;
+  width: 93%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventorycontainer .header .kiloparent .text {
+  position: absolute;
+  top: 20px;
+  /* right: 5%; */
+  font-size: 0.9vw;
+  color: gray;
+  text-shadow: 1px 2px 2px black;
+}
+
+.inventorycontainer .header .kiloparent .kilobar {
+  position: absolute;
+  bottom: 15%;
+  width: 100%;
+  height: 0.6vw;
+  /* border-radius: 0.5vw; */
+  border: 2px solid rgba(0, 0, 0, 0.521);
+}
+
+.inventorycontainer .header .kiloparent .kilobar .inside {
+  height: 100%;
+  background: #2222223a;
+  /* border-radius: 0.5vw; */
+  transition: background-color 1s ease;
+}
+
+.inventorycontainer .header .name {
+  position: absolute;
+  left: 5%;
+  font-size: 1.5vw;
+  color: white;
+  text-shadow: 0.05vw 0.05vw 0.025vw black;
+  font-variant: small-caps;
+}
+
+.inventorycontainer .content {
+  position: relative;
+  width: 30vw;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+#draggedItem {
+  position: absolute;
+  z-index: 80;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+  width: 5vw;
+  height: 4.5vw;
+}
+
+.itementry, #draggedItem {
+  width: 5vw;
+  height: 4.5vw;
+  margin: 0.25vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 0.1vw groove rgba(210, 210, 210, 0.65);
+  -webkit-transition: ease();
+  transition: ease();
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
+}
+
+.itementry:not(#draggedItem), #draggedItem:not(#draggedItem) {
+  position: relative;
+}
+
+.itementry .slot, #draggedItem .slot {
+  position: absolute;
+  top: 0;
+  right: 30%;
+  justify-items: center;
+  color: white;
+  opacity: 40%;
+  font-size: 2.9vw;
+  padding: 0 0.25vw;
+  z-index: 1;
+}
+
+.itementry .name, #draggedItem .name {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.55vw;
+  /* background: rgba(30, 30, 30, 0.85); */
+  color: white;
+  z-index: 1;
+  text-align: center;
+}
+
+.itementry:hover, #draggedItem:hover {
+  border: 0.1vw groove rgba(255, 255, 255, 0.75);
+}
+
+.itementry .quantity, #draggedItem .quantity {
+  position: absolute;
+  font-size: 0.65vw;
+  color: white;
+  bottom: 15%;
+  right: 2%;
+}
+
+.itementry .qualitybar, #draggedItem .qualitybar {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 4%;
+  /* background: #141414; */
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -ms-grid;
+  display: grid;
+  z-index: 2;
+}
+
+.itementry .qualitybar .inside, #draggedItem .qualitybar .inside {
+  background: #ff7b00;
+  height: 95%;
+  width: 100%;
+}
+
+.itementry .img, #draggedItem .img {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  /* background-image: url(../img/preselt_szilva.png); */
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+*::-webkit-scrollbar{
+  width:0px;
+}
+
+.name{
+  font-family:"AXIS";
+}
