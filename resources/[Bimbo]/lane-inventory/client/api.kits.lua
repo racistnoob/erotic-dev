@@ -119,6 +119,15 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "556_rounds", amount = 300, slot = 15},
         },
+        -- ETC
+        ["hopout"] = {
+            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "WEAPON_SP45", primary = true, amount = 1, slot = 5},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "556_rounds", amount = 300, slot = 16},
+        },
 }
 
 
@@ -170,6 +179,7 @@ function DoKitStuff(kit)
     API.GiveKit()
 end
 
+exports("DoKitStuff", DoKitStuff)
 
 --[[ WEAPON FUNCTIONS
 -- FIND PRIMARY WEAPON (KIT)
