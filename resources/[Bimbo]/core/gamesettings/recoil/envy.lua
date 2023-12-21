@@ -112,9 +112,6 @@ local WeaponRecoil = {
     local storedRecoils = {}
     
     Recoil:RegisterMode('envy', function()
-    CreateThread(function()
-    
-        while true do
             Citizen.Wait(100)
             
             local plyPed = GetPlayerPed(-1) -- Defining the player's ped
@@ -202,4 +199,3 @@ local WeaponRecoil = {
         end
     
     end)
-end)
