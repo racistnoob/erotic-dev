@@ -26,8 +26,8 @@ Config = {
     },
 }
 
-RegisterNetEvent('Multiverse:GetWorld')
-AddEventHandler('Multiverse:GetWorld', function(src, cb)
+RegisterNetEvent('erotic-lobby:GetWorld')
+AddEventHandler('erotic-lobby:GetWorld', function(src, cb)
     local ids = ExtractIdentifiers(src);
     if (WorldTracker[ids.license] ~= nil) then 
         cb(WorldTracker[ids.license]);
@@ -35,8 +35,8 @@ AddEventHandler('Multiverse:GetWorld', function(src, cb)
     cb("Normal");
 end)
 
-RegisterNetEvent('Multiverse:GetWorldBucketID')
-AddEventHandler('Multiverse:GetWorldBucketID', function(src, cb)
+RegisterNetEvent('erotic-lobby:GetWorldBucketID')
+AddEventHandler('erotic-lobby:GetWorldBucketID', function(src, cb)
     local ids = ExtractIdentifiers(src);
     if (WorldTracker[ids.license] ~= nil) then 
         cb(Config.Worlds[WorldTracker[ids.license]][1]);
@@ -79,20 +79,21 @@ AddEventHandler('playerDropped', function (reason)
     local ids = ExtractIdentifiers(src);
 end)
 
-RegisterNetEvent('Multiverse:SpawnWorldTrigger')
-AddEventHandler('Multiverse:SpawnWorldTrigger', function()
+RegisterNetEvent('erotic-lobby:SpawnWorldTrigger')
+AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
     local src = source;
     local ids = ExtractIdentifiers(src);
     if WorldTracker[ids.license] ~= nil then
         local worldName = WorldTracker[ids.license]; 
         local coords = Config.Worlds[worldName][2];
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-        --TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
+        TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+        --TriggerClientEvent("erotic-lobby:ChangeCoords", src, coords[1], coords[2], coords[3])
     end
 end)
 
-RegisterNetEvent('Multiverse:ChangeWorld')
-AddEventHandler('Multiverse:ChangeWorld', function(worldName)
+RegisterNetEvent('erotic-lobby:ChangeWorld')
+AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
     local src = source;
     if Config.Worlds[worldName] ~= nil then 
         local permission = Config.Worlds[worldName][3];
@@ -100,8 +101,9 @@ AddEventHandler('Multiverse:ChangeWorld', function(worldName)
         local ids = ExtractIdentifiers(src);
         if not permission then
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-            --TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
+            --TriggerClientEvent("erotic-lobby:ChangeCoords", src, coords[1], coords[2], coords[3])
             WorldTracker[ids.license] = worldName;
+            TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
             TriggerClientEvent("core:updateRPC", src, worldName)
                 -- Changed worlds ...
             return;
@@ -110,3 +112,31 @@ AddEventHandler('Multiverse:ChangeWorld', function(worldName)
         -- This world does not exist...
     end
 end)
+
+
+function getPlayerWorld(playerID)
+    print(GetPlayerRoutingBucket(playerID))
+    return GetPlayerRoutingBucket(playerID)
+end
+
+RegisterNetEvent('erotic-lobby:getPlayerWorld')
+AddEventHandler('erotic-lobby:getPlayerWorld', function(playerID)
+    getPlayerWorld(playerID)
+end)
+
+exports('getPlayerWorld', getPlayerWorld)
+
+function getLobbyPlayerCount(worldID)
+    worldID = tostring(worldID)
+    local playerCount = 0
+
+    for _, v in pairs(WorldTracker) do
+        if v == worldID then
+            playerCount = playerCount + 1
+        end
+    end
+
+    return playerCount
+end
+
+exports('getLobbyPlayerCount', getLobbyPlayerCount)

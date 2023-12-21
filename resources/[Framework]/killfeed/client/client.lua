@@ -1,4 +1,4 @@
-function GetWeaponName(hash)
+local function GetWeaponName(hash)
     hash = hash.weaponhash
     if hash == GetHashKey('WEAPON_UNARMED') then return 'unarmed'
         elseif hash == GetHashKey('WEAPON_KNUCKLE') then return 'knuckle'
@@ -17,16 +17,14 @@ end
 
 AddEventHandler('baseevents:onPlayerKilled', function(killerId, deathData)
     local weaponName = GetWeaponName(deathData)
-    TriggerServerEvent('dst_killfeed:server:playerWasKilled', killerId, GetPlayerName(PlayerId()), weaponName)
+    TriggerServerEvent('killfeed:server:playerWasKilled', killerId, GetPlayerName(PlayerId()), weaponName)
 end)
 
-AddEventHandler('baseevents:onPlayerDied', function()
-    TriggerServerEvent('dst_killfeed:server:playerDied', GetPlayerName(PlayerId()))
-end)
-
-RegisterNetEvent('dst_killfeed:client:feed')
-AddEventHandler('dst_killfeed:client:feed', function(context)
-    SendNUIMessage({
-        context = context
-    })
+RegisterNetEvent('killfeed:client:feed')
+AddEventHandler('killfeed:client:feed', function(worldID, context)
+    if exports['erotic-lobby']:getCurrentWorld() == worldID then
+        SendNUIMessage({
+            context = context
+        })
+    end
 end)

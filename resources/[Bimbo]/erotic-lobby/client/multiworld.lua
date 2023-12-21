@@ -47,7 +47,6 @@ function switchWorld(worldID)
             collectgarbage("collect")
     
             -- these are always the same for all lobbies
-            exports['lane-inventory']:DoKitStuff("hopout")
             exports['core']:setUndeaded(true)
             exports['core']:spawningcars(true)
             exports['core']:setHelmetsEnabled(false)
@@ -58,6 +57,8 @@ function switchWorld(worldID)
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle)
             exports['core']:setnonstopcombat(worldSettings.nonstopCombat)
             exports['core']:setHsMulti(worldSettings.hsMulti)
+
+            TriggerEvent("polyzone:enter")
         end
     end
 end
