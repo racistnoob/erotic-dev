@@ -4,7 +4,7 @@ local no_xhair = (GetResourceKvpInt("erotic_xhair") == 1) or false
 local COMBAT = {
     PedCamera = function()
         while true do
-            Citizen.Wait(0)
+            Citizen.Wait(10)
             local ped = PlayerPedId()
             local InVehicle = IsPedInAnyVehicle(ped, false)
             local isAiming = (IsControlPressed(0, 25) and IsUsingKeyboard(0)) or IsAimCamActive()
@@ -102,33 +102,11 @@ Citizen.CreateThread(function()
     end
 end)
 
--- no ragdoll ontop of vehicle
-WasOnVehicle = false
-RagdollSpeed = 30.0
-
+-- infinite stamina
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
-        local ped = PlayerPedId()
-        local isOnVehicle = IsPedOnVehicle(ped)
-
-        if isOnVehicle then
-            SetRagdollBlockingFlags(ped, 2)
-        elseif WasOnVehicle and not isOnVehicle then
-            ClearRagdollBlockingFlags(ped, 2)
-            if GetEntitySpeed(ped) > RagdollSpeed then
-                SetPedToRagdoll(ped)
-            end
-        end
-        WasOnVehicle = isOnVehicle
-    end
-end)
-
--- infinite stamina
-Citizen.CreateThread( function()
- while true do
-    Citizen.Wait(0)
-    RestorePlayerStamina(PlayerId(), 1.0)
+        Citizen.Wait(500)
+        ResetPlayerStamina(PlayerId())
 	end
 end)
 

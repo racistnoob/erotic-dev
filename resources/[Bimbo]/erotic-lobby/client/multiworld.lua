@@ -51,6 +51,7 @@ function switchWorld(worldID)
             exports['core']:setUndeaded(true)
             exports['core']:spawningcars(true)
             exports['core']:setHelmetsEnabled(false)
+            exports['core']:setCarRagdoll(true)
     
             -- Apply world-specific settings
             exports['core']:SetRecoilMode(worldSettings.recoilMode)
