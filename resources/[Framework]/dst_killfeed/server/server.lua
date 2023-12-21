@@ -1,6 +1,9 @@
 RegisterNetEvent('dst_killfeed:server:playerWasKilled')
 AddEventHandler('dst_killfeed:server:playerWasKilled', function(killerId, whoWasKilled, weaponName)
-    TriggerClientEvent('dst_killfeed:client:feed', -1, '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(whoWasKilled) .. '</strong>')
+    local src = source
+    if GetPlayerRoutingBucket(src) == GetPlayerRoutingwBucket(killerId) then
+        TriggerClientEvent('dst_killfeed:client:feed', -1, '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(whoWasKilled) .. '</strong>')
+    end
 end)
 
 -- RegisterNetEvent('dst_killfeed:server:playerDied')

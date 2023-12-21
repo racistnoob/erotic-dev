@@ -2,9 +2,11 @@ local players = {}
 local playersCid = {}
 local shifts = {}
 
-local whitelistedNames = {
+local names = {
 	['iyruk'] = true,
-	['Flawws'] = true
+	['Flawws'] = true,
+	['beetroot'] = true,
+	['noob'] = true,
 }
 
 local policeJobs = {
