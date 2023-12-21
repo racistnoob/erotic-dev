@@ -38,13 +38,14 @@ CreateThread(function()
                 -- ShowNotification("~g~Already Healing or Full HP.")
                 return false
             end
+            local playerPed = PlayerPedId()
             RequestAnimDict("mp_suicide")
             TaskPlayAnim(GetPlayerPed(-1), "mp_suicide", "pill", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 3500,
                 text = "Vicodin"
             })
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(playerPed)
             if (finished == 100) then
                 local count = math.random(30, 60)
                 healing = true
@@ -52,8 +53,8 @@ CreateThread(function()
                     Wait(1000)
                     count = count - 1
                     healAmount = math.random(1, 4)
-                    SetEntityHealth(GetPlayerPed(-1), GetEntityHealth(GetPlayerPed(-1)) + healAmount)
-                    if IsEntityDead(GetPlayerPed(-1)) then
+                    SetEntityHealth(playerPed, GetEntityHealth(playerPed) + healAmount)
+                    if IsEntityDead(playerPed) then
                         healing = false
                         break
                     end
@@ -65,11 +66,12 @@ CreateThread(function()
     
     Item.Register("armour", {
         func = function(item)
-            if Player.Armour() == 100 then return false end 
+            if Player.Armour() == 100 then return false end
+            local playerPed = PlayerPedId()
             -- loadAnimDict("clothingshirt")  
             RequestAnimDict("clothingtie")
             -- TaskPlayAnim(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
-            TaskPlayAnim(GetPlayerPed(-1), "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
+            TaskPlayAnim(playerPed, "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 7500,
                 text = "Medium Armour"
@@ -79,10 +81,10 @@ CreateThread(function()
                 SetPlayerMaxArmour(PlayerId(), 100)
                 AddArmourToPed(Player.Ped(), 100)
                 -- StopAnimTask(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 1.0)
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(playerPed)
                 API.RemoveItem(item, 1)
             end
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(playerPed)
             return true
         end,
         animClearance = true
@@ -92,6 +94,8 @@ CreateThread(function()
         func = function(item)
             if Player.InVehicle() then return false end 
             if Player.Health() >= 175 then return false end 
+            local playerPed = PlayerPedId()
+
             local currentHealth = Player.Health()
             local healthToSet = currentHealth + 15
             if healthToSet >= 175 then 
@@ -104,7 +108,7 @@ CreateThread(function()
                 length = 7500,
                 text = "BANDAGING"
               })
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(playerPed)
 
             if (finished == 100) then
                 SetEntityHealth(Player.Ped(), healthToSet)
@@ -171,13 +175,14 @@ CreateThread(function()
     Item.Register("joint", {
         func = function(item)
             if Player.InVehicle() then TriggerEvent("noticeme:Warn", "Cannot use joints in a car!") return false end 
+            local playerPed = PlayerPedId()
             TaskStartScenarioInPlace(Player.Ped(), "WORLD_HUMAN_SMOKING_POT", 0, false)
             Player.InAnim = true
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 3500,
                 text = "using joint"
               })
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(playerPed)
 
             if (finished == 100) then
                 SetPedArmour(Player.Ped(), Player.Armour() + 25)
@@ -196,12 +201,13 @@ CreateThread(function()
     Item.Register("kevlar", {
         func = function(item)
             if Player.Armour() == 100 then return false end 
+            local playerPed = PlayerPedId()
             if Player.InVehicle() and GetEntitySpeed(PlayerPedId()) < 1.0 then 
                 local finished = exports["lane-taskbar"]:taskBar({
                     length = 3500,
                     text = "using kevlar"
                   })
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(playerPed)
     
                 if (finished == 100) then
                     SetPedArmour(Player.Ped(), 100)
@@ -221,7 +227,7 @@ CreateThread(function()
                     length = 3500,
                     text = "using kevlar"
                   })
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(playerPed)
     
                 if (finished == 100) then
                     SetPedArmour(Player.Ped(), 100)
@@ -242,13 +248,14 @@ CreateThread(function()
         func = function(item)
             if Player.InVehicle() then return false end 
             if Player.Health() == 200 then return false end 
+            local playerPed = PlayerPedId()
             TaskStartScenarioInPlace(Player.Ped(), "CODE_HUMAN_MEDIC_KNEEL", 0, false)
             Player.InAnim = true 
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 3500,
                 text = "healing"
               })
-            ClearPedTasks(GetPlayerPed(-1))
+            ClearPedTasks(playerPed)
 
             if (finished == 100) then
                 SetEntityHealth(Player.Ped(), 200)
@@ -299,7 +306,7 @@ CreateThread(function()
                     length = 3500,
                     text = "Using Loadout"
                   })
-                ClearPedTasks(GetPlayerPed(-1))
+                ClearPedTasks(PlayerPedId())
                 if (finished == 100) then
                     DoKitStuff(kit)
                     API.RemoveItem(item, 1)

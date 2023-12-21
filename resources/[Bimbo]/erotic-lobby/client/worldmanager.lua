@@ -10,7 +10,7 @@ end)
 
 RegisterNetEvent("Multiverse:ChangeCoords")
 AddEventHandler("Multiverse:ChangeCoords", function(x, y, z)
-    SetEntityCoords(GetPlayerPed(-1), x, y, z, false, false, false, false);
+    SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false);
 end)
 
 --[[RegisterCommand("world", function(source, args, rawCommand)

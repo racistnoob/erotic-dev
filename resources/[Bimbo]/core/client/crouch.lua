@@ -1,11 +1,16 @@
 local crouched = false
+local ped = 0
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5000)
+        ped = PlayerPedId()
+    end
+end)
 
 Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(1)
-
-        local ped = GetPlayerPed(-1)
-
         if DoesEntityExist(ped) and not IsEntityDead(ped) then 
             DisableControlAction(0, 36, true) -- INPUT_DUCK  
 

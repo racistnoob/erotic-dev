@@ -8,7 +8,7 @@ end
 function API.RemoveItem(item, count)
     TriggerServerEvent("zbrp:Player:removeItem", item, count)
     Player.InAnim = false -- when oxy and armour is removed etc...
-    SendNUIMessage({action = 'slotNotification', name = item, formatname = item})
+    --SendNUIMessage({action = 'slotNotification', name = item, formatname = item})
 end
 
 RegisterNetEvent("zbrp:inv.RemoveItem", API.RemoveItem)

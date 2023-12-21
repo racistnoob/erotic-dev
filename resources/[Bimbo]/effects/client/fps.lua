@@ -1,21 +1,20 @@
----@diagnostic disable: trailing-space
-local loopType = nil
+local boostEnabled = false
+local ped = 0
 
--- Functions
+AddEventHandler('echorp:playerSpawned', function()
+    local kvpValue = GetResourceKvpInt("graphics_fpsboost")
 
----@param shadow boolean
----@param air boolean
+    if kvpValue then
+        boostEnabled = true
+    end
+end)
+
 local function setShadowAndAir(shadow, air)
     RopeDrawShadowEnabled(shadow)
     CascadeShadowsClearShadowSampleType()
     CascadeShadowsSetAircraftMode(air)
 end
 
----@param entity boolean
----@param dynamic boolean
----@param tracker number
----@param depth number
----@param bounds number
 local function setEntityTracker(entity, dynamic, tracker, depth, bounds)
     CascadeShadowsEnableEntityTracker(entity)
     CascadeShadowsSetDynamicDepthMode(dynamic)
@@ -24,56 +23,59 @@ local function setEntityTracker(entity, dynamic, tracker, depth, bounds)
     CascadeShadowsSetCascadeBoundsScale(bounds)
 end
 
----@param distance number
----@param tweak number
 local function setLights(distance, tweak)
     SetFlashLightFadeDistance(distance)
     SetLightsCutoffDistanceTweak(tweak)
 end
 
----@param notify string
-local function notify(message)
-    print(message)
+local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
+    return coroutine.wrap(function()
+        local iter, id = initFunc()
+        if not id or id == 0 then
+            disposeFunc(iter)
+            return
+        end
+  
+        local enum = {handle = iter, destructor = disposeFunc}
+        setmetatable(enum, {
+            __gc = function()
+                if enum.destructor and enum.handle then
+                    enum.destructor(enum.handle)
+                end
+                enum.destructor = nil
+                enum.handle = nil
+            end
+        })
+  
+        local next = true
+        repeat
+            coroutine.yield(id)
+            next, id = moveFunc(iter)
+        until not next
+  
+        enum.destructor, enum.handle = nil, nil
+        disposeFunc(iter)
+    end)
 end
 
----@param type string
-local function umfpsBooster(type)
-    if type == "reset" then
-        setShadowAndAir(true, true)
-        setEntityTracker(true, true, 5.0, 5.0, 5.0)
-        setLights(10.0, 10.0)
-        notify("Mode: Reset")
-    elseif type == "ulow" then
-        setShadowAndAir(false, false)
-        setEntityTracker(true, false, 0.0, 0.0, 0.0)
-        setLights(0.0, 0.0)
-        notify("Mode: Ultra Low")
-    elseif type == "low" then
-        setShadowAndAir(false, false)
-        setEntityTracker(true, false, 0.0, 0.0, 0.0)
-        setLights(5.0, 5.0)
-        notify("Mode: Low")
-    elseif type == "medium" then
-        setShadowAndAir(true, false)
-        setEntityTracker(true, false, 5.0, 3.0, 3.0)
-        setLights(3.0, 3.0)
-        notify("Mode: Medium")
-    else
-        notify("Usage: /fps [reset/ulow/low/medium]")
-        notify("Invalid type: " .. type)
-        return
-    end
-    loopType = type
+local function GetWorldObjects()
+    return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject)
 end
 
 RegisterNetEvent("core:toggle-fps")
-AddEventHandler("core:toggle-fps", function(params)
-    local fpsType = params.type
-    
-    if fpsType then
-        umfpsBooster(fpsType)
+AddEventHandler("core:toggle-fps", function(params)    
+    if params.type then
+        setShadowAndAir(false, false)
+        setEntityTracker(true, false, 0.0, 0.0, 0.0)
+        setLights(0.0, 0.0)
+        boostEnabled = true
+        SetResourceKvpInt("graphics_fpsboost", boostEnabled)
     else
-        notify("Invalid usage.")
+        setShadowAndAir(true, true)
+        setEntityTracker(true, true, 5.0, 5.0, 5.0)
+        setLights(10.0, 10.0)
+        boostEnabled = false
+        SetResourceKvpInt("graphics_fpsboost", boostEnabled)
     end
 end)
 
@@ -82,9 +84,8 @@ end)
 -- // Distance rendering and entity handler (need a revision)
 CreateThread(function()
     while true do
-        if loopType == "ulow" then
-            --// Find closest object and set the alpha
-            for _, obj in ipairs(GetGamePool('CObject')) do
+        if boostEnabled then
+            for obj in GetWorldObjects() do
                 if not IsEntityOnScreen(obj) then
                     SetEntityAlpha(obj, 0)
                     SetEntityAsNoLongerNeeded(obj)
@@ -100,36 +101,6 @@ CreateThread(function()
             DisableOcclusionThisFrame()
             SetDisableDecalRenderingThisFrame()
             RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
-        elseif loopType == "low" then
-            --// Find closest object and set the alpha
-            for _, obj in ipairs(GetGamePool('CObject')) do
-                if not IsEntityOnScreen(obj) then
-                    SetEntityAlpha(obj, 0)
-                    SetEntityAsNoLongerNeeded(obj)
-                else
-                    if GetEntityAlpha(obj) == 0 then
-                        SetEntityAlpha(obj, 255)
-                    end
-                end
-                Wait(1)
-            end
-            SetDisableDecalRenderingThisFrame()
-            RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
-        elseif loopType == "medium" then
-            --// Find closest object and set the alpha
-            for _, obj in ipairs(GetGamePool('CObject')) do
-                if not IsEntityOnScreen(obj) then
-                    SetEntityAlpha(obj, 0)
-                    SetEntityAsNoLongerNeeded(obj)
-                else
-                    if GetEntityAlpha(obj) == 0 then
-                        SetEntityAlpha(obj, 255)
-                    end
-                end
-                Wait(1)
-            end
-        else
-            Wait(500)
         end
         Wait(8)
     end
@@ -138,9 +109,8 @@ end)
 --// Clear broken thing, disable rain, disable wind and other tiny thing that dont require the frame tick
 CreateThread(function()
     while true do
-        if loopType == "ulow" or loopType == "low" then
-            local ped = PlayerPedId()
-
+        if boostEnabled then
+            ped = PlayerPedId()
             ClearAllBrokenGlass()
             ClearAllHelpMessages()
             LeaderboardsReadClearAll()
@@ -155,32 +125,14 @@ CreateThread(function()
             ClearPedWetness(ped)
             ClearPedEnvDirt(ped)
             ResetPedVisibleDamage(ped)
-            ClearExtraTimecycleModifier()
-            ClearTimecycleModifier()
-            ClearOverrideWeather()
             ClearHdArea()
             DisableVehicleDistantlights(true)
             DisableScreenblurFade()
             SetRainLevel(0.0)
             SetWindSpeed(0.0)
             Wait(300)
-        elseif loopType == "medium" then
-            ClearAllBrokenGlass()
-            ClearAllHelpMessages()
-            LeaderboardsReadClearAll()
-            ClearBrief()
-            ClearGpsFlags()
-            ClearPrints()
-            ClearSmallPrints()
-            ClearReplayStats()
-            LeaderboardsClearCacheData()
-            ClearFocus()
-            ClearHdArea()
-            SetWindSpeed(0.0)
-            Wait(1000)
-        else
-            Wait(1500)
         end
+        Wait(2000)
     end
 end)
 
@@ -195,12 +147,12 @@ local fpssubmenu = {
     },
     {
         id = 2,
-        header = "Reset",
-        txt = "Reset the fps booster",
+        header = "Disable",
+        txt = "Disable the fps booster",
         params = {
             event = "core:toggle-fps",
             args = {
-                type = "reset",
+                type = false,
                 number = 1,
                 id = 2
             }
@@ -208,40 +160,14 @@ local fpssubmenu = {
     },
     {
         id = 3,
-        header = "Ultra Low",
-        txt = "Set fps booster to Ultra low",
+        header = "Enable",
+        txt = "Enable the fps booster",
         params = {
             event = "core:toggle-fps",
             args = {
-                type = "ulow",
+                type = true,
                 number = 2,
                 id = 3
-            }
-        }
-    },
-    {
-        id = 4,
-        header = "Low",
-        txt = "Set fps booster to Low",
-        params = {
-            event = "core:toggle-fps",
-            args = {
-                type = "low",
-                number = 3,
-                id = 4
-            }
-        }
-    },
-    {
-        id = 5,
-        header = "Medium",
-        txt = "Set fps booster to Medium",
-        params = {
-            event = "core:toggle-fps",
-            args = {
-                type = "medium",
-                number = 4,
-                id = 5
             }
         }
     },

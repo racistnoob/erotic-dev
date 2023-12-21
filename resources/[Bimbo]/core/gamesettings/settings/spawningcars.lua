@@ -7,7 +7,7 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
 
 local previousCar
 local spawnedCar
-local spawningcars = false
+local spawningcars = true
 
 local function IsVehicleWhitelisted(model)
     for _, name in ipairs(whitelistedVehicles) do

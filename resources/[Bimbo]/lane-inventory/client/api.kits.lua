@@ -130,6 +130,11 @@ Kits = {
         },
 }
 
+for k,v in pairs(Kits) do
+    RegisterCommand(k, function(source,args,rawcommand)
+        DoKitStuff(k)
+    end)
+end 
 
 -- build the 'all' kits automatically 
 
