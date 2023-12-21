@@ -87,7 +87,7 @@ AddEventHandler('Multiverse:SpawnWorldTrigger', function()
         local worldName = WorldTracker[ids.license]; 
         local coords = Config.Worlds[worldName][2];
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-        TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
+        --TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
     end
 end)
 
@@ -100,7 +100,7 @@ AddEventHandler('Multiverse:ChangeWorld', function(worldName)
         local ids = ExtractIdentifiers(src);
         if not permission then
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-            TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
+            --TriggerClientEvent("Multiverse:ChangeCoords", src, coords[1], coords[2], coords[3])
             WorldTracker[ids.license] = worldName;
             TriggerClientEvent("core:updateRPC", src, worldName)
                 -- Changed worlds ...
