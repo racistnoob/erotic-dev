@@ -87,17 +87,9 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 end
             end
 
-            local currentVehicle = GetVehiclePedIsIn(playerPed, false)
-            if DoesEntityExist(currentVehicle) then
-                if GetPedInVehicleSeat(currentVehicle, -1) == playerPed then
-                    deleteVeh(currentVehicle)
-                else
-                    exports['drp-notifications']:SendAlert('inform', 'Exit your current vehicle.', 5000)
-                    return
-                end
-            end
+            deleteCurrentVehicle(playerPed)
 
-            deletePreviousVehicle()
+            deletePreviousVehicle(playerPed)
 
             local car = CreateVehicle(vehiclehash, x, y, z, GetEntityHeading(playerPed), 1, 0)
             if DoesEntityExist(car) then
@@ -105,6 +97,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 exports['drp-notifications']:SendAlert('inform', 'Vehicle spawned', 5000)
                 TriggerEvent('keys:addNew', car, GetVehicleNumberPlateText(car))
                 SetVehicleEngineOn(car, true, true, false)
+                SetVehicleDirtLevel(car, 0.0)
                 spawnedCar = car
                 previousCar = veh
 
@@ -113,7 +106,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                     if savedMods then
                         local parsedMods = json.decode(savedMods)
                         if parsedMods then
-                            exports["core"]:SetVehicleProperties(car, parsedMods)
+                            exports["noob"]:SetVehicleProperties(car, parsedMods)
                         end
                     end
                 end)
@@ -122,6 +115,12 @@ AddEventHandler("drp:spawnvehicle", function(veh)
             end
         end)
     end
+end)
+
+AddEventHandler("drp:saveVehicleModsBennys", function(veh)
+    if not DoesEntityExist(veh) then return end
+    local mods = exports['noob']:GetVehicleProperties(veh)
+    SetResourceKvp("vehicle_" .. tostring(GetEntityModel(veh)) .. "_mods", json.encode(mods))
 end)
 
 RegisterCommand("previous_vehicle", function()
