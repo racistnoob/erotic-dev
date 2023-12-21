@@ -20,7 +20,7 @@ CreateThread(function()
   while true do
     Wait(0)
 
-    SetPedSuffersCriticalHits(GetPlayerPed(-1), hsmultiEnabled)
+    SetPedSuffersCriticalHits(PlayerPedId(), hsmultiEnabled)
 
   end
 end)

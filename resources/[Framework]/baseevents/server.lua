@@ -133,6 +133,7 @@ local Weapons = {
     [`WEAPON_RUN_OVER_BY_CAR`] = {['weaponName'] = 'Run over by car', ['type'] = 'Vehicle'},
 }
 
+--[[
 AddEventHandler('baseevents:onPlayerKilled', function(killedBy, data)
 	local victim = source
 	local DeathReason = data.weaponhash
@@ -160,4 +161,4 @@ AddEventHandler('baseevents:onPlayerDied', function(killedBy, pos, discordlog)
 		local msg = "Name: **"..GetPlayerName(victim).." **(**"..victim.."**)\nBy Player: **No**\nDeath Coords: **"..GetEntityCoords(GetPlayerPed(victim)).."**\nDeath Cause: **Self**"
 		----exports[drp_adminmenu']:sendToDiscord('Player Death', msg, "16732048", "")
 	end
-end)
+end)]]

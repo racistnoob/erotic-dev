@@ -40,7 +40,7 @@ CreateThread(function()
             end
             local playerPed = PlayerPedId()
             RequestAnimDict("mp_suicide")
-            TaskPlayAnim(GetPlayerPed(-1), "mp_suicide", "pill", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
+            TaskPlayAnim(playerPed, "mp_suicide", "pill", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 3500,
                 text = "Vicodin"

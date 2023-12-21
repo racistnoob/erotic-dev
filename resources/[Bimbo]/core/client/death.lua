@@ -85,7 +85,7 @@ exports("setUndeaded2", SetUndeaded2)
 exports("setUndeaded3", SetUndeaded3)
 
 local revivespots1 = {
-    vector4(231.8789, -1390.2084, 30.4853, 318.6673),
+    vector4(231.8789, -1390.2084, 30.4853, 142.7518),
 }
 
 local revivespots2 = {
@@ -135,7 +135,6 @@ end
 RegisterCommand('kill', function(source, args, rawCommand)
     exports['drp-notifications']:SendAlert('inform', 'About to die', 5000)
     Citizen.Wait(1800)
-	TriggerServerEvent('dst_killfeed:server:playerDied', GetPlayerName(PlayerId()))
     SetPedToRagdoll(PlayerPedId(), 5000, 5000, 0, 0, 0, 0)
     Citizen.Wait(1200)
     UndeadedPlayer(true)

@@ -302,9 +302,6 @@ CreateThread(function()
     end
 end)
 
-RegisterCommand(("kill"), function(source, args, rawCommand)
-    SetEntityHealth(GetPlayerPed(-1), 0)
-end)
 RegisterCommand("giveitem", function(source,args,rawcommand)
     TriggerServerEvent("GiveItem", args[1], args[2])
 end)

@@ -108,7 +108,7 @@ local GroupRecoil = {
     
     Recoil:RegisterMode('envy', function()
             
-            local plyPed = GetPlayerPed(-1) -- Defining the player's ped
+            local plyPed = PlayerPedId() -- Defining the player's ped
     
             local isArmed = IsPedArmed(plyPed, 4) -- Checking if they are armed
             local _, weapon = GetCurrentPedWeapon(plyPed, true) -- Get's the ped's weapon
