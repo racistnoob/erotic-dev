@@ -1,105 +1,100 @@
 local WeaponRecoil = {
     --m16
-        [`weapon_tacticalrifle`] = {
-            vertical = .31,
-            horizontal = .15
-        },
+    [`weapon_tacticalrifle`] = {
+        vertical = .31,
+        horizontal = .15
+    },
     --mk18
-        [`weapon_magpull`] = {
-            vertical = .15,
-        },
+    [`weapon_carbinerifle_mk2`] = {
+        vertical = .15,
+    },
     --doesnt matter shitter gun
-        [`weapon_specialcarbine`] = {
-            vertical = .11,
-        },
+    [`weapon_specialcarbine`] = {
+        vertical = .11,
+    },
     -- op as fuck
-        [`weapon_heavyrifle`] = {
-            vertical = .19,
-        },
+    [`weapon_heavyrifle`] = {
+        vertical = .19,
+    },
     --berretta
-        [`weapon_pistol`] = {
-            vertical = .21,
-        },
-        [`weapon_sp45`] = {
-            vertical = .21,
-        },
-        [`WEAPON_combatpistol`] = {
-            vertical = .80,
-            horizontal = .20
-        },
-        [`weapon_minismg`] = {
-            vertical = .80,
-        },
-        [`weapon_deagle`] = {
-            vertical = .20,
-        },
-        [`weapon_carbinerifle_mk2`] = {
-            vertical = .15,
-        },
-        [`weapon_microsmg`] = {
-            vertical = .15,
-        },
-        [`weapon_m60`] = {
-            vertical = .15,
-        },
+    [`weapon_pistol`] = {
+    vertical = .21,
+    },
+    [`weapon_sp45`] = {
+        vertical = .21,
+    },
+    [`WEAPON_GLOCK18`] = {
+        vertical = .80,
+        horizontal = .20
+    },
+    [`weapon_minismg`] = {
+        vertical = .80,
+    },
+    [`WEAPON_TEC9`] = {
+        vertical = .20,
+    },
+    [`weapon_combatmg`] = {
+        vertical = .15,
+    },
+    [`weapon_m249`] = {
+        vertical = .15,
+    },
+    [`weapon_m60`] = {
+        vertical = .15,
+    },
     --ak
-        [`weapon_assaultrifle`] = {
-            vertical = .23,
-        },
+    [`weapon_assaultrifle`] = {
+        vertical = .23,
+    },
     --mpx
-        [`weapon_combatpdw`] = {
-            vertical = .11,
-        },
+    [`weapon_combatpdw`] = {
+        vertical = .11,
+    },
     --magpull
-        [`weapon_assaultsmg`] = {
-            vertical = .18,
-        },
+    [`weapon_assaultsmg`] = {
+        vertical = .18,
+    },
     --mp5
-        [`weapon_smg_mk2`] = {
-            vertical = .26,
-        },
-        [`weapon_microsmg`] = {
-            vertical = .48,
-        },
+    [`weapon_smg_mk2`] = {
+        vertical = .26,
+    },
+    [`weapon_microsmg`] = {
+        vertical = .48,
+    },
     --762
-        [`weapon_carbinerifle_mk2`] = {
-            vertical = .30,
-            horizontal = .14
-        },
-        [`weapon_mp5`] = {
-            vertical = .26,
-    
-        },
-    
-    
-    
-    }
-    
-    -- Group recoil: This is the recoil for the group overall if it is lacking an invidivual weapon recoil; 0.0 means no recoil at all
-    
-    local GroupRecoil = {
-        [416676503] = {
-            vertical = .2,
-        }, -- Handgun
-        [-957766203] = {
-            vertical = .17,
-        }, -- Submachine
-        [860033945] = {
-            vertical = .22,
-        }, -- Shotgun
-        [970310034] = {
-            vertical = .17,
-        }, -- Assault Rifle
-        [1159398588] = {
-            vertical = .18,
-        }, -- LMG
-        [3082541095] = {
-            vertical = .15,
-        }, -- Sniper
-        [2725924767] = {
-            vertical = .3,
-        } -- Heavy
-    }
+    [`weapon_carbinerifle_mk2`] = {
+        vertical = .30,
+        horizontal = .14
+    },
+    [`weapon_mp5`] = {
+        vertical = .26,
+    },
+}
+
+-- Group recoil: This is the recoil for the group overall if it is lacking an invidivual weapon recoil; 0.0 means no recoil at all
+local GroupRecoil = {
+    [416676503] = {
+        vertical = .2,
+    }, -- Handgun
+    [-957766203] = {
+        vertical = .17,
+    }, -- Submachine
+    [860033945] = {
+        vertical = .22,
+    }, -- Shotgun
+    [970310034] = {
+        vertical = .17,
+    }, -- Assault Rifle
+    [1159398588] = {
+        vertical = .18,
+    }, -- LMG
+    [3082541095] = {
+        vertical = .15,
+    }, -- Sniper
+    [2725924767] = {
+        vertical = .3,
+    } -- Heavy
+}
     
     local function GetStressRecoil()
     
@@ -112,7 +107,6 @@ local WeaponRecoil = {
     local storedRecoils = {}
     
     Recoil:RegisterMode('envy', function()
-            Citizen.Wait(100)
             
             local plyPed = GetPlayerPed(-1) -- Defining the player's ped
     
@@ -121,8 +115,7 @@ local WeaponRecoil = {
     
             local vehicle = GetVehiclePedIsIn(plyPed, false)
             local inVehicle = vehicle ~= 0
-    
-            Wait(isArmed and 0 or 1000) -- Optimization reasons
+
     
             if isArmed and not inVehicle then
     
@@ -195,7 +188,5 @@ local WeaponRecoil = {
                 end
     
             end
-    
-        end
     
     end)
