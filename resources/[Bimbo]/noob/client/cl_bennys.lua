@@ -2988,20 +2988,20 @@ do
 			if not HasStreamedTextureDictLoaded("commonmenu") then
 				RequestStreamedTextureDict("commonmenu")
 				while not HasStreamedTextureDictLoaded("commonmenu") do
-					Citizen.Wait(0)
+					Citizen.Wait(100)
 				end
 			end
 			if not HasStreamedTextureDictLoaded("commonmenutu") then
 				RequestStreamedTextureDict("commonmenutu")
 				while not HasStreamedTextureDictLoaded("commonmenutu") do
-					Citizen.Wait(0)
+					Citizen.Wait(100)
 				end
 			end
 			if self.title_sprite then
 				if not HasStreamedTextureDictLoaded(self.title_sprite) then
 					RequestStreamedTextureDict(self.title_sprite)
 					while not HasStreamedTextureDictLoaded(self.title_sprite) do
-						Citizen.Wait(0)
+						Citizen.Wait(100)
 					end
 				end
 			end

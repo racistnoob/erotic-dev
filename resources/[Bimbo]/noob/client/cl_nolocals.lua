@@ -1,4 +1,5 @@
 CreateThread(function()
+    Citizen.Wait(100)
     SetAudioFlag("PoliceScannerDisabled", true)
     DistantCopCarSirens(false)
     DisableVehicleDistantlights(true)

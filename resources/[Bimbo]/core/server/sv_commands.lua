@@ -13,28 +13,12 @@ Config.commands = {
         targetAll = true,  -- Set this to true to target only the player who called the command
     },
     {
-        commandName = "kit",
-        restricCommand = false,
-        serverevent = "drp:server:giveplayerKit",
-        argsCount = 1,
-        disable = true,
-        targetSelf = true  -- Set this to true to target only the player who called the command
-    },
-    {
         commandName = "dva",
         restricCommand = false,
         clientevent = "drp:scripts:vehwipe",
         argsCount = 0,
         disable = false,
         targetAll = true
-    },
-    {
-        commandName = "spawnlastcar",
-        restricCommand = false,
-        clientevent = "drp:spawnvehicle",
-        argsCount = 0,
-        disable = false,
-        targetSelf = true  -- Set this to true to target only the player who called the command
     },
     {
         commandName = "car",

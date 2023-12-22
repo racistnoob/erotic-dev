@@ -50,7 +50,7 @@ end
 
 CreateThread(function()
     while true do
-        Wait(0)
+        Wait(1)
         if Recoil.activeMode and Recoil.modes[Recoil.activeMode] then
             Recoil.modes[Recoil.activeMode]:callback(Recoil.activeMode)
         end

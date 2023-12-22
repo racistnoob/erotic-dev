@@ -46,7 +46,7 @@ local function ShowIds()
                     end
                 end
             end
-            Citizen.Wait(0)
+            Citizen.Wait(1)
         end
     end)
 end
