@@ -8,14 +8,14 @@ Easy to use queue system for FiveM with:
     - Require steam
     - Language options
 
-**Please report any bugs on the release thread [Here](https://forum.fivem.net/t/alpha-connectqueue-a-server-queue-system-fxs/22228) or through [GitHub](https://github.com/Nick78111/ConnectQueue/issues).**
+**Please report any bugs on the release thread [Here](https://forum.fivem.net/t/alpha-ConnectQueue-a-server-queue-system-fxs/22228) or through [GitHub](https://github.com/Nick78111/ConnectQueue/issues).**
 
 ## How to install
 ---
 - Drop the folder inside your resources folder.
-- Add `start connectqueue` inside your server.cfg. - *Preferrably at the top*
+- Add `start ConnectQueue` inside your server.cfg. - *Preferrably at the top*
 - Set convars to your liking.
-- Open `connectqueue/server/sv_queue_config.lua` and edit to your liking.
+- Open `ConnectQueue/server/sv_queue_config.lua` and edit to your liking.
 - Renaming the resource may cause problems.
 
 ## ConVars
@@ -25,8 +25,8 @@ Easy to use queue system for FiveM with:
 
 ## How to use / Examples
 ---
-To use the API add `server_script "@connectqueue/connectqueue.lua"` at the top of the `__resource.lua` file in question.
-I would also suggest adding `dependency "connectqueue"` to it aswell.
+To use the API add `server_script "@ConnectQueue/ConnectQueue.lua"` at the top of the `__resource.lua` file in question.
+I would also suggest adding `dependency "ConnectQueue"` to it aswell.
 You may now use any of the functions below, anywhere in that resource.
 
 ### OnReady
