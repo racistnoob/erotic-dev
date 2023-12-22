@@ -1,13 +1,23 @@
-fx_version 'cerulean'
-game 'gta5'
+fx_version "cerulean"
 
-author 'noob'
+description "Basic React (TypeScript) & Lua Game Scripts Boilerplate"
+author "Project Error"
 version '1.0.0'
+repository 'https://github.com/project-error/fivem-react-boilerplate-lua'
 
-client_scripts {
-    'client/**'
+lua54 'yes'
+
+games {
+  "gta5",
+  "rdr3"
 }
 
-server_scripts {
-    'server/**'
+ui_page 'web/build/index.html'
+
+client_script "client/**/*"
+server_script "server/**/*"
+
+files {
+  'web/build/index.html',
+  'web/build/**/*'
 }

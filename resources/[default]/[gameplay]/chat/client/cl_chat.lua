@@ -32,15 +32,15 @@ AddEventHandler('chatMessage', function(author, color, text)
   })
 end)
 
-AddEventHandler('__cfx_internal:serverPrint', function(msg)
-  SendNUIMessage({
-    type = 'ON_MESSAGE',
-    message = {
-      templateId = 'print',
-      args = { msg }
-    }
-  })
-end)
+-- AddEventHandler('__cfx_internal:serverPrint', function(msg)
+--   SendNUIMessage({
+--     type = 'ON_MESSAGE',
+--     message = {
+--       templateId = 'print',
+--       args = { msg }
+--     }
+--   })
+-- end)
 
 AddEventHandler('chat:addMessage', function(message)
   if message['color'] then
@@ -174,7 +174,7 @@ end)
 AddEventHandler('onClientResourceStop', function(resName)
   Wait(500)
   refreshCommands()
-end)
+end) 
 
 RegisterNUICallback('loaded', function(data, cb)
   TriggerServerEvent('chat:init');
@@ -221,49 +221,9 @@ AddEventHandler('adminChat:checkPermissions', function(msg, user)
   end
 end)
 
-RegisterNetEvent('drp-chat:dispatch')
-AddEventHandler('drp-chat:dispatch', function(msg, name)
-  TriggerServerEvent('drp-chat:dispatch', msg, name)
-end)
-
-RegisterNetEvent('drp-chat:911')
-AddEventHandler('drp-chat:911', function(id, msg, name, callid, pos)
-  TriggerServerEvent('drp-chat:911', id, msg, name, callid, pos)
-end)
-
-RegisterNetEvent('drp-chat:311')
-AddEventHandler('drp-chat:311', function(id, msg, name, callid, pos)
-  TriggerServerEvent('drp-chat:311', id, msg, name, callid, pos)
-end)
-
-
 RegisterNetEvent('drp-chat:reply')
 AddEventHandler('drp-chat:reply', function(id, msg, name, callid)
   TriggerServerEvent('drp-chat:reply', id, msg, name, callid)
-end)
-
-RegisterNetEvent("erp:walkcommand")
-AddEventHandler("erp:walkcommand", function(msg)
-    TriggerEvent('chat:addMessage', {
-        template = '<div class="chat-message-wal">{0}</div>',
-        args = { msg }
-    })
-end)
-
-RegisterNetEvent("erp:walkhelp")
-AddEventHandler("erp:walkhelp", function(msg)
-    TriggerEvent('chat:addMessage', {
-        template = '<div class="chat-message-wal"><b>Walks:</b> {0}</div>',
-        args = { msg }
-    })
-end)
-
-RegisterNetEvent("erp:emotehelp")
-AddEventHandler("erp:emotehelp", function(msg)
-    TriggerEvent('chat:addMessage', {
-        template = '<div class="chat-message-wal"><b>Emotes:</b> {0}</div>',
-        args = { msg }
-    })
 end)
 
 AddEventHandler("erp:vehdeg", function(msg, plate)

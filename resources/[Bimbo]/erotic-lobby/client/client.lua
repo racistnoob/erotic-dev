@@ -3,31 +3,12 @@ local function toggleNuiFrame(shouldShow)
   SendReactMessage('setVisible', shouldShow)
 end
 
---[[RegisterCommand('show-nui', function()
-  toggleNuiFrame(true)
-  debugPrint('Show NUI frame')
-end)]]
-
--- Corrected Key Mapping
---[[Citizen.CreateThread(function()
-  RegisterKeyMapping('toggle-nui', 'Toggle lobby view', 'keyboard', 'F1')
-end)
-
--- Event handler for the F1 key press
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(0)
-    if IsControlJustPressed(0, 288) then -- 288 is the control ID for the F1 key
-      toggleNuiFrame(true)
-    end
-  end
-end)]]
-
 RegisterNUICallback('hideFrame', function(data, cb)
   toggleNuiFrame(false)
   debugPrint('Hide NUI frame')
   cb({}) -- Respond to the NUI with an empty table to acknowledge the request
 end)
+
 -----PEDS-----
 function DrawText3D(x, y, z, text)
   local onScreen, _x, _y = World3dToScreen2d(x, y, z)
