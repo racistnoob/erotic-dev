@@ -1,9 +1,20 @@
-local suppressor = false
-NoSuppressorComponents = {
+local components = false
 
+NoWeaponComponents = {}
+
+CurrentSkin = 1  -- Default skin index
+
+WeaponSkins = {
+    [1] = "1",
+    [2] = "2",
+    [3] = "3",
+    [4] = "4",
+    [5] = "5",
+    [6] = "6",
+    [7] = "7"
 }
 
-SuppressorComponents = {
+WeaponComponents = {
     ["WEAPON_ASSAULTRIFLE"] = {
         {comp = "COMPONENT_AT_AR_SUPP_02"}
     },
@@ -36,29 +47,45 @@ SuppressorComponents = {
     }
 }
 
-
-
 function ApplyWeaponComponents(primary)
     print("COMP: " .. primary)
-    if suppressor == false then
-        if NoSuppressorComponents[primary] == nil then return end 
-            for k,v in pairs(NoSuppressorComponents[primary]) do 
+    if components == false then
+        if NoWeaponComponents[primary] == nil then return end 
+            for k,v in pairs(NoWeaponComponents[primary]) do 
                 print(v.comp)
                 GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(primary), GetHashKey(v.comp))
         end
     else 
-        if SuppressorComponents[primary] == nil then return end 
-            for k,v in pairs(SuppressorComponents[primary]) do 
+        if WeaponComponents[primary] == nil then return end 
+            for k,v in pairs(WeaponComponents[primary]) do 
                 print(v.comp)
                 GiveWeaponComponentToPed(GetPlayerPed(-1), GetHashKey(primary), GetHashKey(v.comp))
             end
         end
     end
 
-RegisterCommand("silencer", function(source, args, rawCommand)
-    if suppressor == false then
-        suppressor = true
+function ApplyWeaponSkin(ped, weaponHash, skinIndex)
+    print("Skin " .. skinIndex)
+    if skinIndex >= 1 and skinIndex <= 7 then
+        SetPedWeaponTintIndex(ped, weaponHash, skinIndex)
     else
-        suppressor = false
+        SetPedWeaponTintIndex(ped, weaponHash, 1) -- set default if nil
+    end
+end
+
+RegisterCommand("silencer", function(source, args, rawCommand)
+    if components == false then
+        components = true
+    else
+        components = false
+    end
+end)
+
+RegisterCommand("skin", function(source, args, rawCommand)
+    local skinIndex = tonumber(args[1])
+    if skinIndex and skinIndex >= 1 and skinIndex <= 7 then
+        CurrentSkin = skinIndex
+    else
+        print("Invalid skin index. Please use a number between 1 and 7.")
     end
 end)

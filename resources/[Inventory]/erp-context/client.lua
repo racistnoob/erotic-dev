@@ -8,7 +8,6 @@ RegisterNUICallback("dataPost", function(data, cb)
     cb('ok')
 end)
 
-
 RegisterNUICallback("cancel", function(cb)
     SetNuiFocus(false)
     TriggerEvent('erp-context:cancel')
@@ -73,42 +72,18 @@ local mainMenu = {
             }
         }
     },
-    {
-        id = 5,
-        header = "Skin",
-        txt = "Customize your weapons",
-        params = {
-            event = "erp-context:submenu",
-            args = {
-                number = 4, -- You can modify these values as needed
-                id = 5
-            }
-        }
-    },
-    {
-        id = 6,
-        header = "Attachments",
-        txt = "Manage weapon attachments",
-        params = {
-            event = "erp-context:submenu",
-            args = {
-                number = 5, -- You can modify these values as needed
-                id = 6
-            }
-        }
-    },
-    {
-        id = 7,
-        header = "FPS BOOSTER",
-        txt = "boost fps now",
-        params = {
-            event = "erp-context:submenu",
-            args = {
-                number = 6, -- You can modify these values as needed
-                id = 7
-            }
-        }
-    },
+    -- {
+    --     id = 7,
+    --     header = "FPS BOOSTER",
+    --     txt = "boost fps now",
+    --     params = {
+    --         event = "erp-context:submenu",
+    --         args = {
+    --             number = 6, -- You can modify these values as needed
+    --             id = 7
+    --         }
+    --     }
+    -- },
 }
 
 RegisterNetEvent('erp-context:submenu', function(data)
@@ -122,9 +97,9 @@ RegisterNetEvent('erp-context:submenu', function(data)
     elseif id == 4 then
         submenu = exports["effects"]:getBloodFXSubMenu()
     elseif id == 5 then
-        submenu = exports["drp-inventory"]:getSkinSubMenu()
+        submenu = exports["lane-inventory"]:getSkinSubMenu()
     elseif id == 6 then
-        submenu = exports["drp-inventory"]:getAttachmentSubMenu()
+        submenu = exports["lane-inventory"]:getAttachmentSubMenu()
     elseif id == 7 then
         submenu = exports["effects"]:getFpsSubMenu()
     end

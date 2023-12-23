@@ -4,17 +4,19 @@ local playerArmed = false
 RegisterNetEvent('arena:useWeapon')
 AddEventHandler('arena:useWeapon', function(weaponName)
     Citizen.CreateThread(function()
+        local ped = PlayerPedId()
         local weaponHash = GetHashKey(weaponName)
 
         if not playerHasWeapon() then
-
             local bulletType = findAmmoType(weaponHash)
             local ammoCount = ammoCount(bulletType)
 
-            GiveWeaponToPed(PlayerPedId(), weaponHash, tonumber(ammoCount), false, true)
-            SetAmmoInClip(PlayerPedId(), weaponHash, 999) --------- I PUT THIS IS AS HOTFIX FOR NOW (GIVES MAX AMMO ON EQUIP)
-            ClearPedTasks(PlayerPedId())
+            GiveWeaponToPed(ped, weaponHash, tonumber(ammoCount), false, true)
+            SetAmmoInClip(ped, weaponHash, 250)
+            ClearPedTasks(ped)
+
             ApplyWeaponComponents(weaponName)
+            ApplyWeaponSkin(ped, weaponHash, CurrentSkin)
         else
             putawayGun()
         end
@@ -35,8 +37,6 @@ Citizen.CreateThread(function()
         playerArmed = IsPedArmed(PlayerPedId(), 4)
     end
 end)
-
-
 
 function ammoCount(bullet)
     local count = 0
@@ -119,7 +119,6 @@ Citizen.CreateThread(
         end
     end
 )
-
 
 function putawayGun()
     Citizen.CreateThread(
