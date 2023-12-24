@@ -80,7 +80,7 @@ function switchWorld(worldID)
 
             -- Apply world-specific settings
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
-            exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or true)
+            exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             exports['core']:setnonstopcombat(worldSettings.nonstopCombat or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
 
