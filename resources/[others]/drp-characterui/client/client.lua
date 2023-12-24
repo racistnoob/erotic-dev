@@ -5,42 +5,6 @@ AddEventHandler("echorp:spawnInitialized", function()
     TriggerEvent('drp-characterui:client:chooseChar')
 end)
 
-local CurrentSpawnLoc = 0
-
--- SpawnLocs[CurrentSpawnLoc]
-local SpawnLocs = {
-    [1] = {
-        PedCoords = vector4(-1849.53, -1230.71, 12.0, 325.98),
-        HiddenCoords = vector4(-1811.41, -1221.48, 12.9, 110.55),
-        CamCoords = vector4(-1847.74, -1228.51, 13.0, 141.73),
-        Yaw = 142.50
-    },
-    [2] = {
-        PedCoords = vector4(301.07, 201.85, 104.36, 155.91),
-        HiddenCoords = vector4(307.67, 218.77, 104.36, 119.06),
-        CamCoords = vector4(299.88, 198.67, 104.75, 340.16),
-        Yaw = -20.0
-    },
-    [3] = {
-        PedCoords = vector4(-542.43, -208.51, 37.64, 209.76),
-        HiddenCoords = vector4(-565.94, -161.22, 44.56, 34.02),
-        CamCoords = vector4(-540.78, -211.53, 37.81, 28.35),
-        Yaw = 29.75
-    },
-    [4] = {
-        PedCoords = vector4(-272.39, -2032.42, 30.14, 272.13),
-        HiddenCoords = vector4(-292.67, -1990.62, 30.14, 25.51),
-        CamCoords = vector4(-268.34, -2032.26, 30.38, 90.71),
-        Yaw = 95.0
-    },
-    [5] = {
-        PedCoords = vector4(-781.7, 319.2, 187.94, 48.19),
-        HiddenCoords = vector4(-801.27, 316.96, 168.64, 272.13),
-        CamCoords = vector4(-784.95, 321.71, 188.11, 235.28),
-        Yaw = -125.0
-    }
-}
-
 local choosingCharacter = false
 local cam = nil
 
@@ -88,11 +52,9 @@ end)
 RegisterNetEvent('drp-characterui:client:chooseChar')
 AddEventHandler('drp-characterui:client:chooseChar', function()
     local plyPed = PlayerPedId()
-    CurrentSpawnLoc = math.random(1, #SpawnLocs)
     DoScreenFadeOut(10)
     Citizen.Wait(250)
     FreezeEntityPosition(plyPed, true)
-    SetEntityCoords(plyPed, SpawnLocs[CurrentSpawnLoc]['HiddenCoords'].xyz)
     Citizen.Wait(250)
     openCharMenu(true)
 end)
@@ -611,7 +573,6 @@ local function setDefault(gender)
             local model = `mp_m_freemode_01`
             RequestModel(model)
             while not HasModelLoaded(model) do Citizen.Wait(0) end
-            charPed = CreatePed(2, model, SpawnLocs[CurrentSpawnLoc]['PedCoords'], false, true)
             FreezeEntityPosition(charPed, false)
             SetEntityInvincible(charPed, true)
             PlaceObjectOnGroundProperly(charPed)
@@ -621,7 +582,6 @@ local function setDefault(gender)
             local model = `mp_f_freemode_01`
             RequestModel(model)
             while not HasModelLoaded(model) do Citizen.Wait(0) end
-            charPed = CreatePed(2, model, SpawnLocs[CurrentSpawnLoc]['PedCoords'], false, true)
             FreezeEntityPosition(charPed, false)
             SetEntityInvincible(charPed, true)
             PlaceObjectOnGroundProperly(charPed)
@@ -632,7 +592,6 @@ local function setDefault(gender)
         local model = randommodels[math.random(1, #randommodels)]
         RequestModel(model)
         while not HasModelLoaded(model) do Citizen.Wait(0) end
-        charPed = CreatePed(2, model, SpawnLocs[CurrentSpawnLoc]['PedCoords'], false, true)
         FreezeEntityPosition(charPed, false)
         SetEntityInvincible(charPed, true)
         PlaceObjectOnGroundProperly(charPed)
@@ -659,7 +618,6 @@ RegisterNUICallback('cDataPed', function(data, cb)
         if model == nil then setDefault(cData.gender) return end
         model = model ~= nil and tonumber(model) or false
         RequestModel(model) while not HasModelLoaded(model) do Citizen.Wait(0) end
-        charPed = CreatePed(2, model, SpawnLocs[CurrentSpawnLoc]['PedCoords'], false, true)
         if not IsModelInCdimage(model) or not IsModelValid(model) then setDefault() return end
         if (model ~= `mp_f_freemode_01` and model ~= `mp_m_freemode_01`) then
             SetPedRandomComponentVariation(charPed, true)
@@ -717,7 +675,6 @@ RegisterNUICallback('cDataPed', function(data, cb)
             local model = randommodels[math.random(1, #randommodels)]
             RequestModel(model)
             while not HasModelLoaded(model) do Citizen.Wait(0) end
-            charPed = CreatePed(2, model, SpawnLocs[CurrentSpawnLoc]['PedCoords'], false, true)
             FreezeEntityPosition(charPed, false)
             SetEntityInvincible(charPed, true)
             PlaceObjectOnGroundProperly(charPed)
@@ -785,7 +742,6 @@ end)
 function skyCam(bool)
     if bool then
         DoScreenFadeIn(1000)
-        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", SpawnLocs[CurrentSpawnLoc]['CamCoords'].xyz, 0.0 ,0.0, SpawnLocs[CurrentSpawnLoc]['Yaw'], 45.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
     else

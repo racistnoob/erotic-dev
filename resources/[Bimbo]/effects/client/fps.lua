@@ -1,178 +1,178 @@
-local boostEnabled = false
-local ped = 0
+-- local boostEnabled = false
+-- local ped = 0
 
-AddEventHandler('echorp:playerSpawned', function()
-    local kvpValue = GetResourceKvpInt("graphics_fpsboost")
+-- AddEventHandler('echorp:playerSpawned', function()
+--     local kvpValue = GetResourceKvpInt("graphics_fpsboost")
 
-    if kvpValue then
-        boostEnabled = true
-    end
-end)
+--     if kvpValue then
+--         boostEnabled = true
+--     end
+-- end)
 
-local function setShadowAndAir(shadow, air)
-    RopeDrawShadowEnabled(shadow)
-    CascadeShadowsClearShadowSampleType()
-    CascadeShadowsSetAircraftMode(air)
-end
+-- -- local function setShadowAndAir(shadow, air)
+-- --     RopeDrawShadowEnabled(shadow)
+-- --     CascadeShadowsClearShadowSampleType()
+-- --     CascadeShadowsSetAircraftMode(air)
+-- -- end
 
-local function setEntityTracker(entity, dynamic, tracker, depth, bounds)
-    CascadeShadowsEnableEntityTracker(entity)
-    CascadeShadowsSetDynamicDepthMode(dynamic)
-    CascadeShadowsSetEntityTrackerScale(tracker)
-    CascadeShadowsSetDynamicDepthValue(depth)
-    CascadeShadowsSetCascadeBoundsScale(bounds)
-end
+-- -- local function setEntityTracker(entity, dynamic, tracker, depth, bounds)
+-- --     CascadeShadowsEnableEntityTracker(entity)
+-- --     CascadeShadowsSetDynamicDepthMode(dynamic)
+-- --     CascadeShadowsSetEntityTrackerScale(tracker)
+-- --     CascadeShadowsSetDynamicDepthValue(depth)
+-- --     CascadeShadowsSetCascadeBoundsScale(bounds)
+-- -- end
 
-local function setLights(distance, tweak)
-    SetFlashLightFadeDistance(distance)
-    SetLightsCutoffDistanceTweak(tweak)
-end
+-- -- local function setLights(distance, tweak)
+-- --     SetFlashLightFadeDistance(distance)
+-- --     SetLightsCutoffDistanceTweak(tweak)
+-- -- end
 
-local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
-    return coroutine.wrap(function()
-        local iter, id = initFunc()
-        if not id or id == 0 then
-            disposeFunc(iter)
-            return
-        end
+-- -- local function EnumerateEntities(initFunc, moveFunc, disposeFunc)
+-- --     return coroutine.wrap(function()
+-- --         local iter, id = initFunc()
+-- --         if not id or id == 0 then
+-- --             disposeFunc(iter)
+-- --             return
+-- --         end
   
-        local enum = {handle = iter, destructor = disposeFunc}
-        setmetatable(enum, {
-            __gc = function()
-                if enum.destructor and enum.handle then
-                    enum.destructor(enum.handle)
-                end
-                enum.destructor = nil
-                enum.handle = nil
-            end
-        })
+-- --         local enum = {handle = iter, destructor = disposeFunc}
+-- --         setmetatable(enum, {
+-- --             __gc = function()
+-- --                 if enum.destructor and enum.handle then
+-- --                     enum.destructor(enum.handle)
+-- --                 end
+-- --                 enum.destructor = nil
+-- --                 enum.handle = nil
+-- --             end
+-- --         })
   
-        local next = true
-        repeat
-            coroutine.yield(id)
-            next, id = moveFunc(iter)
-        until not next
+-- --         local next = true
+-- --         repeat
+-- --             coroutine.yield(id)
+-- --             next, id = moveFunc(iter)
+-- --         until not next
   
-        enum.destructor, enum.handle = nil, nil
-        disposeFunc(iter)
-    end)
-end
+-- --         enum.destructor, enum.handle = nil, nil
+-- --         disposeFunc(iter)
+-- --     end)
+-- -- end
 
-local function GetWorldObjects()
-    return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject)
-end
+-- -- local function GetWorldObjects()
+-- --     return EnumerateEntities(FindFirstObject, FindNextObject, EndFindObject)
+-- -- end
 
-RegisterNetEvent("core:toggle-fps")
-AddEventHandler("core:toggle-fps", function(params)    
-    if params.type then
-        setShadowAndAir(false, false)
-        setEntityTracker(true, false, 0.0, 0.0, 0.0)
-        setLights(0.0, 0.0)
-        boostEnabled = true
-        SetResourceKvpInt("graphics_fpsboost", boostEnabled)
-    else
-        setShadowAndAir(true, true)
-        setEntityTracker(true, true, 5.0, 5.0, 5.0)
-        setLights(10.0, 10.0)
-        boostEnabled = false
-        SetResourceKvpInt("graphics_fpsboost", boostEnabled)
-    end
-end)
+-- -- RegisterNetEvent("core:toggle-fps")
+-- -- AddEventHandler("core:toggle-fps", function(params)    
+-- --     if params.type then
+-- --         setShadowAndAir(false, false)
+-- --         setEntityTracker(true, false, 0.0, 0.0, 0.0)
+-- --         setLights(0.0, 0.0)
+-- --         boostEnabled = true
+-- --         SetResourceKvpInt("graphics_fpsboost", boostEnabled)
+-- --     else
+-- --         setShadowAndAir(true, true)
+-- --         setEntityTracker(true, true, 5.0, 5.0, 5.0)
+-- --         setLights(10.0, 10.0)
+-- --         boostEnabled = false
+-- --         SetResourceKvpInt("graphics_fpsboost", boostEnabled)
+-- --     end
+-- -- end)
 
--- Main Loop
+-- -- -- Main Loop
 
--- // Distance rendering and entity handler (need a revision)
-CreateThread(function()
-    while true do
-        if boostEnabled then
-            for obj in GetWorldObjects() do
-                if not IsEntityOnScreen(obj) then
-                    SetEntityAlpha(obj, 0)
-                    SetEntityAsNoLongerNeeded(obj)
-                else
-                    if GetEntityAlpha(obj) == 0 then
-                        SetEntityAlpha(obj, 255)
-                    elseif GetEntityAlpha(obj) ~= 170 then
-                        SetEntityAlpha(obj, 170)
-                    end
-                end
-                Wait(1)
-            end
-            DisableOcclusionThisFrame()
-            SetDisableDecalRenderingThisFrame()
-            RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
-        end
-        Wait(8)
-    end
-end)
+-- -- -- // Distance rendering and entity handler (need a revision)
+-- -- CreateThread(function()
+-- --     while true do
+-- --         if boostEnabled then
+-- --             for obj in GetWorldObjects() do
+-- --                 if not IsEntityOnScreen(obj) then
+-- --                     SetEntityAlpha(obj, 0)
+-- --                     SetEntityAsNoLongerNeeded(obj)
+-- --                 else
+-- --                     if GetEntityAlpha(obj) == 0 then
+-- --                         SetEntityAlpha(obj, 255)
+-- --                     elseif GetEntityAlpha(obj) ~= 170 then
+-- --                         SetEntityAlpha(obj, 170)
+-- --                     end
+-- --                 end
+-- --                 Wait(1)
+-- --             end
+-- --             DisableOcclusionThisFrame()
+-- --             SetDisableDecalRenderingThisFrame()
+-- --             RemoveParticleFxInRange(GetEntityCoords(PlayerPedId()), 10.0)
+-- --         end
+-- --         Wait(8)
+-- --     end
+-- -- end)
 
---// Clear broken thing, disable rain, disable wind and other tiny thing that dont require the frame tick
-CreateThread(function()
-    while true do
-        if boostEnabled then
-            ped = PlayerPedId()
-            ClearAllBrokenGlass()
-            ClearAllHelpMessages()
-            LeaderboardsReadClearAll()
-            ClearBrief()
-            ClearGpsFlags()
-            ClearPrints()
-            ClearSmallPrints()
-            ClearReplayStats()
-            LeaderboardsClearCacheData()
-            ClearFocus()
-            ClearPedBloodDamage(ped)
-            ClearPedWetness(ped)
-            ClearPedEnvDirt(ped)
-            ResetPedVisibleDamage(ped)
-            ClearHdArea()
-            DisableVehicleDistantlights(true)
-            DisableScreenblurFade()
-            SetRainLevel(0.0)
-            SetWindSpeed(0.0)
-            Wait(300)
-        end
-        Wait(2000)
-    end
-end)
+-- -- --// Clear broken thing, disable rain, disable wind and other tiny thing that dont require the frame tick
+-- -- CreateThread(function()
+-- --     while true do
+-- --         if boostEnabled then
+-- --             ped = PlayerPedId()
+-- --             ClearAllBrokenGlass()
+-- --             ClearAllHelpMessages()
+-- --             LeaderboardsReadClearAll()
+-- --             ClearBrief()
+-- --             ClearGpsFlags()
+-- --             ClearPrints()
+-- --             ClearSmallPrints()
+-- --             ClearReplayStats()
+-- --             LeaderboardsClearCacheData()
+-- --             ClearFocus()
+-- --             ClearPedBloodDamage(ped)
+-- --             ClearPedWetness(ped)
+-- --             ClearPedEnvDirt(ped)
+-- --             ResetPedVisibleDamage(ped)
+-- --             ClearHdArea()
+-- --             DisableVehicleDistantlights(true)
+-- --             DisableScreenblurFade()
+-- --             SetRainLevel(0.0)
+-- --             SetWindSpeed(0.0)
+-- --             Wait(300)
+-- --         end
+-- --         Wait(2000)
+-- --     end
+-- -- end)
 
-local fpssubmenu = {
-    {
-        id = 1,
-        header = "< Go Back",
-        txt = "HAS ISSUES WITH TIMECYCLE WHEN USED :WIP: TESTING ACCESS: TRUE",
-        params = {
-            event = "erp-context:GoBackToMainMenu"
-        }
-    },
-    {
-        id = 2,
-        header = "Disable",
-        txt = "Disable the fps booster",
-        params = {
-            event = "core:toggle-fps",
-            args = {
-                type = false,
-                number = 1,
-                id = 2
-            }
-        }
-    },
-    {
-        id = 3,
-        header = "Enable",
-        txt = "Enable the fps booster",
-        params = {
-            event = "core:toggle-fps",
-            args = {
-                type = true,
-                number = 2,
-                id = 3
-            }
-        }
-    },
-}
+-- local fpssubmenu = {
+--     {
+--         id = 1,
+--         header = "< Go Back",
+--         txt = "HAS ISSUES WITH TIMECYCLE WHEN USED :WIP: TESTING ACCESS: TRUE",
+--         params = {
+--             event = "erp-context:GoBackToMainMenu"
+--         }
+--     },
+--     {
+--         id = 2,
+--         header = "Disable",
+--         txt = "Disable the fps booster",
+--         params = {
+--             event = "core:toggle-fps",
+--             args = {
+--                 type = false,
+--                 number = 1,
+--                 id = 2
+--             }
+--         }
+--     },
+--     {
+--         id = 3,
+--         header = "Enable",
+--         txt = "Enable the fps booster",
+--         params = {
+--             event = "core:toggle-fps",
+--             args = {
+--                 type = true,
+--                 number = 2,
+--                 id = 3
+--             }
+--         }
+--     },
+-- }
 
-exports("getFpsSubMenu", function()
-    return fpssubmenu
-end)
+-- exports("getFpsSubMenu", function()
+--     return fpssubmenu
+-- end)
