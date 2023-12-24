@@ -128,14 +128,15 @@ RegisterCommand("previous_vehicle", function()
         TriggerEvent("drp:spawnvehicle", previousCar)
     end
 end)
+
 RegisterKeyMapping("previous_vehicle", "Spawn your last spawned vehicle", "KEYBOARD", "F3")
 
-RegisterCommand("delveh", function()
+RegisterCommand("dv", function()
     if exports["noob"]:inSafeZone() then
         deleteCurrentVehicle(PlayerPedId())
     end
 end)
-RegisterKeyMapping("delveh", "Delete current vehicle", "KEYBOARD", "K")
+RegisterKeyMapping("dv", "Delete current vehicle", "KEYBOARD", "K")
 
 exports("spawningcars", function(state)
     spawningcars = state
