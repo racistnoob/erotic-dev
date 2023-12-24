@@ -2,9 +2,6 @@ local clothingShops = {
 	{coords = vector3(212.9796, -1377.5498, 30.5875), blip = true, job = 'all'},
 }
 
-local savedArmor = 0
-local savedHealth = 0
-
 local barberShops = {
 	{coords = vector3(219.7580, -1389.5319, 30.5875), blip = true},
 }
@@ -799,8 +796,6 @@ local function SetSkin(model, setDefault)
 			plyPed = PlayerPedId()
 			FreezePedCameraRotation(plyPed, true)
 
-			if savedArmor ~= 0 then SetPedArmour(plyPed, savedArmor) savedArmor = 0 end
-			if savedHealth ~= 0 then SetEntityHealth(plyPed, savedHealth) savedHealth = 0 end
 			SetEntityMaxHealth(plyPed, 200)
 
 			if setDefault and model ~= nil then
@@ -907,9 +902,6 @@ end)
 
 local function RefreshUI(type)
 	plyPed = PlayerPedId()
-
-	savedArmor = GetPedArmour(plyPed)
-	savedHealth = GetEntityHealth(plyPed) 
 
 	if type then currentMenu = type end
 
@@ -1761,16 +1753,12 @@ local whitelisted_to_use_custom_skins = {
 
 local function SetModelOC(model)
 	if IsModelInCdimage(model) and IsModelValid(model) then
-		savedArmor = GetPedArmour(PlayerPedId())
-		savedHealth = GetEntityHealth(PlayerPedId()) 
 		RequestModel(model)
 		while not HasModelLoaded(model) do
 			RequestModel(model)
 			Wait(0)
 		end
 		SetPlayerModel(PlayerId(), model)
-		SetPedArmour(PlayerPedId(), savedArmor) savedArmor = 0
-		SetEntityHealth(PlayerPedId(), savedHealth) savedHealth = 0
 		SetEntityMaxHealth(PlayerPedId(), 200)
 		SetModelAsNoLongerNeeded(model)
 	end
