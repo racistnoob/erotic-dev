@@ -1,0 +1,83 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* background: black; */
+}
+
+#hud-container {
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+#hud {
+    width: 340px; /* Increased width to accommodate padding */
+    margin: 0 auto;
+}
+
+.bar-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+@keyframes fadeGlow {
+    0%, 100% { 
+        box-shadow: 
+            inset 0 0 10px black,
+            0 0 10px 5px rgba(255,255,255,0.5);
+    } 
+    30% { 
+        box-shadow: 
+            inset 0 0 10px black,
+            0 0 10px 5px rgba(255,255,255,0);
+    }
+}
+
+.bar {
+    position: relative;
+    height: 2.5em;
+    /* padding-left: 50px; */
+    border: 1px solid #000;
+    background-color: #111;
+    box-shadow: 
+        inset 0 0 10px black,
+        0 0 10px 5px rgba(255,255,255,0.5);
+    animation: fadeGlow 10s infinite;
+    transform: skewX(-3deg);
+}
+
+.bar i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) scale(2);
+    font-size: 16px; /* Adjust if needed */
+    color: #222;
+    text-shadow: 0 0 5px white;
+}
+
+.background-bar {
+    position: relative;
+    height: 20px; /* Same height as your health and armor bars */
+    flex-grow: 1;
+    background-color: #0000005e; /* Background color */
+    z-index: 1; /* Ensure it's behind the main bar */
+}
+
+#health-bar {
+    background-color: white;
+    width: 100%; 
+    height: 20px; 
+}
+
+#armor-bar {
+    box-sizing: border-box;
+    background-color: gray;
+    width: 100%;
+    height: 20px;
+}
