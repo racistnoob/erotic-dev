@@ -1668,17 +1668,13 @@ AddEventHandler("drp_clothing:setclothes", function(data,alreadyExist,firstspawn
 	local currArmor = GetPedArmour(plyPed)
 	local function setDefault()
 		CreateThread(function()
-			local plyData = exports['drp']:GetPlayerData()
-			local gender = plyData.gender
-			if gender == "m" or gender == "M" then SetSkin(`mp_m_freemode_01`, true)
-			else SetSkin(`mp_f_freemode_01`, true) end
+			SetSkin(`mp_m_freemode_01`, true)
 			DestroyAllCams(false)
 			RenderScriptCams(false, true, 1, true, true)
 			OpenMenu("Clothing")
 			newplayer, inClothes = true, true
 			SetEntityCoords(PlayerPedId(),221.1265, -1376.3824, 30.5432)
 			SetEntityHeading(PlayerPedId(),191.9764)
-			exports['erotic']:toggleInformation()
 			exports['erotic-lobby']:switchWorld(1)
 			DoScreenFadeIn(50)
 			DestroyAllCams(false)

@@ -63,45 +63,6 @@ Citizen.CreateThread(function()
     Citizen.Wait(250)
 end)
 
--- information menu
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-
-        if IsControlJustReleased(0, 288) then -- F1 key
-            SendNUIMessage({ action = 'toggleInfo' })
-        elseif IsControlJustReleased(0, 322) then -- ESC key
-            SendNUIMessage({ action = 'toggleInfo' })
-        end
-    end
-end)
-
-local infoVisible = false
-
-function toggleInformation()
-    infoVisible = not infoVisible
-    SendNUIMessage({ action = 'toggleInfo' })
-end
-
-exports("toggleInformation", toggleInformation)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(100)
-
-        if IsControlJustReleased(0, 288) then  -- F1 key
-            toggleInformation()
-        end
-
-        if infoVisible then
-            if IsControlJustReleased(0, 322) then  -- ESC key
-                toggleInformation()
-            end
-            DisableControlAction(0, 200, true)  -- Disable ESC key default action (Opening pause menu)
-        end
-    end
-end)
-
 -- infinite stamina
 Citizen.CreateThread(function()
     while true do
