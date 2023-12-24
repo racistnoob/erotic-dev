@@ -34,3 +34,14 @@ Citizen.CreateThread(function()
         HideHudComponentThisFrame(13) -- Cash change
     end
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1)
+        -- Disable the cinematic camera
+        if IsCinematicCamRendering() then
+            StopCinematicCamShaking(true)
+            SetCinematicButtonActive(false)
+        end
+    end
+end)
