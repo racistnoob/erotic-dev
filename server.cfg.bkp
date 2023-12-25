@@ -6,9 +6,7 @@ endpoint_add_udp "0.0.0.0:30120"
 set sv_enforceGameBuild 2802
 
 set steam_webApiKey "07D25A35167670D1B140E98015DFA91B"
-set sv_licenseKey "cfxk_xFnI0LO9EWQaQJCrxmSu_4HWSzI"
-
-set discordWebhook "https://discord.com/api/webhooks/1187640951758401596/9wBE4qpZt80Ar3Dfn0Yamc-RgpIpgpUrG7ysmaUcs4SEMnj8jccPyKfg6QsXe_PTtSHZ"
+set sv_licenseKey "cfxk_jWMQJsGAgr7rzsBQzyZ7_1ItX6d"
 
 sv_pureLevel 1
 
@@ -23,16 +21,11 @@ sets tags "roleplay, rp, police, cars, ems, jobs, serious, cops, economy, allowl
 sets gametype "Roleplay"
 sets locale "en-US"
 
-sets activitypubFeed EchoRP@mastodon.social
-set activitypubFeed EchoRP@mastodon.social
-
-exec echopermissions.cfg
-
 sv_hostname ""
 sets sv_projectName ""
 sets sv_projectDesc ""
 
-set mysql_connection_string "mysql://root@localhost/echorp"
+set mysql_connection_string "mysql://root@localhost/eroticpvp"
 
 sv_scriptHookAllowed 0
 
@@ -46,9 +39,8 @@ sv_authMinTrust 1
 # add system admins
 add_ace group.admin command allow
 add_ace group.owner command allow
+add_ace group.admin request.screenshot allow
 add_ace group.owner request.screenshot allow
-
-add_principal identifier.fivem:11300965 group.owner
 
 # hide player endpoints in external log output
 sv_endpointprivacy true
@@ -62,3 +54,6 @@ set voice_enableRadioSubmix 1
 set voice_defaultCycle "Z"
 
 exec resources.cfg
+
+## [txAdmin CFG validator]: onesync MUST only be set in the txAdmin settings page.
+# set onesync on
