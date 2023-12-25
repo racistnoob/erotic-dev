@@ -10,6 +10,20 @@ local function GetSeatPedIsIn(ped)
     return -2
 end
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        local ped = PlayerPedId()
+        if not IsPedInAnyVehicle(ped, false) then
+            if IsPedUsingActionMode(ped) then
+                SetPedUsingActionMode(ped, -1, -1, 1)
+            end
+        else
+            Citizen.Wait(3000)
+        end
+    end
+end)
+
 -- Citizen.CreateThread(function()
 -- 	while true do
 -- 		Wait(1000)
