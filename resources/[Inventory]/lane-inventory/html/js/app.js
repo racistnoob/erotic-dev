@@ -542,7 +542,7 @@ window.addEventListener("message", (event) => {
 });
 
 window.addEventListener('keydown', function (event) {
-    console.log(event.key)
+    // console.log(event.key)
     if (event.key == 'Escape' || event.key == 'k' || event.key == 'Tab') {
         if (self.DEVELOPER == false) {
             self.opened = false;

@@ -10,18 +10,18 @@ window.addEventListener('message', (event) => {
         updateAmmoDisplay(event.data.data);
     }
 
-});
+    var scopeElement = document.querySelector('.scope');
 
-window.addEventListener('message', function(event) {
-    if (event.data.action === 'toggleInfo') {
-        toggleInfoDisplay();
+    var item = event.data;
+    if (item.type === "scope") {
+        if (item.value === true) {
+            scopeElement.classList.add('visible');
+        } else {
+            scopeElement.classList.remove('visible');
+        }
     }
 });
 
-function toggleInfoDisplay() {
-    var info = document.querySelector('.information');
-    info.style.display = (info.style.display === 'flex' ? 'none' : 'flex');
-}
 const ammoCountElement = document.querySelector('.ammo-count');
 const ammoMaxElement = document.querySelector('.ammo-max');
 

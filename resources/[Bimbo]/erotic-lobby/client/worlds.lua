@@ -1,8 +1,17 @@
+local currentWorldID = nil
+
 local defaultSpawn = {
     x = 233.5797,
     y = -1393.9111,
     z = 30.5152,
     h = 143.0110
+}
+
+local TrickSpawn = {
+    x = 770.5748,
+    y = -233.9927,
+    z = 66.1145,
+    h = 354.6606
 }
 
 local worlds = {
@@ -39,7 +48,15 @@ local worlds = {
         firstPersonVehicle = true, 
         hsMulti = true 
     }},
-    { startID = 9, endID = 12, settings = { 
+    { startID = 9, endID = 10, settings = { 
+        recoilMode = "roleplay2",
+        firstPersonVehicle = true, 
+        hsMulti = true,
+        spawn = TrickSpawn,
+        spawningcars = false,
+        kit = 'trick'
+    }},
+    { startID = 11, endID = 12, settings = { 
         recoilMode = "qb", 
         firstPersonVehicle = true, 
         hsMulti = true 
@@ -63,16 +80,18 @@ function switchWorld(worldID)
         for _, world in ipairs(worlds) do
             if worldID >= world.startID and worldID <= world.endID then
                 worldSettings = world.settings
-                worldSpawn = world.spawn or defaultSpawn
+                worldSpawn = worldSettings.spawn or defaultSpawn
                 break
             end
         end
-    
+
+        currentWorldID = worldID
+
         if worldSettings then
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
             collectgarbage("collect")
-
-            -- these are always the same for all lobbies
+            exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
+            
             exports['core']:setUndeaded(worldSettings.setUndeaded or true)
             exports['core']:spawningcars(worldSettings.spawningcars or true)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
@@ -91,3 +110,7 @@ function switchWorld(worldID)
 end
 
 exports("switchWorld", switchWorld)
+
+exports("getCurrentWorldID", function()
+    return currentWorldID
+end)

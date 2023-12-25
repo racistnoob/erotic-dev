@@ -5,6 +5,33 @@
     50% { opacity: 1; }
 }
 
+.scope {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+scope img {
+    width: 100px; /* Adjust the size of your scope image */
+    height: 100px; /* Adjust the size of your scope image */
+    border-radius: 50%; /* Make it circular */
+    box-shadow: 0 0 100vh 100vmax rgba(0, 0, 0, 0.7);
+    object-fit: contain;
+}
+
+.scope.visible {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
 .fullscreen-flex-container {
     position: fixed;
     top: 0;
@@ -17,44 +44,6 @@
     z-index: 1000;
 }
 
-.information {
-    /* transition: opacity .7s ease-in-out;
-    opacity: 0; */
-    font-family: Poppins;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.562);
-    border: 3px solid #ddd;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px; /* Rounded corners */
-    padding: 20px;
-    width: 400px; /* Adjust width as needed */
-    text-align: center;
-    color: #333; /* Dark text for contrast */
-}
-
-.commands-container {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.5); /* Slightly more opaque for nested container */
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc; /* Slightly darker border for the inner box */
-}
-
-.commands-list p {
-    text-align: left;
-    margin: 5px 0;
-    color: white;
-}
-
-.info-text, .commands-list h2 {
-    color: white;
-    margin-bottom: 10px;
-}
-
 #combat {
     transition: opacity .7s ease-in-out;
     opacity: 0;
@@ -63,11 +52,11 @@
 
 
 .WaterMark {
-    position: absolute; /* or fixed, depending on your needs */
-    top: 10px; /* Adjust as needed */
+    position: absolute;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1100; /* Ensure it's above the fullscreen-flex-container */
+    z-index: 1100;
 }
 
 .WM-data {

@@ -2,7 +2,7 @@ local components = false
 
 NoWeaponComponents = {}
 
-CurrentSkin = 1  -- Default skin index
+CurrentSkin = 1
 
 WeaponSkins = {
     [1] = "1",
@@ -69,7 +69,7 @@ function ApplyWeaponSkin(ped, weaponHash, skinIndex)
     if skinIndex >= 1 and skinIndex <= 7 then
         SetPedWeaponTintIndex(ped, weaponHash, skinIndex)
     else
-        SetPedWeaponTintIndex(ped, weaponHash, 1) -- set default if nil
+        SetPedWeaponTintIndex(ped, weaponHash, 1)
     end
 end
 

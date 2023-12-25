@@ -9,6 +9,7 @@ files {
 	'ui/index.html',
 	'ui/app.css',
 	'ui/app.js',
+	'ui/img/**'
 }
 
 client_scripts {

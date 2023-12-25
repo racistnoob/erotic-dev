@@ -70,12 +70,12 @@ const App: React.FC = () => {
     {
       id: 9,
       name: 'Southside #9',
-      settings: ['FPS Mode', 'Medium Recoil'],
+      settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
     },
     {
       id: 10,
       name: 'Southside #10',
-      settings: ['FPS Mode', 'Medium Recoil'],
+      settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
     },
     {
       id: 11,
@@ -154,7 +154,7 @@ const App: React.FC = () => {
   };
 
   type FilterSettings = { [key: string]: boolean; };
-  const [filterSettings, setFilterSettings] = useState<FilterSettings>({ 'FPS Mode': false, 'FFA': false, 'Third Person': false, 'Headshots': false });
+  const [filterSettings, setFilterSettings] = useState<FilterSettings>({ 'FPS Mode': false, 'Deluxo': false, 'FFA': false, 'Third Person': false, 'Headshots': false });
   const [selectedRecoil, setSelectedRecoil] = useState('');
 
   const handleFilterChange = (setting: string) => {

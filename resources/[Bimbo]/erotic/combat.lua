@@ -1,6 +1,15 @@
 local currentValues = { MaxAmmo = 0, ClipAmmo = 0 }
 local no_xhair = (GetResourceKvpInt("erotic_xhair") == 1) or false
 
+local weapons = {
+    snipers = {
+        177293209,
+        205991906,
+        1785463520,
+        3342088282
+    }
+}
+
 local COMBAT = {
     PedCamera = function()
         while true do
@@ -41,6 +50,22 @@ local COMBAT = {
             end
         end
     end,    
+
+    SniperThread = function()
+        while true do 
+            Citizen.Wait(1)
+
+            local pedWeapon = GetSelectedPedWeapon(PlayerPedId()) or false;
+
+            if pedWeapon == 177293209 and IsPlayerFreeAiming(PlayerId()) or pedWeapon == 1785463520 and IsPlayerFreeAiming(PlayerId()) then 
+                SendNUIMessage({ type = "scope", value = true })
+                SendNUIMessage({ type = "ammo", data = currentValues })
+                SendNUIMessage({ type = "show", value = false, cross = no_xhair })
+            else
+                SendNUIMessage({ type = "scope", value = false })
+            end            
+        end
+    end,
     
     HideAmmo = function(self)
         while true do
@@ -50,8 +75,6 @@ local COMBAT = {
         end
     end,
 }
-
-Citizen.CreateThread(function() while true do N_0x4757f00bc6323cfe(-1553120962, 0.0) Wait(0) end end)
 
 Citizen.CreateThread(function()
     COMBAT:HideAmmo()
@@ -63,7 +86,13 @@ Citizen.CreateThread(function()
     Citizen.Wait(250)
 end)
 
--- infinite stamina
+Citizen.CreateThread(function()
+    COMBAT:SniperThread()
+    Citizen.Wait(0)
+end)
+
+Citizen.CreateThread(function() while true do N_0x4757f00bc6323cfe(-1553120962, 0.0) Wait(0) end end)
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(500)
@@ -71,8 +100,35 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- crosshair toggle
 RegisterCommand('cross', function(src, args)
     no_xhair = not no_xhair
     SetResourceKvpInt("erotic_xhair", no_xhair)
 end)
+
+RegisterCommand("top", function()
+        local playerPed = PlayerPedId()
+        local worldID = exports['erotic-lobby']:getCurrentWorldID()
+
+        if worldID >= 9 and worldID <= 10 then
+        if IsPedInAnyVehicle(playerPed, false) then
+            local vehicle = GetVehiclePedIsIn(playerPed, false)
+            TaskLeaveVehicle(playerPed, vehicle, 0)
+
+            SetVehicleForwardSpeed(vehicle, 0.0)
+
+            while IsPedInAnyVehicle(playerPed, false) do
+               Citizen.Wait(0)
+            end
+
+            local x, y, z = table.unpack(GetEntityCoords(vehicle))
+            local min, max = GetModelDimensions(GetEntityModel(vehicle))
+            local height = max.z - min.z
+
+            SetPedCoordsKeepVehicle(playerPed, x, y, z + height)
+        else
+            print("Naughty Naughty")
+        end
+    end
+end, false)
+
+RegisterKeyMapping("top", "Teleport on top of car", "keyboard", "h")

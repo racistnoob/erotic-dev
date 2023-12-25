@@ -24,7 +24,49 @@ function ShowNotification(text)
     DrawNotification(false, false)
 end
 
+local function deleteVeh(vehicle)
+    SetEntityAsMissionEntity(vehicle, false, false)
+    SetVehicleHasBeenOwnedByPlayer(vehicle, false)
+    SetEntityAsMissionEntity(vehicle, false, false)
+    DeleteVehicle(vehicle)
+    if DoesEntityExist(vehicle) then
+        DeleteVehicle(vehicle)
+    end
+end
 
+local function deleteCurrentVehicle(playerPed)
+    local currentVehicle = GetVehiclePedIsIn(playerPed, false)
+    if DoesEntityExist(currentVehicle) then
+        if GetPedInVehicleSeat(currentVehicle, -1) == playerPed then
+            deleteVeh(currentVehicle)
+        else
+            exports['drp-notifications']:SendAlert('inform', 'You are not the driver.', 5000)
+            return
+        end
+    end
+end
+
+local function deletePreviousVehicle(playerPed)
+    -- deletes old car to prevent spammed cars
+    if not DoesEntityExist(spawnedCar) then
+        spawnedCar = false
+        return
+    end
+
+    -- checks if anyone is in the car
+    local shouldDelete = true
+    for seatIndex = -1, 5 do
+        local ped = GetPedInVehicleSeat(spawnedCar, seatIndex)
+        if DoesEntityExist(ped) and ped ~= playerPed then
+            shouldDelete = false
+        end
+    end
+
+    -- deletes car
+    if shouldDelete then
+        deleteVeh(spawnedCar)
+    end
+end
 
 
 --[[
@@ -74,12 +116,38 @@ CreateThread(function()
             TaskPlayAnim(playerPed, "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 7500,
-                text = "Medium Armour"
+                text = "Heavy Armour"
               })
 
             if (finished == 100) then
                 SetPlayerMaxArmour(PlayerId(), 100)
                 AddArmourToPed(Player.Ped(), 100)
+                -- StopAnimTask(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 1.0)
+                ClearPedTasks(playerPed)
+                API.RemoveItem(item, 1)
+            end
+            ClearPedTasks(playerPed)
+            return true
+        end,
+        animClearance = true
+    })
+
+    Item.Register("armour2", {
+        func = function(item)
+            if Player.Armour() == 100 then return false end
+            local playerPed = PlayerPedId()
+            -- loadAnimDict("clothingshirt")  
+            RequestAnimDict("clothingtie")
+            -- TaskPlayAnim(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
+            TaskPlayAnim(playerPed, "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
+            local finished = exports["lane-taskbar"]:taskBar({
+                length = 7500,
+                text = "Heavy Armour"
+              })
+
+            if (finished == 100) then
+                SetPlayerMaxArmour(PlayerId(), 100)
+                AddArmourToPed(Player.Ped(), 60)
                 -- StopAnimTask(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 1.0)
                 ClearPedTasks(playerPed)
                 API.RemoveItem(item, 1)
@@ -123,9 +191,6 @@ CreateThread(function()
         end,
         animClearance = true
     })
-
-
-
 
     Item.Register("repairkit", {
         func = function(item)
@@ -185,7 +250,7 @@ CreateThread(function()
             ClearPedTasks(playerPed)
 
             if (finished == 100) then
-                SetPedArmour(Player.Ped(), Player.Armour() + 25)
+                SetPedArmour(Player.Ped(), Player.Armour() + 15)
                 ClearPedTasks(Player.Ped())
                 API.RemoveItem(item, 1)
                 Player.InAnim = false
@@ -270,6 +335,63 @@ CreateThread(function()
         animClearance = true
     })
 
+    Item.Register("deluxo", {
+        func = function(item)
+            local zone = exports['noob']:CurrentSafezone()
+            print("Current safezone:", zone)  -- Debug
+
+            if exports['noob']:inSafeZone() and zone == 'casino' then
+                local previousCar
+                local spawnedCar
+                local spawningcars = true
+                local playerPed = PlayerPedId()
+                local vehiclehash = GetHashKey("deluxo")
+                local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
+    
+                RequestModel(vehiclehash)
+    
+                Citizen.CreateThread(function()
+                    local waiting = 0
+                    while not HasModelLoaded(vehiclehash) do
+                        waiting = waiting + 100
+                        Citizen.Wait(100)
+                        if waiting > 5000 then
+                            exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
+                            return
+                        end
+                    end
+    
+                    deleteCurrentVehicle(playerPed)
+                    deletePreviousVehicle(playerPed)
+    
+                    local car = CreateVehicle(vehiclehash, x, y, z, GetEntityHeading(playerPed), true, false)
+                    if DoesEntityExist(car) then
+                        SetPedIntoVehicle(playerPed, car, -1)
+                        exports['drp-notifications']:SendAlert('inform', 'Vehicle spawned', 5000)
+                        TriggerEvent('keys:addNew', car, GetVehicleNumberPlateText(car))
+                        SetVehicleEngineOn(car, true, true, false)
+                        SetVehicleDirtLevel(car, 0.0)
+    
+                        -- Load saved modifications, if any
+                        Citizen.CreateThread(function()
+                            local savedMods = GetResourceKvpString("vehicle_" .. tostring(vehiclehash) .. "_mods")
+                            if savedMods then
+                                local parsedMods = json.decode(savedMods)
+                                if parsedMods then
+                                    exports["noob"]:SetVehicleProperties(car, parsedMods)
+                                end
+                            end
+                        end)
+                    else
+                        exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
+                    end
+                end)
+            else
+                exports['drp-notifications']:SendAlert('inform', 'Cannot Deluxo out of safezone.', 5000)
+            end
+        end,
+    }) 
+
     Item.Register("stamina", {
         func = function(item)
             if Player.InVehicle() then return false end 
@@ -284,16 +406,6 @@ CreateThread(function()
         end,
         animClearance = true
     })
-
-
-    -- Config.Loadouts = {
-    --     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
-    --     {name = "LOADOUT_M9", format = "M9 Beretta Loadout", kit = "m9"},
-    --     {name = "LOADOUT_MP9", format = "MP9 Loadout", kit = "mp9"},
-    --     {name = "LOADOUT_MCX", format = "MCX Loadout", kit = "mcx"},
-    --     {name = "LOADOUT_AK47", format = "AK-47 Loadout", kit = "akm"},
-    -- }
-
 
     for k,v in pairs(Config.Loadouts) do 
         local kit = v.kit 

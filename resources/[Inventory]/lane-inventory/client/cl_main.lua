@@ -112,7 +112,7 @@ AddEventHandler('zbrp:updatePlayerInventory', function(inventory)
     while not NUI_LOADED do
         Citizen.Wait(100)
     end
-    print("Updating Player Inventory")
+
     SendNUIMessage({
         action = 'updatePlayerInventory',
         inventory = inventory
@@ -125,7 +125,7 @@ AddEventHandler('zbrp:setPlayerStaticData', function(maxweight, name)
     while not NUI_LOADED do
         Citizen.Wait(100)
     end
-    print("Player Static Data: "..maxweight.. " - "..name)
+    -- print("Player Static Data: "..maxweight.. " - "..name)
     SendNUIMessage({ action = 'setPlayerStaticData', maxweight = maxweight, name = name})
 end)
 

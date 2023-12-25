@@ -33,7 +33,7 @@ Kits = {
         },
     -- },
     -- ["ars"] = {
-        ["akm"] = {
+        ["ak"] = {
             {item = "WEAPON_ASSAULTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
@@ -43,12 +43,6 @@ Kits = {
             {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 20, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
-        },
-        ["m16"] = {
-            {item = "WEAPON_TACTICALRIFLE", primary = true, amount = 1, slot = 1},
-            {item = "armour", amount = 5, slot = 2},
-            {item = "oxy", amount = 15, slot = 3},
             {item = "556_rounds", amount = 300, slot = 15},
         },
         ["m16"] = {
@@ -113,11 +107,17 @@ Kits = {
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
         -- Snipers
-        ["awp"] = {
+        ["trick"] = {
             {item = "WEAPON_HEAVYSNIPER_MK2", primary = true, amount = 1, slot = 1},
-            {item = "armour", amount = 5, slot = 2},
-            {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "kevlar", amount = 5, slot = 2},
+            {item = "medkit", amount = 15, slot = 3},
+            {item = "deluxo", amount = 1, slot = 5},
+        },
+        ["trick2"] = {
+            {item = "WEAPON_MARKSMANRIFLE_MK2", primary = true, amount = 1, slot = 1},
+            {item = "kevlar", amount = 5, slot = 2},
+            {item = "medkit", amount = 15, slot = 3},
+            {item = "deluxo", amount = 1, slot = 5},
         },
         -- ETC
         ["hopout"] = {
@@ -157,8 +157,26 @@ function AllKits()
     end
 end
 
+-- build the 'all' kits automatically 
 
+CreateThread(function()
+    Kits["all"] = {} 
+    local all = Kits["all"]
+    for k,v in pairs(Kits) do 
+        for i,p in pairs(Kits[k]) do 
+            all[i] = p 
+        end
+    end
+end)
+        
 
+function AllKits()
+    for k,v in pairs(Kits) do 
+        for i,p in pairs(Kits[k]) do 
+            API.GiveItem(p.item, p.amount, p.slot)
+        end 
+    end
+end
 
 RegisterNetEvent("inventory:forceKit", function(genre, kit)
     local kit = Kits[genre][kit]
@@ -204,17 +222,14 @@ function API.GetKitAmmo(kit)
     local primary = API.FindPrimaryWeapon(kit)
     local ammo = findAmmoType(GetHashKey(primary))
     for k,v in pairs(kit) do 
-        print(v.item)
+        -- print(v.item)
         if v.item == ammo then result = result + v.amount end 
     end
     return result
 end
 
-
-
-
 function API.GiveKit()
-    print("givekit", Player.CurrentKitGenre, Player.CurrentKit )
+    -- print("givekit", Player.CurrentKitGenre, Player.CurrentKit )
     -- if Player.CurrentKitGenre == nil or Player.CurrentKit == nil then return end 
     local kit = Kits[Player.CurrentKit]
     for k,v in pairs(kit) do API.GiveItem(v.item, v.amount, v.slot) end 
@@ -227,8 +242,6 @@ function API.GiveKit()
     SetAmmoInClip(Player.Ped(), GetHashKey(primary), 999)
 end
 exports("GiveKit", API.GiveKit)
-
-    
 
 -- SWAPPING SLOTS FUNCTIONS 
 -- HAS REQUIRED ITEMS FOR KITS 
@@ -249,8 +262,6 @@ function API.FindViaItem(item, kit)
     return false 
 end
 
-
-
 function API.SwapSlots(fromslot, toslot, fromdata, todata)
     local kit = Kits[Player.CurrentKitGenre][Player.CurrentKit]
     if not API.HasRequiredItems(kit) then return end 
@@ -269,7 +280,6 @@ function API.SwapToEmpty(data)
     if not key then return end 
     kit[key].slot = data.droppedTo 
 end
-
 
 -- EVENTS AND CALLBACKS
 
