@@ -50,20 +50,21 @@ CreateThread(function()
     end
 end)
 
-local currentSafeZoneName = nil  -- Variable to store the current safezone name
+local currentSafeZoneName = nil
 
 AddEventHandler("polyzone:enter", function(name)
     currentSafeZoneName = name  -- Store the name of the entered safezone
-    if name == "southside" then
-        inSafeZone = true
-        SetLocalPlayerAsGhost(true)
-        NetworkSetPlayerIsPassive(true)
-    else
+    if name == "casino" then
         inSafeZone = true
         SetLocalPlayerAsGhost(false)
         NetworkSetPlayerIsPassive(false)
         NetworkSetFriendlyFireOption(false)
         SetCanAttackFriendly(PlayerPedId(), false, false)
+    else
+        SetCanAttackFriendly(PlayerPedId(), false, false)
+        inSafeZone = true
+        SetLocalPlayerAsGhost(true)
+        NetworkSetPlayerIsPassive(true)
     end
 end)
 

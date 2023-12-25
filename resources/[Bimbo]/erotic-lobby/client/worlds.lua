@@ -7,20 +7,6 @@ local defaultSpawn = {
     h = 143.0110
 }
 
-local defaultDeathSpot = {
-    x = 231.8789,
-    y = -1390.2084,
-    z = 30.4853,
-    h = 142.7518
-}
-
-local TrickSpawn = {
-    x = 770.5748,
-    y = -233.9927,
-    z = 66.1145,
-    h = 354.6606
-}
-
 local worlds = {
     -- { startID = 1, endID = 4, settings = { 
     --     recoilMode = "roleplay", 
@@ -59,10 +45,9 @@ local worlds = {
         recoilMode = "roleplay2",
         firstPersonVehicle = true, 
         hsMulti = false,
-        spawn = TrickSpawn,
         spawningcars = false,
         kit = 'trick2',
-        deathSpot = {
+        spawn = {
             x = 770.5748, 
             y = -233.9927, 
             z = 66.1145, 
@@ -101,14 +86,14 @@ function switchWorld(worldID)
         currentWorldID = worldID
 
         if worldSettings then
-            if worldSettings and worldSettings.deathSpot then
-                exports['core']:deathSpot(worldSettings.deathSpot.x, worldSettings.deathSpot.y, worldSettings.deathSpot.z, worldSettings.deathSpot.h)
+            if worldSettings and worldSettings.spawn then
+                exports['core']:deathSpot(worldSettings.spawn.x, worldSettings.spawn.y, worldSettings.spawn.z, worldSettings.spawn.h)
             else
-                exports['core']:deathSpot(defaultDeathSpot.x, defaultDeathSpot.y, defaultDeathSpot.z, defaultDeathSpot.h)
+                exports['core']:deathSpot(defaultSpawn.x, defaultSpawn.y, defaultSpawn.z, defaultSpawn.h)
             end
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
             exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
-            
+
             exports['core']:spawningcars(worldSettings.spawningcars or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
@@ -118,9 +103,6 @@ function switchWorld(worldID)
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             -- exports['core']:setnonstopcombat(worldSettings.nonstopCombat or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
-
-            TriggerEvent("erotic-lobby:ChangeCoords", worldSpawn.x, worldSpawn.y, worldSpawn.z)
-            TriggerEvent("polyzone:enter")
         end
 
         print("World Settings for World ID " .. worldID .. ":")
