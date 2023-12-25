@@ -7,6 +7,13 @@ local defaultSpawn = {
     h = 143.0110
 }
 
+local defaultDeathSpot = {
+    x = 231.8789,
+    y = -1390.2084,
+    z = 30.4853,
+    h = 142.7518
+}
+
 local TrickSpawn = {
     x = 770.5748,
     y = -233.9927,
@@ -55,8 +62,12 @@ local worlds = {
         spawn = TrickSpawn,
         spawningcars = false,
         kit = 'trick',
-        setUndeaded = false,
-        setUndeaded2 = true
+        deathSpot = {
+            x = 770.5748, 
+            y = -233.9927, 
+            z = 66.1145, 
+            h = 354.6606
+        }
     }},
     { startID = 11, endID = 12, settings = { 
         recoilMode = "qb", 
@@ -90,11 +101,14 @@ function switchWorld(worldID)
         currentWorldID = worldID
 
         if worldSettings then
+            if worldSettings and worldSettings.deathSpot then
+                exports['core']:deathSpot(worldSettings.deathSpot.x, worldSettings.deathSpot.y, worldSettings.deathSpot.z, worldSettings.deathSpot.h)
+            else
+                exports['core']:deathSpot(defaultDeathSpot.x, defaultDeathSpot.y, defaultDeathSpot.z, defaultDeathSpot.h)
+            end
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
-            collectgarbage("collect")
             exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
             
-            exports['core']:setUndeaded(worldSettings.setUndeaded or true)
             exports['core']:spawningcars(worldSettings.spawningcars or true)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
@@ -106,10 +120,24 @@ function switchWorld(worldID)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
 
             TriggerEvent("erotic-lobby:ChangeCoords", worldSpawn.x, worldSpawn.y, worldSpawn.z)
+            collectgarbage("collect")
             TriggerEvent("polyzone:enter")
         end
     end
 end
+
+function getCurrentWorldDeathSpot()
+    if currentWorldID then
+        for _, world in ipairs(worlds) do
+            if currentWorldID >= world.startID and currentWorldID <= world.endID then
+                return world.settings.deathSpot or defaultDeathSpot
+            end
+        end
+    end
+    return defaultDeathSpot
+end
+
+exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
 
 exports("switchWorld", switchWorld)
 
