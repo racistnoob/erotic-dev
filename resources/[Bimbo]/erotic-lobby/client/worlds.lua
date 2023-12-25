@@ -108,7 +108,7 @@ function getCurrentWorldDeathSpot()
     if currentWorldID then
         for _, world in ipairs(worlds) do
             if currentWorldID >= world.startID and currentWorldID <= world.endID then
-                return world.settings.deathSpot or defaultDeathSpot
+                return world.settings.spawn or defaultSpawn
             end
         end
     end
