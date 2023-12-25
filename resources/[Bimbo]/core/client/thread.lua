@@ -26,3 +26,13 @@ Citizen.CreateThread(function()
         DisableControlAction(0, 264, true)
     end
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000) -- Wait 1 second (1000 milliseconds)
+        -- The '263' is the ID for SET_PLAYER_IDLE_CAM_TIME
+        N_0x9e4cfff989258472() -- Disable the vehicle idle camera
+        SetPlayerIdleCamTime(PlayerId(), 99999) -- Reset the idle timer (99999 seconds)
+        SetPlayerIdleDropKeepLoadedTime(PlayerId(), 99999) -- Reset the idle drop time
+    end
+end)

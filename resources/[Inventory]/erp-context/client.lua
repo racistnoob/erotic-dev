@@ -97,11 +97,11 @@ RegisterNetEvent('erp-context:submenu', function(data)
     elseif id == 4 then
         submenu = exports["effects"]:getBloodFXSubMenu()
     elseif id == 5 then
-        submenu = exports["lane-inventory"]:getSkinSubMenu()
+
     elseif id == 6 then
-        submenu = exports["lane-inventory"]:getAttachmentSubMenu()
+        
     elseif id == 7 then
-        submenu = exports["effects"]:getFpsSubMenu()
+        
     end
 
     TriggerEvent('erp-context:sendMenu', submenu)
