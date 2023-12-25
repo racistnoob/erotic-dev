@@ -338,7 +338,7 @@ CreateThread(function()
     Item.Register("deluxo", {
         func = function(item)
             local zone = exports['noob']:CurrentSafezone()
-            print("Current safezone:", zone)  -- Debug
+            print("Current safezone:", zone)
 
             if exports['noob']:inSafeZone() and zone == 'casino' then
                 local previousCar

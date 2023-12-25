@@ -109,19 +109,30 @@ function switchWorld(worldID)
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
             exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
             
-            exports['core']:spawningcars(worldSettings.spawningcars or true)
+            exports['core']:spawningcars(worldSettings.spawningcars or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
 
             -- Apply world-specific settings
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
-            exports['core']:setnonstopcombat(worldSettings.nonstopCombat or false)
+            -- exports['core']:setnonstopcombat(worldSettings.nonstopCombat or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
 
             TriggerEvent("erotic-lobby:ChangeCoords", worldSpawn.x, worldSpawn.y, worldSpawn.z)
-            collectgarbage("collect")
             TriggerEvent("polyzone:enter")
+        end
+
+        print("World Settings for World ID " .. worldID .. ":")
+        for key, value in pairs(worldSettings) do
+            if type(value) == 'table' then
+                print(key .. ":")
+                for subKey, subValue in pairs(value) do
+                    print("  " .. subKey .. " = " .. tostring(subValue))
+                end
+            else
+                print(key .. " = " .. tostring(value))
+            end
         end
     end
 end

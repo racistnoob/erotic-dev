@@ -7,7 +7,7 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
 
 local previousCar
 local spawnedCar
-local spawningcars = true
+local spawningcars = false
 
 local function IsVehicleWhitelisted(model)
     for _, name in ipairs(whitelistedVehicles) do
@@ -41,13 +41,11 @@ local function deleteCurrentVehicle(playerPed)
 end
 
 local function deletePreviousVehicle(playerPed)
-    -- deletes old car to prevent spammed cars
     if not DoesEntityExist(spawnedCar) then
         spawnedCar = false
         return
     end
 
-    -- checks if anyone is in the car
     local shouldDelete = true
     for seatIndex = -1, 5 do
         local ped = GetPedInVehicleSeat(spawnedCar, seatIndex)
@@ -56,7 +54,6 @@ local function deletePreviousVehicle(playerPed)
         end
     end
 
-    -- deletes car
     if shouldDelete then
         deleteVeh(spawnedCar)
     end
