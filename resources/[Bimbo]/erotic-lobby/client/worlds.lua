@@ -91,18 +91,16 @@ function switchWorld(worldID)
             else
                 exports['core']:deathSpot(defaultSpawn.x, defaultSpawn.y, defaultSpawn.z, defaultSpawn.h)
             end
-            exports['erotic-lobby']:ChangeWorld(tostring(worldID))
             exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
-
             exports['core']:spawningcars(worldSettings.spawningcars or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
-
-            -- Apply world-specific settings
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
-            -- exports['core']:setnonstopcombat(worldSettings.nonstopCombat or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
+
+
+            exports['erotic-lobby']:ChangeWorld(tostring(worldID))
         end
 
         print("World Settings for World ID " .. worldID .. ":")
