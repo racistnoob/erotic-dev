@@ -58,7 +58,7 @@ local worlds = {
     { startID = 9, endID = 10, settings = { 
         recoilMode = "roleplay2",
         firstPersonVehicle = true, 
-        hsMulti = true,
+        hsMulti = false,
         spawn = TrickSpawn,
         spawningcars = false,
         kit = 'trick',
