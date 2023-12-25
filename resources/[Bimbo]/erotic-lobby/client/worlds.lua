@@ -8,10 +8,9 @@ local defaultSpawn = {
 }
 
 local worlds = {
-    -- { startID = 1, endID = 4, settings = { 
+    -- { startID = 0, endID = 0, settings = { 
     --     recoilMode = "roleplay", 
     --     firstPersonVehicle = true, 
-    --     nonstopCombat = false, 
     --     hsMulti = false,
     --     spawn = {     
     --     x = 0,
@@ -101,18 +100,6 @@ function switchWorld(worldID)
 
 
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
-        end
-
-        print("World Settings for World ID " .. worldID .. ":")
-        for key, value in pairs(worldSettings) do
-            if type(value) == 'table' then
-                print(key .. ":")
-                for subKey, subValue in pairs(value) do
-                    print("  " .. subKey .. " = " .. tostring(subValue))
-                end
-            else
-                print(key .. " = " .. tostring(value))
-            end
         end
     end
 end
