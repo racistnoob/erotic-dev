@@ -54,7 +54,9 @@ local worlds = {
         hsMulti = true,
         spawn = TrickSpawn,
         spawningcars = false,
-        kit = 'trick'
+        kit = 'trick',
+        setUndeaded = false,
+        setUndeaded2 = true
     }},
     { startID = 11, endID = 12, settings = { 
         recoilMode = "qb", 
