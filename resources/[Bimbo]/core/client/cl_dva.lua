@@ -75,8 +75,9 @@ end
 
 Citizen.CreateThread(function()
   while true do
-      Citizen.Wait(120000)
-      print('Vehicles Cleared')
+      Citizen.Wait(175000)
+      exports['drp-notifications']:SendAlert('inform', 'Wiping Vehicls in 5secs...', 5000)
+      Citizen.Wait(5000)
       clearVehicles()
   end
 end)

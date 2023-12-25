@@ -10,8 +10,8 @@ end)
 function DeathTimer()
     CreateThread(function()
         Citizen.Wait(1000)
-        local deathSpot = exports['erotic-lobby']:getCurrentWorldDeathSpot()
-        UndeadedPlayer(deathSpot.x, deathSpot.y, deathSpot.z, deathSpot.h)
+        local spawn = exports['erotic-lobby']:getCurrentWorldDeathSpot()
+        UndeadedPlayer(spawn.x, spawn.y, spawn.z, spawn.h)
     end)
 end
 

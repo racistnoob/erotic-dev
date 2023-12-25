@@ -112,7 +112,7 @@ function getCurrentWorldDeathSpot()
             end
         end
     end
-    return defaultDeathSpot
+    return defaultSpawn
 end
 
 exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
