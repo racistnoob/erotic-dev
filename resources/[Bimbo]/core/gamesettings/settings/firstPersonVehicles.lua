@@ -6,7 +6,7 @@ end
 
 CreateThread(function()
     while true do
-        Wait(0)
+        Wait(10)
 
         if firstPersonVehicleEnabled then
             local isInVehicle = IsPedInAnyVehicle(PlayerPedId(), false)

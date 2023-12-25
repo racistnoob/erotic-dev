@@ -16,7 +16,7 @@ Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(1)
         if exists and not isDead then 
-            DisableControlAction(0, 36, true) -- INPUT_DUCK  
+            DisableControlAction(0, 36, true)
             if not IsPauseMenuActive() then 
                 if IsDisabledControlJustPressed(0, 36) then 
                     RequestAnimSet("move_ped_crouched")
@@ -32,12 +32,11 @@ Citizen.CreateThread(function()
                         crouched = true 
                     end 
                 end
-            end 
+            end
 
-            -- Check if the player is aiming
             if IsPlayerFreeAiming(PlayerId()) then
-                ResetPedMovementClipset(ped, 0) -- Reset to normal standing position
-                crouched = false -- Update the crouched variable
+                ResetPedMovementClipset(ped, 0)
+                crouched = false
             end
         end 
     end

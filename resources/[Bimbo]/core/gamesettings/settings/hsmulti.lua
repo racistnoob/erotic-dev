@@ -18,9 +18,8 @@ exports("getHsMulti", GetHsMulti)
 
 CreateThread(function()
   while true do
-    Wait(0)
+    Wait(250)
 
     SetPedSuffersCriticalHits(PlayerPedId(), hsmultiEnabled)
-
   end
 end)

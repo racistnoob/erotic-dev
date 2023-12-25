@@ -18,7 +18,7 @@ exports("getHelmetsEnabled", GetHelmetsEnabled)
 
 CreateThread(function()
   while true do
-    Wait(0)
+    Wait(250)
     SetPedConfigFlag(PlayerPedId(), 149, not helmetsEnabled)
     SetPedConfigFlag(PlayerPedId(), 438, not helmetsEnabled)
 

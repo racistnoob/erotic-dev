@@ -13,7 +13,7 @@ local weapons = {
 local COMBAT = {
     PedCamera = function()
         while true do
-            Citizen.Wait(10)
+            Citizen.Wait(250)
             local ped = PlayerPedId()
             local InVehicle = IsPedInAnyVehicle(ped, false)
             local isAiming = (IsControlPressed(0, 25) and IsUsingKeyboard(0)) or IsAimCamActive()
@@ -53,7 +53,7 @@ local COMBAT = {
 
     SniperThread = function()
         while true do 
-            Citizen.Wait(1)
+            Citizen.Wait(250)
 
             local pedWeapon = GetSelectedPedWeapon(PlayerPedId()) or false;
 
@@ -88,16 +88,7 @@ end)
 
 Citizen.CreateThread(function()
     COMBAT:SniperThread()
-    Citizen.Wait(0)
-end)
-
-Citizen.CreateThread(function() while true do N_0x4757f00bc6323cfe(-1553120962, 0.0) Wait(0) end end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(500)
-        ResetPlayerStamina(PlayerId())
-	end
+    Citizen.Wait(250)
 end)
 
 RegisterCommand('cross', function(src, args)

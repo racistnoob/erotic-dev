@@ -17,31 +17,3 @@ Citizen.CreateThread(function()
         })
     end
 end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1000)
-        DisplayAmmoThisFrame(false) -- Disable ammo display
-        HideHudComponentThisFrame(1) -- Wanted stars
-        HideHudComponentThisFrame(2) -- Weapon icon
-        HideHudComponentThisFrame(3) -- Cash
-        HideHudComponentThisFrame(4) -- MP Cash
-        HideHudComponentThisFrame(6) -- Vehicle name
-        HideHudComponentThisFrame(7)  -- Area name, hides armor
-        HideHudComponentThisFrame(9)  -- Street name, hides health
-        HideHudComponentThisFrame(8) -- Vehicle class
-        HideHudComponentThisFrame(9)  -- Street name, hides health
-        HideHudComponentThisFrame(13) -- Cash change
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1)
-        -- Disable the cinematic camera
-        if IsCinematicCamRendering() then
-            StopCinematicCamShaking(true)
-            SetCinematicButtonActive(false)
-        end
-    end
-end)
