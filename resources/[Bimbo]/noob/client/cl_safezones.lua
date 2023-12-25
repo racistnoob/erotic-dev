@@ -37,6 +37,9 @@ local safezones = {
 }
 
 CreateThread(function()
+    
+    Citizen.Wait(1)
+
     for _, zone in ipairs(safezones) do
         exports["noob"]:AddPolyZone(
             zone.name,
