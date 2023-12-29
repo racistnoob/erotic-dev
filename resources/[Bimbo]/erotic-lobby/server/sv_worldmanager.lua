@@ -157,5 +157,3 @@ end
 
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
 exports('getPlayerWorld', getPlayerWorld)
-
-exports['erotic-lobby']:getLobbyPlayerCount('1')
