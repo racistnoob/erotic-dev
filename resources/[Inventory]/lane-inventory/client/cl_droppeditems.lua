@@ -150,3 +150,13 @@ function clearDropped()
     end
 end
 RegisterNetEvent("inventory.Api:ClearDroppedItems", clearDropped)
+
+function API.OnDrop(i, item) 
+    if item["item"].itemdata.type == "ammo" then return end 
+    local func = RegisteredItems[item["item"].itemdata.item]
+    if fun == nil then return end 
+    if func.onDrop == nil then return end 
+    func.onDrop() 
+end
+
+RegisterNetEvent("zbrp:addDroppedItem", API.OnDrop)

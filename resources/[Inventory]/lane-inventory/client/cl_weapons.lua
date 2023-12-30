@@ -1,27 +1,66 @@
 local animPlaying = false
 local playerArmed = false
+local quickSelectEnabled = false
 
-RegisterNetEvent('arena:useWeapon')
-AddEventHandler('arena:useWeapon', function(weaponName)
-    Citizen.CreateThread(function()
-        local ped = PlayerPedId()
-        local weaponHash = GetHashKey(weaponName)
+local clipCache = {}
 
-        if not playerHasWeapon() then
+RegisterNetEvent("erotic:quickSelectEnabled", function(newState)
+    quickSelectEnabled = newState
+end)
+
+AddEventHandler("baseevents:onPlayerDied", function()
+    clipCache = {}
+end) -- baseevents died
+
+RegisterNetEvent("erotic:joinedlobby", function()
+    clipCache = {}
+end) -- event joining lobby
+
+local cooldown = false
+
+RegisterNetEvent('erotic:useWeapon')
+AddEventHandler('erotic:useWeapon', function(weaponName)
+    local ped = PlayerPedId()
+    local weaponHash = GetHashKey(weaponName)
+    local currentWeapon = GetSelectedPedWeapon(ped)
+
+    if weaponHash == currentWeapon then
+      -- Wait(500)
+        putawayGun(weaponName)
+        SendNotification({
+            text = "~r~~h~Unequipped.",
+            type = 'bottomLeft',
+            timeout = 1000,
+        })
+    elseif not IsPedJumping(ped) and cooldown == false then
+      cooldown = true
+      Wait(500)
+      cooldown = false
+            SendNotification({
+                text = "~g~~h~Equipped.",
+                type = 'bottomLeft',
+                timeout = 1000,
+            })
+            
             local bulletType = findAmmoType(weaponHash)
             local ammoCount = ammoCount(bulletType)
 
             GiveWeaponToPed(ped, weaponHash, tonumber(ammoCount), false, true)
-            SetAmmoInClip(ped, weaponHash, 250)
-            ClearPedTasks(ped)
-
             ApplyWeaponComponents(weaponName)
             ApplyWeaponSkin(ped, weaponHash, CurrentSkin)
-        else
-            putawayGun()
+            SetCurrentPedVehicleWeapon(PlayerPedId(), weaponHash)
+            SetCurrentPedWeapon(PlayerPedId(), weaponHash, true)
+            ClearPedTasks(ped)
+            SetAmmoInClip(PlayerPedId(), weaponHash, clipCache[tostring(weaponHash)])
+          elseif cooldown == false then
+           SendNotification({
+                text = "~r~~h~Unequipped.",
+                type = 'bottomLeft',
+                timeout = 1000,
+            })
+            putawayGun(weaponName, currentWeapon)
         end
     end)
-end)
 
 function playerHasWeapon()
     if not IsPedArmed(PlayerPedId(), 1) and not IsPedArmed(PlayerPedId(), 2) and not IsPedArmed(PlayerPedId(), 4) then
@@ -38,95 +77,142 @@ Citizen.CreateThread(function()
     end
 end)
 
-function ammoCount(bullet)
+CreateThread(function()
+    while true do
+      Wait(0)
+  
+      if not quickSelectEnabled and playerArmed then
+        local playerPed = PlayerPedId()
+        local currentWeapon = GetSelectedPedWeapon(playerPed)
+  
+        local found, clipSize = GetAmmoInClip(playerPed, currentWeapon)
+        if found then
+          clipCache[tostring(currentWeapon)] = clipSize
+        end
+      end
+    end
+  end)
+
+  function ammoCount(bullet)
     local count = 0
     if inventoryData and type(inventoryData) == 'table' then
-        for k,v in pairs(inventoryData) do
-            if v and v.item then
-                if v.item == bullet then
-                    count = count + v.quantity
-                end
-            end
+      for k, v in pairs(inventoryData) do
+        if v and v.item then
+          if v.item == bullet then
+            count = count + v.quantity
+          end
         end
+      end
     end
-
+  
     return count
-end
-
-function setDefaultAmmo(forbullet, count)
+  end
+  
+  function setDefaultAmmo(forbullet, count)
     if inventoryData and type(inventoryData) == 'table' then
-        for k,v in pairs(inventoryData) do 
-            if v and v.item then 
-                if v.item == bullet then 
-                    v.quantity = count
-                end
-            end
+      for k, v in pairs(inventoryData) do
+        if v and v.item then
+          if v.item == bullet then
+            v.quantity = count
+          end
         end
+      end
     end
-end
-
-function findAmmoType(weaponHash)
+  end
+  
+  function findAmmoType(weaponHash)
     for weaponName, bullet in pairs(Config.Weapons) do
-        if GetHashKey(weaponName) == weaponHash then
-            if type(bullet) == 'string' then
-                return bullet
-            end
+      if GetHashKey(weaponName) == weaponHash then
+        if type(bullet) == 'string' then
+          return bullet
         end
+      end
     end
     return
-end
+  end
 
-AddEventHandler('arena:updatePlayerInventory', function(inventory)
+AddEventHandler('erotic:updatePlayerInventory', function(inventory)
     local localPlayer = PlayerPedId()
     if IsPedArmed(localPlayer, 4) then
-        local currentWeapon = GetSelectedPedWeapon(localPlayer)
-        local ammoType = findAmmoType(currentWeapon)
-        local ammoCount = ammoCount(ammoType)
-        SetPedAmmo(localPlayer, currentWeapon, ammoCount)
-
-        local hasWeapon = false
-        for k,v in pairs(inventory) do
-            if v and v.item then
-                if GetHashKey(v.item) == currentWeapon then
-                    hasWeapon = true
-                end
-            end
+      local currentWeapon = GetSelectedPedWeapon(localPlayer)
+      local ammoType = findAmmoType(currentWeapon)
+      local ammoCount = ammoCount(ammoType)
+      SetPedAmmo(localPlayer, currentWeapon, ammoCount)
+  
+      local hasWeapon = false
+      for k, v in pairs(inventory) do
+        if v and v.item then
+          if GetHashKey(v.item) == currentWeapon then
+            hasWeapon = true
+          end
         end
-
-        if not hasWeapon then
-            RemoveAllPedWeapons(localPlayer, false)
-        end
+      end
+  
+      if not hasWeapon then
+        RemoveAllPedWeapons(localPlayer, false)
+      end
     end
 end)
 
-Citizen.CreateThread(
-    function()
-        while true do
-            local localPlayer = PlayerPedId()
-            -- ammo update
-            if playerArmed then
-                local currentWeapon = GetSelectedPedWeapon(localPlayer)
+-- Citizen.CreateThread(
+--     function()
+--         while true do
+--             local localPlayer = PlayerPedId()
+--             -- ammo update
+--             if playerArmed then
+--                 local currentWeapon = GetSelectedPedWeapon(localPlayer)
 
-                if IsPedShooting(localPlayer) then
-                    local ammoType = findAmmoType(currentWeapon)
-                    if ammoType then
-                        TriggerServerEvent('arena:reduceWeaponAmmo', ammoType)
-                    end
-                end
-            end
+--                 if IsPedShooting(localPlayer) then
+--                     local ammoType = findAmmoType(currentWeapon)
+--                     if ammoType then
+--                         TriggerServerEvent('erotic:reduceWeaponAmmo', ammoType)
+--                     end
+--                 end
+--             end
 
-            Citizen.Wait(0)
-        end
+--             Citizen.Wait(0)
+--         end
+--     end
+-- )
+
+function putawayGun(weaponName)
+  Citizen.CreateThread(function()
+    local ped = PlayerPedId()
+    local currentWeapon = GetSelectedPedWeapon(ped)
+
+    if currentWeapon == GetHashKey(weaponName) then
+      ClearPedTasks(ped)
+      RemoveAllPedWeapons(ped, true)
     end
-)
-
-function putawayGun()
-    Citizen.CreateThread(
-        function()
-            local localPlayer = PlayerPedId()
-
-            if playerHasWeapon() then
-                RemoveAllPedWeapons(localPlayer, false)
-            end
-        end)
+  end)
 end
+
+-- local cooldownWeapons = {
+--   [`WEAPON_PRECISIONRIFLE`] = 750,
+-- }
+
+-- function putawayGun()
+--   Citizen.CreateThread(
+--     function()
+--       local localPlayer = PlayerPedId()
+--       if playerHasWeapon() then
+--         local weapon = GetSelectedPedWeapon(PlayerPedId())
+--         if cooldownWeapons[weapon] ~= nil then
+--           CreateThread(function()
+--             canEquipWeapon = false
+--             local now = GetGameTimer()
+--             local toWait = cooldownWeapons[weapon]
+--             while GetGameTimer() - now < toWait do
+--               Wait(5)
+--               if IsEntityDead(PlayerPedId()) then
+--                 toWait = 0
+--               end
+--             end
+--             canEquipWeapon = true
+--           end)
+--         end
+--         RemoveAllPedWeapons(localPlayer, false)
+--       end
+--       TriggerEvent("erotic:useWeapon")
+--     end)
+-- end
