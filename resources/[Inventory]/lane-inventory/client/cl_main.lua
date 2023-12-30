@@ -76,7 +76,7 @@ RegisterNUICallback('nui:zbrp:openedState', function(data)
 
     -- global
     SetNuiFocus(state, state)
-    Scaleform.Cursor()
+    -- Scaleform.Cursor()
     
 
     if state then
@@ -100,7 +100,7 @@ RegisterNUICallback('nui:zbrp:openedState', function(data)
 
         TriggerServerEvent('zbrp:removeSecondary')
         TriggerScreenblurFadeOut()
-        Scaleform.Hide()
+        -- Scaleform.Hide()
     end
 end)
 
