@@ -18,8 +18,13 @@ RegisterNetEvent("inventory:updateValues", function(genre, kit, canSwitch)
     else Player.CanSwitch = canSwitch end
 end)
 
+RegisterNetEvent("client:joined_lobby", function()
+    SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
+    Player.InStim = false
+    Player.InAnim = false
+end)
 
-RegisterNetEvent("are   pawned", function()
+RegisterNetEvent("erotic:playerRespawned", function()
     Player.InAnim = false 
     Player.InStim = false
 end)
@@ -60,8 +65,6 @@ end
 function Player.ServerID() -- experimental
     return GetPlayerServerId(GetPlayerIndex())
 end
-
-
 
 function Player.GetTargetVehicle(coordFrom, coordTo)
     local offset = 0

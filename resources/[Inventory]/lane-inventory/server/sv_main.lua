@@ -7,9 +7,9 @@ INVENTORY.MAIN = {
         if self.Player[source][slot] == 'empty' then return end
 
         if string.find(self.Player[source][slot].item, "WEAPON") then
-            return TriggerClientEvent('arena:useWeapon',source, self.Player[source][slot].item)
+            return TriggerClientEvent('erotic:useWeapon',source, self.Player[source][slot].item)
         end
-    
+
         TriggerClientEvent('inventory.api:useItem', source, self.Player[source][slot].item, slot)
     end,
 
@@ -17,14 +17,35 @@ INVENTORY.MAIN = {
         if not self.Player[source] then return print("Player not found") end
 
 
-        print(data.item,data.slot)
+        -- print(data.item,data.slot)
         self.Player[source][data.slot] = {item = data.item, itemdata = {weight=0.5}, quantity=count}
         TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
     end,
 
-    RemoveItem = function(self, source)
-
-    end,
+    RemoveItem = function(self, source, item, quantity)
+        if not self.Player[source] then return print("Player not found") end
+    
+        local quantityToRemove = tonumber(quantity)
+        if not quantityToRemove then return print("Invalid quantity or needs to be a number") end
+    
+        for slot, slotData in pairs(self.Player[source]) do
+            if slotData ~= 'empty' and slotData.item == item then
+                local currentQuantity = tonumber(slotData.quantity) or 0
+    
+                if currentQuantity <= quantityToRemove then
+                    self.Player[source][slot] = 'empty'
+                    TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
+                    return
+                else
+                    self.Player[source][slot].quantity = currentQuantity - quantityToRemove
+                    TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
+                    return
+                end
+            end
+        end
+    
+        print("Item not found in inventory")
+    end,      
 
     ClearInventory = function(self, source)
         if not self.Player[source] then return print("Player not found") end
@@ -70,15 +91,15 @@ INVENTORY.MAIN = {
         local player = ToPlayer
         local item = Item
         if not self.Player[player] then return print("Player not found") end
-    
+
         local slot = self:GetFreeSlot(ToPlayer)
         if type(slot) ~= "number" then return end
         -- local IsSlotAvailable, error = self:IsSlotFree(player, slot)
         -- if not IsSlotAvailable then return print(error) end 
-    
+
         -- print(player, GetPlayerName(player), item)
         -- print("Free Slot:", GetFreeSlot(player))
-    
+
         self.Player[player][slot] = {item = Item, itemdata = {weight=0.5}, quantity = 1}
         TriggerClientEvent('zbrp:updatePlayerInventory', player, self.Player[player])
     end,
@@ -89,7 +110,7 @@ INVENTORY.MAIN = {
         local count = data['count']
         local index = data['index']
         -- print("DEBUG MOVE ITEM: ","Source: "..source, "Player: "..PlayerType, "Slot: "..DroppedTo, "Count: "..count, "Index: "..index)
-    
+
         local IsSlotAvailable, error = self:IsSlotFree(source, DroppedTo)
         if not IsSlotAvailable then return print(error) end 
         self.Player[source][DroppedTo] = self.Player[source][index]
@@ -100,13 +121,13 @@ INVENTORY.MAIN = {
     IsSlotFree = function(self, source, slot)
         if not self.Player[source] then return false, "Player NOT FOUND" end
         if self.Player[source][slot] ~= 'empty' then return false, "SLOT TAKEN" end
-    
+
         return true
     end,
 
     GetFreeSlot = function(self, source)
         if not self.Player[source] then return "Player NOT FOUND" end
-    
+
         for k,v in pairs(self.Player[source]) do
             if v == 'empty' then return k end
         end 
@@ -115,7 +136,7 @@ INVENTORY.MAIN = {
     SetupPlayer = function(self, source)
         local source = source 
         if not source then return print("Error 501") end
-    
+
         self.Player[source] = {
             [1] = 'empty',
             [2] = 'empty',
@@ -157,6 +178,18 @@ INVENTORY.MAIN = {
 
 }
 
+INVENTORY.Secondary = {}
+
+RegisterNetEvent('zbrp:openSecondInventory')
+AddEventHandler('zbrp:openSecondInventory', function(data)
+    local src = source
+    local inventoryId = data.id -- Unique identifier for the secondary inventory
+    local inventoryType = data.type -- For example, 'other'
+    print('a')
+
+    TriggerClientEvent('zbrp:updateSecondInventory', src, inventoryData, maxWeight)
+end)
+
 RegisterNetEvent('zbrp:Player:addItem', function(...)
     INVENTORY.MAIN:AddItem(source,...)
 end)
@@ -166,7 +199,7 @@ RegisterNetEvent('zbrp:Player:removeItem', function(...)
 end)
 
 RegisterNetEvent('zbrp:Player:clearItems', function(...)
-    print("clearitems")
+    -- print("clearitems")
     INVENTORY.MAIN:ClearInventory(source, ...)
 end)
 
@@ -175,11 +208,9 @@ RegisterNetEvent('nui:zbrp:useItem', function(...)
 end)
 
 RegisterNetEvent('GiveItem', function(...)
-    print(...)
+    -- print(...)
     INVENTORY.MAIN:GiveItem(source, ...)
 end)
-
-
 
 RegisterNetEvent('nui:zbrp:moveInside', function(...)
     INVENTORY.MAIN:MoveItem(source, ...)
@@ -249,4 +280,6 @@ AddEventHandler('playerDropped', function(reason)
     INVENTORY.MAIN.Player[source] = nil
 end)
 
-
+RegisterNetEvent('erotic:reduceWeaponAmmo', function(ammoType)
+    INVENTORY.MAIN:RemoveItem(source, ammoType, 1)
+end)

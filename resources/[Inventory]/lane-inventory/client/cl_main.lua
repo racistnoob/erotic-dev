@@ -1,10 +1,6 @@
-local clonedPed = nil
-
 inventoryOpened = false
 NUI_LOADED = false
-inventoryData = {
-    -- [1] = {item = "WEAPON_ASSAULTRIFLE", itemdata = {weight=0.5}, quantity = 1}
-}
+inventoryData = nil
 
 exports("GetPlayerInventory", function()
     return inventoryData 
@@ -36,13 +32,30 @@ Citizen.CreateThread(
 )
 
 function openInventory()
-    -- Scaleform.Show()
-    Wait(100)
-    SendNUIMessage({action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
+    local playerPos = GetEntityCoords(PlayerPedId())
+    local playerInVehicle = IsPedInAnyVehicle(PlayerPedId(), false)
+    local foundAny = false
+
+    for i, d in ipairs(Config.OtherInventories) do
+        if #(playerPos - d.pos) < 3.0 then -- Proximity threshold
+            foundAny = true
+            
+            if foundAny then
+                print('second')
+                TriggerServerEvent('zbrp:openSecondInventory', {
+                    type = 'other',
+                    id = i
+                })
+                break
+            end
+        end
+    end
+
+    if not foundAny then
+        -- Scaleform.Show()
+        SendNUIMessage({ action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
+    end
 end
-
-
-
 
 RegisterNUICallback('nui:zbrp:blurState', function(blur)
     if blur == 'on' then
@@ -100,11 +113,10 @@ AddEventHandler('zbrp:updateSecondInventory', function(inventory, maxweight)
     })
 end)
 
-
 RegisterNetEvent('zbrp:JoinedLobby')
 AddEventHandler('zbrp:JoinedLobby', function()
-    SetEntityCoords(PlayerPedId(), 234.2412, -1393.6769, 30.5178)
-    SetEntityHeading(PlayerPedId(), 141.6501)
+    -- SetEntityCoords(PlayerPedId(), 234.2412, -1393.6769, 30.5178)
+    -- SetEntityHeading(PlayerPedId(), 141.6501)
 end)
 
 RegisterNetEvent('zbrp:updatePlayerInventory')
@@ -271,14 +283,14 @@ Citizen.CreateThread(function()
 end)
 
 function IsWeapon(slot)
-    if string.find(inventoryData[slot].item, "WEAPON") then return true end 
+    if string.find(inventoryData[slot].item, "WEAPON") then return true end
     return false 
 end
 
 function CanUse(slot)
     -- if they are in animation stop them from pulling out weapon 
-    if IsWeapon(slot) and Player.InAnim then return false end 
-    return true 
+    if IsWeapon(slot) and Player.InAnim then return false end
+    return true
 end
 
 -- [[ WEAPON WHEEL ]] --
@@ -287,13 +299,13 @@ CreateThread(function()
         Wait(0)
         BlockWeaponWheelThisFrame()
         DisableControlAction(0, 37, true)
-        DisableControlAction(0, 199, true)  
+        DisableControlAction(0, 199, true)
     end
 end)
 
 -- [[ RADIO WITH SHIFT AND G ]]
 CreateThread(function()
-    while true do 
+    while true do
         Wait(0)
         if IsControlPressed(0, 58) and IsControlPressed(0, 61) then 
             if API.HasItem("radio") then 

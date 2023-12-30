@@ -11,7 +11,6 @@ Config.NoTrunk = {
     [GetHashKey("terbyte")] = true 
 }
 
-
 Config.FactionSafes = {}
 
 Config.OtherInventories = {
@@ -138,58 +137,53 @@ Functions.Trim = function(value)
 end
 
 
-local function allLoadouts()
-    local str = "["
+-- local function allLoadouts()
+--     local str = "["
 
-    for k,v in pairs(Config.Loadouts) do 
-        str = str..'{"item": '..v.name..'", "quantity": 1, "slot": '..k..'},'
-    end
-    str = str.."]"
-    return str 
-end
+--     for k,v in pairs(Config.Loadouts) do 
+--         str = str..'{"item": '..v.name..'", "quantity": 1, "slot": '..k..'},'
+--     end
+--     str = str.."]"
+--     return str 
+-- end
 
 
-Config.LoadoutData = {
-    ["pistols"] = 
-    '[{"item" : "LOADOUT_HEAVYPISTOL", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2}, {"item" : "LOADOUT_SP45", "quantity" : 1, "slot" : 3}, {"item" : "LOADOUT_VINTAGEPISTOL", "quantity" : 1, "slot" : 4}]',
-    -- ["all"] = '[{"item" : "LOADOUT_HEAVYPISTOL", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2},{"item" : "LOADOUT_MP9", "quantity" : 1, "slot" : 3},{"item" : "LOADOUT_MCX", "quantity" : 1, "slot" : 4},{"item" : "LOADOUT_AK47", "quantity" : 1, "slot" : 5},{"item" : "LOADOUT_COMBATPISTOL", "quantity" : 1, "slot" : 6}, {"item":"LOADOUT_M60", "quantity" : 1, "slot" : 7} , {"item":"LOADOUT_APPISTOL", "quantity" : 1, "slot" : 8} , {"item":"LOADOUT_M1911", "quantity" : 1, "slot" : 9}]',
-    ["smgs"] = 
-    '[{"item" : "LOADOUT_SMG_MK2", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2},{"item" : "LOADOUT_MP9", "quantity" : 1, "slot" : 3}, {{"item" : "LOADOUT_MPX", "quantity" : 1, "slot" : 4}}, {{"item" : "LOADOUT_TOMMY", "quantity" : 1, "slot" : 5}}]',
-    ["ars"] = 
-    '[{"item" : "LOADOUT_762", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_AK47", "quantity" : 1, "slot" : 2}, {"item":"LOUDOUT_M16", "quantity" : 1, "slot" : 3}, {"item":"LOADOUT_HEAVYRIFLE", "quantity" : 1, "slot" : 4}, {"item":"LOADOUT_COMPACTRIFLE", "quantity" : 1, "slot" : 5}]'
-}
+-- Config.LoadoutData = {
+--     ["pistols"] = 
+--     '[{"item" : "LOADOUT_HEAVYPISTOL", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2}, {"item" : "LOADOUT_SP45", "quantity" : 1, "slot" : 3}, {"item" : "LOADOUT_VINTAGEPISTOL", "quantity" : 1, "slot" : 4}]',
+--     -- ["all"] = '[{"item" : "LOADOUT_HEAVYPISTOL", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2},{"item" : "LOADOUT_MP9", "quantity" : 1, "slot" : 3},{"item" : "LOADOUT_MCX", "quantity" : 1, "slot" : 4},{"item" : "LOADOUT_AK47", "quantity" : 1, "slot" : 5},{"item" : "LOADOUT_COMBATPISTOL", "quantity" : 1, "slot" : 6}, {"item":"LOADOUT_M60", "quantity" : 1, "slot" : 7} , {"item":"LOADOUT_APPISTOL", "quantity" : 1, "slot" : 8} , {"item":"LOADOUT_M1911", "quantity" : 1, "slot" : 9}]',
+--     ["smgs"] = 
+--     '[{"item" : "LOADOUT_SMG_MK2", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_M9", "quantity" : 1, "slot" : 2},{"item" : "LOADOUT_MP9", "quantity" : 1, "slot" : 3}, {{"item" : "LOADOUT_MPX", "quantity" : 1, "slot" : 4}}, {{"item" : "LOADOUT_TOMMY", "quantity" : 1, "slot" : 5}}]',
+--     ["ars"] = 
+--     '[{"item" : "LOADOUT_762", "quantity" : 1, "slot" : 1},{"item" : "LOADOUT_AK47", "quantity" : 1, "slot" : 2}, {"item":"LOUDOUT_M16", "quantity" : 1, "slot" : 3}, {"item":"LOADOUT_HEAVYRIFLE", "quantity" : 1, "slot" : 4}, {"item":"LOADOUT_COMPACTRIFLE", "quantity" : 1, "slot" : 5}]'
+-- }
 
-CreateThread(function()
-    Config.LoadoutData["all"] = '['
-    -- {"item" : "LOADOUT_MCX", "quantity" : 1, "slot" : 1},
-    for k,v in pairs(Config.Loadouts) do 
-        local str
-        if k == #Config.Loadouts then 
-            str = '{"item": "%s", "quantity": %s, "slot": %s}'
-        else
-            str = '{"item": "%s", "quantity": %s, "slot": %s},'
-        end
-        str = str:format(v.name, 1, k)
-        Config.LoadoutData["all"] = Config.LoadoutData["all"]..str
-    end
-    Config.LoadoutData["all"] = Config.LoadoutData["all"]..']'
-    -- print(Config.LoadoutData["all"])
-end)
+-- CreateThread(function()
+--     Config.LoadoutData["all"] = '['
+--     -- {"item" : "LOADOUT_MCX", "quantity" : 1, "slot" : 1},
+--     for k,v in pairs(Config.Loadouts) do 
+--         local str
+--         if k == #Config.Loadouts then 
+--             str = '{"item": "%s", "quantity": %s, "slot": %s}'
+--         else
+--             str = '{"item": "%s", "quantity": %s, "slot": %s},'
+--         end
+--         str = str:format(v.name, 1, k)
+--         Config.LoadoutData["all"] = Config.LoadoutData["all"]..str
+--     end
+--     Config.LoadoutData["all"] = Config.LoadoutData["all"]..']'
+--     -- print(Config.LoadoutData["all"])
+-- end)
 
 Config.Weapons = {
     ["WEAPON_APPISTOL"] = "9mm_rounds",
-    ["WEAPON_CARBINERIFLE_MK2"] = "556_rounds",
     ["WEAPON_SPECIALCARBINE"] = "556_rounds",
-    ["WEAPON_SPECIALCARBINE_MK2"] = "556_rounds",
     ["WEAPON_ASSAULTRIFLE"] = "556_rounds",
     ["WEAPON_TACTICALRIFLE"] = "556_rounds",
     ["WEAPON_COMBATPISTOL"] = "9mm_rounds",
-    ["WEAPON_COMPACTRIFLE"] = "556_rounds",
     ["WEAPON_HEAVYPISTOL"] = "9mm_rounds",
     ["WEAPON_SP45"] = "9mm_rounds",
-    ["WEAPON_PISTOL50"] = "9mm_rounds",
     ["WEAPON_SMG_MK2"] = "9mm_rounds",
-    ["WEAPON_CARBINERIFLE"] = "556_rounds",
     ["WEAPON_CARBINERIFLE_MK2"] = "556_rounds",
     ["WEAPON_SPECIALCARBINE_MK2"] = "556_rounds",
     ["WEAPON_PISTOL50"] = "50cal_rounds",
@@ -200,7 +194,9 @@ Config.Weapons = {
     ["WEAPON_COMBATPDW"] = "9mm_rounds",
     ["WEAPON_MICROSMG"] = "9mm_rounds",
     ["WEAPON_GUSENBERG"] = "9mm_rounds",
-    ["WEAPON_ASSAULTSMG"] = "9mm_rounds"
+    ["WEAPON_ASSAULTSMG"] = "9mm_rounds",
+    ["WEAPON_MARKSMANRIFLE_MK2"] = "50cal_rounds",
+    ["WEAPON_HEAVYSNIPER_MK2"] = "50cal_rounds"
 }
 
 
@@ -212,7 +208,7 @@ Config.Loadouts = {
     {name = "LOADOUT_G36", format = "G36 Loadout", kit = "g36"},
     {name = "LOADOUT_AWP", format = "Awp Loadout", kit = "awp"},
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
-    {name = "LOADOUT_M9", format = "M9 Beretta Loadout", kit = "m9"},
+    {name = "LOADOUT_M1911", format = "M1911 Beretta Loadout", kit = "M1911"},
     {name = "LOADOUT_MP9", format = "MP9 Loadout", kit = "mp9"},
     {name = "LOADOUT_762", format = "762 Loadout", kit = "762"},
     {name = "LOADOUT_AK47", format = "AK-47 Loadout", kit = "akm"},

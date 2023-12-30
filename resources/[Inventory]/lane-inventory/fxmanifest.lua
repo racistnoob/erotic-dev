@@ -17,7 +17,7 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/*.lua'
+    'client/**/**'
 }
 
 ui_page 'html/index.html'

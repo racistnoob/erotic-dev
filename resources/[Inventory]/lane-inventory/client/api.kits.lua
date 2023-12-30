@@ -22,7 +22,7 @@ Kits = {
             {item = "WEAPON_COMBATPISTOL", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 7, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
-            {item = "9mm_rounds", amount = 300, slot = 15},
+            {item = "9mm_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 14},
         },
         ["vintage"] = {
@@ -43,37 +43,37 @@ Kits = {
             {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 20, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
         ["m16"] = {
             {item = "WEAPON_TACTICALRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
         ["heavyrifle"] = {
             {item = "WEAPON_HEAVYRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
         ["g36"] = {
             {item = "WEAPON_SPECIALCARBINE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
         ["mk18"] = {
             {item = "WEAPON_CARBINERIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
         ["draco"] = {
             {item = "WEAPON_COMPACTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
-            {item = "556_rounds", amount = 300, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 15},
         },
     -- ["smgs"] = {
         ["mp5"] = {
@@ -112,21 +112,23 @@ Kits = {
             {item = "kevlar", amount = 5, slot = 2},
             {item = "medkit", amount = 15, slot = 3},
             {item = "deluxo", amount = 1, slot = 5},
+            {item = "50cal_rounds", amount = 150, slot = 15},
         },
         ["trick2"] = {
             {item = "WEAPON_MARKSMANRIFLE_MK2", primary = true, amount = 1, slot = 1},
             {item = "kevlar", amount = 5, slot = 2},
             {item = "medkit", amount = 15, slot = 3},
             {item = "deluxo", amount = 1, slot = 5},
+            {item = "50cal_rounds", amount = 150, slot = 15},
         },
         -- ETC
         ["hopout"] = {
-            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
             {item = "WEAPON_SP45", primary = true, amount = 1, slot = 5},
             {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "556_rounds", amount = 300, slot = 16},
+            {item = "556_rounds", amount = 250, slot = 16},
+            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
         },
 }
 
@@ -135,28 +137,6 @@ for k,v in pairs(Kits) do
         DoKitStuff(k)
     end)
 end 
-
--- build the 'all' kits automatically 
-
-CreateThread(function()
-    Kits["all"] = {} 
-    local all = Kits["all"]
-    for k,v in pairs(Kits) do 
-        for i,p in pairs(Kits[k]) do 
-            all[i] = p 
-        end
-    end
-end)
-        
-
-function AllKits()
-    for k,v in pairs(Kits) do 
-        for i,p in pairs(Kits[k]) do 
-            API.GiveItem(p.item, p.amount, p.slot)
-        end 
-    end
-end
-
 -- build the 'all' kits automatically 
 
 CreateThread(function()
@@ -185,6 +165,7 @@ RegisterNetEvent("inventory:forceKit", function(genre, kit)
     local ammoCount = API.GetKitAmmo(kit)
     GiveWeaponToPed(Player.Ped(), GetHashKey(primary), 0, false, true)
     ApplyWeaponComponents(primary)
+    ApplyWeaponSkin(Player.Ped(), primary, CurrentSkin)
     SetPedAmmo(Player.Ped(), GetHashKey(primary), ammoCount)
     Wait(0)
     SetAmmoInClip(Player.Ped(), GetHashKey(primary), 999)
@@ -237,6 +218,7 @@ function API.GiveKit()
     local ammoCount = API.GetKitAmmo(kit)
     GiveWeaponToPed(Player.Ped(), GetHashKey(primary), 0, false, true)
     ApplyWeaponComponents(primary)
+    ApplyWeaponSkin(Player.Ped(), primary, CurrentSkin)
     SetPedAmmo(Player.Ped(), GetHashKey(primary), ammoCount)
     Wait(0)
     SetAmmoInClip(Player.Ped(), GetHashKey(primary), 999)
