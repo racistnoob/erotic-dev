@@ -22,30 +22,34 @@ INVENTORY.MAIN = {
         TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
     end,
 
-    RemoveItem = function(self, source, item, quantity)
-        if not self.Player[source] then return print("Player not found") end
+    -- RemoveItem = function(self, source, item, quantity) -- working removeitem function
+    --     if not self.Player[source] then return print("Player not found") end
     
-        local quantityToRemove = tonumber(quantity)
-        if not quantityToRemove then return print("Invalid quantity or needs to be a number") end
+    --     local quantityToRemove = tonumber(quantity)
+    --     if not quantityToRemove then return print("Invalid quantity or needs to be a number") end
     
-        for slot, slotData in pairs(self.Player[source]) do
-            if slotData ~= 'empty' and slotData.item == item then
-                local currentQuantity = tonumber(slotData.quantity) or 0
+    --     for slot, slotData in pairs(self.Player[source]) do
+    --         if slotData ~= 'empty' and slotData.item == item then
+    --             local currentQuantity = tonumber(slotData.quantity) or 0
     
-                if currentQuantity <= quantityToRemove then
-                    self.Player[source][slot] = 'empty'
-                    TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
-                    return
-                else
-                    self.Player[source][slot].quantity = currentQuantity - quantityToRemove
-                    TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
-                    return
-                end
-            end
-        end
+    --             if currentQuantity <= quantityToRemove then
+    --                 self.Player[source][slot] = 'empty'
+    --                 TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
+    --                 return
+    --             else
+    --                 self.Player[source][slot].quantity = currentQuantity - quantityToRemove
+    --                 TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])
+    --                 return
+    --             end
+    --         end
+    --     end
     
-        print("Item not found in inventory")
-    end,      
+    --     print("Item not found in inventory")
+    -- end,
+
+    RemoveItem = function()
+
+    end, 
 
     ClearInventory = function(self, source)
         if not self.Player[source] then return print("Player not found") end

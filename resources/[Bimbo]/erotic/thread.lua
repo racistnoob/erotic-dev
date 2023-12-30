@@ -24,34 +24,34 @@ Citizen.CreateThread(function()
     end
 end)
 
--- Citizen.CreateThread(function()
--- 	while true do
--- 		Wait(1000)
--- 		ped = PlayerPedId()
--- 		vehicle = GetVehiclePedIsIn(ped, false)
--- 	end
--- end)
+Citizen.CreateThread(function()
+	while true do
+		Wait(1000)
+		ped = PlayerPedId()
+		vehicle = GetVehiclePedIsIn(ped, false)
+	end
+end)
 
--- Citizen.CreateThread(function()
---     while true do
---         if vehicle then
---             -- keep engine on
---             if IsControlPressed(2, 75) and not IsEntityDead(ped) then
---                 Wait(150)
---                 SetVehicleEngineOn(vehicle, true, true, false)
---                 TaskLeaveVehicle(ped, vehicle, 0)
---             end
+Citizen.CreateThread(function()
+    while true do
+        if vehicle then
+            -- keep engine on
+            if IsControlPressed(2, 75) and not IsEntityDead(ped) then
+                Wait(150)
+                SetVehicleEngineOn(vehicle, true, true, false)
+                TaskLeaveVehicle(ped, vehicle, 0)
+            end
       
---             -- anti shuffle
---             local seat = GetSeatPedIsIn(ped)
---             SetPedConfigFlag(ped, 184, true)
---             if GetIsTaskActive(ped, 165) == 1 then
---                 SetPedIntoVehicle(ped, vehicle, seat) -- getting into car from passenger with no driver
---             end
---         end
---         Wait(1000)
---     end
--- end)
+            -- anti shuffle
+            local seat = GetSeatPedIsIn(ped)
+            SetPedConfigFlag(ped, 184, true)
+            if GetIsTaskActive(ped, 165) == 1 then
+                SetPedIntoVehicle(ped, vehicle, seat) -- getting into car from passenger with no driver
+            end
+        end
+        Wait(1000)
+    end
+end)
 
 RegisterCommand("seat", function(source, args, rawCommand)
     local seatID = tonumber(args[1])
