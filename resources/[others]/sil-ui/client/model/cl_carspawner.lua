@@ -1,16 +1,43 @@
 local CAR_LIST = {
     [1] = {
         ['model'] = 'Revolter',
-        ['image'] = 'https://i.imgur.com/0RI3Snh.png',
+        ['image'] = 'https://www.gtaboom.com/wp-content/uploads/2018/01/revolter3.jpg',
     },
     [2] = {
-        ['model'] = 'Neon'
+        ['model'] = 'Sheava',
+        ['image'] = 'https://img.gta5-mods.com/q75/images/emperor-sheava-add-on-lods/d9c4d0-Sheava.9.png',
     },
     [3] = {
-        ['model'] = 'Neon'
+        ['model'] = 'Issi7',
+        ['image'] = 'https://th.bing.com/th/id/OIP.meiRzJA_S-t9PQTCMyX1IgHaEK?rs=1&pid=ImgDetMain',
     },
     [4] = {
-        ['model'] = 'Neon'
+        ['model'] = 'Cyclone',
+        ['image'] = 'https://th.bing.com/th/id/OIP.eTYHQOMIqy_8bfrBIXaFhQHaEK?rs=1&pid=ImgDetMain',
+    },
+    [5] = {
+        ['model'] = 'Shotaro',
+        ['image'] = 'https://vignette.wikia.nocookie.net/gtawiki/images/d/df/Shotaro-GTAO-front.png/revision/latest?cb=20161004182220',
+    },
+    [6] = {
+        ['model'] = 'Toros',
+        ['image'] = 'https://th.bing.com/th/id/R.86f1754dbf9f5d4b21d0302538724fbf?rik=bdWUn0Mfs8viNg&pid=ImgRaw&r=0',
+    },
+    [7] = {
+        ['model'] = 'OmnisEGT',
+        ['image'] = 'https://www.gtabase.com/images/user/vehicles/62e6735f473c8_omnisegt.jpg',
+    },
+    [8] = {
+        ['model'] = 'Paragon',
+        ['image'] = 'https://www.gtabase.com/images/jch-optimize/ng/images_gta-5_vehicles_sports_main_paragon-r.webp',
+    },
+    [9] = {
+        ['model'] = 'SultanRS',
+        ['image'] = 'https://www.gtabase.com/images/jch-optimize/ng/images_gta-5_vehicles_super_main_sultan-rs.webp',
+    },
+    [10] = {
+        ['model'] = 'Neon',
+        ['image'] = 'https://www.gtabase.com/images/user/vehicles/62e6735f473c8_omnisegt.jpg',
     },
 }
 
