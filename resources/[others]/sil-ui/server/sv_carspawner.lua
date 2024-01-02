@@ -1,0 +1,12 @@
+-- local CAR_LIST = {
+--     [1] = {
+--         ['MODEL'] = 'Revolter'
+--     },
+--     [2] = {
+--         ['MODEL'] = 'Neon'
+--     },
+-- }
+
+-- RPC.register('ui:carspawner:fetchVehicleList', function(source)
+--     return CAR_LIST
+-- end)
