@@ -178,6 +178,7 @@ end
 Config.Weapons = {
     ["WEAPON_APPISTOL"] = "9mm_rounds",
     ["WEAPON_PISTOL"] = "9mm_rounds",
+    ["WEAPON_USP45"] = "9mm_rounds",
     ["WEAPON_SPECIALCARBINE"] = "556_rounds",
     ["WEAPON_ASSAULTRIFLE"] = "556_rounds",
     ["WEAPON_TACTICALRIFLE"] = "556_rounds",
