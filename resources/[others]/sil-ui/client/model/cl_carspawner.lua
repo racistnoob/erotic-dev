@@ -184,50 +184,7 @@ end)
 
 RegisterNUICallback('carspawner:spawnVehicle', function(DATA)
     SetNuiFocus(false, false)
-    
-    if IsPedInAnyVehicle(PlayerPedId()) then return end
-
-    Citizen.CreateThread(function()
-        local HASH = GetHashKey(DATA.MODEL)
-
-        if not IsModelAVehicle(HASH) then return end
-        if not IsModelInCdimage(HASH) or not IsModelValid(HASH) then return end
-        
-        RequestModel(HASH)
-
-        while not HasModelLoaded(HASH) do
-            Citizen.Wait(0)
-        end
-
-        local COORDS = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 1.5, 5.0, 0.0)
-
-        local HEADING = GetEntityHeading(PlayerPedId())
-        local CREATED_VEHICLE = CreateVehicle(HASH, COORDS, HEADING, true, false)
-
-        SetVehicleModKit(CREATED_VEHICLE, 0)
-        SetVehicleMod(CREATED_VEHICLE, 11, 3, false)
-        SetVehicleMod(CREATED_VEHICLE, 12, 2, false)
-        SetVehicleMod(CREATED_VEHICLE, 13, 2, false)
-        SetVehicleMod(CREATED_VEHICLE, 15, 3, false)
-        SetVehicleMod(CREATED_VEHICLE, 16, 4, false)
-        SetModelAsNoLongerNeeded(HASH)
-        TaskWarpPedIntoVehicle(PlayerPedId(), CREATED_VEHICLE, -1)
-        
-        SetVehicleDirtLevel(CREATED_VEHICLE, 0)
-        SetVehicleWindowTint(CREATED_VEHICLE, 0)
-
-        Citizen.CreateThread(function()
-            local savedMods = GetResourceKvpString("vehicle_" .. tostring(HASH) .. "_mods")
-            if savedMods then
-                local parsedMods = json.decode(savedMods)
-                if parsedMods then
-                    exports["noob"]:SetVehicleProperties(CREATED_VEHICLE, parsedMods)
-                end
-            end
-        end)
-
-        SetResourceKvp('last_vehicle',DATA.MODEL)
-    end)
+    TriggerEvent('drp:spawnvehicle', DATA.MODEL)
 end)
 
 RegisterCommand('+car_menu', function()
