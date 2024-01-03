@@ -185,6 +185,7 @@ end)
 RegisterNUICallback('carspawner:spawnVehicle', function(DATA)
     SetNuiFocus(false, false)
     TriggerEvent('drp:spawnvehicle', DATA.MODEL)
+    SetResourceKvp("last_vehicle", DATA.MODEL)
 end)
 
 RegisterCommand('+car_menu', function()
