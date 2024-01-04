@@ -34,7 +34,7 @@ AddEventHandler('erotic:useWeapon', function(weaponName)
         })
     elseif not IsPedJumping(ped) and cooldown == false then
       cooldown = true
-      Wait(500)
+      Wait(100)
       cooldown = false
             SendNotification({
                 text = "~g~~h~Equipped.",
