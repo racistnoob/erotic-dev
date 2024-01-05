@@ -177,6 +177,7 @@ end
 
 Config.Weapons = {
     ["WEAPON_APPISTOL"] = "9mm_rounds",
+    ["WEAPON_MACHINEPISTOL"] = "9mm_rounds",
     ["WEAPON_PISTOL"] = "9mm_rounds",
     ["WEAPON_USP45"] = "9mm_rounds",
     ["WEAPON_SPECIALCARBINE"] = "556_rounds",
@@ -204,6 +205,7 @@ Config.Weapons = {
 
 Config.Loadouts = {
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
+    {name = "LOADOUT_TEC9", format = "Machine Pistol Loadout", kit = "tec9"},
     {name = "LOADOUT_HOPOUT", format = "Hopout Loadout", kit = "hopout"},
     {name = "LOADOUT_TRICK", format = "Trick Loadout", kit = "Trick"},
     {name = "LOADOUT_TRICK2", format = "Trick2 Loadout", kit = "Trick2"},

@@ -42,6 +42,13 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
+        ["TEC9"] = {
+            {item = "WEAPON_MACHINEPISTOL", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+        },
     -- },
     -- ["ars"] = {
         ["ak"] = {
