@@ -1,4 +1,8 @@
-WorldTracker = {};
+
+
+
+
+WorldTracker = {}; -- [license] = {World = WorldName, Name = PlayerName, Kills = 0}
 
 Config = {}
 Config = {
@@ -26,20 +30,32 @@ Config = {
     },
 }
 
+function UpdateStats(worldID)
+    for _, v in pairs(WorldTracker) do
+        if v.World == worldID then
+            TriggerClientEvent('Update:Lobby:Stats',v.src, GetLobbyStats(worldID))
+        end
+    end
+end
+
+function GetWorld(src)
+    local ids = ExtractIdentifiers(src);
+    if (WorldTracker[ids.license].World ~= nil) then 
+        return(WorldTracker[ids.license].World);
+    end
+    return "normal"
+end
+
 RegisterNetEvent('erotic-lobby:GetWorld')
 AddEventHandler('erotic-lobby:GetWorld', function(src, cb)
-    local ids = ExtractIdentifiers(src);
-    if (WorldTracker[ids.license] ~= nil) then 
-        cb(WorldTracker[ids.license]);
-    end
-    cb("Normal");
+    cb(GetWorld(src))
 end)
 
 RegisterNetEvent('erotic-lobby:GetWorldBucketID')
 AddEventHandler('erotic-lobby:GetWorldBucketID', function(src, cb)
     local ids = ExtractIdentifiers(src);
-    if (WorldTracker[ids.license] ~= nil) then 
-        cb(Config.Worlds[WorldTracker[ids.license]][1]);
+    if (WorldTracker[ids.license].World ~= nil) then 
+        cb(Config.Worlds[WorldTracker[ids.license].World][1]);
     end
     cb(1);
 end)
@@ -47,19 +63,31 @@ end)
 AddEventHandler('playerDropped', function (reason) 
     local src = source;
     local ids = ExtractIdentifiers(src);
+    if WorldTracker[ids.license].World ~= nil then
+        UpdateStats(WorldTracker[ids.license].World)
+    end
     WorldTracker[ids.license] = nil;
-    local ids = ExtractIdentifiers(src);
 end)
 
 RegisterNetEvent('erotic-lobby:SpawnWorldTrigger')
 AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
     local src = source;
     local ids = ExtractIdentifiers(src);
-    if WorldTracker[ids.license] ~= nil then
-        local worldName = WorldTracker[ids.license]; 
+
+    WorldTracker[ids.license] = {
+        OldLobby = "1",
+        World = "1",
+        src = src,
+        Name = GetPlayerName(src),
+        Kills = 0,
+    }
+    if WorldTracker[ids.license].World ~= nil then
+        local worldName = WorldTracker[ids.license].World; 
         local coords = Config.Worlds[worldName][2];
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+        UpdateStats(worldName)
+        UpdateStats(WorldTracker[ids.license].OldLobby)
     end
 end)
 
@@ -72,8 +100,16 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
         local ids = ExtractIdentifiers(src);
         if not permission then
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-            WorldTracker[ids.license] = worldName;
+            WorldTracker[ids.license] = {
+                OldLobby = WorldTracker[ids.license].World or worldName,
+                World = worldName,
+                src = src,
+                Name = GetPlayerName(src),
+                Kills = 0,
+            }
             TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+            UpdateStats(worldName)
+            UpdateStats(WorldTracker[ids.license].OldLobby)
             TriggerClientEvent("core:updateRPC", src, worldName)
                 -- Changed worlds ...
             return;
@@ -133,7 +169,7 @@ function getLobbyPlayerCount(worldID)
     local playerCount = 0
 
     for _, v in pairs(WorldTracker) do
-        if v == worldID then
+        if v.World == worldID then
             playerCount = playerCount + 1
         end
     end
@@ -146,7 +182,7 @@ function updateAndSendPlayerCount(worldID)
 
     -- Count players in the specified world
     for _, v in pairs(WorldTracker) do
-        if v == worldID then
+        if v.World == worldID then
             count = count + 1
         end
     end
@@ -155,5 +191,37 @@ function updateAndSendPlayerCount(worldID)
     TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, worldID, count)
 end
 
+function GetLobbyStats(worldID)
+    local stats = {}
+    for _, v in pairs(WorldTracker) do
+        if v.World == worldID then
+            table.insert(stats,{
+                License = _,
+                Name = v.Name,
+                Kills = v.Kills,
+            })
+        end
+    end
+    table.sort(stats, function(a, b) return a.Kills > b.Kills end)
+    return stats
+end
+
+function UpdateLobbyStats(source, worldID, type)
+    local src = source
+    local ids = ExtractIdentifiers(src)
+    if not ids then return end
+
+    if WorldTracker[ids.license].World == worldID then
+        if type == "Kills" then
+            WorldTracker[ids.license].Kills = WorldTracker[ids.license].Kills + 1
+        end
+    end
+
+    UpdateStats(worldID)
+end
+
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
 exports('getPlayerWorld', getPlayerWorld)
+exports('GetLobbyStats', GetLobbyStats)
+exports('UpdateLobbyStats', UpdateLobbyStats)
+exports('GetWorld', GetWorld)
