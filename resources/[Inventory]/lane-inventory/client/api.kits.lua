@@ -49,10 +49,31 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
+        ["glock17"] = {
+            {item = "WEAPON_GLOCK17", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+        },
+        ["glock18c"] = {
+            {item = "WEAPON_GLOCK18C", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+        },
     -- },
     -- ["ars"] = {
         ["ak"] = {
             {item = "WEAPON_ASSAULTRIFLE", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "556_rounds", amount = 250, slot = 15},
+        },
+        ["scarh"] = {
+            {item = "WEAPON_SCARH", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
@@ -87,7 +108,7 @@ Kits = {
             {item = "556_rounds", amount = 250, slot = 15},
         },
         ["mk18"] = {
-            {item = "WEAPON_CARBINERIFLE", primary = true, amount = 1, slot = 1},
+            {item = "WEAPON_MK18", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
@@ -117,6 +138,13 @@ Kits = {
         },
         ["uzi"] = {
             {item = "WEAPON_MICROSMG", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+        },
+        ["Skorpion"] = {
+            {item = "WEAPON_MINISMG", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},

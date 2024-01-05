@@ -16,6 +16,9 @@ local WeaponRecoil = {
     [`weapon_heavyrifle`] = {
         vertical = .19,
     },
+    [`weapon_scarh`] = {
+        vertical = .19,
+    },
     --berretta
     [`weapon_pistol`] = {
     vertical = .21,
@@ -23,7 +26,10 @@ local WeaponRecoil = {
     [`weapon_sp45`] = {
         vertical = .21,
     },
-    [`WEAPON_GLOCK18`] = {
+    [`weapon_glock17`] = {
+        vertical = .21,
+    },
+    [`WEAPON_GLOCK18C`] = {
         vertical = .80,
         horizontal = .20
     },
@@ -63,6 +69,10 @@ local WeaponRecoil = {
     },
     --762
     [`weapon_carbinerifle_mk2`] = {
+        vertical = .30,
+        horizontal = .14
+    },
+    [`weapon_mk18`] = {
         vertical = .30,
         horizontal = .14
     },
