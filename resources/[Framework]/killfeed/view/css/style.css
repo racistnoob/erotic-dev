@@ -41,3 +41,145 @@ body {
     margin: 8px;
     user-select: none;
 }
+
+
+
+
+
+
+.player {
+    display: grid;
+    /* grid-template-columns: repeat(4, 25%); */
+    grid-template-columns: 25% 37.5% 15% 17.5%;
+    grid-auto-rows: 100%;
+    column-gap: 1%;
+    align-items:center;
+    text-align: center;
+    color:white;
+    font-family:"AXIS";
+    padding-top:1%;
+    padding-bottom: 1%;
+    box-sizing: border-box; 
+
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.shit {
+    position:absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.player-list{
+    display:none;
+    height:60%;
+    position: absolute;
+    width:60%;
+    max-height:100%;
+
+    background-color: #212329;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
+
+    overflow-y:scroll;
+    overflow-x:hidden;
+    font-size:1vh;
+    border-radius: 5px;
+}
+
+.player-list::-webkit-scrollbar{
+    width:0px;
+}
+
+.player-list-text{
+    font-size:1.7vh;
+}
+
+.nh{
+    box-sizing: border-box;
+    border-bottom:0.3vh solid rgb(234, 70, 70);
+}
+
+.player:hover{
+    
+    background-color: rgb(234, 70, 70);
+    color:white;
+    /* height: 200px; */
+}
+
+
+
+
+
+/* botom right stats */
+
+.StatsInfo {
+    width: 247px;
+    height: 130px;
+    position: fixed;
+  
+    bottom: -5%;
+    right: -100px;
+  
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+  
+    display: flex;
+    flex-direction: column;
+  
+    transition: left 0.4s;
+}
+
+.information {
+    margin: 16px 24px;
+}
+
+.labelValue {
+    display: flex;
+    flex-direction: row;
+    width: 199px;
+    border-bottom: 2px solid rgba(167, 167, 167, 0.5);
+}
+
+.label {
+    width: 150px;
+    height: 33px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 33px;          
+    color: #FFFFFF;
+}
+
+.value {
+
+    height: 33px;
+
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 33px;          
+    color: #FFFFFF;
+
+    margin-left: auto;
+
+    &.time {
+
+        position: absolute;
+        left: 136px;
+        text-align: right;
+        width: 80px;
+
+    }
+
+}
+  

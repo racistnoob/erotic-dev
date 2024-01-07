@@ -17,14 +17,56 @@ end
 
 AddEventHandler('baseevents:onPlayerKilled', function(killerId, deathData)
     local weaponName = GetWeaponName(deathData)
-    TriggerServerEvent('killfeed:server:playerWasKilled', killerId, GetPlayerName(PlayerId()), weaponName)
+    TriggerServerEvent('killfeed:server:playerWasKilled', killerId, weaponName)
 end)
 
 RegisterNetEvent('killfeed:client:feed')
 AddEventHandler('killfeed:client:feed', function(worldID, context)
     if exports['erotic-lobby']:getCurrentWorld() == worldID then
         SendNUIMessage({
+            type = "killfeed",
             context = context
         })
+    
     end
+end)
+
+
+local List = {}
+RegisterCommand("stats", function()
+    TriggerServerEvent("Grab:Leaderboard")
+    Wait(500)
+
+    SendNUIMessage({
+        type = "ui",
+        mode = "Leaderboard",
+        data = json.encode(List),
+    })
+
+    SetNuiFocus(true, true)
+    SetTimecycleModifier('hud_def_blur')
+end)
+
+AddEventHandler('Recieved:Info')
+RegisterNetEvent('Recieved:Info', function(data)
+    List = data or {}
+end)
+
+RegisterNUICallback("exit",function()
+    SendNUIMessage({
+        type = "ui",
+        mode = "close_all",
+    })
+    SetNuiFocus(false,false)
+    SetTimecycleModifier('default')
+    TriggerScreenblurFadeOut(50)
+end)
+
+AddEventHandler('Update:Lobby:Stats')
+RegisterNetEvent('Update:Lobby:Stats', function(data)
+    SendNUIMessage({
+        type = "ui",
+        mode = "stats",
+        data = json.encode(data),
+    })
 end)

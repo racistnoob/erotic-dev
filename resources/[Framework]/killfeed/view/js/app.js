@@ -1,7 +1,3 @@
-window.addEventListener('message', event => {
-    feed(event);
-});
-
 let feedId = 0;
 function feed(event) {
     feedId += 60;
@@ -11,4 +7,99 @@ function feed(event) {
     setTimeout(() => {
         $('body').find(`#feed-${toDelId}`).fadeOut();
     }, 4000);
+}
+
+function truncate(str, num) {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  }
+
+function GenerateStats(stats) {
+    $(".StatsInfo").show()
+    for (let x = 0; x < 4; x++) {
+        $('.information').append(`
+            <div class='labelValue'>
+                    <div class='label'>${truncate(stats[x].Name,19)}</div>
+                    <div class='value'>${stats[x].Kills}</div>
+            </div>
+        `);
+      }   
+
+}
+
+function GenerateList(players) {
+    $(".player-list").show()
+    $(".player-list").append(
+      `
+      <div class="player nh">
+              <span class="player-list-text">NAME</span>
+              <span class="player-list-text">KILLS</span>
+              <span class="player-list-text">DEATHS</span>
+              <span class="player-list-text">K/D Ratio</span>
+      </div>`
+      )
+
+      for (x = 0; x < players.length; x++) {
+        $('.player-list').append(`
+        <div class="player" onclick='PlayerSelect(${players[x].id})')>
+            <span class="player-list-text">${players[x].Name}</span>
+            <span class="player-list-text">${players[x].Kills}</span>
+            <span class="player-list-text">${players[x].Deaths}</span>
+            <span class="player-list-text">${players[x].kd}</span>
+            
+        </div>
+        `);
+      }   
+  }
+
+let hide = ["player-list"]
+function FadeAllOut(){
+  $(".back-button").empty()
+  for (x = 0; x < hide.length; x++){
+      $("."+hide[x]).fadeOut()
+  }
+
+}
+$(function(){
+    window.addEventListener("message", function(event){
+        var item = event.data;
+        if (item.type === "killfeed") {
+            feed(event);
+        }
+        if (item.type === "ui") {
+            if (item.mode === "Leaderboard"){
+                $(".player-list").empty()
+                playerlist = JSON.parse(event.data.data);
+                GenerateList(playerlist)
+                FadeInMenu("player-list")
+            } else if (item.mode === "close_all"){
+                $(".player-list").hide()
+                $(".player-list").empty()
+                FadeAllOut()
+            } else if (item.mode === "stats") {
+                $(".information").empty()
+                GenerateStats(JSON.parse(event.data.data))
+            }
+        }
+    })
+
+    $(document).keydown(function(e) {
+        if (e.key === "Escape") { 
+          $.post("https://killfeed/exit",JSON.stringify({}));
+        }
+    });
+
+})
+
+function FadeInMenu(menu){
+    clss = "."+menu
+    $(clss).fadeIn()
+    $(".title").fadeIn()
+  }
+
+function Exit(){
+  $.post("https://killfeed/exit",JSON.stringify({}));
 }
