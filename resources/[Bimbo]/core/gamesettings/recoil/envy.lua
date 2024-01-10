@@ -23,6 +23,9 @@ local WeaponRecoil = {
     [`weapon_pistol`] = {
     vertical = .21,
     },
+    [`weapon_fnx45`] = {
+        vertical = .21,
+        },
     [`weapon_sp45`] = {
         vertical = .21,
     },
