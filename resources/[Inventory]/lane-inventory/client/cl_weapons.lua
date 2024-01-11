@@ -51,7 +51,7 @@ AddEventHandler('erotic:useWeapon', function(weaponName)
             SetCurrentPedVehicleWeapon(PlayerPedId(), weaponHash)
             SetCurrentPedWeapon(PlayerPedId(), weaponHash, true)
             ClearPedTasks(ped)
-            SetAmmoInClip(PlayerPedId(), weaponHash, clipCache[tostring(weaponHash)])
+            SetAmmoInClip(PlayerPedId(), weaponHash, GetMaxAmmoInClip(PlayerPedId(), weaponHash, 1))
           elseif cooldown == false then
            SendNotification({
                 text = "~r~~h~Unequipped.",
