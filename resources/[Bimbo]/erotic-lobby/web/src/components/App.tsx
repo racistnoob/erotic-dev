@@ -33,7 +33,7 @@ const App: React.FC = () => {
     
     {
       id: 2,
-      name: 'Southside #2',
+      name: 'FFA',
       settings: ['FPS Mode', 'Light Recoil'],
 
     },

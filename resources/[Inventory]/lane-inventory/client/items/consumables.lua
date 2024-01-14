@@ -13,7 +13,7 @@ CreateThread(function()
             RequestAnimDict("mp_suicide")
             TaskPlayAnim(playerPed, "mp_suicide", "pill", 8.0, 1.0, -1, 49, 0, 0, 0, 0 )
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 3500,
+                length = 2500,
                 text = "Vicodin"
             })
             ClearPedTasks(playerPed)
@@ -44,7 +44,7 @@ CreateThread(function()
             -- TaskPlayAnim(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
             TaskPlayAnim(playerPed, "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 7500,
+                length = 4500,
                 text = "Heavy Armour"
               })
 
@@ -70,7 +70,7 @@ CreateThread(function()
             -- TaskPlayAnim(Player.Ped(), "clothingshirt", "try_shirt_positive_d", 8.0, 1.0, -1, 49, 0, 0, 0, 0)
             TaskPlayAnim(playerPed, "clothingtie", "try_tie_negative_a", 1.0, -1, -1, 50, 0, 0, 0, 0)
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 7500,
+                length = 4500,
                 text = "Heavy Armour"
               })
 
@@ -102,7 +102,7 @@ CreateThread(function()
             TaskStartScenarioInPlace(Player.Ped(), "CODE_HUMAN_MEDIC_KNEEL", 0, false)
             Player.InAnim = true 
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 7500,
+                length = 4500,
                 text = "BANDAGING"
               })
             ClearPedTasks(playerPed)
@@ -173,7 +173,7 @@ CreateThread(function()
             TaskStartScenarioInPlace(Player.Ped(), "WORLD_HUMAN_SMOKING_POT", 0, false)
             Player.InAnim = true
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 3500,
+                length = 2500,
                 text = "using joint"
               })
             ClearPedTasks(playerPed)
