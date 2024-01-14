@@ -222,7 +222,6 @@ for i, v in pairs(kitNames) do
     RegisterCommand(i, function(source,args,rawcommand)
         local message = '<div class="chat-message-deg"> <b>'..i..':<br></b>'
         for k,j in pairs(v) do
-            print(j)
             message = message ..j..' <br>'
         end 
         message = message .. '</div>'
@@ -232,20 +231,6 @@ for i, v in pairs(kitNames) do
         })
     end, false)
 end
-
---[[
-    RegisterCommand(i, function(source,args,rawcommand)
-        print"hi"
-        print(result)
-        TriggerEvent('erp:addChatSystem', "hi"..result, source)
-    end)
-local result = table.concat(kitNames, ", ")
-RegisterCommand("kits", function(source,args,rawcommand)
-    print"hi"
-    print(result)
-    TriggerEvent('erp:addChatSystem', "hi"..result, source)
-end)
-]]
 
 RegisterNetEvent("inventory:forceKit", function(genre, kit)
     local kit = Kits[genre][kit]
