@@ -54,7 +54,7 @@ end)
 RegisterNetEvent('erotic-lobby:GetWorldBucketID')
 AddEventHandler('erotic-lobby:GetWorldBucketID', function(src, cb)
     local ids = ExtractIdentifiers(src);
-    if (WorldTracker[ids.license].World ~= nil) then 
+    if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
         cb(Config.Worlds[WorldTracker[ids.license].World][1]);
     end
     cb(1);
@@ -63,7 +63,7 @@ end)
 AddEventHandler('playerDropped', function (reason) 
     local src = source;
     local ids = ExtractIdentifiers(src);
-    if WorldTracker[ids.license].World ~= nil then
+    if WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil then
         UpdateStats(WorldTracker[ids.license].World)
     end
     WorldTracker[ids.license] = nil;
