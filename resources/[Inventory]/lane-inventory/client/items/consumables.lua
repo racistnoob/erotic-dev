@@ -7,7 +7,7 @@ CreateThread(function()
         func = function(item)
             if Player.Health() == 200 or healing == true then
                 -- Already Full HP
-                --return false
+                return false
             end
             local playerPed = PlayerPedId()
             local finished = exports["lane-taskbar"]:taskBar({
@@ -151,7 +151,7 @@ CreateThread(function()
 
     Item.Register("joint", {
         func = function(item)
-            --if Player.Armour() == 100 then return false end
+            if Player.Armour() == 100 then return false end
             local playerPed = PlayerPedId()
             Player.InAnim = true
             local finished = exports["lane-taskbar"]:taskBar({
