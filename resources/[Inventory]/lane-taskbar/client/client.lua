@@ -167,6 +167,24 @@ local propEmotes = {
     rotationOrder = 0,
     fixedRot = 1
   },
+  ['joint'] = {
+    hash = `prop_sh_joint_01`,
+    xOffset = 0.0,
+    yOffset = 0.0,
+    zOffset = 0.0,
+    bone = 60309,
+    xPos = 0.0,
+    yPos = 0.0,
+    zPos = 0.0,
+    xRot = 0.0,
+    yRot = 0.0,
+    zRot = 0.0,
+    softSpinning = 1,
+    collision = 0,
+    isPed = 1,
+    rotationOrder = 1,
+    fixedRot = 1
+  },
 }
 
 exports('updateStatus', updateStatus)
@@ -178,7 +196,7 @@ local speakingWidth = 0
 
 local function taskBar(data)
 
-  local length, text, runcheck, ignoreclear, keepweapon, vehicle, distcheck, animation, desc, preventCancel, showTime, flopcheck = data.length, data.text, data.runcheck, data.ignoreclear, data.keepweapon, data.vehicle, data.distcheck, data.animation, data.desc, data.preventCancel, data.showTime, data.flopcheck
+  local length, text, runcheck, ignoreclear, keepweapon, vehicle, distcheck, animation, desc, preventCancel, showTime, flopcheck, canShoot = data.length, data.text, data.runcheck, data.ignoreclear, data.keepweapon, data.vehicle, data.distcheck, data.animation, data.desc, data.preventCancel, data.showTime, data.flopcheck, data.canShoot
   local keepoutofvehicle = data.keepoutofvehicle
   local plyPed = PlayerPedId()
   local startPos = GetEntityCoords(plyPed)
@@ -198,7 +216,7 @@ local function taskBar(data)
     anim = animation['anim']
     prop = animation['prop'] or ""
     stuck = animation['stuck'] or false
-    if not HasAnimDictLoaded(dict) and exports['erp_clothes']:IsThisAnAnimalAndCanIAnimate() then
+    if not HasAnimDictLoaded(dict) then
       RequestAnimDict(dict)
       while not HasAnimDictLoaded(dict) do
         Citizen.Wait(0)
@@ -296,7 +314,7 @@ local function taskBar(data)
       end
     end
 
-    if IsPedShooting(plyPed) then
+    if IsPedShooting(plyPed) and not canShoot then
       taskStatus = { active = false, id = 0, status = 0 }
       updateStatus("error")
       if anim ~= "" then
@@ -403,7 +421,7 @@ local function taskBar(data)
       end
     end
 
-    if anim ~= "" and exports['erp_clothes']:IsThisAnAnimalAndCanIAnimate() then
+    if anim ~= "" then
       if not IsEntityPlayingAnim(plyPed, dict, anim, 3) then
         local flag = 49
         if stuck then flag = 0; end
@@ -422,7 +440,7 @@ local function taskBar(data)
       end
     end
 
-    if scenario ~= "" and not exports['erp_clothes']:IsThisAnAnimalAndCanIAnimate() then
+    if scenario ~= "" then
       if not IsPedUsingScenario(plyPed, scenario) then
         ClearPedTasks(plyPed)
         TaskStartScenarioInPlace(plyPed, scenario, 0, true)

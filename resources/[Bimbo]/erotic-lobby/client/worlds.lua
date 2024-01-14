@@ -27,7 +27,8 @@ local worlds = {
     { startID = 2, endID = 2, settings = { 
         recoilMode = "roleplay", 
         firstPersonVehicle = true, 
-        hsMulti = true,    
+        hsMulti = true,
+        spawningcars = false,   
         RandomSpawns = {
             [1] = {x = 895.6183, y = -3245.4922,  z = -98.2509, h = 143.0110},
             [2] = {x = 843.3173, y = -3235.2666, z = -98.6991, h = 143.0110},
@@ -64,7 +65,7 @@ local worlds = {
         firstPersonVehicle = true, 
         hsMulti = false,
         spawningcars = false,
-        kit = 'trick2',
+        kit = {'snipers', 'trick2'},
         spawn = {
             x = 770.5748, 
             y = -233.9927, 
@@ -93,7 +94,7 @@ function switchWorld(worldID)
     worldID = tonumber(worldID)
     if worldID then
         local worldSettings, worldSpawn = nil, nil
-        for _, world in ipairs(worlds) do
+        for _, world in pairs(worlds) do
             if worldID >= world.startID and worldID <= world.endID then
                 worldSettings = world.settings
                 worldSpawn = worldSettings.spawn or defaultSpawn
@@ -113,14 +114,18 @@ function switchWorld(worldID)
             else
                 exports['core']:deathSpot(defaultSpawn.x, defaultSpawn.y, defaultSpawn.z, defaultSpawn.h)
             end
-            exports['lane-inventory']:DoKitStuff(worldSettings.kit or 'hopout')
-            exports['core']:spawningcars(worldSettings.spawningcars or worldSettings.spawningcars == nil)
+            
+            if type(worldSettings.kit) == "table" then
+                exports['lane-inventory']:DoKitStuff(worldSettings.kit[1] or 'ars', worldSettings.kit[2] or 'hopout')
+            else
+                exports['lane-inventory']:DoKitStuff('ars', 'hopout')
+            end
+            exports['core']:spawningcars(false or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
-
 
             exports['erotic-lobby']:ChangeWorld(tostring(worldID))
         end
@@ -129,7 +134,7 @@ end
 
 function getCurrentWorldDeathSpot()
     if currentWorldID then
-        for _, world in ipairs(worlds) do
+        for _, world in pairs(worlds) do
             if currentWorldID >= world.startID and currentWorldID <= world.endID then
                 if world.settings.RandomSpawns then
                     return world.settings.RandomSpawns[math.random(1, #world.settings.RandomSpawns)]

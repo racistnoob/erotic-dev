@@ -7,26 +7,26 @@ WorldTracker = {}; -- [license] = {World = WorldName, Name = PlayerName, Kills =
 Config = {}
 Config = {
     Worlds = { -- ["WorldName"] = {RoutingBucket, Spawnpoint, PermissionRequired},
-        ["1"] = {0, false}, -- DO NOT REMOVE
-        ["2"] = {1, false},
-        ["3"] = {2, false},
-        ["4"] = {3, false},
-        ["5"] = {4, false},
-        ["6"] = {5, false},
-        ["7"] = {6, false},
-        ["8"] = {7, false},
-        ["9"] = {8, false},
-        ["10"] = {9, false},
-        ["11"] = {10, false},
-        ["12"] = {11, false},
-        ["13"] = {12, false},
-        ["14"] = {13, false},
-        ["15"] = {14, false},
-        ["16"] = {15, false},
-        ["17"] = {16, false},
-        ["18"] = {17, false},
-        ["19"] = {18, false},
-        ["20"] = {19, false},
+        ["1"] = {1, false}, -- DO NOT REMOVE
+        ["2"] = {2, false},
+        ["3"] = {3, false},
+        ["4"] = {4, false},
+        ["5"] = {5, false},
+        ["6"] = {6, false},
+        ["7"] = {7, false},
+        ["8"] = {8, false},
+        ["9"] = {9, false},
+        ["10"] = {10, false},
+        ["11"] = {11, false},
+        ["12"] = {12, false},
+        ["13"] = {13, false},
+        ["14"] = {14, false},
+        ["15"] = {15, false},
+        ["16"] = {16, false},
+        ["17"] = {17, false},
+        ["18"] = {18, false},
+        ["19"] = {19, false},
+        ["20"] = {20, false},
     },
 }
 
@@ -75,7 +75,6 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
     local ids = ExtractIdentifiers(src);
 
     WorldTracker[ids.license] = {
-        OldLobby = "1",
         World = "1",
         src = src,
         Name = GetPlayerName(src),
@@ -87,7 +86,6 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
         UpdateStats(worldName)
-        UpdateStats(WorldTracker[ids.license].OldLobby)
     end
 end)
 
@@ -101,15 +99,13 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
         if not permission then
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
             WorldTracker[ids.license] = {
-                OldLobby = WorldTracker[ids.license].World or worldName,
                 World = worldName,
                 src = src,
                 Name = GetPlayerName(src),
                 Kills = 0,
             }
-            TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+            TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
             UpdateStats(worldName)
-            UpdateStats(WorldTracker[ids.license].OldLobby)
             TriggerClientEvent("core:updateRPC", src, worldName)
                 -- Changed worlds ...
             return;

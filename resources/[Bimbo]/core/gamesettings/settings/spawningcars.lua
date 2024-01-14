@@ -5,9 +5,9 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
                              "specter2", "tempesta", "elegy", "sultan2", "banshee2", "cliffhanger", "bati", "sanchez",
                              "manchez", "bf400", "powersurge"}
 
-local previousCar
+local previousCar = "revolter" -- default
 local spawnedCar
-local spawningcars = false
+spawningcars = true
 
 local function IsVehicleWhitelisted(model)
     for _, name in ipairs(whitelistedVehicles) do
@@ -61,12 +61,14 @@ end
 
 RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
-    if spawningcars then
+    local worldID = exports['erotic-lobby']:getCurrentWorldID()
+    local trickLobby = (worldID >= 9 and worldID <= 10)
+    if spawningcars or trickLobby and veh == "deluxo" then
         local playerPed = PlayerPedId()
         local vehiclehash = GetHashKey(veh)
         local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
 
-        if not IsVehicleWhitelisted(vehiclehash) then
+        if not IsVehicleWhitelisted(vehiclehash) and not trickLobby then
             exports['drp-notifications']:SendAlert('inform', 'This vehicle cannot be spawned.', 5000)
             return
         end
@@ -111,6 +113,8 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
             end
         end)
+    else
+        exports['drp-notifications']:SendAlert('inform', 'Spawning cars is disabled in this lobby.', 5000)
     end
 end)
 
