@@ -58,3 +58,12 @@
 --         SetPedCanPlayAmbientAnims(playerPed, false)
 --     end
 -- end)
+
+ Citizen.CreateThread(function()
+    DisableIdleCamera(true)
+    while true do
+        N_0x4757f00bc6323cfe(-1553120962, 0)
+        SetPedCanPlayAmbientAnims(PlayerPedId(), false)
+        Wait(5000)
+    end
+ end)

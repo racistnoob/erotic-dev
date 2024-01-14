@@ -65,6 +65,7 @@ local worlds = {
         firstPersonVehicle = true, 
         hsMulti = false,
         spawningcars = false,
+        CarRagdoll = true,
         kit = {'snipers', 'trick2'},
         spawn = {
             x = 770.5748, 
@@ -122,7 +123,7 @@ function switchWorld(worldID)
             end
             exports['core']:spawningcars(false or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
-            exports['core']:setCarRagdoll(worldSettings.CarRagdoll or true)
+            exports['core']:setCarRagdoll(worldSettings.CarRagdoll or false)
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)

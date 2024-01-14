@@ -176,6 +176,7 @@ RegisterNUICallback('nui:zbrp:giveItemToTarget', function(data)
 end)
 
 -- SECONDARY INVENTORIES RENDER
+--[[
 Citizen.CreateThread(
     function()
         local modelhash = GetHashKey('p_v_43_safe_s')
@@ -211,7 +212,7 @@ Citizen.CreateThread(
             end
         end
     end
-)
+)]]
 
 RegisterNUICallback('getNearbyPlayers', function(_, cb)
     local players = GetActivePlayers()
@@ -303,19 +304,29 @@ CreateThread(function()
         BlockWeaponWheelThisFrame()
         DisableControlAction(0, 37, true)
         DisableControlAction(0, 199, true)
+
+        DisableControlAction(0, 199, true)
+        DisableControlAction(0, 37, true)
+        DisableControlAction(0, 140, true)
+        DisableControlAction(0, 141, true)
+        DisableControlAction(0, 142, true)
+        DisableControlAction(0, 257, true)
+        DisableControlAction(0, 263, true)
+        DisableControlAction(0, 264, true)
     end
 end)
 
--- [[ RADIO WITH SHIFT AND G ]]
+--[[
+
 CreateThread(function()
     while true do
         Wait(0)
-        if IsControlPressed(0, 58) and IsControlPressed(0, 61) then 
+        if IsControlPressed(0, 58) and IsControlPressed(0, 61) then -- shift and g
             if API.HasItem("radio") then 
             TriggerEvent("radioGui") Wait(2500) end
         end
     end
-end)
+end)]]
 
 RegisterCommand("giveitem", function(source,args,rawcommand)
     TriggerServerEvent("GiveItem", args[1], args[2])

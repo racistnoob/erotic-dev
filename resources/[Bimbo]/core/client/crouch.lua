@@ -5,7 +5,7 @@ local isDead = IsEntityDead(ped)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000)
+        Citizen.Wait(2500)
         ped = PlayerPedId()
         exists = DoesEntityExist(ped)
         isDead = IsEntityDead(ped)

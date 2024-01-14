@@ -79,7 +79,7 @@ end)
 
 CreateThread(function()
     while true do
-      Wait(0)
+      Wait(100)
   
       if not quickSelectEnabled and playerArmed then
         local playerPed = PlayerPedId()

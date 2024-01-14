@@ -136,11 +136,6 @@ function SetRecoilMode(player, mode)
     Recoil:SetMode(mode)
     print("^2Recoil set: " .. mode)
 
-    local commands = recoilModes[mode].commands
-
-    for _, command in ipairs(commands) do
-
-    end
 end
 
 RegisterNetEvent('settings:ChangeRecoilMode')

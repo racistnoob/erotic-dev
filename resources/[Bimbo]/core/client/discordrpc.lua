@@ -8,7 +8,6 @@ AddEventHandler("core:updateRPC", function(msg)
         currentState = ("Southside #" .. msg)
     end
 end)
-
 Citizen.CreateThread(function()
     while true do
         Wait(10000)

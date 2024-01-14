@@ -1550,102 +1550,93 @@ CreateThread(function()
 
 	while true do
 		local sleepTimer = 1500
-		local plyPos = GetEntityCoords(PlayerPedId())
-		local clothShop = IsNearShop(clothingShops, plyPos)
-		local nearcloth = clothShop[1]
-		local shopCoords = clothShop[2]
-		local job = clothShop[3]
-		nearClothing = nearcloth
-		
-		local currMenu = ""
-		local allowed = false
-
-		if nearcloth < 6.0 then
-			if job ~= 'all' then
-				local PlayerData = exports['drp']:GetPlayerData()
-				if type(job) == 'table' then
-					for k,v in ipairs(job) do
-						if v == PlayerData['job']['name'] then allowed = true end
-					end
-				else
-					if PlayerData['job']['name'] == job then allowed = true end
-				end
-			else 
-				allowed = true
-			end
-			sleepTimer = 1
+		if exports["noob"]:inSafeZone() then
+			local plyPos = GetEntityCoords(PlayerPedId())
+			local clothShop = IsNearShop(clothingShops, plyPos)
+			local nearcloth = clothShop[1]
+			local shopCoords = clothShop[2]
+			nearClothing = nearcloth
 			
-			if allowed and nearcloth > 0.65 then
-				DrawMarker(1, shopCoords.x, shopCoords.y, shopCoords.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 159, 72, 240, 120, false, true, 2, nil, nil, false)
-				DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Clothing")
-			end						
-			if nearcloth < 2.0 and allowed then
-				sleepTimer = 0
-				currMenu = "Clothing"
-				if promptstatus == 0 then
-					--TriggerEvent('drp-prompts:ShowUI', 'show', '[H] '..currMenu)
-					promptstatus = 1
-				end
-			end
-		end
-
-		if sleepTimer ~= 0 then
-			local tatShop = IsNearShop(tattoosShops, plyPos)
-			local neartat = tatShop[1]
-			local shopCoords = tatShop[2]
-			if neartat < 6.0 then
+			local currMenu = ""
+			local allowed = false
+	
+			if nearcloth < 6.0 then
+				allowed = true
 				sleepTimer = 1
-				if neartat > 0.65 then
+				
+				if allowed and nearcloth > 0.65 then
 					DrawMarker(1, shopCoords.x, shopCoords.y, shopCoords.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 159, 72, 240, 120, false, true, 2, nil, nil, false)
-					DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Tattos")
-				 end
-				if neartat < 2.0 then
+					DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Clothing")
+				end						
+				if nearcloth < 2.0 and allowed then
 					sleepTimer = 0
-					currMenu = "Tattoo"
+					currMenu = "Clothing"
 					if promptstatus == 0 then
 						--TriggerEvent('drp-prompts:ShowUI', 'show', '[H] '..currMenu)
 						promptstatus = 1
 					end
 				end
 			end
-		end
-		
-		if sleepTimer ~= 0 then
-			local barbShop = IsNearShop(barberShops, plyPos)
-			local nearbarber = barbShop[1]
-			local shopCoords = barbShop[2]
-			if nearbarber < 6.0 then
-			 sleepTimer = 1
-			 if nearbarber > 0.65 then
-    			DrawMarker(1, shopCoords.x, shopCoords.y, shopCoords.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 159, 72, 240, 120, false, true, 2, nil, nil, false)
-				DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Barber")
-			 end
-
-			 if nearbarber < 2.0 then
-				 sleepTimer = 0
-				 currMenu = "Barber"
-				 if promptstatus == 0 then
-					--TriggerEvent('drp-prompts:ShowUI', 'show', '[H] '..currMenu)
-					promptstatus = 1
+	
+			if sleepTimer ~= 0 then
+				local tatShop = IsNearShop(tattoosShops, plyPos)
+				local neartat = tatShop[1]
+				local shopCoords = tatShop[2]
+				if neartat < 6.0 then
+					sleepTimer = 1
+					if neartat > 0.65 then
+						DrawMarker(1, shopCoords.x, shopCoords.y, shopCoords.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 159, 72, 240, 120, false, true, 2, nil, nil, false)
+						DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Tattos")
+					 end
+					if neartat < 2.0 then
+						sleepTimer = 0
+						currMenu = "Tattoo"
+						if promptstatus == 0 then
+							--TriggerEvent('drp-prompts:ShowUI', 'show', '[H] '..currMenu)
+							promptstatus = 1
+						end
+					end
 				end
+			end
+			
+			if sleepTimer ~= 0 then
+				local barbShop = IsNearShop(barberShops, plyPos)
+				local nearbarber = barbShop[1]
+				local shopCoords = barbShop[2]
+				if nearbarber < 6.0 then
+				 sleepTimer = 1
+				 if nearbarber > 0.65 then
+					DrawMarker(1, shopCoords.x, shopCoords.y, shopCoords.z - 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 159, 72, 240, 120, false, true, 2, nil, nil, false)
+					DrawText3D(shopCoords.x, shopCoords.y, shopCoords.z + 0.5, "Press ~h~H~h~ For Barber")
+				 end
+	
+				 if nearbarber < 2.0 then
+					 sleepTimer = 0
+					 currMenu = "Barber"
+					 if promptstatus == 0 then
+						--TriggerEvent('drp-prompts:ShowUI', 'show', '[H] '..currMenu)
+						promptstatus = 1
+					end
+				 end
 			 end
-		 end
-	 	end
-
-	 	if currMenu ~= "" then
-			if IsControlJustReleased(0, 74) then
-				ClearPedDecorationsLeaveScars(PlayerPedId())
-				TriggerServerEvent("drp_clothing:retrieve_tats")
-				OpenMenu(currMenu)
+			 end
+	
+			 if currMenu ~= "" then
+				if IsControlJustReleased(0, 74) then
+					ClearPedDecorationsLeaveScars(PlayerPedId())
+					TriggerServerEvent("drp_clothing:retrieve_tats")
+					OpenMenu(currMenu)
+				end
+			else
+				if promptstatus == 1 then
+					TriggerEvent('drp-prompts:HideUI')
+					allowed = false
+					promptstatus = 0
+				end
 			end
 		else
-			if promptstatus == 1 then
-				TriggerEvent('drp-prompts:HideUI')
-				allowed = false
-				promptstatus = 0
-			end
+			sleepTimer = 2500
 		end
-
 		Wait(sleepTimer)
 	end
 end)
@@ -2012,7 +2003,7 @@ CreateThread(function()
 				SetEntityHeading(charPed, GetEntityHeading(charPed)+3)
 			end
 		else
-			Wait(500)
+			Wait(1500)
 		end
 	end
 end)
@@ -2055,60 +2046,68 @@ function DrawText3D(x, y, z, text)
   
 	AddTextComponentString(text)
 	DrawText(_x, _y)
-  end
+end
   
-  function OpenLobby()
+function OpenLobby()
 	toggleNuiFrame(true)
-  end
+end
   
-  local peds = {
+local peds = {
 	{
-	  coords = vector3(211.5664, -1379.2432, 29.5875),
-	  heading = 320.5612,
-	  labelText = "Clothing Menu",
-	  scenario = "WORLD_HUMAN_DANCEMUSIC",
-	  interactionFunction = nil,
-	  pedModel = "a_f_y_fitness_02"
+	  	coords = vector3(211.5664, -1379.2432, 29.5875),
+	  	heading = 320.5612,
+	  	labelText = "Clothing Menu",
+	  	scenario = "WORLD_HUMAN_DANCEMUSIC",
+	  	interactionFunction = nil,
+	  	pedModel = "a_f_y_fitness_02"
 	},
-  }
+}
   
-  function CreatePeds(pedsData)
-	for _, pedData in ipairs(pedsData) do
-	  local pedCoords = pedData.coords
+function CreatePeds(pedsData)
+	for _, pedData in pairs(pedsData) do
+		local pedCoords = pedData.coords
   
-	  RequestModel(pedData.pedModel)
-  
-	  while not HasModelLoaded(pedData.pedModel) do
-		Wait(1)
-	  end
-  
-	  local ped = CreatePed(4, pedData.pedModel, pedCoords, pedData.heading, false, false)
-	  SetEntityInvincible(ped, true)
-	  SetPedFleeAttributes(ped, 0, false)
-	  SetBlockingOfNonTemporaryEvents(ped, true)
-  
-	  TaskStartScenarioInPlace(ped, pedData.scenario, 0, true)
-  
-	  FreezeEntityPosition(ped, true)
-  
-	  while true do
-		Wait(0)
-		if DoesEntityExist(ped) then
-		  local playerCoords = GetEntityCoords(PlayerPedId())
-		  local distance = #(playerCoords - pedCoords)
-		  if distance < 2.0 then
-			DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z + 1.0, pedData.labelText)
-			if IsControlJustReleased(0, 38) then
-			  if pedData.interactionFunction ~= nil and type(pedData.interactionFunction) == "function" then
-				pedData.interactionFunction()
-			  end
-			end
-		  end
-		else
-		  break
+		RequestModel(pedData.pedModel)
+		
+		while not HasModelLoaded(pedData.pedModel) do
+			Wait(1)
 		end
-	  end
+		
+		local ped = CreatePed(4, pedData.pedModel, pedCoords, pedData.heading, false, false)
+		SetEntityInvincible(ped, true)
+		SetPedFleeAttributes(ped, 0, false)
+		SetBlockingOfNonTemporaryEvents(ped, true)
+		
+		TaskStartScenarioInPlace(ped, pedData.scenario, 0, true)
+		
+		FreezeEntityPosition(ped, true)
+		
+		Citizen.CreateThread(function()
+			while true do
+				local sleepTimer = 1500
+				if exports["noob"]:inSafeZone() then
+					if DoesEntityExist(ped) then
+						local playerCoords = GetEntityCoords(PlayerPedId())
+						local distance = #(playerCoords - pedCoords)
+						if distance < 2.0 then
+							sleepTimer = 1
+							DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z + 1.0, pedData.labelText)
+							if IsControlJustReleased(0, 38) then
+								if pedData.interactionFunction ~= nil and type(pedData.interactionFunction) == "function" then
+									pedData.interactionFunction()
+								end
+							end
+						end
+					else
+						break
+					end
+				else
+					sleepTimer = 2500
+				end
+				Wait(sleepTimer)
+			end
+		end)
 	end
-  end
+end
   
-  CreatePeds(peds)
+CreatePeds(peds)

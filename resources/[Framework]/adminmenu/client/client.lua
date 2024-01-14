@@ -181,14 +181,14 @@ end)
 
 CreateThread(function()
   while true do 
-    Wait(0)
+    Wait(1000)
     if Cloack then
       local yayeetEntity = PlayerPedId()
       SetEntityVisible(yayeetEntity, false, false)
       SetLocalPlayerVisibleLocally(true)
       SetEntityAlpha(yayeetEntity, 50, false)
     else
-      Wait(100)
+      Wait(1500)
     end
   end
 end)

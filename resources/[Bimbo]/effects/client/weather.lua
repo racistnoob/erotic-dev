@@ -38,29 +38,14 @@ function setWeather(newWeather) -- Define the setWeather function
     weather = newWeather
 end
 
-exports("setRunTimeSyncing", function(state, newOverrideTime)
-    runTimeSync = state
-    if newOverrideTime and #newOverrideTime == 2 then
-      overrideTime[1] = newOverrideTime[1]
-      overrideTime[2] = newOverrideTime[2]
-    end
-    -- Reset to default state
-    if runTimeSync then
-      overrideTime = { 12, 00 }
-    end
-end)
 
 exports("getWeather", function()
     return weather
 end)
 
-exports("getTimeSyncRunning", function()
-    return runTimeSync, overrideTime
-  end)
-
 CreateThread(function()
     while true do
-        Wait(0)
+        Wait(1000)
         ClearOverrideWeather()
         ClearWeatherTypePersist()
         SetWeatherTypePersist(weather)
@@ -121,40 +106,6 @@ end)
         end
     end
 end)]]
-
-RegisterNetEvent('vSync:updateTime', function(base, offset, freeze)
-    freezeTime = freeze
-    timeOffset = offset
-    baseTime = base
-end)
-  
-CreateThread(function()
-    local hour = 0
-    local minute = 0
-    while true do
-      Wait(0)
-      if GetConvarInt("graphics_weather", 0) == 0 and runTimeSync then
-        local newBaseTime = baseTime
-        if GetGameTimer() - 500 > timer then
-          newBaseTime = newBaseTime + 0.25
-          timer = GetGameTimer()
-        end
-        if freezeTime then
-          timeOffset = timeOffset + baseTime - newBaseTime
-        end
-        baseTime = newBaseTime
-        hour = math.floor(((baseTime + timeOffset) / 60) % 24)
-        minute = math.floor((baseTime + timeOffset) % 60)
-        NetworkOverrideClockTime(hour, minute, 0)
-      elseif not runTimeSync then
-        NetworkOverrideClockTime(overrideTime[1], overrideTime[2], 0)
-      end
-    end
-end)
-  
-AddEventHandler('playerSpawned', function()
-    TriggerServerEvent('vSync:requestSync')
-end)
   
 local submenu = {
   {

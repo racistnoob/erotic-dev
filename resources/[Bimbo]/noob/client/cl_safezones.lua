@@ -40,7 +40,7 @@ CreateThread(function()
     
     Citizen.Wait(1)
 
-    for _, zone in ipairs(safezones) do
+    for _, zone in pairs(safezones) do
         exports["noob"]:AddPolyZone(
             zone.name,
             zone.points,
