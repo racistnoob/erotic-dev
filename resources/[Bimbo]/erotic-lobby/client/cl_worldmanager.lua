@@ -1,5 +1,4 @@
-currentWorldID = 0
-currentWorldName = "1"
+currentWorldID = 1
 
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
@@ -13,7 +12,7 @@ end)
 AddEventHandler('echorp:playerSpawned', function()
     local src = source;
     TriggerServerEvent('erotic-lobby:SpawnWorldTrigger');
-    exports['lane-inventory']:DoKitStuff("hopout")
+    exports['lane-inventory']:DoKitStuff("ars", "hopout")
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')
@@ -27,9 +26,8 @@ AddEventHandler("erotic-lobby:ChangeCoords", function(x, y, z)
 end)
 
 RegisterNetEvent('erotic-lobby:updateLobby')
-AddEventHandler('erotic-lobby:updateLobby', function(worldID, worldName)
+AddEventHandler('erotic-lobby:updateLobby', function(worldID)
     currentWorldID = worldID
-    currentWorldName = worldName
 end)
 
 RegisterNetEvent('erotic-lobby:sendPlayerCount')
@@ -43,7 +41,7 @@ AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount)
 end)
 
 exports('getCurrentWorld', function()
-    return currentWorldID, currentWorldName
+    return currentWorldID
 end)
 
 exports('ChangeWorld', function(worldId)

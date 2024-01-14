@@ -250,32 +250,7 @@ CreateThread(function()
 
     Item.Register("deluxo", {
         func = function(item)
-                local playerPed = PlayerPedId()
-                local vehiclehash = GetHashKey("deluxo")
-                local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
-    
-                RequestModel(vehiclehash)
-    
-                Citizen.CreateThread(function()
-                    local waiting = 0
-                    while not HasModelLoaded(vehiclehash) do
-                        waiting = waiting + 100
-                        Citizen.Wait(100)
-                        if waiting > 5000 then
-                            return
-                        end
-                    end
-    
-                    deleteCurrentVehicle(playerPed)
-                    deletePreviousVehicle(playerPed)
-    
-                    local car = CreateVehicle(vehiclehash, x, y, z, GetEntityHeading(playerPed), true, false)
-                    if DoesEntityExist(car) then
-                        SetPedIntoVehicle(playerPed, car, -1)
-                        SetVehicleEngineOn(car, true, true, false)
-                        SetVehicleDirtLevel(car, 0.0)
-                    end
-                end)
+            TriggerEvent('drp:spawnvehicle', "deluxo")
         end,
     }) 
 

@@ -7,7 +7,7 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
 
 local previousCar
 local spawnedCar
-local spawningcars = false
+spawningcars = true
 
 local function IsVehicleWhitelisted(model)
     for _, name in ipairs(whitelistedVehicles) do
@@ -61,12 +61,14 @@ end
 
 RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
+    local worldID = exports['erotic-lobby']:getCurrentWorldID()
+    local trickLobby = (worldID >= 9 and worldID <= 10)
     if spawningcars then
         local playerPed = PlayerPedId()
         local vehiclehash = GetHashKey(veh)
         local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
 
-        if not IsVehicleWhitelisted(vehiclehash) then
+        if not IsVehicleWhitelisted(vehiclehash) and not trickLobby then
             exports['drp-notifications']:SendAlert('inform', 'This vehicle cannot be spawned.', 5000)
             return
         end
