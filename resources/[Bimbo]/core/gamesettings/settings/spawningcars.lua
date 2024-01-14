@@ -5,7 +5,7 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
                              "specter2", "tempesta", "elegy", "sultan2", "banshee2", "cliffhanger", "bati", "sanchez",
                              "manchez", "bf400", "powersurge"}
 
-local previousCar
+local previousCar = "revolter" -- default
 local spawnedCar
 spawningcars = true
 
