@@ -1,5 +1,5 @@
 Kits = {
-    -- ["pistols"] = {
+    ["pistols"] = {
         ["deagle"] = {
             {item = "WEAPON_PISTOL50", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
@@ -35,22 +35,15 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
-        ["USP"] = {
+        ["usp"] = {
             {item = "WEAPON_USP45", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
-        ["FNX45"] = {
+        ["fnx"] = {
             {item = "WEAPON_FNX45", primary = true, amount = 1, slot = 1},
-            {item = "armour", amount = 5, slot = 2},
-            {item = "oxy", amount = 30, slot = 3},
-            {item = "joint", amount = 15, slot = 4},
-            {item = "9mm_rounds", amount = 250, slot = 15},
-        },
-        ["TEC9"] = {
-            {item = "WEAPON_MACHINEPISTOL", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
@@ -70,8 +63,17 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
-    -- },
-    -- ["ars"] = {
+    },
+    ["ars"] = {
+        ["hopout"] = {
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "WEAPON_SP45", primary = true, amount = 1, slot = 5},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "556_rounds", amount = 250, slot = 16},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
+        },
         ["ak"] = {
             {item = "WEAPON_ASSAULTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
@@ -121,6 +123,15 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
         },
+    },
+    ["smgs"] = {
+        ["tec9"] = {
+            {item = "WEAPON_MACHINEPISTOL", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+        },
         ["draco"] = {
             {item = "WEAPON_COMPACTRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
@@ -128,7 +139,6 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
         },
-    -- ["smgs"] = {
         ["mp5"] = {
             {item = "WEAPON_SMG_MK2", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
@@ -150,7 +160,7 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
-        ["Skorpion"] = {
+        ["skorpion"] = {
             {item = "WEAPON_MINISMG", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
@@ -171,12 +181,13 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
-        -- Snipers
+    },
+    ["snipers"] = {
         ["trick"] = {
             {item = "WEAPON_HEAVYSNIPER_MK2", primary = true, amount = 1, slot = 1},
             {item = "kevlar", amount = 5, slot = 2},
             {item = "medkit", amount = 15, slot = 3},
-                        {item = "joint", amount = 15, slot = 4},
+            {item = "joint", amount = 15, slot = 4},
             {item = "deluxo", amount = 1, slot = 5},
             {item = "50cal_rounds", amount = 150, slot = 15},
         },
@@ -188,43 +199,53 @@ Kits = {
             {item = "deluxo", amount = 1, slot = 5},
             {item = "50cal_rounds", amount = 150, slot = 15},
         },
-        -- ETC
-        ["hopout"] = {
-            {item = "armour", amount = 5, slot = 2},
-            {item = "oxy", amount = 15, slot = 3},
-            {item = "WEAPON_SP45", primary = true, amount = 1, slot = 5},
-            {item = "9mm_rounds", amount = 250, slot = 15},
-            {item = "556_rounds", amount = 250, slot = 16},
-            {item = "joint", amount = 15, slot = 4},
-            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
-        },
+    }
 }
 
+local kitNames = {}
 for k,v in pairs(Kits) do
-    RegisterCommand(k, function(source,args,rawcommand)
-        DoKitStuff(k)
-    end)
-end 
--- build the 'all' kits automatically 
+    local categoryNames = {}
 
-CreateThread(function()
-    Kits["all"] = {} 
-    local all = Kits["all"]
-    for k,v in pairs(Kits) do 
-        for i,p in pairs(Kits[k]) do 
-            all[i] = p 
-        end
+    for i,j in pairs(v) do
+        table.insert(categoryNames, i)
+         -- makes commands for all the kits (/usp, /deagle etc ..)
+        RegisterCommand(i, function(source,args,rawcommand)
+            DoKitStuff(k, i)
+         end)
     end
-end)
-        
 
-function AllKits()
-    for k,v in pairs(Kits) do 
-        for i,p in pairs(Kits[k]) do 
-            API.GiveItem(p.item, p.amount, p.slot)
-        end 
-    end
+    kitNames[k] = categoryNames
 end
+
+-- makes a command to list all loadouts under each category (/snipers, /smg etc..)
+for i, v in pairs(kitNames) do
+    RegisterCommand(i, function(source,args,rawcommand)
+        local message = '<div class="chat-message-deg"> <b>'..i..':<br></b>'
+        for k,j in pairs(v) do
+            print(j)
+            message = message ..j..' <br>'
+        end 
+        message = message .. '</div>'
+        TriggerEvent('chat:addMessage', {
+            template = message,
+            args = {}
+        })
+    end, false)
+end
+
+--[[
+    RegisterCommand(i, function(source,args,rawcommand)
+        print"hi"
+        print(result)
+        TriggerEvent('erp:addChatSystem', "hi"..result, source)
+    end)
+local result = table.concat(kitNames, ", ")
+RegisterCommand("kits", function(source,args,rawcommand)
+    print"hi"
+    print(result)
+    TriggerEvent('erp:addChatSystem', "hi"..result, source)
+end)
+]]
 
 RegisterNetEvent("inventory:forceKit", function(genre, kit)
     local kit = Kits[genre][kit]
@@ -244,7 +265,8 @@ function API.ClearItems()
 end
 
 
-function DoKitStuff(kit)
+function DoKitStuff(genre, kit)
+    Player.CurrentKitGenre = genre
     Player.CurrentKit = kit
     API.ClearItems()
     Wait(500)
@@ -278,10 +300,10 @@ function API.GetKitAmmo(kit)
 end
 
 function API.GiveKit()
-    -- print("givekit", Player.CurrentKitGenre, Player.CurrentKit )
-    -- if Player.CurrentKitGenre == nil or Player.CurrentKit == nil then return end 
-    local kit = Kits[Player.CurrentKit]
-    for k,v in pairs(kit) do API.GiveItem(v.item, v.amount, v.slot) end 
+    local kit = Kits[Player.CurrentKitGenre][Player.CurrentKit]
+    for k,v in pairs(kit) do
+        API.GiveItem(v.item, v.amount, v.slot)
+    end
     local primary = API.FindPrimaryWeapon(kit)
     local ammoCount = API.GetKitAmmo(kit)
     GiveWeaponToPed(Player.Ped(), GetHashKey(primary), 0, false, true)

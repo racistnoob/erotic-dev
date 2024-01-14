@@ -33,6 +33,7 @@ RegisterCommand('kill', function(source, args, rawCommand)
     Citizen.Wait(1000)
     TriggerEvent('baseevents:onPlayerDied')
     SetEntityHealth(playerPed, 0)
+    DetachEntity(playerPed)
 end)
 
 RegisterCommand('leave', function(source, args, rawCommand)
