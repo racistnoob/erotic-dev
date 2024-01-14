@@ -48,8 +48,8 @@
 					<RecoilAccuracyToAllowHeadShotPlayer value="0.175000"/>
 					<MinHeadShotDistancePlayer value="1.000000"/>
 					<MaxHeadShotDistancePlayer value="50.000000"/>
-					<HeadShotDamageModifierPlayer value="0.750000"/>
-					<Damage value="26.500000"/>
+					<HeadShotDamageModifierPlayer value="1.000000"/>
+					<Damage value="29.000000"/>
 					<DamageTime value="0.000000"/>
 					<DamageTimeInVehicle value="0.000000"/>
 					<DamageTimeInVehicleHeadShot value="0.000000"/>
@@ -214,56 +214,56 @@
 							<FirstPersonScopeAttachmentFov value="45.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0187500" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>		 	 
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_02</Name>
 							<FirstPersonScopeAttachmentFov value="55.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_03</Name>
 							<FirstPersonScopeAttachmentFov value="55.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_04</Name>
 							<FirstPersonScopeAttachmentFov value="10.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_05</Name>
 							<FirstPersonScopeAttachmentFov value="45.000000" />
 							<FirstPersonScopeAttachmentOffset x="-0.001000" y="0.125000" z="-0.0180000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_06</Name>
 							<FirstPersonScopeAttachmentFov value="45.000000" />
 							<FirstPersonScopeAttachmentOffset x="-0.002500" y="0.125000" z="-0.0200000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_07</Name>
 							<FirstPersonScopeAttachmentFov value="45.000000" />
 							<FirstPersonScopeAttachmentOffset x="-0.000500" y="0.125000" z="-0.0240000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_08</Name>
 							<FirstPersonScopeAttachmentFov value="5.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0285000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 						<Item>
 							<Name>COMPONENT_MK18_SCOPE_09</Name>
 							<FirstPersonScopeAttachmentFov value="5.000000" />
 							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0232500" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-					</FirstPersonScopeAttachmentData>	
+						</Item>
+					</FirstPersonScopeAttachmentData>
 					<ZoomFactorForAccurateMode value="1.300000"/>
 					<RecoilShakeHash>ASSAULT_RIFLE_RECOIL_SHAKE</RecoilShakeHash>
 					<RecoilShakeHashFirstPerson>FPS_ASSAULT_RIFLE_RECOIL_SHAKE</RecoilShakeHashFirstPerson>
@@ -409,7 +409,7 @@
 								</Item>
 								<Item>
 									<Name>COMPONENT_MK18_SCOPE_05</Name>
-									<Default value="false"/>
+									<Default value="True"/>
 								</Item>
 								<Item>
 									<Name>COMPONENT_MK18_SCOPE_06</Name>

@@ -5,9 +5,9 @@ local WeaponRecoil = {
         horizontal = .15
     },
     --mk18
-    [`weapon_carbinerifle_mk2`] = {
-        vertical = .15,
-    },
+    --[`weapon_carbinerifle_mk2`] = {
+        --vertical = .15,
+    --},
     --doesnt matter shitter gun
     [`weapon_specialcarbine`] = {
         vertical = .11,
@@ -23,6 +23,9 @@ local WeaponRecoil = {
     [`weapon_pistol`] = {
     vertical = .21,
     },
+    [`weapon_1911`] = {
+        vertical = .21,
+        },
     [`weapon_fnx45`] = {
         vertical = .21,
         },
@@ -76,8 +79,7 @@ local WeaponRecoil = {
         horizontal = .14
     },
     [`weapon_mk18`] = {
-        vertical = .30,
-        horizontal = .14
+        vertical = .15,
     },
     [`weapon_mp5`] = {
         vertical = .26,

@@ -177,6 +177,7 @@ end
 
 Config.Weapons = {
     ["WEAPON_APPISTOL"] = "9mm_rounds",
+    ["WEAPON_1911"] = "9mm_rounds",
     ["WEAPON_FNX45"] = "9mm_rounds",
     ["WEAPON_MACHINEPISTOL"] = "9mm_rounds",
     ["WEAPON_PISTOL"] = "9mm_rounds",
@@ -220,7 +221,7 @@ Config.Loadouts = {
     {name = "LOADOUT_USP", format = "USP Loadout", kit = "USP"},
     {name = "LOADOUT_AWP", format = "Awp Loadout", kit = "awp"},
     {name = "LOADOUT_HEAVYPISTOL", format = "Heavy Pistol Loadout", kit = "heavypistol"},
-    {name = "LOADOUT_M1911", format = "M1911 Beretta Loadout", kit = "M1911"},
+    {name = "LOADOUT_M1911", format = "M1911 Beretta Loadout", kit = "1911"},
     {name = "LOADOUT_MP9", format = "MP9 Loadout", kit = "mp9"},
     {name = "LOADOUT_762", format = "762 Loadout", kit = "762"},
     {name = "LOADOUT_AK47", format = "AK-47 Loadout", kit = "akm"},

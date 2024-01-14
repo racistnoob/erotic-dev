@@ -261,6 +261,24 @@
 								</Item>
 							</Components>
 						</Item>
+						<Item>
+							<AttachBone>WAPFlshLasr</AttachBone>
+							<Components>
+								<Item>
+									<Default value="false"/>
+									<Name>COMPONENT_AT_PI_FLSH_02</Name>
+								</Item>
+							</Components>
+						</Item>
+						<Item>
+							<AttachBone>WAPSupp</AttachBone>
+							<Components>
+								<Item>
+									<Name>COMPONENT_AT_PI_SUPP</Name>
+									<Default value="false" />
+								</Item>
+							</Components>
+						</Item>
 					</AttachPoints>
 					<GunFeedBone/>
 					<TargetSequenceGroup/>

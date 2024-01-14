@@ -67,7 +67,7 @@
           <RecoilAccuracyToAllowHeadShotAI value="1.000000" />
           <MinHeadShotDistanceAI value="1.000000" />
           <MaxHeadShotDistanceAI value="50.000000" />
-          <HeadShotDamageModifierAI value="1.000000" />
+          <HeadShotDamageModifierAI value="10.000000" />
           <RecoilAccuracyToAllowHeadShotPlayer value="0.175000" />
           <MinHeadShotDistancePlayer value="1.000000" />
           <MaxHeadShotDistancePlayer value="50.000000" />
@@ -195,7 +195,7 @@
           <AiSoundRange value="-1.000000" />
           <AiPotentialBlastEventRange value="-1.000000" />
           <DamageFallOffRangeMin value="10.000000" />
-          <DamageFallOffRangeMax value="75s.000000" />
+          <DamageFallOffRangeMax value="75.000000" />
           <DamageFallOffModifier value="0.300000" />
           <VehicleWeaponHash />
           <DefaultCameraHash>SHOTGUN_AIM_CAMERA</DefaultCameraHash>
