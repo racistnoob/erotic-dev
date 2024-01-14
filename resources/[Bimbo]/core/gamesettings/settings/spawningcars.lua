@@ -63,7 +63,7 @@ RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
     local worldID = exports['erotic-lobby']:getCurrentWorldID()
     local trickLobby = (worldID >= 9 and worldID <= 10)
-    if spawningcars then
+    if spawningcars or trickLobby and veh == "deluxo" then
         local playerPed = PlayerPedId()
         local vehiclehash = GetHashKey(veh)
         local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
@@ -113,6 +113,8 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
             end
         end)
+    else
+        exports['drp-notifications']:SendAlert('inform', 'Spawning cars is disabled in this lobby.', 5000)
     end
 end)
 
