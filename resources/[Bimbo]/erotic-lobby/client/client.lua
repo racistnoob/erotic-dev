@@ -29,7 +29,7 @@ end
 function OpenLobby()
 		toggleNuiFrame(true)
 end
-
+exports('openLobby', toggleNuiFrame)
 local peds = {
 		{
 				coords = vector3(236.9479, -1390.3431, 29.548),
