@@ -7,7 +7,7 @@ local barberShops = {
 }
 
 local tattoosShops = {
-	{coords = vector3(1322.95, -1652.28, 52.26), blip = false},
+	{coords = vector3(215.8360, -1385.9246, 30.5878), blip = true},
 }
 
 local currentMenu, armor, health = "", 0, 0

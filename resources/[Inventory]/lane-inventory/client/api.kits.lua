@@ -130,6 +130,13 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
         },
+        ["m60"] = {
+            {item = "WEAPON_COMBATMG", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "556_rounds", amount = 250, slot = 15},
+        },
     },
     ["smgs"] = {
         ["tec9"] = {
