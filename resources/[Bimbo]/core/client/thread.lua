@@ -64,6 +64,7 @@
     while true do
         N_0x4757f00bc6323cfe(-1553120962, 0)
         SetPedCanPlayAmbientAnims(PlayerPedId(), false)
+        SetPedCanLosePropsOnDamage(PlayerPedId(), false, 0)
         Wait(5000)
     end
  end)

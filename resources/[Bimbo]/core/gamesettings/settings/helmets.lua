@@ -29,7 +29,5 @@ CreateThread(function()
     Wait(1000)
     SetPedConfigFlag(ped, 149, not helmetsEnabled)
     SetPedConfigFlag(ped, 438, not helmetsEnabled)
-
-    SetPedCanLosePropsOnDamage(ped, false, 0)
   end
 end)
