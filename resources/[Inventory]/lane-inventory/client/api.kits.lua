@@ -253,6 +253,7 @@ RegisterNetEvent("inventory:forceKit", function(genre, kit)
 end)
 
 function API.ClearItems()
+    RemoveAllPedWeapons(Player.Ped())
     TriggerServerEvent("zbrp:Player:clearItems")
 end
 
