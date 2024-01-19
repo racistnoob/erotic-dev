@@ -62,6 +62,9 @@ local WeaponRecoil = {
     [`weapon_combatpdw`] = {
         vertical = .11,
     },
+    [`WEAPON_MPX`] = {
+        vertical = .11,
+    },
     --magpull
     [`weapon_assaultsmg`] = {
         vertical = .18,

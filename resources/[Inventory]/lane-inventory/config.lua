@@ -205,7 +205,9 @@ Config.Weapons = {
     ["WEAPON_GUSENBERG"] = "9mm_rounds",
     ["WEAPON_ASSAULTSMG"] = "9mm_rounds",
     ["WEAPON_MARKSMANRIFLE_MK2"] = "50cal_rounds",
-    ["WEAPON_HEAVYSNIPER_MK2"] = "50cal_rounds"
+    ["WEAPON_HEAVYSNIPER_MK2"] = "50cal_rounds",
+    ["WEAPON_ADVANCEDRIFLE"] = "556_rounds",
+    ["WEAPON_MPX"] = "9mm_rounds",
 }
 
 

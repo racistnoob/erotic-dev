@@ -122,9 +122,16 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
-        },
+        },--[[ GUN JUST DOESNT WORK IDK WHY
         ["mk18"] = {
             {item = "WEAPON_MK18", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "556_rounds", amount = 250, slot = 15},
+        },]]
+        ["advrifle"] = {
+            {item = "WEAPON_ADVANCEDRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
@@ -154,7 +161,7 @@ Kits = {
             {item = "9mm_rounds", amount = 250, slot = 15},
         },
         ["mpx"] = {
-            {item = "WEAPON_COMBATPDW", primary = true, amount = 1, slot = 1},
+            {item = "WEAPON_MPX", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},

@@ -68,6 +68,11 @@ WeaponComponents = {
         extmag = "COMPONENT_SPECIALCARBINE_CLIP_02",
         drummag = "COMPONENT_SPECIALCARBINE_CLIP_03"
     },
+    ["WEAPON_ADVANCEDRIFLE"] = {
+        silencer = "COMPONENT_AT_AR_SUPP",
+        flashlight = "COMPONENT_AT_AR_FLSH",
+        extmag = "COMPONENT_ADVANCEDRIFLE_CLIP_02",
+    },
     ["WEAPON_SCARH"] = {
         silencer = "COMPONENT_AT_AR_SUPP_02",
         flashlight = "COMPONENT_AT_AR_FLSH",
@@ -90,6 +95,7 @@ WeaponComponents = {
         drummag = "COMPONENT_COMBATPDW_CLIP_03"
     },
     ["WEAPON_MICROSMG"] = {
+        silencer = "COMPONENT_AT_AR_SUPP_02",
         extmag = "COMPONENT_MICROSMG_CLIP_02",
     },
     ["WEAPON_MINISMG"] = {
