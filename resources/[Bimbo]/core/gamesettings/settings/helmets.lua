@@ -16,12 +16,18 @@ end
 exports("setHelmetsEnabled", SetHelmetsEnabled)
 exports("getHelmetsEnabled", GetHelmetsEnabled)
 
+local ped = 0
+Citizen.CreateThread(function()
+  while true do
+      Citizen.Wait(2500)
+      ped = PlayerPedId()
+  end
+end)
+
 CreateThread(function()
   while true do
-    Wait(250)
-    SetPedConfigFlag(PlayerPedId(), 149, not helmetsEnabled)
-    SetPedConfigFlag(PlayerPedId(), 438, not helmetsEnabled)
-
-    SetPedCanLosePropsOnDamage(PlayerPedId(), false, 0)
+    Wait(1000)
+    SetPedConfigFlag(ped, 149, not helmetsEnabled)
+    SetPedConfigFlag(ped, 438, not helmetsEnabled)
   end
 end)

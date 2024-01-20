@@ -1,7 +1,7 @@
 local animPlaying = false
 local playerArmed = false
 local quickSelectEnabled = false
-
+currentWeaponName = "unequipped"
 local clipCache = {}
 
 RegisterNetEvent("erotic:quickSelectEnabled", function(newState)
@@ -27,21 +27,11 @@ AddEventHandler('erotic:useWeapon', function(weaponName)
     if weaponHash == currentWeapon then
       -- Wait(500)
         putawayGun(weaponName)
-        SendNotification({
-            text = "~r~~h~Unequipped.",
-            type = 'bottomLeft',
-            timeout = 1000,
-        })
     elseif not IsPedJumping(ped) and cooldown == false then
       cooldown = true
       Wait(100)
       cooldown = false
-            SendNotification({
-                text = "~g~~h~Equipped.",
-                type = 'bottomLeft',
-                timeout = 1000,
-            })
-            
+            currentWeaponName = weaponName
             local bulletType = findAmmoType(weaponHash)
             local ammoCount = ammoCount(bulletType)
 
@@ -53,11 +43,6 @@ AddEventHandler('erotic:useWeapon', function(weaponName)
             ClearPedTasks(ped)
             SetAmmoInClip(PlayerPedId(), weaponHash, GetMaxAmmoInClip(PlayerPedId(), weaponHash, 1))
           elseif cooldown == false then
-           SendNotification({
-                text = "~r~~h~Unequipped.",
-                type = 'bottomLeft',
-                timeout = 1000,
-            })
             putawayGun(weaponName, currentWeapon)
         end
     end)
@@ -78,10 +63,14 @@ Citizen.CreateThread(function()
 end)
 
 CreateThread(function()
+  local sleepTimer = 100
     while true do
-      Wait(0)
-  
+      Wait(sleepTimer)
+      if not playerArmed then
+        Wait(1000)
+      end
       if not quickSelectEnabled and playerArmed then
+        sleepTimer = 100
         local playerPed = PlayerPedId()
         local currentWeapon = GetSelectedPedWeapon(playerPed)
   
@@ -184,6 +173,7 @@ function putawayGun(weaponName)
       ClearPedTasks(ped)
       RemoveAllPedWeapons(ped, true)
     end
+    currentWeaponName = "unequipped"
   end)
 end
 

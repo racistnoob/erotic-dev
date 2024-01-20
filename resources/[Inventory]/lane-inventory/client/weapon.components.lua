@@ -21,6 +21,12 @@ end
 function toggleWeaponSkins(skinIndex)
     if skinIndex and skinIndex >= 0 and skinIndex <= 7 then
         CurrentSkin = skinIndex
+        local currentWeapon = GetSelectedPedWeapon(PlayerPedId())
+        if currentWeapon ~= 2725352035 then
+            ApplyWeaponComponents(currentWeaponName)
+            ApplyWeaponSkin(PlayerPedId(), currentWeapon, CurrentSkin)
+        end
+        SetResourceKvpInt("weaponTint", CurrentSkin)
     else
         -- print("Invalid skin index. Please use a number between 0 and 7.")
     end
@@ -47,7 +53,7 @@ local function SaveWeaponComponentStates(weaponName)
 end
 
 local function toggleWeaponComponent(componentType)
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     local currentWeapon = GetSelectedPedWeapon(playerPed)
     local weaponName = nil
 
@@ -98,6 +104,7 @@ end
 for componentType in pairs(uniqueComponentTypes) do
     RegisterCommand(componentType, function(source, args, rawCommand)
         toggleWeaponComponent(componentType)
+        ApplyWeaponComponents(currentWeaponName)
     end)
 end
 
@@ -113,6 +120,7 @@ AddEventHandler("Inv:load:components", function()
     for weaponName in pairs(WeaponComponents) do
         LoadWeaponComponentStates(weaponName)
     end
+    toggleWeaponSkins(GetResourceKvpInt("weaponTint"))
 end)
 
 local function WipeWeaponKVPs()

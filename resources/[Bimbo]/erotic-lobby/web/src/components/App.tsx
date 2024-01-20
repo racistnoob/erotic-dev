@@ -1,155 +1,169 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import { debugData } from '../utils/debugData';
 import { fetchNui } from '../utils/fetchNui';
-import { useNuiEvent } from '../hooks/useNuiEvent';
-
-debugData([
-  {
-    action: 'setVisible',
-    data: true,
-  },
-]);
 
 interface Lobby {
   id: number;
   name: string;
   settings: string[]; // Array of strings for lobby settings
+  playerCount: number;
 }
-
-interface PlayerCountData {
-  worldID: number; // or string, depending on your data
-  count: number;
-}
-
 const App: React.FC = () => {
 
-  const [lobbies] = useState<Lobby[]>([
+  const [lobbies, setLobbies] = useState<Lobby[]>([
     {
       id: 1,
       name: 'Southside #1',
       settings: ['FPS Mode', 'Light Recoil'],
+      playerCount: 0
     },
     
     {
       id: 2,
       name: 'FFA',
       settings: ['FPS Mode', 'Light Recoil'],
+      playerCount: 0
 
     },
     {
       id: 3,
       name: 'Southside #3',
       settings: ['FPS Mode', 'Light Recoil', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 4,
       name: 'Southside #4',
       settings: ['FPS Mode', 'Light Recoil', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 5,
       name: 'Southside #5',
       settings: ['FPS Mode', 'Medium Recoil'],
+      playerCount: 0
     },
     {
       id: 6,
       name: 'Southside #6',
       settings: ['FPS Mode', 'Medium Recoil'],
+      playerCount: 0
     },
     {
       id: 7,
       name: 'Southside #7',
       settings: ['FPS Mode', 'Medium Recoil', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 8,
       name: 'Southside #8',
       settings: ['FPS Mode', 'Medium Recoil', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 9,
       name: 'Southside #9',
       settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 10,
       name: 'Southside #10',
       settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
+      playerCount: 0
     },
     {
       id: 11,
       name: 'Southside #11',
       settings: ['FPS Mode', 'Medium Recoil'],
+      playerCount: 0
     },
     {
       id: 12,
       name: 'Southside #12',
       settings: ['FPS Mode', 'Medium Recoil'],
+      playerCount: 0
     },
     {
       id: 13,
       name: 'Southside #13',
       settings: ['FPS Mode', 'Heavy Recoil'],
+      playerCount: 0
     },
     {
       id: 14,
       name: 'Southside #14',
       settings: ['FPS Mode', 'Heavy Recoil'],
+      playerCount: 0
     },
     {
       id: 15,
       name: 'Southside #15',
       settings: ['FPS Mode', 'Heavy Recoil'],
+      playerCount: 0
     },
     {
       id: 16,
       name: 'Southside #16',
       settings: ['FPS Mode', 'Heavy Recoil'],
+      playerCount: 0
     },
     {
       id: 17,
       name: 'Southside #17',
       settings: ['Third Person', 'Light Recoil'],
+      playerCount: 0
     },
     {
       id: 18,
       name: 'Southside #18',
       settings: ['Third Person', 'Light Recoil'],
+      playerCount: 0
     },
     {
       id: 19,
       name: 'Southside #19',
       settings: ['Third Person', 'Light Recoil'],
+      playerCount: 0
     },
     {
       id: 20,
       name: 'Southside #20',
       settings: ['Third Person', 'Light Recoil'],
+      playerCount: 0
     },
   ]);
 
-  const [playerCount, setPlayerCount] = useState(0);
-  const [currentWorldID, setCurrentWorldID] = useState<number | null>(null);
-
-  useNuiEvent<PlayerCountData>('erotic-lobby:sendPlayerCount', (data) => {
-    if (data.worldID === currentWorldID) { // Ensure currentWorldID is defined or obtained correctly
-      setPlayerCount(data.count);
+  window.addEventListener('message', (event) => {
+    if (event.data.type === "updatePlayerCount") {
+      const newPlayerCount = event.data.count;
+      const worldID = event.data.worldId;
+  
+      setLobbies((prevLobbies) => {
+        const updatedLobbies = prevLobbies.map((lobby) => {
+          if (lobby.id === worldID) {
+            return { ...lobby, playerCount: newPlayerCount };
+          }
+          return lobby;
+        });
+  
+        return updatedLobbies;
+      });
     }
   });
-
+  
   const handleJoinLobby = (lobbyId: number) => {
     fetchNui('switchWorld', { worldId: lobbyId })
       .then((response) => {
         if (response.success) {
           console.log('Joined lobby successfully!');
-          console.log(`Number of people in lobby: ${playerCount}`);
         } else {
           console.error('Failed to join the lobby:', response.error);
         }
       })
       .catch((error) => {
-        console.error('Failed to join the lobby:', error);
+        console.error('Failed to   join the lobby:', error);
       });
   };
 
@@ -170,15 +184,6 @@ const App: React.FC = () => {
       !filterSettings[setting] || lobby.settings.includes(setting)
     ) && (!selectedRecoil || lobby.settings.includes(selectedRecoil))
   );
-
-  const [filterHeight, setFilterHeight] = useState(0);
-const filterRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (filterRef.current) {
-      setFilterHeight(filterRef.current.clientHeight);
-    }
-  }, [/* dependencies, e.g., state of checkboxes */]);
 
   return (
     <div className='overlay'>
@@ -210,7 +215,7 @@ const filterRef = useRef<HTMLDivElement>(null);
                   <p key={index} className="lobby-setting">{setting}</p>
                 ))}
               </div>
-              <p className="lobby-player-count">Players: {playerCount}</p>
+              <p className="lobby-player-count">Players: {lobby.playerCount}</p>
             </div>
           ))}
         </div>

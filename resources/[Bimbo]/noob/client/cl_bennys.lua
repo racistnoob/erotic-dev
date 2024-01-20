@@ -1,9 +1,6 @@
---[[
-	nigrdeobfusatr
---]]
 
 
-do
+
 	local colors = {
 		{
 			name = "Black",
@@ -4083,7 +4080,6 @@ do
 			inside = false
 			currentgarage = 0
 			SetPlayerControl(PlayerId(), true)
-			print"yes"
 			TriggerEvent("drp:saveVehicleModsBennys", veh)
 		end)
 	end
@@ -4138,34 +4134,6 @@ do
 		ClearDrawOrigin()
 	end
 
-  local coords = vector3(244.3327, -1409.678, 30.09405)
-  Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1)
-        if exports["noob"]:inSafeZone() then
-          if inside == false then
-            local ped = PlayerPedId()
-            if IsPedSittingInAnyVehicle(ped) then
-                local veh = GetVehiclePedIsUsing(ped)
-                if DoesEntityExist(veh) and GetPedInVehicleSeat(veh, -1) == ped then
-                    if GetDistanceBetweenCoords(coords, GetEntityCoords(ped)) <= 7.5 then
-                      if IsControlJustPressed(1, 38) then
-                          SetupModPrices()
-                          inside = true
-                          currentgarage = 1
-                          editCount = 0
-                          DriveInGarage()
-                      end
-                    else
-                      DrawMarker(21, coords.x, coords.y, coords.z + 0.7, vector3(0,0,0), vector3(0,0,0), vector3(1.1, 1.1, 0.9), 201, 116, 255, 125, false, false, false, true, false, false, false)
-                    end
-                end
-            end
-        end
-        end
-    end
-end)
-        
     --Lets drive out of the garage
 	function LSCMenu:OnMenuClose(m)
 		DriveOutOfGarage()
@@ -4849,15 +4817,51 @@ end)
 			DrawScaleformMovie(Ibuttons, 0.5, 0.5, 1.0, 1.0, 255, 255, 255, 255)
 		end
 	end
+
+	local coords = vector3(244.3327, -1409.678, 30.09405)
+  
+	
 	Citizen.CreateThread(function()
 		while true do
-			Citizen.Wait(3)
-			if inside then
-				SetLocalPlayerVisibleLocally(1)
+			local sleepTimer = 1500
+			if exports["noob"]:inSafeZone() then
+				-- inside means in bennys
+				if not inside then
+					local ped = PlayerPedId()
+					if IsPedSittingInAnyVehicle(ped) then
+						local veh = GetVehiclePedIsUsing(ped)
+						if DoesEntityExist(veh) and GetPedInVehicleSeat(veh, -1) == ped then
+							local distance = GetDistanceBetweenCoords(coords, GetEntityCoords(ped))
+							if distance <= 7.5 then
+								sleepTimer = 1
+								if IsControlJustPressed(1, 38) then
+									SetupModPrices()
+									inside = true
+									currentgarage = 1
+									editCount = 0
+									DriveInGarage()
+									sleepTimer = 1500
+								end
+							elseif distance <= 20.0 then
+								sleepTimer = 1
+								DrawMarker(21, coords.x, coords.y, coords.z + 0.7, vector3(0,0,0), vector3(0,0,0), vector3(1.1, 1.1, 0.9), 201, 116, 255, 125, false, false, false, true, false, false, false)
+							end
+						end
+					end
+				end
+	
+				if inside then
+					sleepTimer = 1500
+					SetLocalPlayerVisibleLocally(1)
+				end
+
+				if LSCMenu:isVisible() then
+					DrawIbuttons() --Draw the scaleform if menu is visible
+				end
+			else
+				sleepTimer = 2500
 			end
-			if LSCMenu:isVisible() then
-				DrawIbuttons() --Draw the scaleform if menu is visible
-			end
+
+			Wait(sleepTimer)
 		end
 	end)
-end

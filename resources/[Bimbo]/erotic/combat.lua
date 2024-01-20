@@ -97,10 +97,10 @@ RegisterCommand('cross', function(src, args)
 end)
 
 RegisterCommand("top", function()
-        local playerPed = PlayerPedId()
-        local worldID = exports['erotic-lobby']:getCurrentWorldID()
+    local playerPed = PlayerPedId()
+    local worldID = exports['erotic-lobby']:getCurrentWorldID()
 
-        if worldID >= 9 and worldID <= 10 then
+    if worldID >= 9 and worldID <= 10 then
         if IsPedInAnyVehicle(playerPed, false) then
             local vehicle = GetVehiclePedIsIn(playerPed, false)
             TaskLeaveVehicle(playerPed, vehicle, 0)
@@ -116,8 +116,6 @@ RegisterCommand("top", function()
             local height = max.z - min.z
 
             SetPedCoordsKeepVehicle(playerPed, x, y, z + height)
-        else
-            print("Naughty Naughty")
         end
     end
 end, false)

@@ -24,7 +24,7 @@ AddEventHandler('baseevents:revived', function()
 end)
 
 local function GetPlayerByEntityID(id)
-    for _, player in ipairs(GetActivePlayers()) do 
+    for _, player in pairs(GetActivePlayers()) do 
         if NetworkIsPlayerActive(player) and GetPlayerPed(player) == id  then 
             return player 
         end 

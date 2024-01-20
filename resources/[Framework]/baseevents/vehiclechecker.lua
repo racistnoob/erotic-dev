@@ -41,7 +41,7 @@ CreateThread(function()
 				currentSeat = 0
 			end
 		end
-		Wait(100)
+		Wait(250)
 	end
 end)
 

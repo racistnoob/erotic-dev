@@ -13,7 +13,6 @@ end
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        local ped = PlayerPedId()
         if not IsPedInAnyVehicle(ped, false) then
             if IsPedUsingActionMode(ped) then
                 SetPedUsingActionMode(ped, -1, -1, 1)
@@ -26,7 +25,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(1000)
+		Wait(2000)
 		ped = PlayerPedId()
 		vehicle = GetVehiclePedIsIn(ped, false)
 	end
@@ -49,6 +48,7 @@ Citizen.CreateThread(function()
                 SetPedIntoVehicle(ped, vehicle, seat) -- getting into car from passenger with no driver
             end
         end
+        SetPedConfigFlag(ped, 353, true)
         Wait(1000)
     end
 end)

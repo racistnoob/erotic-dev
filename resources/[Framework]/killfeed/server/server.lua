@@ -40,7 +40,7 @@ AddEventHandler("Grab:Leaderboard", function()
     local Database = {}
     local players = GetPlayers()
 
-    for _, playerId in ipairs(players) do
+    for _, playerId in pairs(players) do
         local Steam = GetIdentifier("steam", playerId)
         if not Steam then goto skip end
         local Character = exports.oxmysql:fetchSync("SELECT id, Kills, Deaths FROM users WHERE identifier=:identifier AND deleted='0'", { identifier = Steam })[1]

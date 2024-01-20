@@ -30,7 +30,7 @@ local showing = false
 local function ShowIds()
     CreateThread(function()
         while showing do
-            for _, id in ipairs(GetActivePlayers()) do
+            for _, id in pairs(GetActivePlayers()) do
                 local targetPed = GetPlayerPed(id)
                 if targetPed ~= PlayerPedId() then
                     if playerDistances[id] then
@@ -56,7 +56,7 @@ Citizen.CreateThread(function()
         local playerPed = PlayerPedId()
         local playerCoords = GetEntityCoords(playerPed)
 
-        for _, id in ipairs(GetActivePlayers()) do
+        for _, id in pairs(GetActivePlayers()) do
             local targetPed = GetPlayerPed(id)
             if targetPed ~= playerPed then
                 local distance = #(playerCoords - GetEntityCoords(targetPed))

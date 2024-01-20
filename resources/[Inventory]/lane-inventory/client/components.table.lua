@@ -24,6 +24,35 @@ WeaponComponents = {
         flashlight = "COMPONENT_AT_PI_FLSH",
         extmag = "COMPONENT_HEAVYPISTOL_CLIP_02"
     },
+    ["WEAPON_SP45"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+    },
+    ["WEAPON_FNX45"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+    },
+    ["WEAPON_VINTAGEPISTOL"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+        flashlight = "COMPONENT_AT_PI_FLSH",
+        extmag = "COMPONENT_VINTAGEPISTOL_CLIP_02",
+    },
+    ["WEAPON_PISTOL50"] = {
+        extmag = "COMPONENT_PISTOL50_CLIP_02",
+        flashlight = "COMPONENT_AT_PI_FLSH",
+    },
+    ["WEAPON_1911"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+    },
+    ["WEAPON_COMBATPISTOL"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+        flashlight = "COMPONENT_AT_PI_FLSH",
+        extmag = "COMPONENT_COMBATPISTOL_CLIP_02"
+    },
+    ["WEAPON_GLOCK17"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+    },
+    ["WEAPON_GLOCK18C"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+    },
     ["WEAPON_CARBINERIFLE_MK2"] = {
         silencer = "COMPONENT_AT_AR_SUPP",
         scope = "COMPONENT_AT_SIGHTS",
@@ -38,6 +67,44 @@ WeaponComponents = {
         grip = "COMPONENT_AT_AR_AFGRIP",
         extmag = "COMPONENT_SPECIALCARBINE_CLIP_02",
         drummag = "COMPONENT_SPECIALCARBINE_CLIP_03"
+    },
+    ["WEAPON_ADVANCEDRIFLE"] = {
+        silencer = "COMPONENT_AT_AR_SUPP",
+        flashlight = "COMPONENT_AT_AR_FLSH",
+        extmag = "COMPONENT_ADVANCEDRIFLE_CLIP_02",
+    },
+    ["WEAPON_SCARH"] = {
+        silencer = "COMPONENT_AT_AR_SUPP_02",
+        flashlight = "COMPONENT_AT_AR_FLSH",
+        grip = "COMPONENT_AT_AR_AFGRIP",
+    },
+    ["WEAPON_MACHINEPISTOL"] = {
+        silencer = "COMPONENT_AT_PI_SUPP",
+        extmag = "COMPONENT_MACHINEPISTOL_CLIP_02",
+        drummag = "COMPONENT_MACHINEPISTOL_CLIP_03"
+    },
+    ["WEAPON_COMPACTRIFLE"] = {
+        extmag = "COMPONENT_COMPACTRIFLE_CLIP_02",
+        drummag = "COMPONENT_COMPACTRIFLE_CLIP_03"
+    },
+    ["WEAPON_SMG_MK2"] = {
+        extmag = "COMPONENT_SMG_MK2_CLIP_02",
+    },
+    ["WEAPON_COMBATPDW"] = {
+        extmag = "COMPONENT_COMBATPDW_CLIP_02",
+        drummag = "COMPONENT_COMBATPDW_CLIP_03"
+    },
+    ["WEAPON_MICROSMG"] = {
+        silencer = "COMPONENT_AT_AR_SUPP_02",
+        extmag = "COMPONENT_MICROSMG_CLIP_02",
+    },
+    ["WEAPON_MINISMG"] = {
+        extmag = "COMPONENT_MINISMG_CLIP_02",
+    },
+    ["WEAPON_ASSAULTSMG"] = {
+        extmag = "COMPONENT_ASSAULTSMG_CLIP_02",
+        flashlight = "COMPONENT_AT_AR_FLSH",
+        silencer = "COMPONENT_AT_AR_SUPP_02",
     },
     ["WEAPON_SPECIALCARBINE_MK2"] = {
         flashlight = "COMPONENT_AT_AR_FLSH",

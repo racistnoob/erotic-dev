@@ -1,8 +1,15 @@
+local ped = 0
+Citizen.CreateThread(function()
+  while true do
+      Citizen.Wait(2500)
+      ped = PlayerPedId()
+  end
+end)
+
 Citizen.CreateThread(function()
     while true do
-        Wait(100)
+        Wait(250)
 
-        local ped = GetPlayerPed(-1)
         local health = GetEntityHealth(ped) - 100
         local armor = GetPedArmour(ped)
 

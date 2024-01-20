@@ -2,6 +2,7 @@ currentWorldID = 1
 
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
+        exports['erotic-lobby']:openLobby(false)
         exports['erotic-lobby']:switchWorld(data.worldId)
         cb({ success = true })
     else
@@ -31,13 +32,13 @@ AddEventHandler('erotic-lobby:updateLobby', function(worldID)
 end)
 
 RegisterNetEvent('erotic-lobby:sendPlayerCount')
-AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount)
-    -- Send this data to the NUI (frontend)
+AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount, worldID)
     SendNUIMessage({
         type = "updatePlayerCount",
-        worldId = currentWorldID,
+        worldId = worldID,
         count = playerCount
     })
+    Wait(1000)
 end)
 
 exports('getCurrentWorld', function()

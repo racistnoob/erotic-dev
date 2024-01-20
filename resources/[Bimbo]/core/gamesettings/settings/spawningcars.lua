@@ -10,7 +10,7 @@ local spawnedCar
 spawningcars = true
 
 local function IsVehicleWhitelisted(model)
-    for _, name in ipairs(whitelistedVehicles) do
+    for _, name in pairs(whitelistedVehicles) do
         if model == GetHashKey(name) then
             return true
         end

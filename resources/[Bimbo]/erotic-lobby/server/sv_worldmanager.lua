@@ -97,6 +97,11 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
         local coords = Config.Worlds[worldName][2];
         local ids = ExtractIdentifiers(src);
         if not permission then
+            local oldWorld = 1
+            if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
+                oldWorld = Config.Worlds[WorldTracker[ids.license].World][1]
+            end
+
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
             WorldTracker[ids.license] = {
                 World = worldName,
@@ -107,30 +112,15 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
             TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
             UpdateStats(worldName)
             TriggerClientEvent("core:updateRPC", src, worldName)
-                -- Changed worlds ...
+            updateAndSendPlayerCount(Config.Worlds[worldName][1])
+            updateAndSendPlayerCount(oldWorld)
+            -- Changed worlds ...
             return;
         end
     else 
         -- This world does not exist...
     end
 end)
-
-RegisterNetEvent('erotic-lobby:getPlayerWorld')
-AddEventHandler('erotic-lobby:getPlayerWorld', function(playerID)
-    getPlayerWorld(playerID)
-end)
-
-RegisterNetEvent('requestLobbyPlayerCount')
-AddEventHandler('requestLobbyPlayerCount', function(lobbyID)
-    local src = source
-    local playerCount = getLobbyPlayerCount(lobbyID) -- Assuming this function exists
-    TriggerClientEvent('receiveLobbyPlayerCount', src, lobbyID, playerCount)
-end)
-
-function getPlayerWorld(playerID)
-    print(GetPlayerRoutingBucket(playerID))
-    return GetPlayerRoutingBucket(playerID)
-end
 
 function ExtractIdentifiers(src)
     local identifiers = {
@@ -174,17 +164,8 @@ function getLobbyPlayerCount(worldID)
 end
 
 function updateAndSendPlayerCount(worldID)
-    local count = 0
-
-    -- Count players in the specified world
-    for _, v in pairs(WorldTracker) do
-        if v.World == worldID then
-            count = count + 1
-        end
-    end
-
-    -- Send this data to the frontend
-    TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, worldID, count)
+    getLobbyPlayerCount(worldID)
+    TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), worldID)
 end
 
 function GetLobbyStats(worldID)
@@ -217,7 +198,6 @@ function UpdateLobbyStats(source, worldID, type)
 end
 
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
-exports('getPlayerWorld', getPlayerWorld)
 exports('GetLobbyStats', GetLobbyStats)
 exports('UpdateLobbyStats', UpdateLobbyStats)
 exports('GetWorld', GetWorld)
