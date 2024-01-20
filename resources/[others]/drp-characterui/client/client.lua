@@ -720,7 +720,7 @@ AddEventHandler("fetchCharacters",function(sentData)
 end)
 
 RegisterNUICallback('removeBlur', function()
-    TriggerEvent('set-timecycle')
+    TriggerEvent('reset-timecycle')
 end)
 
 RegisterNUICallback('createNewCharacter', function(data, cb)

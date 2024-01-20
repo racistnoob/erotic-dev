@@ -4,7 +4,7 @@ local function toggleNuiFrame(shouldShow)
 		SetTimecycleModifier('hud_def_blur')
 	else
 		SetNuiFocus(false,false)
-		TriggerEvent('set-timecycle')
+		TriggerEvent('reset-timecycle')
 		TriggerScreenblurFadeOut(50)
 	end
 	SetNuiFocus(shouldShow, shouldShow)
