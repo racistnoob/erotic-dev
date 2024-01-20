@@ -93,7 +93,7 @@ function handleCamUpdates(weaponObject, gunHash, coords)
             camControl(weaponObject, coords)
 
             if IsDisabledControlJustPressed(0, 191) then
-                exports["drp-hud"]:toggleNui(false)
+                exports["drp-hud"]:toggleNui(true)
                 SendNUIMessage({ type = "openUI", toggle = false, gunData = {} })
                 SetNuiFocus(false, false)
                 SetNuiFocusKeepInput(false)

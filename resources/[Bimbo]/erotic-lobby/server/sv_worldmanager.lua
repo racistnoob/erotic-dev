@@ -86,6 +86,7 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
         UpdateStats(worldName)
+        updateAndSendPlayerCount(1, true, src)
     end
 end)
 
@@ -163,9 +164,15 @@ function getLobbyPlayerCount(worldID)
     return playerCount
 end
 
-function updateAndSendPlayerCount(worldID)
-    getLobbyPlayerCount(worldID)
-    TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), worldID)
+function updateAndSendPlayerCount(worldID, all, src)
+    if all then
+        for i = 1, #Config.Worlds do
+            TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
+            Wait(10)
+        end
+    else
+        TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), worldID)
+    end
 end
 
 function GetLobbyStats(worldID)

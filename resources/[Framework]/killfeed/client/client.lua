@@ -58,7 +58,7 @@ RegisterNUICallback("exit",function()
         mode = "close_all",
     })
     SetNuiFocus(false,false)
-    SetTimecycleModifier('default')
+    TriggerEvent('set-timecycle')
     TriggerScreenblurFadeOut(50)
 end)
 

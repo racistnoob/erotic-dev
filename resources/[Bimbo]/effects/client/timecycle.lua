@@ -16,6 +16,14 @@ end
 
 RegisterNetEvent('set-timecycle')
 AddEventHandler('set-timecycle', function(params)
+    if params == nil then
+        local kvpValue = GetResourceKvpString("graphics_timecycle")
+        if kvpValue then
+            print('KVP loaded:', kvpValue)
+            SetTimecycleModifierEffect(kvpValue)
+        end
+    end
+
     local timecycleType = params.type
     local timecycleName = timecycles[timecycleType]
     
@@ -27,6 +35,8 @@ AddEventHandler('set-timecycle', function(params)
         print("Invalid timecycle type.")
     end
 end)
+
+
 
 AddEventHandler('echorp:playerSpawned', function()
     local kvpValue = GetResourceKvpString("graphics_timecycle")
