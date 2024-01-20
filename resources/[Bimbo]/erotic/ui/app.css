@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Oswald&family=Poppins&family=Yuji+Hentaigana+Akari&display=swap');
-
 @keyframes fadeAnimation {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
+    0%,
+    100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
 }
 
 .scope {
@@ -20,9 +24,12 @@
 }
 
 scope img {
-    width: 100px; /* Adjust the size of your scope image */
-    height: 100px; /* Adjust the size of your scope image */
-    border-radius: 50%; /* Make it circular */
+    width: 100px;
+    /* Adjust the size of your scope image */
+    height: 100px;
+    /* Adjust the size of your scope image */
+    border-radius: 50%;
+    /* Make it circular */
     box-shadow: 0 0 100vh 100vmax rgba(0, 0, 0, 0.7);
     object-fit: contain;
 }
@@ -50,7 +57,6 @@ scope img {
     display: flex;
 }
 
-
 .WaterMark {
     position: absolute;
     top: 10px;
@@ -63,7 +69,7 @@ scope img {
     padding: 0%;
     margin: 0%;
     text-shadow: 2px 2px 1px black;
-    color: #908aff;
+    color: gray;
     font-family: Poppins;
     text-align: center;
 }
@@ -116,7 +122,7 @@ scope img {
     font-weight: 600;
     font-size: 30px;
     font-weight: 1000;
-    color: #908aff;
+    color: gray;
     display: flex;
     text-shadow: 2px 2px 1px black;
 }

@@ -1,6 +1,14 @@
 local function toggleNuiFrame(shouldShow)
-		SetNuiFocus(shouldShow, shouldShow)
-		SendReactMessage("setVisible", shouldShow)
+	if shouldShow then
+		SetNuiFocus(true, true)
+		SetTimecycleModifier('hud_def_blur')
+	else
+		SetNuiFocus(false,false)
+		SetTimecycleModifier('default')
+		TriggerScreenblurFadeOut(50)
+	end
+	SetNuiFocus(shouldShow, shouldShow)
+	SendReactMessage("setVisible", shouldShow)
 end
 
 RegisterNUICallback("hideFrame", function(data, cb)

@@ -1,7 +1,6 @@
 local animPlaying = false
 local playerArmed = false
 local quickSelectEnabled = false
-currentWeaponName = "unequipped"
 local clipCache = {}
 
 RegisterNetEvent("erotic:quickSelectEnabled", function(newState)
@@ -31,13 +30,11 @@ AddEventHandler('erotic:useWeapon', function(weaponName)
       cooldown = true
       Wait(100)
       cooldown = false
-            currentWeaponName = weaponName
             local bulletType = findAmmoType(weaponHash)
             local ammoCount = ammoCount(bulletType)
 
             GiveWeaponToPed(ped, weaponHash, tonumber(ammoCount), false, true)
-            ApplyWeaponComponents(weaponName)
-            ApplyWeaponSkin(ped, weaponHash, CurrentSkin)
+            exports["attachments"]:applyComponents(weaponName)
             SetCurrentPedVehicleWeapon(PlayerPedId(), weaponHash)
             SetCurrentPedWeapon(PlayerPedId(), weaponHash, true)
             ClearPedTasks(ped)
@@ -173,7 +170,6 @@ function putawayGun(weaponName)
       ClearPedTasks(ped)
       RemoveAllPedWeapons(ped, true)
     end
-    currentWeaponName = "unequipped"
   end)
 end
 

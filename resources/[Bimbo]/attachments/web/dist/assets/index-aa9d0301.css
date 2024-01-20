@@ -1,0 +1,221 @@
+@import"https://fonts.googleapis.com/css2?family=Oswald&display=swap";
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%
+}
+
+.gun {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 100%;
+    height: 100%;
+    background: url(/src/assets/gun.png) center center no-repeat;
+    scale: 1.3
+}
+
+@media screen and (max-width: 1920px) {
+    .gun {
+        scale: 1
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .gun {
+        scale: 1.3
+    }
+}
+
+.attachmentOptions {
+    position: absolute;
+    bottom: 1%;
+    left: 50%;
+    translate: -50.5% -0%;
+    width: 30%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: row;
+    gap: 1.1vh;
+    padding-left: 2vh;
+    padding-bottom: 1.5vh;
+    overflow-x: overlay;
+    border-radius: 4px
+}
+
+.buttonsContainer {
+    position: absolute;
+    top: 77%;
+    left: 50%;
+    translate: -50%;
+    width: 31.2%;
+    aspect-ratio: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 2%
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0, .5);
+    border: 4px solid transparent;
+    background-clip: content-box;
+    border-radius: 1vh
+}
+
+::-webkit-scrollbar {
+    width: 10px
+}
+
+::-webkit-scrollbar-thumb {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(63, 43, 98, .6) 0%, rgba(48, 36, 63, .7) 100%);
+    border-radius: 1vh
+}
+
+._container_1nkj1_1 {
+    position: absolute;
+    translate: -50% -50%;
+    width: 1%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+._text_1nkj1_23 {
+    position: absolute;
+    translate: 0% -200%;
+    transition: opacity ease .2s;
+    opacity: 0%;
+    font-size: 110%;
+    background-color: #271d32b9;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+._icon_1nkj1_45 {
+    position: absolute;
+    translate: -0% 8%;
+    color: #908aff;
+    cursor: pointer;
+    transition: font-size ease .2s
+}
+
+._icon_1nkj1_45:hover {
+    font-size: 170%
+}
+
+._icon_1nkj1_45:hover~._text_1nkj1_23 {
+    opacity: 100%
+}
+
+._button_1nkj1_77 {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(63, 43, 98, .6) 0%, rgba(48, 36, 63, .7) 100%);
+    border: 1px solid rgba(0, 0, 0, .15);
+    box-shadow: 1px 1px 3px #000;
+    border-radius: 3px;
+    height: 90%;
+    aspect-ratio: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200%;
+    cursor: pointer
+}
+
+._button_1nkj1_77:hover {
+    color: #908aff;
+    box-shadow: 0 2px 6px #908aff;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom, #5656fd 0%, #4E65A7 100%);
+    border-image-slice: 1
+}
+
+._selected_1nkj1_129 {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(63, 43, 98, .6) 0%, rgba(48, 36, 63, .7) 100%);
+    box-shadow: 0 2px 6px #908aff;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom, #5656fd 0%, #4E65A7 100%);
+    border-image-slice: 1;
+    border-radius: 3px;
+    height: 90%;
+    aspect-ratio: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200%;
+    color: #908aff
+}
+
+._container_v40fw_1 {
+    position: relative;
+    height: 80%;
+    aspect-ratio: 1;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(63, 43, 98, .6) 0%, rgba(48, 36, 63, .7) 100%);
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0
+}
+
+._container_v40fw_1:not(._selected_v40fw_49) {
+    cursor: pointer
+}
+
+._container_v40fw_1:not(._selected_v40fw_49):hover {
+    box-shadow: 0 0 5px 1px #ffffffa6
+}
+
+._icon_v40fw_65 {
+    font-size: 350%
+}
+
+._selected_v40fw_49 {
+    box-shadow: 0 2px 6px #908aff;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom, #5656fd 0%, #4E65A7 100%);
+    border-image-slice: 1
+}
+
+._price_v40fw_87 {
+    position: absolute;
+    top: -1%;
+    right: 2%;
+    font-size: 140%;
+    color: #908aff;
+    font-size: 130%
+}
+
+._checkMark_v40fw_105 {
+    position: absolute;
+    top: -1%;
+    left: 2%;
+    font-size: 140%;
+    color: #908aff
+}
+
+._label_v40fw_121 {
+    position: absolute;
+    bottom: 3%;
+    left: 5%;
+    font-size: 1.5vh
+}
+
+body {
+    font-family: Oswald, sans-serif;
+    position: absolute;
+    color: #ffffffde;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    user-select: none
+}

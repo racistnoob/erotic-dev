@@ -34,7 +34,7 @@ local function deleteCurrentVehicle(playerPed)
         if GetPedInVehicleSeat(currentVehicle, -1) == playerPed then
             deleteVeh(currentVehicle)
         else
-            exports['drp-notifications']:SendAlert('inform', 'You are not the driver.', 5000)
+            exports['drp-notifications']:SendAlert('error', 'You are not the driver.', 5000)
             return
         end
     end
@@ -69,7 +69,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
         local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
 
         if not IsVehicleWhitelisted(vehiclehash) and not trickLobby then
-            exports['drp-notifications']:SendAlert('inform', 'This vehicle cannot be spawned.', 5000)
+            exports['drp-notifications']:SendAlert('error', 'This vehicle cannot be spawned.', 5000)
             return
         end
 
@@ -81,7 +81,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 waiting = waiting + 100
                 Citizen.Wait(100)
                 if waiting > 5000 then
-                    exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
+                    exports['drp-notifications']:SendAlert('error', 'Failed to spawn the vehicle.', 5000)
                     return
                 end
             end
@@ -110,11 +110,11 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                     end
                 end)
             else
-                exports['drp-notifications']:SendAlert('inform', 'Failed to spawn the vehicle.', 5000)
+                exports['drp-notifications']:SendAlert('error', 'Failed to spawn the vehicle.', 5000)
             end
         end)
     else
-        exports['drp-notifications']:SendAlert('inform', 'Spawning cars is disabled in this lobby.', 5000)
+        exports['drp-notifications']:SendAlert('error', 'Spawning cars is disabled in this lobby.', 5000)
     end
 end)
 
