@@ -16,16 +16,14 @@ end
 
 RegisterNetEvent('set-timecycle')
 AddEventHandler('set-timecycle', function(params)
-    if params == nil then
-        local kvpValue = GetResourceKvpString("graphics_timecycle")
-        if kvpValue then
-            print('KVP loaded:', kvpValue)
-            SetTimecycleModifierEffect(kvpValue)
-        end
-    end
-
     local timecycleType = params.type
     local timecycleName = timecycles[timecycleType]
+
+    local kvpValue = GetResourceKvpString("graphics_timecycle")
+    if kvpValue and not timecycleName then
+        print('KVP loaded:', kvpValue)
+        SetTimecycleModifierEffect(kvpValue)
+    end
     
     if timecycleName then
         SetResourceKvp("graphics_timecycle", timecycleName) -- Store the timecycle name as a string
