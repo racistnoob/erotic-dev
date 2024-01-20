@@ -54,7 +54,7 @@ local HUD = {
   InfoThread = function(self)
     while true do
       Wait(500)
-      self.plyPed = PlaydrpedId()
+      self.plyPed = PlayerPedId()
       self.plyVehicle = GetVehiclePedIsIn(self.plyPed, false)
       SendReactMessage('setPauseMenu', IsPauseMenuActive() or IsScreenFadedOut() or IsScreenFadingOut() or self.blackbars)
     end
@@ -68,7 +68,7 @@ local HUD = {
 
         Wait(250)
 
-        local armed = self.inventoryActive and GetSelectedPedWeapon(PlaydrpedId()) or `WEAPON_UNARMED`;
+        local armed = self.inventoryActive and GetSelectedPedWeapon(PlayerPedId()) or `WEAPON_UNARMED`;
         local itemId = armed ~= `WEAPON_UNARMED` or false
         
         local weaponImage = itemId or ""
@@ -143,7 +143,7 @@ local HUD = {
     local vehicleExists = DoesEntityExist(self.plyVehicle or 0)
     if not vehicleExists then return end
 
-    local speed = (GetPedInVehicleSeat(self.plyVehicle, -1) == PlaydrpedId()) and GetEntitySpeed(self.plyVehicle) * 2.236936 or 0
+    local speed = (GetPedInVehicleSeat(self.plyVehicle, -1) == PlayerPedId()) and GetEntitySpeed(self.plyVehicle) * 2.236936 or 0
     if speed > 50 then
       exports['drp_notifications']:SendAlert('inform', 'Too high speed to toggle seatbelt')
       return 
@@ -438,7 +438,7 @@ TriggerEvent('chat:addSuggestion', '/blackbars', 'Toggle blackbars, will also di
 
 AddEventHandler("harness", function(toggle)
 
-  local plyVehicle = GetVehiclePedIsIn(PlaydrpedId(), false)
+  local plyVehicle = GetVehiclePedIsIn(PlayerPedId(), false)
   if not plyVehicle or not toggle then return end;
   TriggerServerEvent('harness', VehToNet(plyVehicle))
 
