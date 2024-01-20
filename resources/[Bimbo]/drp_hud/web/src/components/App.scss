@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&display=swap');
+
+body{ 
+  font-family: 'Oswald', sans-serif;
+  overflow: hidden;
+}
+
+.hudContainer {
+  position: absolute;
+  left: 350px;
+}
+
+.carContainer {
+  position: absolute;
+
+  left: 51.25%;
+  bottom: 51px;
+  transform: translateX(-50%);
+  
+
+  &.right {
+    left: unset;
+    right: 24px;
+    bottom: 24px;
+    transform: unset;
+  }
+
+  .circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(63, 43, 98, .6) 0%, rgba(48, 36, 63, .7) 100%);
+    border: 4.5px solid rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 4px #9BB1FF;
+  }
+
+  .insideText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 151.5px;
+
+    position: absolute;
+    bottom: 33px;
+
+    .gear {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      color: #FFFFFF;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25), -1px -1px 0px rgba(0, 0, 0, 0.5), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px 1px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .speed {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 52px;
+      line-height: 45px;      
+      text-align: center;
+      color: #FFFFFF;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25), -1px -1px 0px rgba(0, 0, 0, 0.5), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px 1px 0px rgba(0, 0, 0, 0.5);
+    }
+
+    .type {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+      color: #FFFFFF;
+      text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25), -1px -1px 0px rgba(0, 0, 0, 0.5), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px -1px 0px rgba(0, 0, 0, 0.25), 1px 1px 0px rgba(0, 0, 0, 0.5);
+    }
+
+  }
+
+}
+
+.rpmLine {
+  position: absolute;
+  width: 19.82px;
+  height: 36.5px;
+
+  background: #56FCFC;
+  box-shadow: 0px 0px 4px #56FCFC;
+  border-radius: 5px;
+  transform: rotate(-180deg);
+}
+
+.hex {
+  filter: drop-shadow(0px 0px 4px #9BB1FF);
+}
+
+.hexGroup {
+
+  position: absolute;
+  
+  .divWorkaround {
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #FFFFFF;
+
+    position: absolute;
+    
+    width: 100%;
+
+    text-align: center;
+  }
+
+  img {
+    position: absolute;
+  }
+
+}
+
+.whiteshadow {
+  filter: drop-shadow(0px 0px 4px #FFFFFF);
+}
+
+.redshadow {
+  filter: drop-shadow(0px 0px 4px #FC5656);
+}
+
+.healthshadow {
+  filter: drop-shadow(0px 0px 4px #5551a7);
+}
+
+.blueshadow {
+  filter: drop-shadow(0px 0px 4px white);
+}
+
+.healthiconshadow {
+  filter: drop-shadow(0px 0px 10px #5551a7);
+}
+
+.armorshadow {
+  filter: drop-shadow(0px 0px 4px white)
+}
+
+.armoriconshadow {
+  filter: drop-shadow(0px 4px 4px white) ;
+}
+
+.progressBar {
+  height: 5px;
+  top: 17px;
+  margin-left: -17px;
+  border-radius: 0px 3px 3px 0px
+}
+
+.fadeWee-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.fadeWee-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.fadeWee-exit {
+  opacity: 1;
+}
+
+.fadeWee-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 200ms, transform 200ms;
+}
+
+.locationContainer {
+
+  transition: opacity 300ms ease-in-out 300ms;
+
+  position: fixed;
+  left: 50%;
+  bottom: 7px;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;  
+
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FFFFFF;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 1px 4px rgba(0, 0, 0, 0.25), -1px 0px 4px #000000;
+
+}

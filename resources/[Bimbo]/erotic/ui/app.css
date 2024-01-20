@@ -63,7 +63,7 @@ scope img {
     padding: 0%;
     margin: 0%;
     text-shadow: 2px 2px 1px black;
-    color: gray;
+    color: #908aff;
     font-family: Poppins;
     text-align: center;
 }
@@ -116,7 +116,7 @@ scope img {
     font-weight: 600;
     font-size: 30px;
     font-weight: 1000;
-    color: gray;
+    color: #908aff;
     display: flex;
     text-shadow: 2px 2px 1px black;
 }
