@@ -30,7 +30,7 @@ RegisterNetEvent("erp-weaponbench:openMenu", function(data)
     SetEntityCoords(PlayerPedId(), vec3(240.560211, -1392.974243, 30.453533))
     local coords = CURRENT_LOCATION.editCoords
 
-    local gunData = getAttachmentsForCurrentWeapon(gun)
+    local gunData = getAttachmentsForCurrentWeapon(gun, true)
 
     loadGun(gun, coords)
     SendNUIMessage({ type = "openUI", toggle = true, gunData = gunData })

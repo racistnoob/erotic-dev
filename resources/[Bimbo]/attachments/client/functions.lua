@@ -100,7 +100,7 @@ function applyAttachmentsFromMeta(givenMeta)
 end
 
 
-function getAttachmentsForCurrentWeapon(gun)
+function getAttachmentsForCurrentWeapon(gun, saveog)
     local weaponListCopy = deepcopy(WEAPON_LIST)
 
     for i = 1, #weaponListCopy[gun] do
@@ -138,7 +138,9 @@ function getAttachmentsForCurrentWeapon(gun)
             end
         end
     end
-    ORIGINAL_DATA = weaponListCopy[gun]
+    if saveog then
+        ORIGINAL_DATA = weaponListCopy[gun]
+    end
     return weaponListCopy[gun]
 end
 
