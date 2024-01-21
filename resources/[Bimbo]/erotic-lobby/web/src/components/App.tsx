@@ -40,25 +40,25 @@ const App: React.FC = () => {
     {
       id: 5,
       name: 'Southside #5',
-      settings: ['FPS Mode', 'Medium Recoil'],
+      settings: ['FPS Mode', 'Envy Recoil'],
       playerCount: 0
     },
     {
       id: 6,
       name: 'Southside #6',
-      settings: ['FPS Mode', 'Medium Recoil'],
+      settings: ['FPS Mode', 'Envy Recoil'],
       playerCount: 0
     },
     {
       id: 7,
       name: 'Southside #7',
-      settings: ['FPS Mode', 'Medium Recoil', 'Headshots'],
+      settings: ['FPS Mode', 'Envy Recoil', 'Headshots'],
       playerCount: 0
     },
     {
       id: 8,
       name: 'Southside #8',
-      settings: ['FPS Mode', 'Medium Recoil', 'Headshots'],
+      settings: ['FPS Mode', 'Envy Recoil', 'Headshots'],
       playerCount: 0
     },
     {
@@ -222,6 +222,7 @@ const App: React.FC = () => {
         ))}
         <select value={selectedRecoil} onChange={handleRecoilChange} className='lobby-select'> 
           <option value="">All Recoils</option>
+          <option value="Envy Recoil">Envy Recoil</option>
           <option value="Light Recoil">Light Recoil</option>
           <option value="Medium Recoil">Medium Recoil</option>
           <option value="High Recoil">High Recoil</option>
