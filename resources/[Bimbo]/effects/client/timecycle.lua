@@ -20,6 +20,8 @@ AddEventHandler('reset-timecycle', function()
     if kvpValue then
         print('KVP loaded:', kvpValue)
         SetTimecycleModifierEffect(kvpValue)
+    elseif kvpValue == nil then
+        SetTimecycleModifierEffect("default")
     end
 end)
 
