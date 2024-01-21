@@ -51,22 +51,22 @@ WEAPON_TINTS = {
 WEAPON_LIST = {
     --[[@PISTOLS]]
     [`WEAPON_PISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_PISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_PISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 5000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_PISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_PISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 5000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -119,22 +119,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_SNSPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_SNSPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_SNSPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 6000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_SNSPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_SNSPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 6000
+        --         },
+        --     },
+        -- },
         {
             label = "Tint",
             bone = "gun_root",
@@ -142,22 +142,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_COMBATPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_COMBATPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_COMBATPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 7000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_COMBATPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_COMBATPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 7000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -269,22 +269,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_CERAMICPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_CERAMICPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_CERAMICPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 6000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_CERAMICPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_CERAMICPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 6000
+        --         },
+        --     },
+        -- },
         {
             label = "Suppressor",
             bone = "WAPSupp",
@@ -388,22 +388,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_PISTOL50`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_PISTOL50_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_PISTOL50_CLIP_02",
-                    label = "Extended Mag",
-                    price = 20000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_PISTOL50_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_PISTOL50_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 20000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -456,22 +456,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_DEAGLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_deserteagle_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_deserteagle_CLIP_02",
-                    label = "Extended Mag",
-                    price = 20000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_deserteagle_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_deserteagle_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 20000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -509,22 +509,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_VINTAGEPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_VINTAGEPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_VINTAGEPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 6000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_VINTAGEPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_VINTAGEPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 6000
+        --         },
+        --     },
+        -- },
         {
             label = "Suppressor",
             bone = "WAPSupp_2",
@@ -547,22 +547,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_APPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_APPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_APPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 15000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_APPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_APPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 15000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -615,22 +615,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_HEAVYPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_HEAVYPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_HEAVYPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 100
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_HEAVYPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_HEAVYPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 100
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -669,27 +669,27 @@ WEAPON_LIST = {
     },
     --[[@SMG]]
     [`WEAPON_MACHINEPISTOL`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_MACHINEPISTOL_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MACHINEPISTOL_CLIP_02",
-                    label = "Extended Mag",
-                    price = 12000
-                },
-                {
-                    attachment = "COMPONENT_MACHINEPISTOL_CLIP_03",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_MACHINEPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MACHINEPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 12000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MACHINEPISTOL_CLIP_03",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Suppressor",
             bone = "WAPSupp",
@@ -712,22 +712,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_MINISMG`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_MINISMG_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MINISMG_CLIP_02",
-                    label = "Extended Mag",
-                    price = 15000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_MINISMG_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MINISMG_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 15000
+        --         },
+        --     },
+        -- },
         {
             label = "Tint",
             bone = "gun_root",
@@ -735,22 +735,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_MICROSMG`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_MICROSMG_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MICROSMG_CLIP_02",
-                    label = "Extended Mag",
-                    price = 20000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_MICROSMG_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MICROSMG_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 20000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -818,22 +818,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_SMG_MK2`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_SMG_MK2_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_SMG_MK2_CLIP_02",
-                    label = "Extended Mag",
-                    price = 20000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_SMG_MK2_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_SMG_MK2_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 20000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr_2",
@@ -1043,22 +1043,22 @@ WEAPON_LIST = {
     },
     --[[@RIFLES]]
     [`WEAPON_CARBINERIFLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_CARBINERIFLE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_CARBINERIFLE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 30000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_CARBINERIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_CARBINERIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 30000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1126,22 +1126,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_GUSENBERG`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_GUSENBERG_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_GUSENBERG_CLIP_02",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_GUSENBERG_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_GUSENBERG_CLIP_02",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Tint",
             bone = "gun_root",
@@ -1149,22 +1149,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_COMBATPDW`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip_2",
-            options = {
-                {
-                    attachment = "COMPONENT_COMBATPDW_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_COMBATPDW_CLIP_02",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip_2",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_COMBATPDW_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_COMBATPDW_CLIP_02",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1232,27 +1232,27 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_COMPACTRIFLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip_2",
-            options = {
-                {
-                    attachment = "COMPONENT_COMPACTRIFLE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_COMPACTRIFLE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 30000
-                },
-                {
-                    attachment = "COMPONENT_COMPACTRIFLE_CLIP_03",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip_2",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_COMPACTRIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_COMPACTRIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 30000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_COMPACTRIFLE_CLIP_03",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Tint",
             bone = "gun_root",
@@ -1260,22 +1260,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_SPECIALCARBINE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_SPECIALCARBINE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_SPECIALCARBINE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 40000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_SPECIALCARBINE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_SPECIALCARBINE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1343,22 +1343,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_HEAVYRIFLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip_2",
-            options = {
-                {
-                    attachment = "COMPONENT_HEAVYRIFLE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_HEAVYRIFLE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 40000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip_2",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_HEAVYRIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_HEAVYRIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr_3",
@@ -1446,27 +1446,27 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_ASSAULTRIFLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_ASSAULTRIFLE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_ASSAULTRIFLE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 40000
-                },
-                {
-                    attachment = "COMPONENT_ASSAULTRIFLE_CLIP_03",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_ASSAULTRIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_ASSAULTRIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_ASSAULTRIFLE_CLIP_03",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1549,22 +1549,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_TACTICALRIFLE`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_TACTICALRIFLE_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_TACTICALRIFLE_CLIP_02",
-                    label = "Extended Mag",
-                    price = 40000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_TACTICALRIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_TACTICALRIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1617,22 +1617,22 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_CARBINERIFLE_MK2`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_CARBINERIFLE_MK2_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_CARBINERIFLE_MK2_CLIP_02",
-                    label = "Extended Mag",
-                    price = 40000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_CARBINERIFLE_MK2_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_CARBINERIFLE_MK2_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -1826,47 +1826,47 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_MK18`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_MK18_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_02",
-                    label = "Black Scale Mag",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_03",
-                    label = "Tan Scale Mag",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_04",
-                    label = "Black Tac Mag",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_05",
-                    label = "Tan Tac Mag",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_06",
-                    label = "Box Mag",
-                    price = 100000
-                },
-                {
-                    attachment = "COMPONENT_MK18_CLIP_07",
-                    label = "Drum Mag",
-                    price = 100000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_02",
+        --             label = "Black Scale Mag",
+        --             price = 2000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_03",
+        --             label = "Tan Scale Mag",
+        --             price = 2000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_04",
+        --             label = "Black Tac Mag",
+        --             price = 2000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_05",
+        --             label = "Tan Tac Mag",
+        --             price = 2000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_06",
+        --             label = "Box Mag",
+        --             price = 100000
+        --         },
+        --         {
+        --             attachment = "COMPONENT_MK18_CLIP_07",
+        --             label = "Drum Mag",
+        --             price = 100000
+        --         },
+        --     },
+        -- },
         {
             label = "Flashlight",
             bone = "WAPFlshLasr",
@@ -2103,22 +2103,22 @@ WEAPON_LIST = {
     },
     --[[@MGs]]
     [`WEAPON_COMBATMG`] = {
-        {
-            label = "Mag",
-            bone = "WAPClip",
-            options = {
-                {
-                    attachment = "COMPONENT_COMBATMG_CLIP_01",
-                    label = "Standard Mag",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_COMBATMG_CLIP_02",
-                    label = "Extended Mag",
-                    price = 50000
-                },
-            },
-        },
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_COMBATMG_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_COMBATMG_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 50000
+        --         },
+        --     },
+        -- },
         {
             label = "Optic",
             bone = "WAPScop_2",
