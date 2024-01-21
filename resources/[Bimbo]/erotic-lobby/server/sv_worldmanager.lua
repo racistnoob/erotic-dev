@@ -129,7 +129,7 @@ local function UpdateStats(worldID)
     end
 end
 
-local function GetWorld(src)
+function GetWorld(src)
     local ids = ExtractIdentifiers(src);
     if (WorldTracker[ids.license].World ~= nil) then 
         return(WorldTracker[ids.license].World);
@@ -217,87 +217,6 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
         -- This world does not exist...
     end
 end)
-
-function ExtractIdentifiers(src)
-    local identifiers = {
-        steam = "",
-        ip = "",
-        discord = "",
-        license = "",
-        xbl = "",
-        live = ""
-    }
-    for i = 0, GetNumPlayerIdentifiers(src) - 1 do
-        local id = GetPlayerIdentifier(src, i)
-        if string.find(id, "steam") then
-            identifiers.steam = id
-        elseif string.find(id, "ip") then
-            identifiers.ip = id
-        elseif string.find(id, "discord") then
-            identifiers.discord = id
-        elseif string.find(id, "license") then
-            identifiers.license = id
-        elseif string.find(id, "xbl") then
-            identifiers.xbl = id
-        elseif string.find(id, "live") then
-            identifiers.live = id
-        end
-    end  
-    return identifiers
-end
-
-function getLobbyPlayerCount(worldID)
-    worldID = tostring(worldID)
-    local playerCount = 0
-
-    for _, v in pairs(WorldTracker) do
-        if v.World == worldID then
-            playerCount = playerCount + 1
-        end
-    end
-
-    return playerCount
-end
-
-function updateAndSendPlayerCount(worldID, all, src)
-    if all then
-        for i = 1, #Config.Worlds do
-            TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
-            Wait(10)
-        end
-    else
-        TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), worldID)
-    end
-end
-
-function GetLobbyStats(worldID)
-    local stats = {}
-    for _, v in pairs(WorldTracker) do
-        if v.World == worldID then
-            table.insert(stats,{
-                License = _,
-                Name = v.Name,
-                Kills = v.Kills,
-            })
-        end
-    end
-    table.sort(stats, function(a, b) return a.Kills > b.Kills end)
-    return stats
-end
-
-function UpdateLobbyStats(source, worldID, type)
-    local src = source
-    local ids = ExtractIdentifiers(src)
-    if not ids then return end
-
-    if WorldTracker[ids.license].World == worldID then
-        if type == "Kills" then
-            WorldTracker[ids.license].Kills = WorldTracker[ids.license].Kills + 1
-        end
-    end
-
-    UpdateStats(worldID)
-end
 
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
 exports('GetLobbyStats', GetLobbyStats)
