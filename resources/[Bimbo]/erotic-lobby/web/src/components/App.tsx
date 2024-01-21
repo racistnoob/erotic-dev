@@ -20,8 +20,8 @@ const App: React.FC = () => {
     
     {
       id: 2,
-      name: 'FFA',
-      settings: ['FPS Mode', 'Light Recoil'],
+      name: 'FFA Bunker',
+      settings: ['FPS Mode', 'Light Recoil', "FFA"],
       playerCount: 0
 
     },
