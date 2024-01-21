@@ -135,23 +135,23 @@ const App: React.FC = () => {
     },
   ]);
 
-  window.addEventListener('message', (event) => {
-    if (event.data.type === "updatePlayerCount") {
-      const newPlayerCount = event.data.count;
-      const worldID = event.data.worldId;
+  // window.addEventListener('message', (event) => {
+  //   if (event.data.type === "updatePlayerCount") {
+  //     const newPlayerCount = event.data.count;
+  //     const worldID = event.data.worldId;
   
-      setLobbies((prevLobbies) => {
-        const updatedLobbies = prevLobbies.map((lobby) => {
-          if (lobby.id === worldID) {
-            return { ...lobby, playerCount: newPlayerCount };
-          }
-          return lobby;
-        });
+  //     setLobbies((prevLobbies) => {
+  //       const updatedLobbies = prevLobbies.map((lobby) => {
+  //         if (lobby.id === worldID) {
+  //           return { ...lobby, playerCount: newPlayerCount };
+  //         }
+  //         return lobby;
+  //       });
   
-        return updatedLobbies;
-      });
-    }
-  });
+  //       return updatedLobbies;
+  //     });
+  //   }
+  // });
   
   const handleJoinLobby = (lobbyId: number) => {
     fetchNui('switchWorld', { worldId: lobbyId })
