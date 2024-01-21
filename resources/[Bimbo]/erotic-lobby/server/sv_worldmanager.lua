@@ -1,6 +1,3 @@
-
-WorldTracker[ids.license] = WorldTracker[ids.license] or {}
-
 WorldTracker = {}; -- [license] = {World = WorldName, Name = PlayerName, Kills = 0}
 
 Config = {}
@@ -29,7 +26,7 @@ Config = {
     },
 }
 
-local local function ExtractIdentifiers(src)
+local function ExtractIdentifiers(src)
     local identifiers = {
         steam = "",
         ip = "",

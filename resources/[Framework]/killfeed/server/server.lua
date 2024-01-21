@@ -2,7 +2,7 @@ function GetIdentifier(type, id)
     local identifiers = {}
     local numIdentifiers = GetNumPlayerIdentifiers(id)
 
-    for a = 0, numIdentifiers do
+    for a = 0, numIdentifiers - 1 do
         table.insert(identifiers, GetPlayerIdentifier(id, a))
     end
 
@@ -14,13 +14,12 @@ function GetIdentifier(type, id)
     return false
 end
 
-function CalculateKD(kills,deaths)
-    if not deaths and not deaths then return 0 end
-    if not deaths then 
-        return (kills/0)
+function CalculateKD(kills, deaths)
+    if not deaths or deaths == 0 then
+        return 0
     end
 
-    return (kills/deaths)
+    return (kills / deaths)
 end
 
 RegisterServerEvent("Grab:Leaderboard")
@@ -32,39 +31,50 @@ AddEventHandler("Grab:Leaderboard", function()
 
     for _, playerId in ipairs(players) do
         local Steam = GetIdentifier("steam", playerId)
-        if not Steam then goto skip end
-        local Character = exports.oxmysql:fetchSync("SELECT id, Kills, Deaths FROM users WHERE identifier=:identifier AND deleted='0'", { identifier = Steam })[1]
-        count = count + 1
+        if Steam then
+            local Character = exports.oxmysql:fetchSync("SELECT id, Kills, Deaths FROM users WHERE identifier=:identifier AND deleted='0'", { identifier = Steam })
+            if Character and Character[1] then
+                count = count + 1
+                local Kills = Character[1].Kills or 0
+                local Deaths = Character[1].Deaths or 0
 
-        table.insert(Database, {
-            id = count,
-            Name = GetPlayerName(playerId),
-            Kills = Character.Kills or 0,
-            Deaths = Character.Deaths or 0,
-            kd = string.format("%.2f", CalculateKD(Character.Kills,Character.Deaths)),
-        })
-        ::skip::
+                table.insert(Database, {
+                    id = count,
+                    Name = GetPlayerName(playerId),
+                    Kills = Kills,
+                    Deaths = Deaths,
+                    kd = string.format("%.2f", CalculateKD(Kills, Deaths)),
+                })
+            end
+        end
     end
+
     table.sort(Database, function(a, b) return a.Kills > b.Kills end)
     TriggerClientEvent('Recieved:Info', src, Database)
-end)   
+end)
 
 RegisterNetEvent('killfeed:server:playerWasKilled')
 AddEventHandler('killfeed:server:playerWasKilled', function(killerId, weaponName)
-    Victim = source
-    Killer = killerId
+    local Victim = source
+    local Killer = killerId
 
-    KillerSteam = GetIdentifier("steam", Killer)
-    VictimSteam = GetIdentifier("steam", Victim)
+    local KillerSteam = GetIdentifier("steam", Killer)
+    local VictimSteam = GetIdentifier("steam", Victim)
 
-    TriggerClientEvent('killfeed:client:feed', -1, GetPlayerRoutingBucket(killerId),  '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(GetPlayerName(source)) .. '</strong>')
+    TriggerClientEvent('killfeed:client:feed', -1, GetPlayerRoutingBucket(killerId), '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(GetPlayerName(source)) .. '</strong>')
 
     if KillerSteam then
-        exports.oxmysql:executeSync("UPDATE users SET Kills = Kills + 1 WHERE identifier=:identifier", { identifier = KillerSteam })
+        exports.oxmysql:execute("UPDATE users SET Kills = Kills + 1 WHERE identifier=:identifier", { identifier = KillerSteam }, function(result)
+            -- Handle the result if needed
+        end)
     end
+
     if VictimSteam then
-        exports.oxmysql:executeSync("UPDATE users SET Deaths = Deaths + 1 WHERE identifier=:identifier", { identifier = VictimSteam })
+        exports.oxmysql:execute("UPDATE users SET Deaths = Deaths + 1 WHERE identifier=:identifier", { identifier = VictimSteam }, function(result)
+            -- Handle the result if needed
+        end)
     end
+
     local lobby = exports['erotic-lobby']:GetWorld(Killer)
     exports['erotic-lobby']:UpdateLobbyStats(Killer, lobby, "Kills")
     exports['erotic-lobby']:UpdateLobbyStats(Victim, lobby, "Deaths")
