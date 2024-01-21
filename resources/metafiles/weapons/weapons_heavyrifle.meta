@@ -395,7 +395,7 @@
               <Components>
                 <Item>
                   <Name>COMPONENT_HEAVYRIFLE_SIGHT_01</Name>
-                  <Default value="true" />
+                  <Default value="false" />
                 </Item>
                 <Item>
                   <Name>COMPONENT_AT_SCOPE_MEDIUM</Name>
@@ -426,7 +426,7 @@
               <Components>
                 <Item>
                   <Name>COMPONENT_AT_AR_AFGRIP</Name>
-                  <Default value="true" />
+                  <Default value="false" />
                 </Item>
               </Components>
             </Item>
