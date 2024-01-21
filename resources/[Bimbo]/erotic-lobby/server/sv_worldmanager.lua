@@ -174,8 +174,8 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         local coords = Config.Worlds[worldName][2]
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
-        UpdateStats(worldName)
-        updateAndSendPlayerCount(1, true, src)
+        -- UpdateStats(worldName)
+        -- updateAndSendPlayerCount(1, true, src)
     end
 end)
 
