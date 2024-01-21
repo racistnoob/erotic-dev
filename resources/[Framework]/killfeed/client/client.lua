@@ -89,7 +89,6 @@ local lobbystats = {}
 AddEventHandler('Update:Lobby:Stats')
 RegisterNetEvent('Update:Lobby:Stats', function(data)
     lobbystats  = data
-    print("update:lobby:stats.",json.encode(data))
     SendNUIMessage({
         type = "ui",
         mode = "stats",
