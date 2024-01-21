@@ -298,7 +298,7 @@
                 <Components>
                    <Item>
                       <Name>COMPONENT_AT_AR_FLSH_REH</Name>
-                      <Default value="true" />
+                      <Default value="false" />
                    </Item>
                 </Components>
              </Item>
@@ -316,7 +316,7 @@
                 <Components>
                    <Item>
                       <Name>COMPONENT_AT_AR_AFGRIP</Name>
-                      <Default value="true" />
+                      <Default value="false" />
                    </Item>
                 </Components>
              </Item>			 

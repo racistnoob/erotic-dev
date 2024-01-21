@@ -397,7 +397,7 @@
                 </Item>
                 <Item>
                   <Name>COMPONENT_AT_MUZZLE_07</Name>
-                  <Default value="true" />
+                  <Default value="false" />
                 </Item>
               </Components>
             </Item>
@@ -406,7 +406,7 @@
               <Components>
                 <Item>
                   <Name>COMPONENT_AT_AR_AFGRIP_02</Name>
-                  <Default value="true" />
+                  <Default value="false" />
                 </Item>
               </Components>
             </Item>
@@ -460,7 +460,7 @@
                 </Item>
                 <Item>
                   <Name>COMPONENT_CARBINERIFLE_MK2_CAMO_09</Name>
-                  <Default value="true" />
+                  <Default value="false" />
                 </Item>
                 <Item>
                   <Name>COMPONENT_CARBINERIFLE_MK2_CAMO_10</Name>
