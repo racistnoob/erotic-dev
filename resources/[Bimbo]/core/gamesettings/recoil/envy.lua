@@ -1,117 +1,95 @@
 local WeaponRecoil = {
-    --m16
-    [`weapon_tacticalrifle`] = {
-        vertical = .31,
-        horizontal = .15
-    },
-    --mk18
-    [`weapon_mk18`] = {
-        vertical = .15,
-    },
-    --doesnt matter shitter gun
-    [`weapon_specialcarbine`] = {
-        vertical = .11,
-    },
-    -- op as fuck
-    [`weapon_heavyrifle`] = {
-        vertical = .19,
-    },
-    [`weapon_scarh`] = {
-        vertical = .19,
-    },
-    --berretta
-    [`weapon_pistol`] = {
-    vertical = .21,
-    },
-    [`weapon_M1911`] = {
-        vertical = .21,
-        },
-    [`weapon_fnx45`] = {
-        vertical = .21,
-        },
-    [`weapon_sp45`] = {
-        vertical = .21,
-    },
-    [`weapon_glock17`] = {
-        vertical = .21,
-    },
-    [`weapon_heavypistol`] = {
-        vertical = .21,
-    },
-    [`WEAPON_GLOCK18C`] = {
-        vertical = .80,
-        horizontal = .20
-    },
-    [`weapon_minismg`] = {
-        vertical = .80,
-    },
-    [`WEAPON_TEC9`] = {
-        vertical = .20,
-    },
-    [`weapon_combatmg`] = {
-        vertical = .15,
-    },
-    [`weapon_m249`] = {
-        vertical = .15,
-    },
-    [`weapon_m60`] = {
-        vertical = .15,
-    },
-    --ak
-    [`weapon_assaultrifle`] = {
-        vertical = .23,
-    },
-    --mpx
-    [`weapon_combatpdw`] = {
-        vertical = .11,
-    },
-    [`WEAPON_MPX`] = {
-        vertical = .11,
-    },
-    --magpull
-    [`weapon_assaultsmg`] = {
-        vertical = .18,
-    },
-    --mp5
-    [`weapon_smg_mk2`] = {
-        vertical = .26,
-    },
-    [`weapon_microsmg`] = {
-        vertical = .48,
-    },
-    --762
-    [`weapon_carbinerifle_mk2`] = {
-        vertical = .30,
-        horizontal = .14
-    },
-    [`weapon_mp5`] = {
-        vertical = .26,
-    },
+
+	[`weapon_tacticalrifle`] = {
+		vertical = .31,
+		horizontal = .15
+	},
+	[`weapon_MK18`] = {
+		vertical = .15,
+	},
+	[`weapon_specialcarbine`] = {
+		vertical = .11,
+	},
+	[`weapon_heavyrifle`] = {
+		vertical = .19,
+	},
+	[`weapon_glock17`] = {
+		vertical = .21,
+	},
+	[`weapon_fnx45`] = {
+		vertical = .21,
+	},
+	[`WEAPON_GLOCK18`] = {
+		vertical = .80,
+		horizontal = .20
+	},
+	[`weapon_minismg`] = {
+		vertical = .80,
+	},
+	[`WEAPON_TEC9`] = {
+		vertical = .20,
+	},
+	[`weapon_combatmg`] = {
+		vertical = .15,
+	},
+	[`weapon_m249`] = {
+		vertical = .15,
+	},
+	[`weapon_m60`] = {
+		vertical = .15,
+	},
+	[`weapon_assaultrifle`] = {
+		vertical = .23,
+	},
+	[`weapon_combatpdw`] = {
+		vertical = .11,
+	},
+	[`weapon_assaultsmg`] = {
+		vertical = .18,
+	},
+	[`weapon_smg_mk2`] = {
+		vertical = .26,
+	},
+	[`weapon_microsmg`] = {
+		vertical = .48,
+	},
+	[`weapon_carbinerifle_mk2`] = {
+		vertical = .30,
+		horizontal = .14
+	},
+	[`weapon_mp5`] = {
+		vertical = .26,
+		
+	},
+
+	
+	
 }
 
 -- Group recoil: This is the recoil for the group overall if it is lacking an invidivual weapon recoil; 0.0 means no recoil at all
+
 local GroupRecoil = {
-    [416676503] = {
-        vertical = .2,
-    }, -- Handgun
-    [-957766203] = {
-        vertical = .17,
-    }, -- Submachine
-    [860033945] = {
-        vertical = .22,
-    }, -- Shotgun
-    [970310034] = {
-        vertical = .17,
-    }, -- Assault Rifle
-    [1159398588] = {
-        vertical = .18,
-    }, -- LMG
-    [3082541095] = {
-        vertical = .15,
-    }, -- Sniper
-    [2725924767] = {
-        vertical = .3,
-    } -- Heavy
+	[416676503] = {
+		vertical = .20,
+	}, -- Handgun
+	[-957766203] = {
+		vertical = .17,
+	}, -- Submachine
+	[860033945] = {
+		vertical = .22,
+	}, -- Shotgun
+	[970310034] = {
+		vertical = .17,
+	}, -- Assault Rifle
+	[1159398588] = {
+		vertical = .18,
+	}, -- LMG
+	[3082541095] = {
+		vertical = .15,
+	}, -- Sniper
+	[2725924767] = {
+		vertical = .3,
+	} -- Heavy
 }
     
     local function GetStressRecoil()
@@ -208,3 +186,64 @@ local GroupRecoil = {
             end
     
     end)
+
+local shakeCounter = 0
+local shakeCounter2 = 0
+local isShaking = false
+
+Citizen.CreateThread(function()
+    while true do
+        local plyPed = GetPlayerPed(-1)
+        local isAiming = IsPlayerFreeAiming(PlayerId())
+
+        if IsPedInAnyVehicle(plyPed, false) then
+            -- Player is in a vehicle
+            local isPedStill = IsPedStill(plyPed)
+
+            if isAiming and isPedStill and not IsPedAimingFromCover(plyPed) then
+                Wait(100)
+                shakeCounter = shakeCounter + 1
+                shakeCounter2 = 0
+
+                if shakeCounter == 5 then
+                    isShaking = true
+                    ShakeGameplayCam('HAND_SHAKE', 0.2)
+                end
+            elseif isAiming and not isPedStill then
+                Wait(10)
+                shakeCounter2 = shakeCounter2 + 1
+                shakeCounter = 0
+
+                if shakeCounter2 == 5 then
+                    isShaking = true
+                    ShakeGameplayCam('HAND_SHAKE', 0.9)
+                end
+
+                shakeCounter = 0
+                shakeCounter2 = 0
+            else
+                if isShaking then
+                    isShaking = false
+                    shakeCounter = 0
+                    shakeCounter2 = 0
+                    StopGameplayCamShaking(true)
+                end
+
+                Wait(1000)
+            end
+        else
+            -- Player is not in a vehicle, reset counters and shaking
+            if isShaking then
+                isShaking = false
+                shakeCounter = 0
+                shakeCounter2 = 0
+                StopGameplayCamShaking(true)
+            end
+
+            Wait(1000)
+        end
+
+        Wait(0)
+    end
+end)
+
