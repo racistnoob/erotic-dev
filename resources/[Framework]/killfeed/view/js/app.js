@@ -85,46 +85,46 @@ function FadeAllOut(){
   }
 
 }
-$(function(){
-    window.addEventListener("message", function(event){
-        var item = event.data;
-        if (item.type === "killfeed") {
-            feed(event);
-        }
-        if (item.type === "ui") {
-            if (item.mode === "Leaderboard"){
-                $(".player-list").empty()
-                playerlist = JSON.parse(event.data.data);
-                GenerateList(playerlist)
-                FadeInMenu("player-list")
-            } else if (item.mode === "close_all"){
-                $(".player-list").hide()
-                $(".player-list").empty()
-                FadeAllOut()
-            } else if (item.mode === "stats") {
-                $(".information").empty()
-                GenerateStats(JSON.parse(event.data.data))
-            } else if (item.mode === "extendedview") {
-              $(".information").empty()
-              $(".ExtendedInformation").empty()
-              if (item.state) {
-                $(".StatsInfo").fadeOut()
-                GenerateExtendedStats(JSON.parse(event.data.data))
-              } else {
-                $(".ExtendedStats").fadeOut()
-                GenerateStats(JSON.parse(event.data.data))
-              }
-            }
-        }
-    })
+// $(function(){
+//     window.addEventListener("message", function(event){
+//         var item = event.data;
+//         if (item.type === "killfeed") {
+//             feed(event);
+//         }
+//         if (item.type === "ui") {
+//             if (item.mode === "Leaderboard"){
+//                 $(".player-list").empty()
+//                 playerlist = JSON.parse(event.data.data);
+//                 GenerateList(playerlist)
+//                 FadeInMenu("player-list")
+//             } else if (item.mode === "close_all"){
+//                 $(".player-list").hide()
+//                 $(".player-list").empty()
+//                 FadeAllOut()
+//             } else if (item.mode === "stats") {
+//                 $(".information").empty()
+//                 GenerateStats(JSON.parse(event.data.data))
+//             } else if (item.mode === "extendedview") {
+//               $(".information").empty()
+//               $(".ExtendedInformation").empty()
+//               if (item.state) {
+//                 $(".StatsInfo").fadeOut()
+//                 GenerateExtendedStats(JSON.parse(event.data.data))
+//               } else {
+//                 $(".ExtendedStats").fadeOut()
+//                 GenerateStats(JSON.parse(event.data.data))
+//               }
+//             }
+//         }
+//     })
 
-    $(document).keydown(function(e) {
-        if (e.key === "Escape") { 
-          $.post("https://killfeed/exit",JSON.stringify({}));
-        }
-    });
+//     $(document).keydown(function(e) {
+//         if (e.key === "Escape") { 
+//           $.post("https://killfeed/exit",JSON.stringify({}));
+//         }
+//     });
 
-})
+// })
 
 function FadeInMenu(menu){
     clss = "."+menu
