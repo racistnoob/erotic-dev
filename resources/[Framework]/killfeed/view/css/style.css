@@ -13,6 +13,7 @@
 body {
     margin: 0;
     padding: 0;
+    /* background-color: #212329; */
 }
 
 .feed {
@@ -116,6 +117,91 @@ body {
 
 /* botom right stats */
 
+.ExtendedStats {
+    width: 300px;
+    height: 500px;
+    position: fixed;
+    bottom: -20%;
+    right: -30px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column-reverse; 
+    transition: left 0.4s;
+}
+
+.ExtendedInformation {
+    margin: 16px 24px;
+}
+
+.ExtendedlabelValue {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    border-bottom: 2px solid rgba(167, 167, 167, 0);
+}
+
+.NameLabel {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
+    width: 200px;
+    height: 33px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 13px;          
+    color: #FFFFFF; 
+    margin-right: 1px;
+}
+
+.DeathLabel {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
+    height: 33px;
+    width: 50px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 13px;          
+    color: #FFFFFF; 
+    margin-right: 1px;
+    text-align: center;
+}
+
+.KillLabel {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
+    height: 33px;
+    width: 50px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 13px;          
+    color: #FFFFFF; 
+    margin-right: 1px;
+    text-align: center;
+}
+
+.DamageLabel {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
+    height: 33px;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    width: 80px;
+    text-align: center;
+    line-height: 13px;          
+    color: #FFFFFF; 
+    margin-right: 1px;
+}
+
+
 .StatsInfo {
     width: 247px;
     height: 130px;
@@ -127,8 +213,8 @@ body {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   
-    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    /* background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%); */
+    /* border: 1px solid rgba(0, 0, 0, 0.15); */
     border-radius: 5px;
   
     display: flex;
@@ -145,29 +231,32 @@ body {
     display: flex;
     flex-direction: row;
     width: 199px;
-    border-bottom: 2px solid rgba(167, 167, 167, 0.5);
+    border-bottom: 2px solid rgba(167, 167, 167, 0);
 }
 
 .label {
-    width: 150px;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
+    width: 167px;
     height: 33px;
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 33px;          
+    line-height: 13px;          
     color: #FFFFFF;
 }
 
 .value {
-
+    background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
+    padding: 10px;
     height: 33px;
 
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 33px;          
+    line-height: 13px;          
     color: #FFFFFF;
 
     margin-left: auto;

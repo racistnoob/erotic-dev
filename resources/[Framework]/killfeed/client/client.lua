@@ -20,6 +20,29 @@ AddEventHandler('baseevents:onPlayerKilled', function(killerId, deathData)
     TriggerServerEvent('killfeed:server:playerWasKilled', killerId, weaponName)
 end)
 
+AddEventHandler('gameEventTriggered', function(name, args)
+    if true then
+        if name == 'CEventNetworkEntityDamage' then
+            local victim = args[1]
+            local attacker = args[2]
+            if IsPedAPlayer(attacker) then
+  
+                local victimEntitys, attackEntitys, damages, _s, _s, fatalBools, weaponUseds, _s, _s, _s, entityTypes = table.unpack(args)
+  
+                args = { victimEntitys, attackEntitys, fatalBools == 1, weaponUseds, entityTypes,
+                  math.floor(string.unpack("f", string.pack("i4", damages))) 
+                }
+
+                if GetPlayerByEntityID ~= nil then
+                  local attackerId = GetPlayerServerId(GetPlayerByEntityID(attacker))
+                  TriggerServerEvent('Update:Lobby:Stats',attackerId, damages)
+                end
+            end
+  
+        end
+    end
+  end)
+
 RegisterNetEvent('killfeed:client:feed')
 AddEventHandler('killfeed:client:feed', function(worldID, context)
     if exports['erotic-lobby']:getCurrentWorld() == worldID then
@@ -58,15 +81,37 @@ RegisterNUICallback("exit",function()
         mode = "close_all",
     })
     SetNuiFocus(false,false)
-    TriggerEvent('reset-timecycle')
+    SetTimecycleModifier('default')
     TriggerScreenblurFadeOut(50)
 end)
 
+local lobbystats = {}
 AddEventHandler('Update:Lobby:Stats')
 RegisterNetEvent('Update:Lobby:Stats', function(data)
+    lobbystats  = data
     SendNUIMessage({
         type = "ui",
         mode = "stats",
         data = json.encode(data),
     })
 end)
+
+
+local function setLeaderboardExtended(state)
+    SendNUIMessage({
+        type = "ui",
+        mode = "extendedview",
+        state = state,
+        data = json.encode(lobbystats),
+    })
+end
+  
+RegisterCommand("+leaderboard_extend", function()
+    setLeaderboardExtended(true)
+end)
+
+RegisterCommand("-leaderboard_extend", function()
+    setLeaderboardExtended(false)
+end)
+  
+RegisterKeyMapping("+leaderboard_extend", "Extend Lobby Leaderboard", "keyboard", "z")
