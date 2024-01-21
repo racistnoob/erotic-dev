@@ -14,16 +14,6 @@ function GetIdentifier(type, id)
     return false
 end
 
-function Roundnumber(num, dp)
-    local mult = 10 ^ (dp or 0)
-  
-    if num > 0 then
-        return math.floor(num * mult + 0.5) / mult
-    else
-      return 0
-    end
-end
-
 function CalculateKD(kills,deaths)
     if not deaths and not deaths then return 0 end
     if not deaths then 
@@ -40,7 +30,7 @@ AddEventHandler("Grab:Leaderboard", function()
     local Database = {}
     local players = GetPlayers()
 
-    for _, playerId in pairs(players) do
+    for _, playerId in ipairs(players) do
         local Steam = GetIdentifier("steam", playerId)
         if not Steam then goto skip end
         local Character = exports.oxmysql:fetchSync("SELECT id, Kills, Deaths FROM users WHERE identifier=:identifier AND deleted='0'", { identifier = Steam })[1]
@@ -51,7 +41,7 @@ AddEventHandler("Grab:Leaderboard", function()
             Name = GetPlayerName(playerId),
             Kills = Character.Kills or 0,
             Deaths = Character.Deaths or 0,
-            kd = Roundnumber(CalculateKD(Character.Kills,Character.Deaths)),
+            kd = string.format("%.2f", CalculateKD(Character.Kills,Character.Deaths)),
         })
         ::skip::
     end
@@ -77,4 +67,5 @@ AddEventHandler('killfeed:server:playerWasKilled', function(killerId, weaponName
     end
     local lobby = exports['erotic-lobby']:GetWorld(Killer)
     exports['erotic-lobby']:UpdateLobbyStats(Killer, lobby, "Kills")
+    exports['erotic-lobby']:UpdateLobbyStats(Victim, lobby, "Deaths")
 end)

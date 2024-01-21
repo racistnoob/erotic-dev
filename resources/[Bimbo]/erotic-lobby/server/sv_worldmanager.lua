@@ -75,10 +75,13 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
     local ids = ExtractIdentifiers(src);
 
     WorldTracker[ids.license] = {
+        OldLobby = "1",
         World = "1",
         src = src,
         Name = GetPlayerName(src),
         Kills = 0,
+        Deaths = 0,
+        Damage = 0,
     }
     if WorldTracker[ids.license].World ~= nil then
         local worldName = WorldTracker[ids.license].World; 
@@ -105,10 +108,13 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
 
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
             WorldTracker[ids.license] = {
+                OldLobby = WorldTracker[ids.license] and WorldTracker[ids.license].World or worldName,
                 World = worldName,
                 src = src,
                 Name = GetPlayerName(src),
                 Kills = 0,
+                Deaths = 0,
+                Damage = 0,
             }
             TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
             UpdateStats(worldName)
@@ -183,6 +189,8 @@ function GetLobbyStats(worldID)
                 License = _,
                 Name = v.Name,
                 Kills = v.Kills,
+                Deaths = v.Deaths,
+                Damage = v.Damage,
             })
         end
     end
@@ -190,7 +198,7 @@ function GetLobbyStats(worldID)
     return stats
 end
 
-function UpdateLobbyStats(source, worldID, type)
+function UpdateLobbyStats(source, worldID, type, data)
     local src = source
     local ids = ExtractIdentifiers(src)
     if not ids then return end
@@ -198,11 +206,21 @@ function UpdateLobbyStats(source, worldID, type)
     if WorldTracker[ids.license].World == worldID then
         if type == "Kills" then
             WorldTracker[ids.license].Kills = WorldTracker[ids.license].Kills + 1
+        elseif type == "Deaths" then
+            WorldTracker[ids.license].Deaths = WorldTracker[ids.license].Deaths + 1
+        elseif type == "Damage" then
+            WorldTracker[ids.license].Damage = WorldTracker[ids.license].Damage + data.damage
         end
     end
 
     UpdateStats(worldID)
 end
+
+RegisterNetEvent('Update:Lobby:Stats')
+AddEventHandler('Update:Lobby:Stats', function(attacker,data)
+    local lobby = exports['erotic-lobby']:GetWorld(attacker)
+    UpdateLobbyStats(attacker, lobby, "Damage", {damage=data})
+end)
 
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
 exports('GetLobbyStats', GetLobbyStats)
