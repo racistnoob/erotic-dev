@@ -86,6 +86,8 @@ end)
 
 RegisterCommand("-leaderboard_extend", function()
     setLeaderboardExtended(false)
+    Wait(100)
+    TriggerEvent('Update:Lobby:Stats', lobbystats)
 end)
   
 RegisterKeyMapping("+leaderboard_extend", "Extend Lobby Leaderboard", "keyboard", "z")

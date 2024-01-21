@@ -70,7 +70,11 @@ local COMBAT = {
     HideAmmo = function(self)
         while true do
           Wait(0)
-            HideHudComponentThisFrame(14) 
+            HideHudComponentThisFrame(14)
+            HideHudComponentThisFrame(6)
+            HideHudComponentThisFrame(7)
+            HideHudComponentThisFrame(8)
+            HideHudComponentThisFrame(9)
             DisplayAmmoThisFrame(false)
         end
     end,
