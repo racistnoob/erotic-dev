@@ -78,7 +78,7 @@ local function updateAndSendPlayerCount(worldID, all, src)
     end
 end
 
-local function GetLobbyStats(worldID)
+function GetLobbyStats(worldID)
     local stats = {}
     for _, v in pairs(WorldTracker) do
         if v.World == worldID then
@@ -93,7 +93,7 @@ local function GetLobbyStats(worldID)
     return stats
 end
 
-local function UpdateLobbyStats(source, worldID, type)
+function UpdateLobbyStats(source, worldID, type)
     local src = source
     local ids = ExtractIdentifiers(src)
     if not ids then return end
@@ -118,7 +118,7 @@ local function InitializeWorldTracker(license)
     end
 end
 
-local function UpdateStats(worldID)
+function UpdateStats(worldID)
     for _, v in pairs(WorldTracker) do
         if v.World == worldID then
             TriggerClientEvent('Update:Lobby:Stats',v.src, GetLobbyStats(worldID))
