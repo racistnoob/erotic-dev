@@ -38,7 +38,7 @@ AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount, worldID)
         worldId = worldID,
         count = playerCount
     })
-    Wait(1000)
+    Citizen.Wait(12)
 end)
 
 exports('getCurrentWorld', function()
