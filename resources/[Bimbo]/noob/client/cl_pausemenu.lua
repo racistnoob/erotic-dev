@@ -16,6 +16,6 @@ RegisterCommand('pausemenu', function()
         until not IsPauseMenuActive()
         open = false
     end
-end)
+end, false)
 
 RegisterKeyMapping('pausemenu', 'Pause Menu', 'keyboard', 'ESCAPE')

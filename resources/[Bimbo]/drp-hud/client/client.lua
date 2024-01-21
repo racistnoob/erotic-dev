@@ -16,40 +16,6 @@ local HUD = {
     DisplayRadar(open)
   end,
 
-  GetMinimapPosition = function(self)
-
-    local minimap = {}
-
-    local resX, resY = GetActiveScreenResolution()
-
-    local aspectRatio = GetAspectRatio()
-
-    local scaleX = 1/resX
-    local scaleY = 1/resY
-
-    local minimapRawX, minimapRawY
-
-    SetScriptGfxAlign(string.byte('L'), string.byte('B'))
-
-    if IsBigmapActive() then
-      minimapRawX, minimapRawY = GetScriptGfxPosition(-0.003975, 0.022 + (-0.460416666))
-      minimap.width = scaleX*(resX/(2.52*aspectRatio))
-      minimap.height = scaleY*(resY/(2.3374))
-    else
-      minimapRawX, minimapRawY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
-      minimap.width = scaleX*(resX/(4*aspectRatio))
-      minimap.height = scaleY*(resY/(5.674))
-    end
-
-    ResetScriptGfxAlign()
-
-    minimap.rightX = minimapRawX+minimap.width
-    minimap.bottomY = minimapRawY+minimap.height
-    
-    return minimap
-
-  end,
-
   PlayerId = 0,
 
   InfoThread = function(self)
@@ -72,13 +38,7 @@ local HUD = {
       while true do
 
         Wait(250)
-
-        local map = self:GetMinimapPosition()
-        local rightX = map.rightX * 100
-        local bottomY = map.bottomY * 100
-
-        local localState = LocalPlayer.state
-
+        
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 
         RemoveMultiplayerHudCash(0x968F270E39141ECA)
@@ -87,8 +47,6 @@ local HUD = {
         SendReactMessage('setStatusData', {
           health = GetEntityHealth(self.plyPed) - 100,
           armor = GetPedArmour(self.plyPed),
-          rightX = rightX,
-          bottomY = bottomY,
         })
 
       end

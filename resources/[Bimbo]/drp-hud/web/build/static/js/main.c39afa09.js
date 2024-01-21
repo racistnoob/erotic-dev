@@ -8821,8 +8821,8 @@
                                             style: {
                                                 position: "absolute",
                                                 bottom: "9px",
-                                                width: "142px",
-                                                left: "56px"
+                                                width: "147px",
+                                                left: "52px"
                                             },
                                             children: (0, z.jsx)("div", {
                                                 className: "progressBar",
@@ -8910,8 +8910,8 @@
                                             style: {
                                                 position: "absolute",
                                                 bottom: "9px",
-                                                width: "142px",
-                                                left: "56px"
+                                                width: "147px",
+                                                left: "52px"
                                             },
                                             children: (0, z.jsx)("div", {
                                                 className: "progressBar",

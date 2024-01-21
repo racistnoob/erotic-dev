@@ -27,7 +27,7 @@ end
 
 
 RegisterCommand('kill', function(source, args, rawCommand)
-    exports['drp-notifications']:SendAlert('inform', 'About to die', 5000)
+    exports['drp-notifications']:SendAlert('error', 'About to die', 5000)
     local playerPed = PlayerPedId()
     SetPedToRagdoll(playerPed, 5000, 5000, 0, true, true, false)
     Citizen.Wait(1000)
@@ -38,7 +38,7 @@ end)
 
 RegisterCommand('leave', function(source, args, rawCommand)
     local immediatePed = PlayerPedId()
-    exports['drp-notifications']:SendAlert('inform', 'leaving', 5000)
+    exports['drp-notifications']:SendAlert('inform', 'Leaving lobby', 5000)
     Citizen.Wait(1500)
     exports['erotic-lobby']:switchWorld(1)
 end)
