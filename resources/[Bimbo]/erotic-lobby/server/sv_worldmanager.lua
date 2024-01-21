@@ -86,6 +86,8 @@ function GetLobbyStats(worldID)
                 License = _,
                 Name = v.Name,
                 Kills = v.Kills,
+                Deaths = v.Deaths,
+                Damage = v.Damage,
             })
         end
     end
@@ -101,6 +103,10 @@ function UpdateLobbyStats(source, worldID, type)
     if WorldTracker[ids.license].World == worldID then
         if type == "Kills" then
             WorldTracker[ids.license].Kills = WorldTracker[ids.license].Kills + 1
+        elseif type == "Deaths" then
+            WorldTracker[ids.license].Deaths = WorldTracker[ids.license].Deaths + 1
+        elseif type == "Damage" then
+            WorldTracker[ids.license].Damage = WorldTracker[ids.license].Damage + data.damage
         end
     end
 
@@ -114,6 +120,8 @@ local function InitializeWorldTracker(license)
             src = nil,
             Name = nil,
             Kills = 0,
+            Deaths = 0,
+            Damage = 0,
         }
     end
 end
@@ -168,6 +176,8 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
     WorldTracker[ids.license].src = src
     WorldTracker[ids.license].Name = GetPlayerName(src)
     WorldTracker[ids.license].Kills = 0
+    WorldTracker[ids.license].Deaths = 0
+    WorldTracker[ids.license].Damage = 0
 
     if WorldTracker[ids.license].World then
         local worldName = WorldTracker[ids.license].World
