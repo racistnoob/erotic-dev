@@ -9,8 +9,8 @@ interface Lobby {
   playerCount: number;
 }
 const App: React.FC = () => {
-
-  const [lobbies, setLobbies] = useState<Lobby[]>([
+  const lobbiesRef = useRef<Lobby[]>([
+  // const [lobbies] = useState<Lobby[]>([
     {
       id: 1,
       name: 'Southside #1',
@@ -134,24 +134,6 @@ const App: React.FC = () => {
       playerCount: 0
     },
   ]);
-
-  // window.addEventListener('message', (event) => {
-  //   if (event.data.type === "updatePlayerCount") {
-  //     const newPlayerCount = event.data.count;
-  //     const worldID = event.data.worldId;
-  
-  //     setLobbies((prevLobbies) => {
-  //       const updatedLobbies = prevLobbies.map((lobby) => {
-  //         if (lobby.id === worldID) {
-  //           return { ...lobby, playerCount: newPlayerCount };
-  //         }
-  //         return lobby;
-  //       });
-  
-  //       return updatedLobbies;
-  //     });
-  //   }
-  // });
   
   const handleJoinLobby = (lobbyId: number) => {
     fetchNui('switchWorld', { worldId: lobbyId })
@@ -179,11 +161,50 @@ const App: React.FC = () => {
     setSelectedRecoil(e.target.value);
   };
 
-  const filteredLobbies = lobbies.filter(lobby =>
-    Object.keys(filterSettings).every(setting => 
-      !filterSettings[setting] || lobby.settings.includes(setting)
-    ) && (!selectedRecoil || lobby.settings.includes(selectedRecoil))
-  );
+  const [filteredLobbies, setFilteredLobbies] = useState<Lobby[]>([]);
+
+  useEffect(() => {
+    setFilteredLobbies(
+      lobbiesRef.current.filter((lobby) =>
+        Object.keys(filterSettings).every(
+          (setting) =>
+            !filterSettings[setting] || lobby.settings.includes(setting)
+        ) && (!selectedRecoil || lobby.settings.includes(selectedRecoil))
+      )
+    );
+  }, [filterSettings, selectedRecoil]);
+
+  useEffect(() => {
+    const handlePlayerCountUpdate = (event: MessageEvent) => {
+      if (event.data.type === 'updatePlayerCount') {
+        const newPlayerCount = event.data.count;
+        const worldID = event.data.worldId;
+
+        lobbiesRef.current = lobbiesRef.current.map((lobby) => {
+          if (lobby.id === worldID) {
+            return { ...lobby, playerCount: newPlayerCount };
+          }
+          return lobby;
+        });
+
+        // Update filteredLobbies
+        setFilteredLobbies((prevFilteredLobbies) =>
+          prevFilteredLobbies.map((lobby) => {
+            if (lobby.id === worldID) {
+              return { ...lobby, playerCount: newPlayerCount };
+            }
+            return lobby;
+          })
+        );
+      }
+    };
+
+    window.addEventListener('message', handlePlayerCountUpdate);
+
+    return () => {
+      window.removeEventListener('message', handlePlayerCountUpdate);
+    };
+  }, [filterSettings, selectedRecoil]);
 
   return (
     <div className='overlay'>
