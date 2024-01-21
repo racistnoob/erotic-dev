@@ -98,7 +98,7 @@ end)
 
 RegisterCommand("top", function()
     local playerPed = PlayerPedId()
-    local worldID = exports['erotic-lobby']:getCurrentWorldID()
+    local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
 
     if worldID >= 9 and worldID <= 10 then
         if IsPedInAnyVehicle(playerPed, false) then

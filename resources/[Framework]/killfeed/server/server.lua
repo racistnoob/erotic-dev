@@ -22,6 +22,23 @@ function CalculateKD(kills, deaths)
     return (kills / deaths)
 end
 
+AddEventHandler('weaponDamageEvent', function(sender, data)
+    local _src = sender
+    local victim = NetworkGetEntityFromNetworkId(data.hitGlobalId)
+
+    if GetEntityType(victim) == 1 then
+        local damage = data.weaponDamage
+
+        if data.willKill and damage > 100 then
+            print(data.willKill)
+            damage = damage - 100
+        end
+    
+        local lobby = exports['erotic-lobby']:GetWorld(_src)
+        exports['erotic-lobby']:UpdateLobbyStats(_src, lobby, "Damage", {damage = damage})
+    end
+end)
+
 RegisterServerEvent("Grab:Leaderboard")
 AddEventHandler("Grab:Leaderboard", function()
     local src = source
@@ -57,11 +74,12 @@ RegisterNetEvent('killfeed:server:playerWasKilled')
 AddEventHandler('killfeed:server:playerWasKilled', function(killerId, weaponName)
     local Victim = source
     local Killer = killerId
+    local lobby = exports['erotic-lobby']:GetWorld(Killer)
 
     local KillerSteam = GetIdentifier("steam", Killer)
     local VictimSteam = GetIdentifier("steam", Victim)
 
-    TriggerClientEvent('killfeed:client:feed', -1, GetPlayerRoutingBucket(killerId), '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(GetPlayerName(source)) .. '</strong>')
+    TriggerClientEvent('killfeed:client:feed', -1, lobby, '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(GetPlayerName(source)) .. '</strong>')
 
     if KillerSteam then
         exports.oxmysql:execute("UPDATE users SET Kills = Kills + 1 WHERE identifier=:identifier", { identifier = KillerSteam }, function(result)
@@ -75,7 +93,6 @@ AddEventHandler('killfeed:server:playerWasKilled', function(killerId, weaponName
         end)
     end
 
-    local lobby = exports['erotic-lobby']:GetWorld(Killer)
     exports['erotic-lobby']:UpdateLobbyStats(Killer, lobby, "Kills")
     exports['erotic-lobby']:UpdateLobbyStats(Victim, lobby, "Deaths")
 end)

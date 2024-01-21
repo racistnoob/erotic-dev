@@ -1,5 +1,3 @@
-currentWorldID = 1
-
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
         exports['erotic-lobby']:openLobby(false)
@@ -11,14 +9,13 @@ RegisterNUICallback('switchWorld', function(data, cb)
 end)
 
 AddEventHandler('echorp:playerSpawned', function()
-    local src = source;
     TriggerServerEvent('erotic-lobby:SpawnWorldTrigger');
     exports['lane-inventory']:DoKitStuff("ars", "hopout")
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')
 AddEventHandler('erotic-lobby:KillPlayer', function()
-    SetEntityHealth(PlayerPedId(), 0) -- Sets the player's health to 0, effectively killing them
+    SetEntityHealth(PlayerPedId(), 0)
 end)
 
 RegisterNetEvent("erotic-lobby:ChangeCoords")
@@ -26,23 +23,18 @@ AddEventHandler("erotic-lobby:ChangeCoords", function(x, y, z)
     SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false);
 end)
 
-RegisterNetEvent('erotic-lobby:updateLobby')
-AddEventHandler('erotic-lobby:updateLobby', function(worldID)
-    currentWorldID = worldID
-end)
-
+local cachedPlayerCount = {}
 RegisterNetEvent('erotic-lobby:sendPlayerCount')
 AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount, worldID)
-    SendNUIMessage({
-        type = "updatePlayerCount",
-        worldId = worldID,
-        count = playerCount
-    })
-    Citizen.Wait(12)
-end)
-
-exports('getCurrentWorld', function()
-    return currentWorldID
+    if not cachedPlayerCount[worldID] or (cachedPlayerCount[worldID] ~= playerCount) then
+        SendNUIMessage({
+            type = "updatePlayerCount",
+            count = playerCount,
+            worldId = worldID,
+        })
+        cachedPlayerCount[worldID] = playerCount
+    end
+    Wait(12)
 end)
 
 exports('ChangeWorld', function(worldId)

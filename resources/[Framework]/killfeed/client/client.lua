@@ -20,40 +20,15 @@ AddEventHandler('baseevents:onPlayerKilled', function(killerId, deathData)
     TriggerServerEvent('killfeed:server:playerWasKilled', killerId, weaponName)
 end)
 
-AddEventHandler('gameEventTriggered', function(name, args)
-    if true then
-        if name == 'CEventNetworkEntityDamage' then
-            local victim = args[1]
-            local attacker = args[2]
-            if IsPedAPlayer(attacker) then
-  
-                local victimEntitys, attackEntitys, damages, _s, _s, fatalBools, weaponUseds, _s, _s, _s, entityTypes = table.unpack(args)
-  
-                args = { victimEntitys, attackEntitys, fatalBools == 1, weaponUseds, entityTypes,
-                  math.floor(string.unpack("f", string.pack("i4", damages))) 
-                }
-
-                if GetPlayerByEntityID ~= nil then
-                  local attackerId = GetPlayerServerId(GetPlayerByEntityID(attacker))
-                  TriggerServerEvent('Update:Lobby:Stats',attackerId, damages)
-                end
-            end
-  
-        end
-    end
-  end)
-
 RegisterNetEvent('killfeed:client:feed')
 AddEventHandler('killfeed:client:feed', function(worldID, context)
-    if exports['erotic-lobby']:getCurrentWorld() == worldID then
+    if exports['erotic-lobby']:getCurrentWorld() == tonumber(worldID) then
         SendNUIMessage({
             type = "killfeed",
             context = context
         })
-    
     end
 end)
-
 
 local List = {}
 RegisterCommand("stats", function()
@@ -67,7 +42,7 @@ RegisterCommand("stats", function()
     })
 
     SetNuiFocus(true, true)
-    SetTimecycleModifier('hud_def_blur')
+    TriggerScreenblurFadeIn(50)
 end)
 
 AddEventHandler('Recieved:Info')
@@ -81,7 +56,6 @@ RegisterNUICallback("exit",function()
         mode = "close_all",
     })
     SetNuiFocus(false,false)
-    SetTimecycleModifier('default')
     TriggerScreenblurFadeOut(50)
 end)
 

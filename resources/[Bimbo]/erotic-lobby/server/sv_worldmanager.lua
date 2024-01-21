@@ -68,7 +68,7 @@ local function getLobbyPlayerCount(worldID)
 end
 
 local function updateAndSendPlayerCount(worldID, all, src)
-    if all then
+    if all then -- all worlds updated to specific player (src)
         for i = 1, #Config.Worlds do
             TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
             Wait(10)
@@ -95,7 +95,7 @@ function GetLobbyStats(worldID)
     return stats
 end
 
-function UpdateLobbyStats(source, worldID, type)
+function UpdateLobbyStats(source, worldID, type, data)
     local src = source
     local ids = ExtractIdentifiers(src)
     if not ids then return end
@@ -160,9 +160,11 @@ AddEventHandler('playerDropped', function (reason)
     local src = source;
     local ids = ExtractIdentifiers(src);
     if WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil then
-        UpdateStats(WorldTracker[ids.license].World)
+        local world = WorldTracker[ids.license].World
+        WorldTracker[ids.license] = nil;
+        UpdateStats(world)
+        updateAndSendPlayerCount(world) -- updates playercount of disconnected players old lobby
     end
-    WorldTracker[ids.license] = nil;
 end)
 
 RegisterNetEvent('erotic-lobby:SpawnWorldTrigger')
@@ -185,7 +187,8 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
         UpdateStats(worldName)
-        updateAndSendPlayerCount(1, true, src)
+        updateAndSendPlayerCount(worldName) -- sends every player the new playercount of lobby 1
+        updateAndSendPlayerCount(1, true, src) -- sends every playercount only to the new player
     end
 end)
 
@@ -215,8 +218,8 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
             TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
             UpdateStats(worldName)
             TriggerClientEvent("core:updateRPC", src, worldName)
-            updateAndSendPlayerCount(Config.Worlds[worldName][1])
-            updateAndSendPlayerCount(oldWorld)
+            updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
+            updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby
             -- Changed worlds ...
             return;
         end

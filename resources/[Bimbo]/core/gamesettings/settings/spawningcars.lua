@@ -61,7 +61,7 @@ end
 
 RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
-    local worldID = exports['erotic-lobby']:getCurrentWorldID()
+    local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
     local trickLobby = (worldID >= 9 and worldID <= 10)
     if spawningcars or trickLobby and veh == "deluxo" then
         local playerPed = PlayerPedId()
@@ -125,9 +125,7 @@ AddEventHandler("drp:saveVehicleModsBennys", function(veh)
 end)
 
 RegisterCommand("previous_vehicle", function()
-    if previousCar then
-        TriggerEvent("drp:spawnvehicle", previousCar)
-    end
+    TriggerEvent("drp:spawnvehicle", previousCar or "revolter")
 end)
 
 RegisterKeyMapping("previous_vehicle", "Spawn your last spawned vehicle", "KEYBOARD", "F3")

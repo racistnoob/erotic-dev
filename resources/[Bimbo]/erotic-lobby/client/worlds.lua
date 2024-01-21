@@ -1,4 +1,4 @@
-local currentWorldID = nil
+local currentWorldID = 1
 
 local defaultSpawn = {
     x = 233.5797,
@@ -151,6 +151,6 @@ exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
 
 exports("switchWorld", switchWorld)
 
-exports("getCurrentWorldID", function()
+exports("getCurrentWorld", function()
     return currentWorldID
 end)

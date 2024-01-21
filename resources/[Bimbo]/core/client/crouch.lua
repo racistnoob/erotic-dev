@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
                     while not HasAnimSetLoaded("move_ped_crouched") do 
                         Citizen.Wait(100)
                     end 
-
+                    
                     if crouched then 
                         ResetPedMovementClipset(ped, 0)
                         crouched = false 

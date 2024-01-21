@@ -88,10 +88,13 @@ function applyAttachmentsFromMeta(givenMeta)
 
     for i = 1, #meta do
         local isTint = type(meta[i]) == "number"
-        local attachment = isTint and meta[i] or joaat(meta[i])
+        local attachment = isTint and meta[i] or meta[i]
         local _, gun = GetCurrentPedWeapon(PlayerPedId(), 1)
         if not isTint then
-            GiveWeaponComponentToPed(PlayerPedId(), gun, attachment)
+            if not meta[i]:find("CLIP") then
+                attachment = joaat(meta[i])
+                GiveWeaponComponentToPed(PlayerPedId(), gun, attachment)
+            end
         else
             SetPedWeaponTintIndex(PlayerPedId(), gun, attachment - 1)
         end
