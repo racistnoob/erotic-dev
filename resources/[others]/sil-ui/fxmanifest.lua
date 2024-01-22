@@ -17,7 +17,7 @@ client_scripts {
 
 server_scripts {
   'server/sv_*.lua',
-  'server/sv_*.js'
+  -- 'server/sv_*.js'
 }
 
 files {
