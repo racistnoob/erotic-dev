@@ -5,6 +5,7 @@ version '1.0.1'
 
 files {
     'weapons/*.meta',
+    'handling.meta',
 }
 
 data_file 'HANDLING_FILE' 'handling.meta'
