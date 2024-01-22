@@ -7,5 +7,5 @@ files {
     'weapons/*.meta',
 }
 
-data_file 'HANDLING_FILE' 'handlings/*.meta'
+data_file 'HANDLING_FILE' 'handling.meta'
 data_file 'WEAPONINFO_FILE_PATCH' 'weapons/*.meta'
