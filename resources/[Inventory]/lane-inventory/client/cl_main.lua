@@ -35,7 +35,29 @@ Citizen.CreateThread(
 )
 
 function openInventory()
-    SendNUIMessage({ action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
+    local playerPos = GetEntityCoords(PlayerPedId())
+    local playerInVehicle = IsPedInAnyVehicle(PlayerPedId(), false)
+    local foundAny = false
+
+    for i, d in ipairs(Config.OtherInventories) do
+        if #(playerPos - d.pos) < 3.0 then -- Proximity threshold
+            foundAny = true
+            
+            if foundAny then
+                print('second')
+                TriggerServerEvent('zbrp:openSecondInventory', {
+                    type = 'other',
+                    id = i
+                })
+                break
+            end
+        end
+    end
+
+    if not foundAny then
+        -- Scaleform.Show()
+        SendNUIMessage({ action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
+    end
 end
 
 RegisterNUICallback('nui:zbrp:blurState', function(blur)
@@ -54,7 +76,7 @@ RegisterNUICallback('nui:zbrp:openedState', function(data)
 
     -- global
     SetNuiFocus(state, state)
-    Scaleform.Cursor()
+    -- Scaleform.Cursor()
     
 
     if state then
@@ -78,7 +100,7 @@ RegisterNUICallback('nui:zbrp:openedState', function(data)
 
         TriggerServerEvent('zbrp:removeSecondary')
         TriggerScreenblurFadeOut()
-        Scaleform.Hide()
+        -- Scaleform.Hide()
     end
 end)
 
@@ -306,11 +328,6 @@ CreateThread(function()
     end
 end)]]
 
---[[
 RegisterCommand("giveitem", function(source,args,rawcommand)
     TriggerServerEvent("GiveItem", args[1], args[2])
-end)]]
-
-RegisterCommand("test", function(source,args,rawcommand)
-    Scaleform.Show()
 end)
