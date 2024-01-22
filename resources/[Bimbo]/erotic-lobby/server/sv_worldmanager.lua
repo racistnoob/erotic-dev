@@ -217,6 +217,7 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
             }
             TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
             UpdateStats(worldName)
+            UpdateStats(oldWorld)
             TriggerClientEvent("core:updateRPC", src, worldName)
             updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
             updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby

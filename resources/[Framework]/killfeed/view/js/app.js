@@ -105,9 +105,6 @@ $(function() {
                 FadeAllOut()
             } else if (item.mode === "stats") {
                 $(".information").empty()
-                GenerateStats(JSON.parse(event.data.data))
-            } else if (item.mode === "extendedview") {
-                $(".information").empty()
                 $(".ExtendedInformation").empty()
                 if (item.state) {
                     $(".StatsInfo").fadeOut()

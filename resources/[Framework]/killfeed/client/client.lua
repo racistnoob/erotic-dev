@@ -60,32 +60,25 @@ RegisterNUICallback("exit",function()
 end)
 
 local lobbystats = {}
+local extended = false
 AddEventHandler('Update:Lobby:Stats')
 RegisterNetEvent('Update:Lobby:Stats', function(data)
     lobbystats  = data
     SendNUIMessage({
         type = "ui",
         mode = "stats",
+        state = extended,
         data = json.encode(data),
     })
 end)
-
-
-local function setLeaderboardExtended(state)
-    SendNUIMessage({
-        type = "ui",
-        mode = "extendedview",
-        state = state,
-        data = json.encode(lobbystats),
-    })
-end
   
 RegisterCommand("+leaderboard_extend", function()
-    setLeaderboardExtended(true)
+    extended = true
+    TriggerEvent('Update:Lobby:Stats', lobbystats)
 end)
 
 RegisterCommand("-leaderboard_extend", function()
-    setLeaderboardExtended(false)
+    extended = false
     Wait(100)
     TriggerEvent('Update:Lobby:Stats', lobbystats)
 end)
