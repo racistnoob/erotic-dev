@@ -39,6 +39,7 @@ local HUD = {
 
         Wait(250)
         
+        ResetPlayerStamina(PlayerId())
         SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 
         RemoveMultiplayerHudCash(0x968F270E39141ECA)
