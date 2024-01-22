@@ -1,6 +1,7 @@
 WorldTracker = {}; -- [license] = {World = WorldName, Name = PlayerName, Kills = 0}
 
-Config = {}
+Worlds = {}
+
 Config = {
     Worlds = { -- ["WorldName"] = {RoutingBucket, Spawnpoint, PermissionRequired},
         ["1"] = {1, false}, -- DO NOT REMOVE

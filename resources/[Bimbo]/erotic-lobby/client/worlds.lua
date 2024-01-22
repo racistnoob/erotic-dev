@@ -154,3 +154,8 @@ exports("switchWorld", switchWorld)
 exports("getCurrentWorld", function()
     return currentWorldID
 end)
+
+-- RegisterNUICallback("getWorldsData", function(data, callback)
+--     local worldsData = getWorldsData() -- Assuming you have the getWorldsData function defined
+--     callback(worldsData)
+-- end)

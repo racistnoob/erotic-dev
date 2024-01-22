@@ -5,136 +5,67 @@ import { fetchNui } from '../utils/fetchNui';
 interface Lobby {
   id: number;
   name: string;
-  settings: string[]; // Array of strings for lobby settings
+  settings: string[];
   playerCount: number;
 }
+
 const App: React.FC = () => {
   const lobbiesRef = useRef<Lobby[]>([
-  // const [lobbies] = useState<Lobby[]>([
-    {
-      id: 1,
-      name: 'Southside #1',
-      settings: ['FPS Mode', 'Light Recoil'],
-      playerCount: 0
-    },
-    
-    {
-      id: 2,
-      name: 'FFA Bunker',
-      settings: ['FPS Mode', 'Light Recoil', "FFA"],
-      playerCount: 0
 
-    },
-    {
-      id: 3,
-      name: 'Southside #3',
-      settings: ['FPS Mode', 'Light Recoil', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 4,
-      name: 'Southside #4',
-      settings: ['FPS Mode', 'Light Recoil', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 5,
-      name: 'Southside #5',
-      settings: ['FPS Mode', 'Envy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 6,
-      name: 'Southside #6',
-      settings: ['FPS Mode', 'Envy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 7,
-      name: 'Southside #7',
-      settings: ['FPS Mode', 'Envy Recoil', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 8,
-      name: 'Southside #8',
-      settings: ['FPS Mode', 'Envy Recoil', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 9,
-      name: 'Southside #9',
-      settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 10,
-      name: 'Southside #10',
-      settings: ['FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'],
-      playerCount: 0
-    },
-    {
-      id: 11,
-      name: 'Southside #11',
-      settings: ['FPS Mode', 'Medium Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 12,
-      name: 'Southside #12',
-      settings: ['FPS Mode', 'Medium Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 13,
-      name: 'Southside #13',
-      settings: ['FPS Mode', 'Heavy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 14,
-      name: 'Southside #14',
-      settings: ['FPS Mode', 'Heavy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 15,
-      name: 'Southside #15',
-      settings: ['FPS Mode', 'Heavy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 16,
-      name: 'Southside #16',
-      settings: ['FPS Mode', 'Heavy Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 17,
-      name: 'Southside #17',
-      settings: ['Third Person', 'Light Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 18,
-      name: 'Southside #18',
-      settings: ['Third Person', 'Light Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 19,
-      name: 'Southside #19',
-      settings: ['Third Person', 'Light Recoil'],
-      playerCount: 0
-    },
-    {
-      id: 20,
-      name: 'Southside #20',
-      settings: ['Third Person', 'Light Recoil'],
-      playerCount: 0
-    },
   ]);
+
+  const handleUpdateLobbies = (event: MessageEvent) => {
+    if (event.data.type === 'updateLobbies') {
+        const receivedLobbies: Lobby[] = event.data.lobbies;
+
+        // Preserve existing player counts
+        const updatedLobbies = receivedLobbies.map((receivedLobby: Lobby) => {
+            const existingLobby = lobbiesRef.current.find(lobby => lobby.id === receivedLobby.id);
+
+            if (existingLobby) {
+                // Lobby already exists, update only properties that need to be changed
+                return { ...existingLobby, name: receivedLobby.name, settings: receivedLobby.settings };
+            } else {
+                // Lobby doesn't exist, add it to the array
+                return receivedLobby;
+            }
+        });
+
+        lobbiesRef.current = updatedLobbies;
+
+        // Update filteredLobbies to display all lobbies
+        setFilteredLobbies(updatedLobbies);
+    }
+};
   
+  const handlePlayerCountUpdate = (event: MessageEvent) => {
+    console.log('Received Player Count Update:', event.data);
+
+    if (event.data.type === 'updatePlayerCount') {
+        const newPlayerCount = event.data.count;
+        const worldID = event.data.worldId;
+
+        lobbiesRef.current = lobbiesRef.current.map((lobby) => {
+            if (lobby.id === worldID) {
+                return { ...lobby, playerCount: newPlayerCount };
+            }
+            return lobby;
+        });
+
+        setFilteredLobbies((prevFilteredLobbies) =>
+            prevFilteredLobbies.map((lobby) => {
+                if (lobby.id === worldID) {
+                    return { ...lobby, playerCount: newPlayerCount };
+                }
+                return lobby;
+            })
+        );
+
+        // Log lobby data before sending to NUI
+        console.log('Updated Lobby Data:', lobbiesRef.current);
+    }
+  };
+
   const handleJoinLobby = (lobbyId: number) => {
     fetchNui('switchWorld', { worldId: lobbyId })
       .then((response) => {
@@ -145,12 +76,18 @@ const App: React.FC = () => {
         }
       })
       .catch((error) => {
-        console.error('Failed to   join the lobby:', error);
+        console.error('Failed to join the lobby:', error);
       });
   };
 
-  type FilterSettings = { [key: string]: boolean; };
-  const [filterSettings, setFilterSettings] = useState<FilterSettings>({ 'FPS Mode': false, 'Deluxo': false, 'FFA': false, 'Third Person': false, 'Headshots': false });
+  type FilterSettings = { [key: string]: boolean };
+  const [filterSettings, setFilterSettings] = useState<FilterSettings>({
+    'FPS Mode': false,
+    'Deluxo': false,
+    'FFA': false,
+    'Third Person': false,
+    'Headshots': false,
+  });
   const [selectedRecoil, setSelectedRecoil] = useState('');
 
   const handleFilterChange = (setting: string) => {
@@ -164,47 +101,22 @@ const App: React.FC = () => {
   const [filteredLobbies, setFilteredLobbies] = useState<Lobby[]>([]);
 
   useEffect(() => {
-    setFilteredLobbies(
-      lobbiesRef.current.filter((lobby) =>
-        Object.keys(filterSettings).every(
-          (setting) =>
-            !filterSettings[setting] || lobby.settings.includes(setting)
-        ) && (!selectedRecoil || lobby.settings.includes(selectedRecoil))
-      )
-    );
-  }, [filterSettings, selectedRecoil]);
+    window.addEventListener('message', handleUpdateLobbies);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('message', handleUpdateLobbies);
+    };
+  }, []); // Make sure to have an empty dependency array to run the effect only once on mount
 
   useEffect(() => {
-    const handlePlayerCountUpdate = (event: MessageEvent) => {
-      if (event.data.type === 'updatePlayerCount') {
-        const newPlayerCount = event.data.count;
-        const worldID = event.data.worldId;
-
-        lobbiesRef.current = lobbiesRef.current.map((lobby) => {
-          if (lobby.id === worldID) {
-            return { ...lobby, playerCount: newPlayerCount };
-          }
-          return lobby;
-        });
-
-        // Update filteredLobbies
-        setFilteredLobbies((prevFilteredLobbies) =>
-          prevFilteredLobbies.map((lobby) => {
-            if (lobby.id === worldID) {
-              return { ...lobby, playerCount: newPlayerCount };
-            }
-            return lobby;
-          })
-        );
-      }
-    };
-
     window.addEventListener('message', handlePlayerCountUpdate);
-
+  
+    // Cleanup function
     return () => {
       window.removeEventListener('message', handlePlayerCountUpdate);
     };
-  }, [filterSettings, selectedRecoil]);
+  }, []); // Make sure to have an empty dependency array to run the effect only once on mount  
 
   return (
     <div className='overlay'>
@@ -237,7 +149,7 @@ const App: React.FC = () => {
                   <p key={index} className="lobby-setting">{setting}</p>
                 ))}
               </div>
-              <p className="lobby-player-count">Players: {lobby.playerCount}</p>
+              <p className="lobby-player-count">🧑‍🤝‍🧑/ {lobby.playerCount || 0}</p>
             </div>
           ))}
         </div>
