@@ -3,7 +3,7 @@ currentState = "Southside #1"
 RegisterNetEvent('core:updateRPC')
 AddEventHandler("core:updateRPC", function(msg)
     if msg == "2" then
-        currentState = "FFA"
+        currentState = "FFA Bunker"
     else
         currentState = ("Southside #" .. msg)
     end
