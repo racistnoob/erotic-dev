@@ -48,11 +48,3 @@ RegisterCommand('ooc', function(source, args, rawCommand)
         end
     end
 end, false)
-
-RegisterCommand('id', function(source, rawCommand)
-    local src = source
-    if player ~= false then
-        local user = GetPlayerName(src)
-        TriggerEvent('erp:addChatSystem', 'ID '..src, src)
-    end
-end, false)

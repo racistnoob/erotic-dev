@@ -70,11 +70,11 @@ end
 local function updateAndSendPlayerCount(worldID, all, src)
     if all then -- all worlds updated to specific player (src)
         for i = 1, #Config.Worlds do
-            TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
             Wait(10)
+            TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
         end
     else
-        TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), worldID)
+        TriggerClientEvent('erotic-lobby:sendPlayerCount', -1, getLobbyPlayerCount(worldID), tonumber(worldID))
     end
 end
 
@@ -187,9 +187,9 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
         TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
         UpdateStats(worldName)
-        updateAndSendPlayerCount(worldName) -- sends every player the new playercount of lobby 1
-        updateAndSendPlayerCount(1, true, src) -- sends every playercount only to the new player
     end
+    updateAndSendPlayerCount(1) -- sends every player the new playercount of lobby 1
+    updateAndSendPlayerCount(1, true, src) -- sends every playercount only to the new player
 end)
 
 RegisterNetEvent('erotic-lobby:ChangeWorld')

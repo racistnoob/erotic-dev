@@ -4,9 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <script src="dep/verte.js"></script>
     <link rel="stylesheet" href="css/verte.css">
@@ -69,16 +67,7 @@
                     <div class="inventorycontainer left">
                         <div class="header">
                             <div class="name">{{ _U('main_inventory') }}</div>
-                            <div class="kiloparent">
-                                <div class="text">{{ inventoryWeight(mainInventory) }} / {{
-                                    formatMoney(playerStaticData.maxweight) }} {{ _U('weight_measure') }}
-                                </div>
-                                <div :style="{ 'background': settings.setters.weightbg_1.set }"
-                                    class="kilobar">
-                                    <div :style="{ 'background': '' , 'width': getPercentage(inventoryWeight(mainInventory), playerStaticData.maxweight) + '%' }"
-                                        class="inside"></div>
-                                </div>
-                            </div>
+                        
                         </div>
                         <div class="content">
                             <div @mouseleave="hoveredItemMain = null"

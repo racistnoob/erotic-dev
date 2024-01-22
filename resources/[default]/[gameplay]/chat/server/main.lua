@@ -1,7 +1,3 @@
-RegisterCommand("streamermode", function(source, args, rawCommand)
-    TriggerClientEvent('adminChat:flipme', source)
-end, false)
-
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function(message)
     TriggerClientEvent('chat:addMessage', -1, {
