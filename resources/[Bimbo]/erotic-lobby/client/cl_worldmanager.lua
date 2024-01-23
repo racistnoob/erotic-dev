@@ -1,6 +1,5 @@
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
-        print(data.password)
         if not data.password then
             exports['erotic-lobby']:openLobby(false)
             exports['erotic-lobby']:switchWorld(data.worldId)

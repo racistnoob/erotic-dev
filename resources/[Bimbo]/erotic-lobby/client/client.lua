@@ -132,7 +132,6 @@ function OpenCreateLobby()
 			local success, WorldID = lib.callback.await('erotic-lobby:createLobby', false, {LobbyName = input[1], LobbyPassword = input[2], DeluxoMode = Settings[3].checked, Headshots = Settings[1].checked, FPSMode = Settings[2].checked, Recoil = SelectedRecoil, FirstPerson = Settings[4].checked})
 			if not success then return end
 			exports['erotic-lobby']:switchWorld(WorldID)
-			--   TriggerServerEvent('CreateLobby', {LobbyName = input[1], LobbyPassword = input[2], DeluxoMode = Settings[3].checked, Headshots = Settings[1].checked, FPSMode = Settings[2].checked, Recoil = SelectedRecoil, FirstPerson = Settings[4].checked})
 		end
 	end)
 

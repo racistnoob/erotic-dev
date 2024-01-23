@@ -127,7 +127,6 @@ local FFAMaps = {
 SettingEnabled = function(settingToCheck, settings)
     for _, setting in ipairs(settings) do
         if setting == settingToCheck then
-            -- print("Has Setting",settingToCheck)
             return true
         end
     end
