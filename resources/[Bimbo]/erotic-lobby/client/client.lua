@@ -1,5 +1,109 @@
 lobbyMenuOpen = false
 
+local lobbyData = {
+	{
+		id = 1,
+		name = 'Southside #1',
+		settings = {'FPS Mode', 'Light Recoil'},
+	},
+	  
+	{
+		id = 2,
+		name = 'FFA Bunker',
+		settings = {'FPS Mode', 'Light Recoil', 'FFA'},
+	},
+	{
+		id = 3,
+		name = 'Southside #3',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+	},
+	{
+		id = 4,
+		name = 'Southside #4',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+	},
+	{
+		id = 5,
+		name = 'Southside #5',
+		settings = {'FPS Mode', 'Envy Recoil'},
+	},
+	{
+		id = 6,
+		name = 'Southside #6',
+		settings = {'FPS Mode', 'Envy Recoil'},
+	},
+	{
+		id = 7,
+		name = 'Southside #7',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 8,
+		name = 'Southside #8',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 9,
+		name = 'Southside #9',
+		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
+	},
+	{
+		id = 10,
+		name = 'Southside #10',
+		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
+	},
+	{
+		id = 11,
+		name = 'Southside #11',
+		settings = {'FPS Mode', 'Medium Recoil'},
+	},
+	{
+		id = 12,
+		name = 'Southside #12',
+		settings = {'FPS Mode', 'Medium Recoil'},
+	},
+	{
+		id = 13,
+		name = 'Southside #13',
+		settings = {'FPS Mode', 'Heavy Recoil'},
+	},
+	{
+		id = 14,
+		name = 'Southside #14',
+		settings = {'FPS Mode', 'Heavy Recoil'},
+	},
+	{
+		id = 15,
+		name = 'Southside #15',
+		settings = {'FPS Mode', 'Heavy Recoil'},
+	},
+	{
+		id = 16,
+		name = 'Southside #16',
+		settings = {'FPS Mode', 'Heavy Recoil'},
+	},
+	{
+		id = 17,
+		name = 'Southside #17',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 18,
+		name = 'Southside #18',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 19,
+		name = 'Southside #19',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 20,
+		name = 'Southside #20',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+}
+
 local function toggleNuiFrame(shouldShow)
 	if shouldShow then
 		TriggerEvent("erotic-lobby:updateLobbies")
@@ -84,6 +188,15 @@ end)
 RegisterNUICallback("hideFrame", function(data, cb)
 	toggleNuiFrame(false)
 	cb({})
+end)
+
+RegisterNetEvent('erotic-lobby:updateLobbies')
+AddEventHandler('erotic-lobby:updateLobbies', function()
+    SendNUIMessage({
+        type = "updateLobbies",
+        lobbies = lobbyData,
+    })
+    -- print('Updated lobbies:', json.encode(lobbyData))
 end)
 
 RegisterCommand("wds", function()
