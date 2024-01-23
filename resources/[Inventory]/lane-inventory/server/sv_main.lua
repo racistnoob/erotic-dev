@@ -116,7 +116,7 @@ INVENTORY.MAIN = {
         -- print("DEBUG MOVE ITEM: ","Source: "..source, "Player: "..PlayerType, "Slot: "..DroppedTo, "Count: "..count, "Index: "..index)
 
         local IsSlotAvailable, error = self:IsSlotFree(source, DroppedTo)
-        if not IsSlotAvailable then return print(error) end 
+        if not IsSlotAvailable then return end 
         self.Player[source][DroppedTo] = self.Player[source][index]
         self.Player[source][index] = 'empty'
         TriggerClientEvent('zbrp:updatePlayerInventory', source, self.Player[source])

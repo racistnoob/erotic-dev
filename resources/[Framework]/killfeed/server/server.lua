@@ -30,7 +30,6 @@ AddEventHandler('weaponDamageEvent', function(sender, data)
         local damage = data.weaponDamage
 
         if data.willKill and damage > 100 then
-            print(data.willKill)
             damage = damage - 100
         end
     
