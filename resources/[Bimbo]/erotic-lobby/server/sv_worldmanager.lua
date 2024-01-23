@@ -145,7 +145,7 @@ lib.callback.register('erotic-lobby:createLobby', function(source, data)
         Password = data.LobbyPassword or "",
         RoutingBucket = newLobbyID,
         settings = {data.DeluxoMode and 'Deluxo',data.FirstPerson and 'Third Person', data.Headshots and 'Headshots', data.Recoil == 1 and 'Light Recoil' or data.Recoil == 2 and 'Medium Recoil' or data.Recoil == 3 and 'High Recoil' or data.Recoil == 4 and 'Envy Recoil'},
-        SpawningCars = data.DeluxoMode and false,
+        SpawningCars = data.DeluxoMode and false or true,
         SelectedMap = data.DeluxoMode and "MirrorPark",
     }
  
