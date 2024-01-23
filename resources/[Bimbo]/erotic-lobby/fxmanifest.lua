@@ -21,7 +21,3 @@ files {
   'web/build/index.html',
   'web/build/**/*'
 }
-
-shared_scripts {
-  '@utilities/init.lua',
-}
