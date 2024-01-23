@@ -1,108 +1,5 @@
 lobbyMenuOpen = false
 
-local lobbyData = {
-	{
-		id = 1,
-		name = 'Southside #1',
-		settings = {'FPS Mode', 'Light Recoil'},
-	},
-	  
-	{
-		id = 2,
-		name = 'FFA Bunker',
-		settings = {'FPS Mode', 'Light Recoil', 'FFA'},
-	},
-	{
-		id = 3,
-		name = 'Southside #3',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
-	},
-	{
-		id = 4,
-		name = 'Southside #4',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
-	},
-	{
-		id = 5,
-		name = 'Southside #5',
-		settings = {'FPS Mode', 'Envy Recoil'},
-	},
-	{
-		id = 6,
-		name = 'Southside #6',
-		settings = {'FPS Mode', 'Envy Recoil'},
-	},
-	{
-		id = 7,
-		name = 'Southside #7',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-	},
-	{
-		id = 8,
-		name = 'Southside #8',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-	},
-	{
-		id = 9,
-		name = 'Southside #9',
-		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
-	},
-	{
-		id = 10,
-		name = 'Southside #10',
-		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
-	},
-	{
-		id = 11,
-		name = 'Southside #11',
-		settings = {'FPS Mode', 'Medium Recoil'},
-	},
-	{
-		id = 12,
-		name = 'Southside #12',
-		settings = {'FPS Mode', 'Medium Recoil'},
-	},
-	{
-		id = 13,
-		name = 'Southside #13',
-		settings = {'FPS Mode', 'Heavy Recoil'},
-	},
-	{
-		id = 14,
-		name = 'Southside #14',
-		settings = {'FPS Mode', 'Heavy Recoil'},
-	},
-	{
-		id = 15,
-		name = 'Southside #15',
-		settings = {'FPS Mode', 'Heavy Recoil'},
-	},
-	{
-		id = 16,
-		name = 'Southside #16',
-		settings = {'FPS Mode', 'Heavy Recoil'},
-	},
-	{
-		id = 17,
-		name = 'Southside #17',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 18,
-		name = 'Southside #18',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 19,
-		name = 'Southside #19',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 20,
-		name = 'Southside #20',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-}
 
 local function toggleNuiFrame(shouldShow)
 	if shouldShow then
@@ -192,6 +89,7 @@ end)
 
 RegisterNetEvent('erotic-lobby:updateLobbies')
 AddEventHandler('erotic-lobby:updateLobbies', function()
+	local lobbyData = lib.callback.await('erotic-lobby:getLobbies', false)
     SendNUIMessage({
         type = "updateLobbies",
         lobbies = lobbyData,
@@ -202,5 +100,54 @@ end)
 RegisterCommand("wds", function()
     TriggerEvent("erotic-lobby:updateLobbies")
 end, false)
+
+  
+local Settings = {
+	{label = 'Headshots', checked = false, description = 'Enable Headshots'},
+	{label = 'FPS Mode', checked = true, description = 'FPS Mode'},
+	{label = 'Deluxo', checked = false, description = 'Deluxo Gamemode'},
+	{label = 'Third Person', checked = false, description = 'Enable Third Person in Cars'},
+	{label = 'Weapon Recoil', values = {'Light Recoil', 'Medium Recoil', 'High Recoil', 'Envy Recoil'}, description = 'Pick a recoil'},
+	{label = 'Create The Lobby', description = 'Create a lobby'},
+}
+  
+local SelectedRecoil = 1
+function OpenCreateLobby()
+	lib.registerMenu({
+		id = 'CreateLobby_Menu',
+		title = 'Menu title',
+		position = 'top-right',
+		options = Settings,
+		onSideScroll = function(selected, scrollIndex, args)
+			SelectedRecoil = scrollIndex
+		end,
+		onCheck = function(selected, checked, args)
+			Settings[selected].checked = checked
+		end,
+	}, function(selected, scrollIndex, args)
+		if selected == 6 then 
+			local input = lib.inputDialog('Create Lobby', {'Lobby Name', 'Password'})
+
+			if not input then return end
+			local success, WorldID = lib.callback.await('erotic-lobby:createLobby', false, {LobbyName = input[1], LobbyPassword = input[2], DeluxoMode = Settings[3].checked, Headshots = Settings[1].checked, FPSMode = Settings[2].checked, Recoil = SelectedRecoil, FirstPerson = Settings[4].checked})
+			if not success then return end
+			exports['erotic-lobby']:switchWorld(WorldID)
+			--   TriggerServerEvent('CreateLobby', {LobbyName = input[1], LobbyPassword = input[2], DeluxoMode = Settings[3].checked, Headshots = Settings[1].checked, FPSMode = Settings[2].checked, Recoil = SelectedRecoil, FirstPerson = Settings[4].checked})
+		end
+	end)
+
+	if lib.getOpenMenu() then
+		lib.hideMenu()
+	end
+
+	Wait(50)
+	lib.showMenu('CreateLobby_Menu')
+end
+  
+RegisterNUICallback('CreateLobby', function(data, cb)
+	Wait(500)
+	OpenCreateLobby()
+	cb({}) 
+end)
 
 exports('openLobby', toggleNuiFrame)

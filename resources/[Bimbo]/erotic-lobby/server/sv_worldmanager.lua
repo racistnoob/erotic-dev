@@ -2,30 +2,162 @@ WorldTracker = {}; -- [license] = {World = WorldName, Name = PlayerName, Kills =
 
 Worlds = {}
 
-Config = {
-    Worlds = { -- ["WorldName"] = {RoutingBucket, Spawnpoint, PermissionRequired},
-        ["1"] = {1, false}, -- DO NOT REMOVE
-        ["2"] = {2, false},
-        ["3"] = {3, false},
-        ["4"] = {4, false},
-        ["5"] = {5, false},
-        ["6"] = {6, false},
-        ["7"] = {7, false},
-        ["8"] = {8, false},
-        ["9"] = {9, false},
-        ["10"] = {10, false},
-        ["11"] = {11, false},
-        ["12"] = {12, false},
-        ["13"] = {13, false},
-        ["14"] = {14, false},
-        ["15"] = {15, false},
-        ["16"] = {16, false},
-        ["17"] = {17, false},
-        ["18"] = {18, false},
-        ["19"] = {19, false},
-        ["20"] = {20, false},
-    },
+local lobbyData = {
+	{
+		id = 1,
+		name = 'Southside #1',
+		settings = {'FPS Mode', 'Light Recoil'},
+	},
+	  
+	{
+		id = 2,
+		name = 'FFA Bunker',
+		settings = {'FPS Mode', 'Light Recoil', 'FFA'},
+        SpawningCars = false,
+        SelectedMap = "Bunker",
+	},
+	{
+		id = 3,
+		name = 'Southside #3',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+	},
+	{
+		id = 4,
+		name = 'Southside #4',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+	},
+	{
+		id = 5,
+		name = 'Southside #5',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 6,
+		name = 'Southside #6',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 7,
+		name = 'Southside #7',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 8,
+		name = 'Southside #8',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+	},
+	{
+		id = 9,
+		name = 'Southside #9',
+		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo'},
+        SpawningCars = false,
+        SelectedMap = "MirrorPark",
+	},
+	{
+		id = 10,
+		name = 'Southside #10',
+		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo'},
+        SpawningCars = false,
+        SelectedMap = "MirrorPark",
+	},
+	{
+		id = 11,
+		name = 'Southside #11',
+		settings = {'FPS Mode', 'Medium Recoil', 'Headshots'},
+	},
+	{
+		id = 12,
+		name = 'Southside #12',
+		settings = {'FPS Mode', 'Medium Recoil', 'Headshots'},
+	},
+	{
+		id = 13,
+		name = 'Southside #13',
+		settings = {'FPS Mode', 'Heavy Recoil', 'Headshots'},
+	},
+	{
+		id = 14,
+		name = 'Southside #14',
+		settings = {'FPS Mode', 'Heavy Recoil', 'Headshots'},
+	},
+	{
+		id = 15,
+		name = 'Southside #15',
+		settings = {'FPS Mode', 'Heavy Recoil', 'Headshots'},
+	},
+	{
+		id = 16,
+		name = 'Southside #16',
+		settings = {'FPS Mode', 'Heavy Recoil', 'Headshots'},
+	},
+	{
+		id = 17,
+		name = 'Southside #17',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 18,
+		name = 'Southside #18',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 19,
+		name = 'Southside #19',
+		settings = {'Third Person', 'Light Recoil'},
+	},
+	{
+		id = 20,
+		name = 'Southside #20',
+		settings = {'Third Person', 'Light Recoil'},
+	},
 }
+
+
+-- Returns lobby ID if owns lobby
+IsLobbyOwner = function(source)
+    for k,v in pairs(lobbyData) do
+        if v.Creator == source then
+            return true, k
+        end
+    end
+    return false, 0
+end
+
+-- Closes Lobby
+CloseLobby = function(lobbyID)
+    for _, v in pairs(WorldTracker) do
+        if v.World == lobbyID then
+            TriggerClientEvent("erotic-lobby:ClosedLobby", v.src, 1)
+            TriggerClientEvent('drp-notifications:client:SendAlert', v.src, { type = 'error', text = 'Lobby Closed', length = 3000 })
+        end
+    end
+    table.remove(lobbyData, lobbyID)
+end
+
+lib.callback.register('erotic-lobby:createLobby', function(source, data)
+    local src = source
+    local newLobbyID = #lobbyData + 1
+
+    local data = {
+        id = newLobbyID,
+        Creator = source,
+        name = (data.LobbyPassword ~= "") and "🔒 "..data.LobbyName or "🔓 "..data.LobbyName,
+        Password = data.LobbyPassword or "",
+        RoutingBucket = newLobbyID,
+        settings = {data.DeluxoMode and 'Deluxo',data.FirstPerson and 'Third Person', data.Headshots and 'Headshots', data.Recoil == 1 and 'Light Recoil' or data.Recoil == 2 and 'Medium Recoil' or data.Recoil == 3 and 'High Recoil' or data.Recoil == 4 and 'Envy Recoil'},
+        SpawningCars = data.DeluxoMode and false,
+        SelectedMap = data.DeluxoMode and "MirrorPark",
+    }
+ 
+    table.insert(lobbyData, data)
+    TriggerClientEvent('drp-notifications:client:SendAlert', src, { type = 'inform', text = 'Lobby Created', length = 3000 })
+    return true, newLobbyID
+end)
+
+lib.callback.register('erotic-lobby:getLobbies', function(source)
+    return lobbyData or {}
+end)
+
 
 local function ExtractIdentifiers(src)
     local identifiers = {
@@ -56,7 +188,7 @@ local function ExtractIdentifiers(src)
 end
 
 local function getLobbyPlayerCount(worldID)
-    worldID = tostring(worldID)
+    worldID = worldID
     local playerCount = 0
 
     for _, v in pairs(WorldTracker) do
@@ -70,7 +202,7 @@ end
 
 local function updateAndSendPlayerCount(worldID, all, src)
     if all then -- all worlds updated to specific player (src)
-        for i = 1, #Config.Worlds do
+        for i = 1, #lobbyData do
             Wait(10)
             TriggerClientEvent('erotic-lobby:sendPlayerCount', src, getLobbyPlayerCount(i), i)
         end
@@ -152,7 +284,7 @@ RegisterNetEvent('erotic-lobby:GetWorldBucketID')
 AddEventHandler('erotic-lobby:GetWorldBucketID', function(src, cb)
     local ids = ExtractIdentifiers(src);
     if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
-        cb(Config.Worlds[WorldTracker[ids.license].World][1]);
+        cb(lobbyData[WorldTracker[ids.license].World].id);
     end
     cb(1);
 end)
@@ -160,6 +292,10 @@ end)
 AddEventHandler('playerDropped', function (reason) 
     local src = source;
     local ids = ExtractIdentifiers(src);
+    local IsLobbyOwner, lobby = IsLobbyOwner(src)
+    if IsLobbyOwner then
+        CloseLobby(lobby)
+    end
     if WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil then
         local world = WorldTracker[ids.license].World
         WorldTracker[ids.license] = nil;
@@ -175,7 +311,7 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
 
     InitializeWorldTracker(ids.license)
 
-    WorldTracker[ids.license].World = "1"
+    WorldTracker[ids.license].World = 1
     WorldTracker[ids.license].src = src
     WorldTracker[ids.license].Name = GetPlayerName(src)
     WorldTracker[ids.license].Kills = 0
@@ -184,9 +320,9 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
 
     if WorldTracker[ids.license].World then
         local worldName = WorldTracker[ids.license].World
-        local coords = Config.Worlds[worldName][2]
-        SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
-        TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+
+        SetPlayerRoutingBucket(src, lobbyData[worldName].id)
+        TriggerClientEvent("erotic-lobby:updateLobby", src, lobbyData[worldName].id, worldName)
         UpdateStats(worldName)
     end
     updateAndSendPlayerCount(1) -- sends every player the new playercount of lobby 1
@@ -196,17 +332,23 @@ end)
 RegisterNetEvent('erotic-lobby:ChangeWorld')
 AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
     local src = source;
-    if Config.Worlds[worldName] ~= nil then 
-        local permission = Config.Worlds[worldName][3];
-        local coords = Config.Worlds[worldName][2];
+    local IsLobbyOwner, lobby = IsLobbyOwner(src)
+    if IsLobbyOwner then
+        if lobby ~= worldName then
+            CloseLobby(lobby)
+        end
+    end
+
+    if lobbyData[worldName] ~= nil then 
+        local permission = false
         local ids = ExtractIdentifiers(src);
         if not permission then
             local oldWorld = 1
             if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
-                oldWorld = Config.Worlds[WorldTracker[ids.license].World][1]
+                oldWorld = lobbyData[WorldTracker[ids.license].World] and lobbyData[WorldTracker[ids.license].World].id or 0
             end
 
-            SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
+            SetPlayerRoutingBucket(src, lobbyData[worldName].id);
             WorldTracker[ids.license] = {
                 OldLobby = WorldTracker[ids.license] and WorldTracker[ids.license].World or worldName,
                 World = worldName,
@@ -216,15 +358,16 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
                 Deaths = 0,
                 Damage = 0,
             }
-            TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
+            TriggerClientEvent("erotic-lobby:updateLobby", src, lobbyData[worldName].id)
             UpdateStats(worldName)
             UpdateStats(oldWorld)
             TriggerClientEvent("core:updateRPC", src, worldName)
-            updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
+            updateAndSendPlayerCount(lobbyData[worldName].id) -- sends plr count of new lobby
             updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby
             -- Changed worlds ...
             return;
         end
+        
     else 
         -- This world does not exist...
     end
