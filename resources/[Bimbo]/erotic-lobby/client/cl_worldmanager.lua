@@ -1,19 +1,6 @@
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
-<<<<<<< HEAD
-        if not data.password then
-            exports['erotic-lobby']:openLobby(false)
-            exports['erotic-lobby']:switchWorld(data.worldId)
-            cb({ success = true })
-            return
-        end
 
-        local input = lib.inputDialog('Lobby Password', {'Password'})
-        if not input then return cb({ error = 'Invalid Password' }) end
-        if input[1] ~= data.password then return cb({ error = 'Invalid Password' }) end
-
-=======
->>>>>>> parent of bc911399 (Lobbys + ox lib)
         exports['erotic-lobby']:openLobby(false)
         exports['erotic-lobby']:switchWorld(data.worldId)
         cb({ success = true })

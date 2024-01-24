@@ -27,56 +27,7 @@ Config = {
     },
 }
 
-<<<<<<< HEAD
 
--- Returns lobby ID if owns lobby
-IsLobbyOwner = function(source)
-    for k,v in pairs(lobbyData) do
-        if v.Creator == source then
-            return true, k
-        end
-    end
-    return false, 0
-end
-
--- Closes Lobby
-CloseLobby = function(lobbyID)
-    for _, v in pairs(WorldTracker) do
-        if v.World == lobbyID then
-            TriggerClientEvent("erotic-lobby:ClosedLobby", v.src, 1)
-            TriggerClientEvent('drp-notifications:client:SendAlert', v.src, { type = 'error', text = 'Lobby Closed', length = 3000 })
-        end
-    end
-    table.remove(lobbyData, lobbyID)
-end
-
-lib.callback.register('erotic-lobby:createLobby', function(source, data)
-    local src = source
-    local newLobbyID = #lobbyData + 1
-
-    local data = {
-        id = newLobbyID,
-        Creator = source,
-        name = (data.LobbyPassword ~= "") and "🔒 "..data.LobbyName or "🔓 "..data.LobbyName,
-        Password = data.LobbyPassword or "",
-        RoutingBucket = newLobbyID,
-        settings = {data.DeluxoMode and 'Deluxo',data.FirstPerson and 'Third Person', data.Headshots and 'Headshots', data.Recoil == 1 and 'Light Recoil' or data.Recoil == 2 and 'Medium Recoil' or data.Recoil == 3 and 'High Recoil' or data.Recoil == 4 and 'Envy Recoil'},
-        SpawningCars = data.DeluxoMode and false,
-        SelectedMap = data.DeluxoMode and "MirrorPark",
-    }
- 
-    table.insert(lobbyData, data)
-    TriggerClientEvent('drp-notifications:client:SendAlert', src, { type = 'inform', text = 'Lobby Created', length = 3000 })
-    return true, newLobbyID
-end)
-
-lib.callback.register('erotic-lobby:getLobbies', function(source)
-    return lobbyData or {}
-end)
-
-
-=======
->>>>>>> parent of bc911399 (Lobbys + ox lib)
 local function ExtractIdentifiers(src)
     local identifiers = {
         steam = "",
