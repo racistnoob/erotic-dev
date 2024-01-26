@@ -16,7 +16,6 @@ Citizen.CreateThread(function()
                             TriggerEvent("erp-weaponbench:openMenu", {
                                 editCoords = vec4(241, -1391.5, 29.5600624+1.2, -196)
                             })
-                            SendNUIMessage({ type = "updatePos", bonePositions = BONE_POSITIONS })
                         end
                     else
                         HideHudAndRadarThisFrame()

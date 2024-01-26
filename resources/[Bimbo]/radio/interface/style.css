@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@font-face {
+    font-family: 'a_RubricaXtCn';
+    src: url('./asssets/a_RubricaXtCn.ttf') format('truetype');
+}
+
+body {
+    /* background: black; */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    user-select: none;
+}
+
+.radioCont {
+    position: absolute;
+    right: 0%;
+    /* top: 12%; */
+    top: 80%;
+    transform: scale(1.1);
+    transition: 0.5s;
+    scale: 0.8;
+}
+
+.radio-frame {
+    position: absolute;
+    width: 21.094vw;
+    height: 43vw;
+    top: 15vw;
+    left: -19vw;
+}
+
+.rad-screen {
+    position: absolute;
+    width: 7vw;
+    height: 7vw;
+    left: -13vw;
+    top: 30.813vw;
+    background: #10101D;
+    border-radius: 50%;
+}
+
+#radio-freq {
+    appearance: none;
+    position: relative;
+    width: 5vw;
+    height: 2.76vw;
+    left: 0.9vw;
+    top: 1.4vw;
+    font-family: 'a_RubricaXtCn';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2vw;
+    line-height: 53px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.377);
+    text-align: center;
+}
+
+#radio-freq::selection {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#radio-freq:focus {
+    color: white;
+}
+
+#radio-freq::-webkit-inner-spin-button,
+#radio-freq::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* .mhz_txt {
+    position: relative;
+    width: 2.147vw;
+    height: 1.356vw;
+    margin-left: 2.2vw;
+    top: 1.73vw;
+
+} */
+
+.battery-svg {
+    position: absolute;
+    right: 10.9vw;
+    top: 35.5vw;
+}
+
+.devider-1 {
+    position: absolute;
+    width: 0.057vw;
+    height: 0.396vw;
+    right: 10.5vw;
+    top: 35.65vw;
+    background: #D9D9D9;
+}
+
+.status {
+    position: absolute;
+    width: 1.51vw;
+    height: 1.042vw;
+    right: 8.65vw;
+    top: 35.37vw;
+    font-family: 'a_RubricaXtCn';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.75vw;
+    line-height: 1.042vw;
+    word-spacing: 1.042vw;
+    color: #00FF66;
+    text-align: center;
+}
+
+.devider-2 {
+    position: absolute;
+    width: 0.057vw;
+    height: 0.396vw;
+    right: 8.1vw;
+    top: 35.65vw;
+    background: #D9D9D9;
+}
+
+.rad-dist {
+    position: absolute;
+    right: 6.8vw;
+    top: 35.4vw;
+}
+
+.radio-status-cont {
+    position: absolute;
+    top: -0.4vw;
+    left: -0.2vw;
+}
+
+.soundLevel-cont {
+    display: inline-flex;
+    position: absolute;
+    right: 6.9vw;
+    top: 35.2vw;
+}
+
+.soundBar {
+    position: relative;
+    width: 0.396vw;
+    height: 0.113vw;
+    top: 1.0vw;
+    background: #00FF66;
+    filter: drop-shadow(0px 0px 4.34043px #00FF66);
+    margin-left: 0.1vw;
+}
+
+.ui-fix {
+    position: absolute;
+    top: -0.3vw;
+}
+
+.power-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 9vw;
+    top: 41vw;
+}
+
+.power-btn-txt {
+    position: absolute;
+    left: -30%;
+    bottom: -50.8%;
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.705vw;
+    line-height: 0.625vw;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.volup-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 6.2vw;
+    top: 39.2vw;
+}
+
+.volup-btn-txt {
+    position: absolute;
+    left: 0.2vw;
+    bottom: -50.8%;
+    width: 2.042vw;
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.705vw;
+    line-height: 0.625vw;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.voldown-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 6.3vw;
+    top: 42.5vw;
+}
+
+.voldown-btn-txt {
+    position: absolute;
+    left: -0.3vw;
+    bottom: -0.7vw;
+    width: 2.042vw;
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.705vw;
+    line-height: 0.625vw;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.connect-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 11.4vw;
+    top: 39.7vw;
+}
+
+.connect-btn:hover,
+.disconnect-btn:hover,
+.volup-btn:hover,
+.voldown-btn:hover,
+.power-btn:hover {
+    opacity: 0.8;
+}
+
+.connect-btn-txt {
+    position: absolute;
+    left: -0.4vw;
+    bottom: -0.7vw;
+    width: 2.042vw;
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.65vw;
+    line-height: 0.625vw;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.disconnect-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 11.4vw;
+    top: 42.5vw;
+}
+
+.disconnect-btn-txt {
+    position: absolute;
+    left: -0.4vw;
+    bottom: -0.5vw;
+    width: 2.042vw;
+    font-family: 'Bebas Neue', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.55vw;
+    line-height: 0.625vw;
+    color: rgba(255, 255, 255, 0.76);
+}

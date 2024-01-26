@@ -10,26 +10,27 @@ function GetWeaponBoneCoords(gunHash)
     if not DoesEntityExist(EDIT_GUN) then
         return
     end
-
-    for i, v in ipairs(WEAPON_LIST[gunHash]) do
-        if v.bone then
-            local boneIndex = GetEntityBoneIndexByName(EDIT_GUN, v.bone)
-            local bonePosition = GetWorldPositionOfEntityBone(EDIT_GUN, boneIndex)
-            if v.label == "Tint" then
-                bonePosition = GetOffsetFromEntityInWorldCoords(EDIT_GUN, 0.03, 0, -0.05)
-            end
-            if v.label == "Variation" then
-                bonePosition = GetOffsetFromEntityInWorldCoords(EDIT_GUN, 0, 0, -0.05)
-            end
-            local onScreen, _x, _y = GetScreenCoordFromWorldCoord(bonePosition.x, bonePosition.y, bonePosition.z)
-            _x = ("%.3f%%"):format((_x * 100))
-            _y = ("%.3f%%"):format((_y * 100))
-            local index = i - 1
-            if (BONE_POSITIONS[index]?.left ~= _x or BONE_POSITIONS[index]?.top ~= _y) then
-                isChange = true
-                list[index] = { left = _x, top = _y, visibility = onScreen and "visible" or "hidden" }
-            else
-                list[index] = BONE_POSITIONS[index]
+    if gunHash ~= nil then
+        for i, v in ipairs(WEAPON_LIST[gunHash]) do
+            if v.bone then
+                local boneIndex = GetEntityBoneIndexByName(EDIT_GUN, v.bone)
+                local bonePosition = GetWorldPositionOfEntityBone(EDIT_GUN, boneIndex)
+                if v.label == "Tint" then
+                    bonePosition = GetOffsetFromEntityInWorldCoords(EDIT_GUN, 0.03, 0, -0.05)
+                end
+                if v.label == "Variation" then
+                    bonePosition = GetOffsetFromEntityInWorldCoords(EDIT_GUN, 0, 0, -0.05)
+                end
+                local onScreen, _x, _y = GetScreenCoordFromWorldCoord(bonePosition.x, bonePosition.y, bonePosition.z)
+                _x = ("%.3f%%"):format((_x * 100))
+                _y = ("%.3f%%"):format((_y * 100))
+                local index = i - 1
+                if (BONE_POSITIONS[index]?.left ~= _x or BONE_POSITIONS[index]?.top ~= _y) then
+                    isChange = true
+                    list[index] = { left = _x, top = _y, visibility = onScreen and "visible" or "hidden" }
+                else
+                    list[index] = BONE_POSITIONS[index]
+                end
             end
         end
     end
@@ -175,6 +176,8 @@ function loadGun(gunHash, coords)
         EDIT_GUN = false
     end
     exports["drp-hud"]:toggleNui(false)
+    exports["erotic"]:toggleHud(false)
+    exports["killfeed"]:toggleHud(false)
     EDIT_GUN = GetWeaponObjectFromPed(PlayerPedId(), true)
     SetEntityCoords(EDIT_GUN, vector3(coords.x, coords.y, coords.z))
     SetEntityHeading(EDIT_GUN, coords.w)
@@ -187,6 +190,8 @@ end
 function cancelEditGun()
     SetEntityVisible(PlayerPedId(), true, false)
     exports["drp-hud"]:toggleNui(true)
+    exports["erotic"]:toggleHud(true)
+    exports["killfeed"]:toggleHud(true)
     revertToOriginal()
     destroyWeaponCamera()
     FreezeEntityPosition(PlayerPedId(), false)

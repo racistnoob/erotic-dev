@@ -7,9 +7,10 @@ local distanceStep = 0.05
 local distanceClamp = {min = 0.25, max = 1.0}
 
 function createWeaponCam(coords, gunHash)
+    
     local weaponObject = EDIT_GUN
-    rotationX = 10.0
-    rotationY = 10.0
+    rotationX = -0.013061926639404
+    rotationY = 10.696850389987
     cameraDistance = 0.6
 
     local forwardVector = GetEntityForwardVector(weaponObject)
@@ -25,6 +26,10 @@ function createWeaponCam(coords, gunHash)
     SetCamFarDof(weaponCam, 0.7)
     SetCamActive(weaponCam, true)
     RenderScriptCams(true, false, 0, true, true)
+    local hasChanged = GetWeaponBoneCoords(gunHash)
+    if hasChanged then
+        SendNUIMessage({ type = "updatePos", bonePositions = BONE_POSITIONS })
+    end
     handleCamUpdates(weaponObject, gunHash, coords)
     CreateThread(function()
         while DoesCamExist(weaponCam) do
@@ -67,7 +72,7 @@ local function camControl(weaponObject, coords)
 
         rotationX = math.clamp(rotationX - mouseY, -math.pi / 2, math.pi / 2)
         rotationY = rotationY - mouseX
-
+    
         local camX = coords.x + cameraDistance * math.cos(rotationY) * math.cos(rotationX)
         local camY = coords.y + cameraDistance * math.sin(rotationY) * math.cos(rotationX)
         local camZ = coords.z + cameraDistance * math.sin(rotationX)
@@ -93,7 +98,9 @@ function handleCamUpdates(weaponObject, gunHash, coords)
             camControl(weaponObject, coords)
 
             if IsDisabledControlJustPressed(0, 191) then
+                exports["erotic"]:toggleHud(true)
                 exports["drp-hud"]:toggleNui(true)
+                exports["killfeed"]:toggleHud(true)
                 SendNUIMessage({ type = "openUI", toggle = false, gunData = {} })
                 SetNuiFocus(false, false)
                 SetNuiFocusKeepInput(false)

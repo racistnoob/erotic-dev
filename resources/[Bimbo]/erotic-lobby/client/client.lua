@@ -190,6 +190,15 @@ RegisterNUICallback("hideFrame", function(data, cb)
 	cb({})
 end)
 
+exports('getLobbyData', function(lobby)
+	local lobbyID = lobby
+	if lobbyID then
+		return lobbyData[lobbyID]
+	else -- returns all data if lobbyid isnt specified
+		return lobbyData
+	end
+end)
+
 RegisterNetEvent('erotic-lobby:updateLobbies')
 AddEventHandler('erotic-lobby:updateLobbies', function()
     SendNUIMessage({
@@ -199,8 +208,9 @@ AddEventHandler('erotic-lobby:updateLobbies', function()
     -- print('Updated lobbies:', json.encode(lobbyData))
 end)
 
-RegisterCommand("wds", function()
+--[[
+RegisterCommand("wds", function(source, args, rawCommand)
     TriggerEvent("erotic-lobby:updateLobbies")
-end, false)
+end, false)]]
 
 exports('openLobby', toggleNuiFrame)

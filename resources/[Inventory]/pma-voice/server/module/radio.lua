@@ -109,7 +109,13 @@ function setPlayerRadio(source, _radioChannel)
         -- changed
         TriggerClientEvent('pma-voice:clSetPlayerRadio', source, radioChannel)
     end
-    Player(source).state.radioChannel = radioChannel
+
+    local fakeChannel = tostring(radioChannel)
+    local dotPosition = string.find(radioChannel, "%.")
+    fakeChannel = dotPosition and string.sub(radioChannel, dotPosition + 1) or radioChannel
+    fakeChannel = tonumber(fakeChannel)
+    Player(source).state.radioChannel = fakeChannel
+    
     if radioChannel ~= 0 and plyVoice.radio == 0 then
         addPlayerToRadio(source, radioChannel)
     elseif radioChannel == 0 then

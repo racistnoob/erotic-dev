@@ -486,7 +486,7 @@ CreateThread(function()
         end
       end
     else
-      waitTimerName = 1000
+      waitTimerName = 2500
     end
     Wait(waitTimerName)
   end

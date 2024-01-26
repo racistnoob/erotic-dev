@@ -5,7 +5,6 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
                              "specter2", "tempesta", "elegy", "sultan2", "banshee2", "cliffhanger", "bati", "sanchez",
                              "manchez", "bf400", "powersurge"}
 
-local previousCar = "revolter" -- default
 local spawnedCar
 spawningcars = true
 
@@ -98,7 +97,7 @@ AddEventHandler("drp:spawnvehicle", function(veh)
                 SetVehicleEngineOn(car, true, true, false)
                 SetVehicleDirtLevel(car, 0.0)
                 spawnedCar = car
-                previousCar = veh
+                SetResourceKvp("last_vehicle", veh)
 
                 Citizen.CreateThread(function()
                     local savedMods = GetResourceKvpString("vehicle_" .. tostring(vehiclehash) .. "_mods")
@@ -125,7 +124,7 @@ AddEventHandler("drp:saveVehicleModsBennys", function(veh)
 end)
 
 RegisterCommand("previous_vehicle", function()
-    TriggerEvent("drp:spawnvehicle", previousCar or "revolter")
+    TriggerEvent("drp:spawnvehicle", GetResourceKvpString('last_vehicle') or "revolter")
 end)
 
 RegisterKeyMapping("previous_vehicle", "Spawn your last spawned vehicle", "KEYBOARD", "F3")
@@ -136,6 +135,8 @@ RegisterCommand("dv", function()
     end
 end)
 RegisterKeyMapping("dv", "Delete current vehicle", "KEYBOARD", "K")
+
+exports("deletePreviousVehicle", deletePreviousVehicle)
 
 exports("spawningcars", function(state)
     spawningcars = state

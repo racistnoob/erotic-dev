@@ -92,158 +92,149 @@ local GroupRecoil = {
 	} -- Heavy
 }
     
-    local function GetStressRecoil()
+local function GetStressRecoil()
     
-        return 1
+    return 1
     
-    end
+end
     
-    local isMoving = false
+local isMoving = false
     
-    local storedRecoils = {}
+local storedRecoils = {}
+
     
-    Recoil:RegisterMode('envy', function()
+Recoil:RegisterMode('envy', function()
             
-            local plyPed = PlayerPedId() -- Defining the player's ped
+    local plyPed = PlayerPedId() -- Defining the player's ped
     
-            local isArmed = IsPedArmed(plyPed, 4) -- Checking if they are armed
-            local _, weapon = GetCurrentPedWeapon(plyPed, true) -- Get's the ped's weapon
-    
-            local vehicle = GetVehiclePedIsIn(plyPed, false)
-            local inVehicle = vehicle ~= 0
+    local isArmed = IsPedArmed(plyPed, 4) -- Checking if they are armed
+    local _, weapon = GetCurrentPedWeapon(plyPed, true) -- Get's the ped's weapon
 
-    
-            if isArmed and not inVehicle then
-    
-                if storedRecoils[weapon] then
-                    SetWeaponRecoilShakeAmplitude(weapon, storedRecoils[weapon])
-                    storedRecoils[weapon] = nil
-                end
-    
-            elseif isArmed and inVehicle then
-    
-                if not storedRecoils[weapon] then
-                    storedRecoils[weapon] = GetWeaponRecoilShakeAmplitude(weapon)
-                    SetWeaponRecoilShakeAmplitude(weapon, 4.5)
-                end
-    
+    local vehicle = GetVehiclePedIsIn(plyPed, false)
+    local inVehicle = vehicle ~= 0
+
+    local shakeCounter = 0
+    local shakeCounter2 = 0
+    local isShaking = false
+
+
+    if isArmed and not inVehicle then
+
+        if storedRecoils[weapon] then
+            SetWeaponRecoilShakeAmplitude(weapon, storedRecoils[weapon])
+            storedRecoils[weapon] = nil
+        end
+
+    elseif isArmed and inVehicle then
+
+        if not storedRecoils[weapon] then
+            storedRecoils[weapon] = GetWeaponRecoilShakeAmplitude(weapon)
+            SetWeaponRecoilShakeAmplitude(weapon, 4.5)
+        end
+
+    end
+
+    if isArmed and IsPedShooting(plyPed) then -- Check if they are armed and dangerous (shooting)
+
+        local movementSpeed = math.ceil( GetEntitySpeed(plyPed) ) -- Getting the speed of the ped
+
+        local stressRecoil = GetStressRecoil() -- Grab recoil multiplier based on stress
+        
+        local camHeading = GetGameplayCamRelativeHeading()
+        local headingFactor = math.random(10,40+movementSpeed)/100
+
+        local weaponRecoil = WeaponRecoil[ weapon ] or GroupRecoil[ GetWeapontypeGroup(weapon) ] or { vertical = 0.1, horizontal = 0.1 }
+
+        local rightLeft = math.random(1, 4) -- Chance to move left or right
+
+        local horizontalRecoil = (headingFactor * stressRecoil) * ((weaponRecoil.horizontal or 0.1) * 10)
+
+        if rightLeft == 1 then -- If chance is 1, move right
+            SetGameplayCamRelativeHeading(camHeading + horizontalRecoil)
+        elseif rightLeft == 3 then -- If chance is 1, move left
+            SetGameplayCamRelativeHeading(camHeading - horizontalRecoil)
+        end
+
+        if not isMoving then -- Checks if the recoil is already being vertically adjusted
+
+            local farRange = math.ceil( 75 + (movementSpeed * 1.5) ) -- Faster the player is moving, the higher the random range for recoil
+
+            local recoil = math.random(50, farRange) / 100 -- Random math from 50-farRange and then divides by 100
+
+            local isFirstPerson = GetFollowPedCamViewMode() == 4
+
+            local currentRecoil = 0.0 -- Sets a default value for current recoil at 0
+            local finalRecoilTarget = (recoil * (weaponRecoil.vertical * 10)) * stressRecoil -- Working out the target for recoil
+
+            if isFirstPerson then
+                finalRecoilTarget = finalRecoilTarget / 9.5
             end
-    
-            if isArmed and IsPedShooting(plyPed) then -- Check if they are armed and dangerous (shooting)
-    
-                local movementSpeed = math.ceil( GetEntitySpeed(plyPed) ) -- Getting the speed of the ped
-    
-                local stressRecoil = GetStressRecoil() -- Grab recoil multiplier based on stress
-                
-                local camHeading = GetGameplayCamRelativeHeading()
-                local headingFactor = math.random(10,40+movementSpeed)/100
-    
-                local weaponRecoil = WeaponRecoil[ weapon ] or GroupRecoil[ GetWeapontypeGroup(weapon) ] or { vertical = 0.1, horizontal = 0.1 }
-    
-                local rightLeft = math.random(1, 4) -- Chance to move left or right
-    
-                local horizontalRecoil = (headingFactor * stressRecoil) * ((weaponRecoil.horizontal or 0.1) * 10)
-    
-                if rightLeft == 1 then -- If chance is 1, move right
-                    SetGameplayCamRelativeHeading(camHeading + horizontalRecoil)
-                elseif rightLeft == 3 then -- If chance is 1, move left
-                    SetGameplayCamRelativeHeading(camHeading - horizontalRecoil)
-                end
-    
-                if not isMoving then -- Checks if the recoil is already being vertically adjusted
-    
-                    local farRange = math.ceil( 75 + (movementSpeed * 1.5) ) -- Faster the player is moving, the higher the random range for recoil
-    
-                    local recoil = math.random(50, farRange) / 100 -- Random math from 50-farRange and then divides by 100
-    
-                    local isFirstPerson = GetFollowPedCamViewMode() == 4
-    
-                    local currentRecoil = 0.0 -- Sets a default value for current recoil at 0
-                    local finalRecoilTarget = (recoil * (weaponRecoil.vertical * 10)) * stressRecoil -- Working out the target for recoil
-    
-                    if isFirstPerson then
-                        finalRecoilTarget = finalRecoilTarget / 9.5
-                    end
-    
-                    isMoving = true -- Sets the moving var to true
-    
-                    local vehicleClass = inVehicle and GetVehicleClass(vehicle) or 0
-                    local weirdRecoil = vehicleClass == 13 or vehicleClass == 8
-    
-                    repeat
-    
-                        Wait(0)
-    
-                        SetGameplayCamRelativePitch(GetGameplayCamRelativePitch()+(weirdRecoil and (math.random(28, 32) / 10) or 0.1), 0.2) -- Move the camera pitch up by 0.1
-                        currentRecoil = currentRecoil + 0.1 -- Increment current recoil by 0.1 as we moved up by 0.1
-    
-                    until currentRecoil >= finalRecoilTarget -- Repeat until the currentRecoil variable reaches the desirred recoil target
-    
-                    isMoving = false -- Sets the moving var to false				
-    
-                end
-    
+
+            isMoving = true -- Sets the moving var to true
+
+            local vehicleClass = inVehicle and GetVehicleClass(vehicle) or 0
+            local weirdRecoil = vehicleClass == 13 or vehicleClass == 8
+
+            repeat
+
+                Wait(0)
+
+                SetGameplayCamRelativePitch(GetGameplayCamRelativePitch()+(weirdRecoil and (math.random(28, 32) / 10) or 0.1), 0.2) -- Move the camera pitch up by 0.1
+                currentRecoil = currentRecoil + 0.1 -- Increment current recoil by 0.1 as we moved up by 0.1
+
+            until currentRecoil >= finalRecoilTarget -- Repeat until the currentRecoil variable reaches the desirred recoil target
+
+            isMoving = false -- Sets the moving var to false				
+
+        end
+
+    end
+    local isAiming = IsPlayerFreeAiming(PlayerId())
+
+    if IsPedInAnyVehicle(plyPed, false) then
+        local isPedStill = IsPedStill(plyPed)
+
+        if isAiming and isPedStill and not IsPedAimingFromCover(plyPed) then
+            shakeCounter = shakeCounter + 1
+            shakeCounter2 = 0
+
+            if shakeCounter == 5 then
+                isShaking = true
+                ShakeGameplayCam('HAND_SHAKE', 0.2)
             end
-    
-    end)
+        elseif isAiming and not isPedStill then
+            shakeCounter2 = shakeCounter2 + 1
+            shakeCounter = 0
 
-local shakeCounter = 0
-local shakeCounter2 = 0
-local isShaking = false
-
-Citizen.CreateThread(function()
-    while true do
-        local plyPed = GetPlayerPed(-1)
-        local isAiming = IsPlayerFreeAiming(PlayerId())
-
-        if IsPedInAnyVehicle(plyPed, false) then
-            -- Player is in a vehicle
-            local isPedStill = IsPedStill(plyPed)
-
-            if isAiming and isPedStill and not IsPedAimingFromCover(plyPed) then
-                Wait(100)
-                shakeCounter = shakeCounter + 1
-                shakeCounter2 = 0
-
-                if shakeCounter == 5 then
-                    isShaking = true
-                    ShakeGameplayCam('HAND_SHAKE', 0.2)
-                end
-            elseif isAiming and not isPedStill then
-                Wait(10)
-                shakeCounter2 = shakeCounter2 + 1
-                shakeCounter = 0
-
-                if shakeCounter2 == 5 then
-                    isShaking = true
-                    ShakeGameplayCam('HAND_SHAKE', 0.9)
-                end
-
-                shakeCounter = 0
-                shakeCounter2 = 0
-            else
-                if isShaking then
-                    isShaking = false
-                    shakeCounter = 0
-                    shakeCounter2 = 0
-                    StopGameplayCamShaking(true)
-                end
-
-                Wait(1000)
+            if shakeCounter2 == 5 then
+                isShaking = true
+                ShakeGameplayCam('HAND_SHAKE', 0.9)
             end
+
+            shakeCounter = 0
+            shakeCounter2 = 0
         else
-            -- Player is not in a vehicle, reset counters and shaking
             if isShaking then
                 isShaking = false
                 shakeCounter = 0
                 shakeCounter2 = 0
                 StopGameplayCamShaking(true)
             end
-
-            Wait(1000)
         end
-
-        Wait(0)
+    else
+        if isShaking then
+            isShaking = false
+            shakeCounter = 0
+            shakeCounter2 = 0
+            StopGameplayCamShaking(true)
+        end
     end
+    
+    Wait(0)
 end)
 
+Recoil:OnModeChange(function()
+    for weaponHash, recoil in pairs(storedRecoils) do
+        SetWeaponRecoilShakeAmplitude(GetHashKey(weaponHash), recoil)
+    end
+end)

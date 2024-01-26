@@ -6,6 +6,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "50cal_rounds", amount = 150, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["heavypistol"] = {
             {item = "WEAPON_HEAVYPISTOL", primary = true, amount = 1, slot = 1},
@@ -13,6 +14,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["sp"] = {
             {item = "WEAPON_SP45", primary = true, amount = 1, slot = 1},
@@ -20,6 +22,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["combatpistol"] = {
             {item = "WEAPON_COMBATPISTOL", primary = true, amount = 1, slot = 1},
@@ -27,6 +30,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["vintage"] = {
             {item = "WEAPON_VINTAGEPISTOL", primary = true, amount = 1, slot = 1},
@@ -34,6 +38,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["usp"] = {
             {item = "WEAPON_USP45", primary = true, amount = 1, slot = 1},
@@ -41,6 +46,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["1911"] = {
             {item = "WEAPON_1911", primary = true, amount = 1, slot = 1},
@@ -48,6 +54,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["FNX45"] = {
             {item = "WEAPON_FNX45", primary = true, amount = 1, slot = 1},
@@ -55,6 +62,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["glock17"] = {
             {item = "WEAPON_GLOCK17", primary = true, amount = 1, slot = 1},
@@ -62,6 +70,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["glock18c"] = {
             {item = "WEAPON_GLOCK18C", primary = true, amount = 1, slot = 1},
@@ -69,6 +78,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
     },
     ["ars"] = {
@@ -80,6 +90,7 @@ Kits = {
             {item = "556_rounds", amount = 250, slot = 16},
             {item = "joint", amount = 15, slot = 4},
             {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["ak"] = {
             {item = "WEAPON_ASSAULTRIFLE", primary = true, amount = 1, slot = 1},
@@ -87,6 +98,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["scarh"] = {
             {item = "WEAPON_SCARH", primary = true, amount = 1, slot = 1},
@@ -94,6 +106,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["762"] = {
             {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
@@ -101,6 +114,7 @@ Kits = {
             {item = "oxy", amount = 20, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["m16"] = {
             {item = "WEAPON_TACTICALRIFLE", primary = true, amount = 1, slot = 1},
@@ -108,6 +122,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["heavyrifle"] = {
             {item = "WEAPON_HEAVYRIFLE", primary = true, amount = 1, slot = 1},
@@ -115,6 +130,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["g36"] = {
             {item = "WEAPON_SPECIALCARBINE", primary = true, amount = 1, slot = 1},
@@ -122,6 +138,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },--[[ GUN JUST DOESNT WORK IDK WHY
         ["mk18"] = {
             {item = "WEAPON_MK18", primary = true, amount = 1, slot = 1},
@@ -136,6 +153,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["m60"] = {
             {item = "WEAPON_COMBATMG", primary = true, amount = 1, slot = 1},
@@ -143,6 +161,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
     },
     ["smgs"] = {
@@ -152,6 +171,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["draco"] = {
             {item = "WEAPON_COMPACTRIFLE", primary = true, amount = 1, slot = 1},
@@ -159,6 +179,7 @@ Kits = {
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["mp5"] = {
             {item = "WEAPON_SMG_MK2", primary = true, amount = 1, slot = 1},
@@ -166,6 +187,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["mpx"] = {
             {item = "WEAPON_MPX", primary = true, amount = 1, slot = 1},
@@ -173,6 +195,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["uzi"] = {
             {item = "WEAPON_MICROSMG", primary = true, amount = 1, slot = 1},
@@ -180,6 +203,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["skorpion"] = {
             {item = "WEAPON_MINISMG", primary = true, amount = 1, slot = 1},
@@ -187,6 +211,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["tommy"] = {
             {item = "WEAPON_GUSENBERG", primary = true, amount = 1, slot = 1},
@@ -194,6 +219,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["magpull"] = {
             {item = "WEAPON_ASSAULTSMG", primary = true, amount = 1, slot = 1},
@@ -201,6 +227,7 @@ Kits = {
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
     },
     ["snipers"] = {
@@ -211,6 +238,7 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "deluxo", amount = 1, slot = 5},
             {item = "50cal_rounds", amount = 150, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
         ["trick2"] = {
             {item = "WEAPON_MARKSMANRIFLE_MK2", primary = true, amount = 1, slot = 1},
@@ -219,6 +247,7 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "deluxo", amount = 1, slot = 5},
             {item = "50cal_rounds", amount = 150, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
         },
     }
 }

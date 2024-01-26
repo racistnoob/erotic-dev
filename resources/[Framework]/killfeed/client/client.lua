@@ -15,6 +15,8 @@ local function GetWeaponName(hash)
     end
 end
 
+toggleHud = true
+
 AddEventHandler('baseevents:onPlayerKilled', function(killerId, deathData)
     local weaponName = GetWeaponName(deathData)
     TriggerServerEvent('killfeed:server:playerWasKilled', killerId, weaponName)
@@ -25,7 +27,8 @@ AddEventHandler('killfeed:client:feed', function(worldID, context)
     if exports['erotic-lobby']:getCurrentWorld() == tonumber(worldID) then
         SendNUIMessage({
             type = "killfeed",
-            context = context
+            context = context,
+            show = toggleHud
         })
     end
 end)
@@ -39,6 +42,7 @@ RegisterCommand("stats", function()
         type = "ui",
         mode = "Leaderboard",
         data = json.encode(List),
+        show = toggleHud
     })
 
     SetNuiFocus(true, true)
@@ -54,6 +58,7 @@ RegisterNUICallback("exit",function()
     SendNUIMessage({
         type = "ui",
         mode = "close_all",
+        show = toggleHud
     })
     SetNuiFocus(false,false)
     TriggerScreenblurFadeOut(50)
@@ -69,7 +74,13 @@ RegisterNetEvent('Update:Lobby:Stats', function(data)
         mode = "stats",
         state = extended,
         data = json.encode(data),
+        show = toggleHud
     })
+end)
+
+exports("toggleHud", function(state)
+    toggleHud = state
+    TriggerEvent('Update:Lobby:Stats', lobbystats)
 end)
   
 RegisterCommand("+leaderboard_extend", function()

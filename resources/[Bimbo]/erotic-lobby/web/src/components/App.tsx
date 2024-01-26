@@ -39,7 +39,7 @@ const App: React.FC = () => {
 };
   
   const handlePlayerCountUpdate = (event: MessageEvent) => {
-    console.log('Received Player Count Update:', event.data);
+    //console.log('Received Player Count Update:', event.data);
 
     if (event.data.type === 'updatePlayerCount') {
         const newPlayerCount = event.data.count;
@@ -62,7 +62,7 @@ const App: React.FC = () => {
         );
 
         // Log lobby data before sending to NUI
-        console.log('Updated Lobby Data:', lobbiesRef.current);
+        //console.log('Updated Lobby Data:', lobbiesRef.current);
     }
   };
 
@@ -70,7 +70,7 @@ const App: React.FC = () => {
     fetchNui('switchWorld', { worldId: lobbyId })
       .then((response) => {
         if (response.success) {
-          console.log('Joined lobby successfully!');
+          // console.log('Joined lobby successfully!');
         } else {
           console.error('Failed to join the lobby:', response.error);
         }
@@ -149,7 +149,7 @@ const App: React.FC = () => {
                   <p key={index} className="lobby-setting">{setting}</p>
                 ))}
               </div>
-              <p className="lobby-player-count">🧑‍🤝‍🧑/ {lobby.playerCount || 0}</p>
+              <p className="lobby-player-count">🧑‍🤝‍🧑:&nbsp;&nbsp;{lobby.playerCount || 0}</p>
             </div>
           ))}
         </div>

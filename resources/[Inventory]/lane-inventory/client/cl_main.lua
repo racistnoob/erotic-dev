@@ -35,29 +35,7 @@ Citizen.CreateThread(
 )
 
 function openInventory()
-    local playerPos = GetEntityCoords(PlayerPedId())
-    local playerInVehicle = IsPedInAnyVehicle(PlayerPedId(), false)
-    local foundAny = false
-
-    for i, d in ipairs(Config.OtherInventories) do
-        if #(playerPos - d.pos) < 3.0 then -- Proximity threshold
-            foundAny = true
-            
-            if foundAny then
-                print('second')
-                TriggerServerEvent('zbrp:openSecondInventory', {
-                    type = 'other',
-                    id = i
-                })
-                break
-            end
-        end
-    end
-
-    if not foundAny then
-        -- Scaleform.Show()
-        SendNUIMessage({ action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
-    end
+    SendNUIMessage({ action = 'openInventory', isMale = IsPedMale(PlayerPedId()) })
 end
 
 RegisterNUICallback('nui:zbrp:blurState', function(blur)
@@ -302,6 +280,7 @@ CreateThread(function()
     while true do
         Wait(0)
         BlockWeaponWheelThisFrame()
+        DisableControlAction(0, 36, true)
         DisableControlAction(0, 37, true)
         DisableControlAction(0, 199, true)
 
@@ -314,20 +293,4 @@ CreateThread(function()
         DisableControlAction(0, 263, true)
         DisableControlAction(0, 264, true)
     end
-end)
-
---[[
-
-CreateThread(function()
-    while true do
-        Wait(0)
-        if IsControlPressed(0, 58) and IsControlPressed(0, 61) then -- shift and g
-            if API.HasItem("radio") then 
-            TriggerEvent("radioGui") Wait(2500) end
-        end
-    end
-end)]]
-
-RegisterCommand("giveitem", function(source,args,rawcommand)
-    TriggerServerEvent("GiveItem", args[1], args[2])
 end)

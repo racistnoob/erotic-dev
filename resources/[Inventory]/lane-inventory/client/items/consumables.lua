@@ -140,12 +140,7 @@ CreateThread(function()
 
     Item.Register("radio", {
         func = function(item)
-            TriggerEvent("radioGui")
-            return true
-        end,
-        animClearance = false,
-        onDrop = function(item)
-            TriggerEvent("disableRadio")
+            ExecuteCommand("radio")
         end,
     })
 

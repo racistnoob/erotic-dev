@@ -1,13 +1,14 @@
 currentState = "Southside #1"
 
 RegisterNetEvent('core:updateRPC')
-AddEventHandler("core:updateRPC", function(msg)
-    if msg == "2" then
-        currentState = "FFA Bunker"
-    else
-        currentState = ("Southside #" .. msg)
+AddEventHandler("core:updateRPC", function(args)
+    local lobbyID = tonumber(args)
+    if lobbyID ~= nil then
+        local lobbyData = exports['erotic-lobby']:getLobbyData(lobbyID)
+        currentState = (lobbyData.name)
     end
 end)
+
 Citizen.CreateThread(function()
     while true do
         Wait(10000)

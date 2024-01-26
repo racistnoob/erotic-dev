@@ -187,10 +187,12 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         local worldName = WorldTracker[ids.license].World
         local coords = Config.Worlds[worldName][2]
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
-        TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1], worldName)
+        TriggerClientEvent("core:updateRPC", src, Config.Worlds[worldName])
         UpdateStats(worldName)
     end
+
     updateAndSendPlayerCount(1) -- sends every player the new playercount of lobby 1
+    Wait(1000)
     updateAndSendPlayerCount(1, true, src) -- sends every playercount only to the new player
 end)
 
@@ -217,7 +219,7 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
                 Deaths = 0,
                 Damage = 0,
             }
-            TriggerClientEvent("erotic-lobby:updateLobby", src, Config.Worlds[worldName][1])
+            TriggerClientEvent("core:updateRPC", src, Config.Worlds[worldName])
             UpdateStats(worldName)
             UpdateStats(oldWorld)
             TriggerClientEvent("core:updateRPC", src, worldName)

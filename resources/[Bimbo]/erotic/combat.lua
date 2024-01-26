@@ -1,6 +1,8 @@
 local currentValues = { MaxAmmo = 0, ClipAmmo = 0 }
 local no_xhair = (GetResourceKvpInt("erotic_xhair") == 1) or false
 
+local toggleHud = true
+
 local weapons = {
     snipers = {
         177293209,
@@ -42,12 +44,17 @@ local COMBAT = {
             currentValues["MaxAmmo"] = weaponMaxAmmo - weaponClipAmmo
             currentValues["ClipAmmo"] = weaponClipAmmo
     
-            if IsPedArmed(plyPed, 7) and pedWeapon ~= 911657153 then
-                SendNUIMessage({ type = "ammo", data = currentValues })
-                SendNUIMessage({ type = "show", value = true, cross = no_xhair })
+            if toggleHud then
+                if IsPedArmed(plyPed, 7) and pedWeapon ~= 911657153 then
+                    SendNUIMessage({ type = "ammo", data = currentValues })
+                    SendNUIMessage({ type = "show", value = true, cross = no_xhair })
+                else
+                    SendNUIMessage({ type = "show", value = false, cross = no_xhair })
+                end
             else
-                SendNUIMessage({ type = "show", value = false, cross = no_xhair })
-            end
+                SendNUIMessage({ type = "show", value = false, cross = false })
+                SendNUIMessage({ type = "scope", value = false })
+            end       
         end
     end,    
 
@@ -57,13 +64,18 @@ local COMBAT = {
 
             local pedWeapon = GetSelectedPedWeapon(PlayerPedId()) or false;
 
-            if pedWeapon == 177293209 and IsPlayerFreeAiming(PlayerId()) or pedWeapon == 1785463520 and IsPlayerFreeAiming(PlayerId()) then 
-                SendNUIMessage({ type = "scope", value = true })
-                SendNUIMessage({ type = "ammo", data = currentValues })
-                SendNUIMessage({ type = "show", value = false, cross = no_xhair })
+            if toggleHud then
+                if pedWeapon == 177293209 and IsPlayerFreeAiming(PlayerId()) or pedWeapon == 1785463520 and IsPlayerFreeAiming(PlayerId()) then 
+                    SendNUIMessage({ type = "scope", value = true })
+                    SendNUIMessage({ type = "ammo", data = currentValues })
+                    SendNUIMessage({ type = "show", value = false, cross = no_xhair })
+                else
+                    SendNUIMessage({ type = "scope", value = false })
+                end
             else
+                SendNUIMessage({ type = "show", value = false, cross = false })
                 SendNUIMessage({ type = "scope", value = false })
-            end            
+            end       
         end
     end,
     
@@ -95,9 +107,27 @@ Citizen.CreateThread(function()
     Citizen.Wait(250)
 end)
 
-RegisterCommand('cross', function(src, args)
-    no_xhair = not no_xhair
-    SetResourceKvpInt("erotic_xhair", no_xhair)
+AddEventHandler('echorp:playerSpawned', function()
+    Wait(100)
+    SendNUIMessage({ type = "xhair_colour", color = GetResourceKvpString('crosshairColor') })
+end)
+
+exports("toggleHud", function(state)
+    SendNUIMessage({ type = "showWatermark", value = state})
+    toggleHud = state
+end)
+
+RegisterCommand('cross', function(src, args, rawCommand)
+    local hexArg = string.sub(rawCommand, 7)
+    if #hexArg > 0 then
+        SendNUIMessage({ type = "xhair_colour", color = hexArg })
+        exports['drp-notifications']:SendAlert('inform', 'Crosshair color updated')
+        SetResourceKvp('crosshairColor', hexArg)
+    else
+        no_xhair = not no_xhair
+        exports['drp-notifications']:SendAlert('inform', 'Crosshair '.. (no_xhair and "Disabled" or "Enabled"))
+        SetResourceKvpInt("erotic_xhair", no_xhair)
+    end
 end)
 
 RegisterCommand("top", function()

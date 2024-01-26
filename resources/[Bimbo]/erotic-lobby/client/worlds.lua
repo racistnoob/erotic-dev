@@ -92,7 +92,7 @@ local worlds = {
 }
 
 function switchWorld(worldID)
-    worldID = tonumber(worldID)
+    local worldID = tonumber(worldID)
     if worldID then
         local worldSettings, worldSpawn = nil, nil
         for _, world in pairs(worlds) do
@@ -128,7 +128,15 @@ function switchWorld(worldID)
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
 
-            exports['erotic-lobby']:ChangeWorld(tostring(worldID))
+            if LocalPlayer.state.radioChannel ~= 111 then -- global radio
+                exports['radio']:changeradio(0)
+            end
+
+            worldID = tostring(worldID)
+
+            exports['core']:deletePreviousVehicle(PlayerPedId())
+            TriggerServerEvent('erotic-lobby:ChangeWorld', worldID)
+            exports['drp-notifications']:SendAlert('inform', 'Changed Worlds', 5000)
         end
     end
 end

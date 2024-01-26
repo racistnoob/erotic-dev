@@ -58,11 +58,17 @@ scope img {
 }
 
 .WaterMark {
+    opacity: 1;
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1100;
+}
+
+.WaterMark.hide {
+    opacity: 0;
+    transition: opacity .7s ease-in-out;
 }
 
 .WM-data {
@@ -102,7 +108,7 @@ scope img {
     border: 2px solid black;
     width: 2px;
     height: 2px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 
 .ammo-container {

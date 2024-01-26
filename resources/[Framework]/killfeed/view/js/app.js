@@ -90,32 +90,38 @@ function FadeAllOut() {
 $(function() {
     window.addEventListener("message", function(event) {
         var item = event.data;
-        if (item.type === "killfeed") {
-            feed(event);
-        }
-        if (item.type === "ui") {
-            if (item.mode === "Leaderboard") {
-                $(".player-list").empty()
-                playerlist = JSON.parse(event.data.data);
-                GenerateList(playerlist)
-                FadeInMenu("player-list")
-            } else if (item.mode === "close_all") {
-                $(".player-list").hide()
-                $(".player-list").empty()
-                FadeAllOut()
-            } else if (item.mode === "stats") {
-                $(".information").empty()
-                $(".ExtendedInformation").empty()
-                if (item.state) {
-                    $(".StatsInfo").fadeOut()
-                    $(".ExtendedStats").fadeIn()
-                    GenerateExtendedStats(JSON.parse(event.data.data))
-                } else {
-                    $(".ExtendedStats").fadeOut()
-                    $(".StatsInfo").fadeIn()
-                    GenerateStats(JSON.parse(event.data.data))
+        if (item.show) {
+            if (item.type === "killfeed") {
+                feed(event);
+            }
+            if (item.type === "ui") {
+                if (item.mode === "Leaderboard") {
+                    $(".player-list").empty()
+                    playerlist = JSON.parse(event.data.data);
+                    GenerateList(playerlist)
+                    FadeInMenu("player-list")
+                } else if (item.mode === "close_all") {
+                    $(".player-list").hide()
+                    $(".player-list").empty()
+                    FadeAllOut()
+                } else if (item.mode === "stats") {
+                    $(".information").empty()
+                    $(".ExtendedInformation").empty()
+                    if (item.state) {
+                        $(".StatsInfo").fadeOut()
+                        $(".ExtendedStats").fadeIn()
+                        GenerateExtendedStats(JSON.parse(event.data.data))
+                    } else {
+                        $(".ExtendedStats").fadeOut()
+                        $(".StatsInfo").fadeIn()
+                        GenerateStats(JSON.parse(event.data.data))
+                    }
                 }
             }
+        } else {
+            FadeAllOut()
+            $(".ExtendedStats").fadeOut()
+            $(".StatsInfo").fadeOut()
         }
     })
 

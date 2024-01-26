@@ -6,7 +6,15 @@ window.addEventListener('message', (event) => {
         let xhair = document.querySelector('.xhair-container');
         xhair.style.opacity = event.data.cross ? '0' : '1';
 
-    } else if (event.data.type === 'ammo') {
+    }
+
+    if (event.data.type === 'xhair_colour') {
+        let xhair = document.querySelector('.xhair');
+        console.log(event.data.color)
+        xhair.style.setProperty('background-color', event.data.color || "rgb(255, 255, 255)");
+    }
+
+    if (event.data.type === 'ammo') {
         updateAmmoDisplay(event.data.data);
     }
 
@@ -18,6 +26,15 @@ window.addEventListener('message', (event) => {
             scopeElement.classList.add('visible');
         } else {
             scopeElement.classList.remove('visible');
+        }
+    }
+
+    var watermark = document.querySelector('.WaterMark');
+    if (item.type === "showWatermark") {
+        if (item.value === true) {
+            watermark.classList.remove('hide');
+        } else {
+            watermark.classList.add('hide');
         }
     }
 });

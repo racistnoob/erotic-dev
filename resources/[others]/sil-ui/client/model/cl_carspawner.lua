@@ -185,7 +185,6 @@ end)
 RegisterNUICallback('carspawner:spawnVehicle', function(DATA)
     SetNuiFocus(false, false)
     TriggerEvent('drp:spawnvehicle', DATA.MODEL)
-    SetResourceKvp("last_vehicle", DATA.MODEL)
 end)
 
 RegisterCommand('+car_menu', function()
@@ -193,10 +192,3 @@ RegisterCommand('+car_menu', function()
 end)
 
 RegisterKeyMapping('+car_menu', '[Car Spawner] Open Menu', 'keyboard', 'm')
-
-RegisterCommand("previous_vehicle", function()
-    local previousVehicle = GetResourceKvpString('last_vehicle')
-    if previousVehicle then
-        TriggerEvent("drp:spawnvehicle", previousVehicle)
-    end
-end)
