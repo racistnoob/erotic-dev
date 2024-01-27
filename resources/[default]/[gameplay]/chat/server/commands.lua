@@ -29,20 +29,20 @@ RegisterCommand('a', function(source, args, rawCommand)
     end
 end, false)
 
-RegisterCommand('ooc', function(source, args, rawCommand)
+RegisterCommand('all', function(source, args, rawCommand)
     local src = source
     local msg = rawCommand:sub(5)
     if source == 0 then
         local user = "Console"
         TriggerClientEvent('chat:addMessage', -1, {
-            template = '<div class="chat-message-ooc"><b>OOC <font color="red"><b>{0}</b></font>:</b> {1}</div>',
+            template = '<div class="chat-message-ooc"><b>[ALL] <font color="red"><b>{0}</b></font>:</b> {1}</div>',
             args = { user, msg }
         }) 
     else 
         if player ~= false then
             local user = GetPlayerName(src)
                 TriggerClientEvent('chat:addMessage', -1, {
-                template = '<div class="chat-message-ooc"><b>OOC {0}:</b> {1}</div>',
+                template = '<div class="chat-message-ooc"><b>[ALL] {0}:</b> {1}</div>',
                 args = { user, msg }
             })
         end

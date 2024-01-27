@@ -12,7 +12,41 @@ AddEventHandler("chatMessage", function(source, args, raw)
     CancelEvent()
 end)
 
+local function routeMessage(source, author, message, lobbyID)
+    if source >= 1 then
+        author = GetPlayerName(source)
+    end
 
+    local outMessage = {
+        template = '<div class="chat-message-ooc"><b>{0}:</b> {1}</div>',
+        args = { message },
+    }
+
+    if author ~= "" then
+        outMessage.args = { author, message }
+    end
+
+    local messageCanceled = false
+
+    if messageCanceled then
+        return
+    end
+
+    local players = exports['erotic-lobby']:getPlayersInLobby(lobbyID)
+    for _, id in pairs(players) do
+        TriggerClientEvent('chat:addMessage', id, outMessage)
+    end
+end
+
+AddEventHandler('_chat:messageEntered', function(author, color, message, lobbyID)
+    if not message or not author then
+        return
+    end
+
+    local source = source
+
+    routeMessage(source, author, message, lobbyID)
+end)
 
 AddEventHandler('__cfx_internal:commandFallback', function(command)
     local name = GetPlayerName(source)

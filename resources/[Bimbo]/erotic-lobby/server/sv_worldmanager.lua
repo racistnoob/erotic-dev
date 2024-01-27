@@ -144,6 +144,21 @@ function GetWorld(src)
     return "normal"
 end
 
+function getPlayersInLobby(lobbyID)
+    lobbyID = tostring(lobbyID)
+    local players = {}
+
+    for _, v in pairs(WorldTracker) do
+        if v.World == lobbyID then
+            players[#players+1] = v.src
+        end
+    end
+
+    return players
+end
+
+exports('getPlayersInLobby', getPlayersInLobby)
+
 RegisterNetEvent('erotic-lobby:GetWorld')
 AddEventHandler('erotic-lobby:GetWorld', function(src, cb)
     cb(GetWorld(src))

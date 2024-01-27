@@ -46,6 +46,7 @@ AddEventHandler('chat:addMessage', function(message)
   if message['color'] then
     message =  { template = '<div class="chat-message-system"><b>SYSTEM :</b> {1}</div>', args = message['args'] }
   end
+  
   SendNUIMessage({
     type = 'ON_MESSAGE',
     message = message
@@ -139,7 +140,7 @@ RegisterNUICallback('chatResult', function(data, cb)
     if data.message:sub(1, 1) == '/' then
       ExecuteCommand(data.message:sub(2))
     else
-      TriggerServerEvent('_chat:messageEntered', GetPlayerName(id), { r, g, b }, data.message)
+      TriggerServerEvent('_chat:messageEntered', GetPlayerName(id), { r, g, b }, data.message, exports['erotic-lobby']:getCurrentWorld())
     end
   end
 
