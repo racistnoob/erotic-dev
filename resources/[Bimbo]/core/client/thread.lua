@@ -58,13 +58,32 @@
 --         SetPedCanPlayAmbientAnims(playerPed, false)
 --     end
 -- end)
+local getPlayer = PlayerPedId
+local getPlayerID = PlayerId
+local getIsOnVehicle = IsPedOnVehicle
+local wait = Wait
 
- Citizen.CreateThread(function()
+PlayerPed = getPlayer()
+isOnVehicle = getIsOnVehicle(PlayerPed)
+playerID = getPlayerID()
+
+Citizen.CreateThread(function()
+    while true do
+        PlayerPed = getPlayer()
+        isOnVehicle = getIsOnVehicle(PlayerPed)
+        playerID = getPlayerID()
+        wait(1000)
+    end
+end)
+
+local set_ped_can_play_ambient_anims = SetPedCanPlayAmbientAnims
+local set_ped_can_lose_props_on_damage = SetPedCanLosePropsOnDamage
+Citizen.CreateThread(function()
     DisableIdleCamera(true)
     while true do
         N_0x4757f00bc6323cfe(-1553120962, 0)
-        SetPedCanPlayAmbientAnims(PlayerPedId(), false)
-        SetPedCanLosePropsOnDamage(PlayerPedId(), false, 0)
-        Wait(5000)
+        set_ped_can_play_ambient_anims(PlayerPed, false)
+        set_ped_can_lose_props_on_damage(PlayerPed, false, 0)
+        wait(5000)
     end
  end)

@@ -7,9 +7,10 @@ function Recoil:SetMode(mode)
     if type(mode) == "string" and mode:lower() == "disabled" then mode = false end
     assert(not mode or self.modes[mode], 'Mode ' .. tostring(mode) .. ' is not registered')
     self.activeMode = mode
+    --[[]
     if (GetConvarInt('debugger_recoil', 0) == 1) then
         TriggerEvent("arena:postNotify", "Set recoil to mode '" .. tostring(mode) .. "'.", Config.UI.successColour)
-    end
+    end]]
 
     for k, v in pairs(self.onResetCallbacks) do
         v(mode)
@@ -48,9 +49,10 @@ function Recoil:OnModeChange(cb)
     table.insert(self.onResetCallbacks, cb)
 end
 
+local wait = Wait
 CreateThread(function()
     while true do
-        Wait(1)
+        wait(1)
         if Recoil.activeMode and Recoil.modes[Recoil.activeMode] then
             Recoil.modes[Recoil.activeMode]:callback(Recoil.activeMode)
         end

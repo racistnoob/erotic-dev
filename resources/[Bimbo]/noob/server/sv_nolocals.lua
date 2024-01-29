@@ -4,11 +4,10 @@ local function toggleLocals(worldID, value)
     end)
 end
 
--- disables locals in lobbies 1 -> 20
 CreateThread(function()
-    for i = 0, 19 do
+    for i = 0, 22 do
         toggleLocals(i, false)
     end
 end)
 
-exports('noob:toggleLocals', toggleLocals)
+exports('toggleLocals', toggleLocals)

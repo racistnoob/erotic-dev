@@ -24,6 +24,8 @@ Config = {
         ["18"] = {18, false},
         ["19"] = {19, false},
         ["20"] = {20, false},
+        ["21"] = {21, false},
+        ["22"] = {22, false},
     },
 }
 
@@ -102,7 +104,7 @@ function UpdateLobbyStats(source, worldID, type, data)
     local ids = ExtractIdentifiers(src)
     if not ids then return end
 
-    if WorldTracker[ids.license].World == worldID then
+    if WorldTracker[ids.license]?.World == worldID then
         if type == "Kills" then
             WorldTracker[ids.license].Kills = WorldTracker[ids.license].Kills + 1
         elseif type == "Deaths" then
@@ -138,7 +140,7 @@ end
 
 function GetWorld(src)
     local ids = ExtractIdentifiers(src);
-    if (WorldTracker[ids.license].World ~= nil) then 
+    if WorldTracker[ids.license]?.World ~= nil then
         return(WorldTracker[ids.license].World);
     end
     return "normal"
