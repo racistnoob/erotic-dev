@@ -87,8 +87,9 @@ end
 
 local get_selected_ped_weapon = GetSelectedPedWeapon
 local wait = Wait
+local is_ped_armed = IsPedArmed
 Recoil:RegisterMode("hardcore", function()
-    if IsPedArmed(PlayerPed, 6) then
+    if is_ped_armed(PlayerPed, 6) then
         local weapon = get_selected_ped_weapon(PlayerPed)
         setRecoilAmplitude(PlayerPed, weapon, weaponRecoils[weapon] or 3.0)
     else
