@@ -1,50 +1,50 @@
 
 WEAPON_TINTS = {
     [1] = { --[[@normal_weapons]]
-        [1] = { label = "None", price = 0 },
-        [2] = { label = "Green", price = 2000 },
-        [3] = { label = "Gold", price = 2000 },
-        [4] = { label = "Pink", price = 2000 },
-        [5] = { label = "Army", price = 2000 },
-        [6] = { label = "LSPD", price = 2000 },
-        [7] = { label = "Orange", price = 2000 },
-        [8] = { label = "Platinum", price = 2000 },
-    },
-    [2] = { --[[@mk2_weapons]]
-        [1] = { label = "None", price = 0 },
-        [2] = { label = "Gray", price = 2000 },
-        [3] = { label = "Two-Tone", price = 2000 },
-        [4] = { label = "White", price = 2000 },
-        [5] = { label = "Beige", price = 2000 },
-        [6] = { label = "Green", price = 2000 },
-        [7] = { label = "Blue", price = 2000 },
-        [8] = { label = "Earth", price = 2000 },
-        [9] = { label = "Brown & Black", price = 3000 },
-        [10] = { label = "Red Contrast", price = 2000 },
-        [11] = { label = "Blue Contrast", price = 2000 },
-        [12] = { label = "Yellow Contrast", price = 2000 },
-        [13] = { label = "Orange Contrast", price = 2000 },
-        [14] = { label = "Pink", price = 2000 },
-        [15] = { label = "Purple & Yellow", price = 3000 },
-        [16] = { label = "Orange", price = 2000 },
-        [17] = { label = "Green & Purple", price = 2500 },
-        [18] = { label = "Red Features", price = 2000 },
-        [19] = { label = "Green Features", price = 2000 },
-        [20] = { label = "Cyan Features", price = 2000 },
-        [21] = { label = "Yellow Features", price = 2000 },
-        [22] = { label = "Red & White", price = 3000 },
-        [23] = { label = "Blue & White", price = 3000 },
-        [24] = { label = "Gold", price = 2000 },
-        [25] = { label = "Platinum", price = 2000 },
-        [26] = { label = "Gray & Lilac", price = 3000 },
-        [27] = { label = "Purple & Lime", price = 3000 },
-        [28] = { label = "Red", price = 2000 },
-        [29] = { label = "Green", price = 2000 },
-        [30] = { label = "Blue", price = 2000 },
-        [31] = { label = "White & Aqua", price = 3000 },
-        [32] = { label = "Orange & Yellow", price = 3000 },
-        [33] = { label = "Red & Yellow", price = 3000 },
-    }
+    [1] = { label = "None", price = 0 },
+    [2] = { label = "Green", price = 2000 },
+    [3] = { label = "Gold", price = 2000 },
+    [4] = { label = "Pink", price = 2000 },
+    [5] = { label = "Army", price = 2000 },
+    [6] = { label = "LSPD", price = 2000 },
+    [7] = { label = "Orange", price = 2000 },
+    [8] = { label = "Platinum", price = 2000 },
+},
+[2] = { --[[@mk2_weapons]]
+[1] = { label = "None", price = 0 },
+[2] = { label = "Gray", price = 2000 },
+[3] = { label = "Two-Tone", price = 2000 },
+[4] = { label = "White", price = 2000 },
+[5] = { label = "Beige", price = 2000 },
+[6] = { label = "Green", price = 2000 },
+[7] = { label = "Blue", price = 2000 },
+[8] = { label = "Earth", price = 2000 },
+[9] = { label = "Brown & Black", price = 3000 },
+[10] = { label = "Red Contrast", price = 2000 },
+[11] = { label = "Blue Contrast", price = 2000 },
+[12] = { label = "Yellow Contrast", price = 2000 },
+[13] = { label = "Orange Contrast", price = 2000 },
+[14] = { label = "Pink", price = 2000 },
+[15] = { label = "Purple & Yellow", price = 3000 },
+[16] = { label = "Orange", price = 2000 },
+[17] = { label = "Green & Purple", price = 2500 },
+[18] = { label = "Red Features", price = 2000 },
+[19] = { label = "Green Features", price = 2000 },
+[20] = { label = "Cyan Features", price = 2000 },
+[21] = { label = "Yellow Features", price = 2000 },
+[22] = { label = "Red & White", price = 3000 },
+[23] = { label = "Blue & White", price = 3000 },
+[24] = { label = "Gold", price = 2000 },
+[25] = { label = "Platinum", price = 2000 },
+[26] = { label = "Gray & Lilac", price = 3000 },
+[27] = { label = "Purple & Lime", price = 3000 },
+[28] = { label = "Red", price = 2000 },
+[29] = { label = "Green", price = 2000 },
+[30] = { label = "Blue", price = 2000 },
+[31] = { label = "White & Aqua", price = 3000 },
+[32] = { label = "Orange & Yellow", price = 3000 },
+[33] = { label = "Red & Yellow", price = 3000 },
+}
 
 }
 
@@ -269,25 +269,9 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_CERAMICPISTOL`] = {
-        -- {
-        --     label = "Mag",
-        --     bone = "WAPClip",
-        --     options = {
-        --         {
-        --             attachment = "COMPONENT_CERAMICPISTOL_CLIP_01",
-        --             label = "Standard Mag",
-        --             price = 0
-        --         },
-        --         {
-        --             attachment = "COMPONENT_CERAMICPISTOL_CLIP_02",
-        --             label = "Extended Mag",
-        --             price = 6000
-        --         },
-        --     },
-        -- },
         {
             label = "Suppressor",
-            bone = "WAPSupp",
+            bone = "WAPSupp_2",
             options = {
                 {
                     label = "None",
@@ -385,6 +369,11 @@ WEAPON_LIST = {
                     price = 7000
                 },
             },
+        },
+        {
+            label = "Tint",
+            bone = "gun_root",
+            options = {},
         },
     },
     [`WEAPON_PISTOL50`] = {
@@ -658,6 +647,21 @@ WEAPON_LIST = {
                     attachment = "COMPONENT_AT_PI_SUPP",
                     label = "Suppressor",
                     price = 100
+                },
+            },
+        },
+        {
+            label = "Variation",
+            bone = "gun_root",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_HEAVYPISTOL_VARMOD_LUXE",
+                    label = "Deluxe",
+                    price = 10000
                 },
             },
         },
@@ -1616,7 +1620,7 @@ WEAPON_LIST = {
             options = {},
         },
     },
-    [`WEAPON_CARBINERIFLE_MK2`] = {
+    [`WEAPON_762`] = {
         -- {
         --     label = "Mag",
         --     bone = "WAPClip",
@@ -1826,277 +1830,18 @@ WEAPON_LIST = {
         },
     },
     [`WEAPON_MK18`] = {
-        -- {
-        --     label = "Mag",
-        --     bone = "WAPClip",
-        --     options = {
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_01",
-        --             label = "Standard Mag",
-        --             price = 0
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_02",
-        --             label = "Black Scale Mag",
-        --             price = 2000
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_03",
-        --             label = "Tan Scale Mag",
-        --             price = 2000
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_04",
-        --             label = "Black Tac Mag",
-        --             price = 2000
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_05",
-        --             label = "Tan Tac Mag",
-        --             price = 2000
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_06",
-        --             label = "Box Mag",
-        --             price = 100000
-        --         },
-        --         {
-        --             attachment = "COMPONENT_MK18_CLIP_07",
-        --             label = "Drum Mag",
-        --             price = 100000
-        --         },
-        --     },
-        -- },
-        {
-            label = "Flashlight",
-            bone = "WAPFlshLasr",
-            options = {
-                {
-                    label = "None",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_01",
-                    label = "Tan Laser",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_02",
-                    label = "Small Tan Laser",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_03",
-                    label = "Grey Laser",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_04",
-                    label = "Large Black Laser",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_05",
-                    label = "Flashlight",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_06",
-                    label = "Tan Flash + Laser",
-                    price = 3500
-                },
-                {
-                    attachment = "COMPONENT_MK18_FLASH_07",
-                    label = "Tan Flash + S Laser",
-                    price = 3500
-                },
-            },
-        },
         {
             label = "Optic",
             bone = "WAPScop",
             options = {
                 {
-                    attachment = "COMPONENT_MK18_SCOPE_01",
-                    label = "Iron Sights",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_02",
-                    label = "Tan Holo",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_03",
-                    label = "Tan Holo/Acog - off",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_04",
-                    label = "Tan Holo/Acog - on",
-                    price = 2500
+                    label = "None",
+                    price = 0
                 },
                 {
                     attachment = "COMPONENT_MK18_SCOPE_05",
                     label = "Black Holo",
                     price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_06",
-                    label = "Red Dot",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_07",
-                    label = "Black Holo 2",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_08",
-                    label = "Short Scope",
-                    price = 2500
-                },
-                {
-                    attachment = "COMPONENT_MK18_SCOPE_09",
-                    label = "Long Scope",
-                    price = 2500
-                },
-            },
-        },
-        {
-            label = "Suppressor",
-            bone = "WAPSupp",
-            options = {
-                {
-                    label = "None",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_01",
-                    label = "Suppressor 1",
-                    price = 25000
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_02",
-                    label = "Suppressor 2",
-                    price = 25000
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_03",
-                    label = "Suppressor 3",
-                    price = 25000
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_04",
-                    label = "Suppressor 4",
-                    price = 25000
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_05",
-                    label = "Suppressor 5",
-                    price = 25000
-                },
-                {
-                    attachment = "COMPONENT_MK18_SUPPRESSOR_06",
-                    label = "Suppressor 6",
-                    price = 25000
-                },
-            },
-        },
-        {
-            label = "Grip",
-            bone = "WAPGrip",
-            options = {
-                {
-                    label = "None",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_GRIP_05",
-                    label = "Foregrip 1",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_GRIP_01",
-                    label = "Foregrip 2",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_GRIP_02",
-                    label = "Foregrip 3",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_GRIP_03",
-                    label = "Foregrip 4",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_GRIP_04",
-                    label = "Foregrip 5",
-                    price = 2000
-                },
-            },
-        },
-        {
-            label = "Stock",
-            bone = "WAPGrip_2",
-            options = {
-                {
-                    attachment = "COMPONENT_MK18_STOCK_01",
-                    label = "Stock 1",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_02",
-                    label = "Stock 2",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_03",
-                    label = "Stock 3",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_04",
-                    label = "Stock 4",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_05",
-                    label = "Stock 5",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_06",
-                    label = "Stock 6",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_STOCK_07",
-                    label = "Stock 7",
-                    price = 2000
-                },
-            },
-        },
-        {
-            label = "Frame",
-            bone = "WAPFrame",
-            options = {
-                {
-                    attachment = "COMPONENT_MK18_FRAME_01",
-                    label = "Black Frame",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_MK18_FRAME_02",
-                    label = "Blk + Tan Frame",
-                    price = 2000
-                },
-                {
-                    attachment = "COMPONENT_MK18_FRAME_03",
-                    label = "Tan Frame",
-                    price = 2000
                 },
             },
         },

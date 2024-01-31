@@ -83,7 +83,7 @@ AddEventHandler('zbrp:addDroppedItem', function(id, data)
 end)
 
 local defaultColour = 'm'
-
+--[[
 Citizen.CreateThread(function()
     while true do
         if not IsEntityDead(Player.Ped()) then 
@@ -125,7 +125,7 @@ Citizen.CreateThread(function()
         end end
         Citizen.Wait(0)
     end
-end)
+end)]]
 
 RegisterNetEvent("zbrp:addDroppedItem", API.SyncAmmo)
 

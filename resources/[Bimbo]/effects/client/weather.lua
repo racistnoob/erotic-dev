@@ -43,17 +43,26 @@ exports("getWeather", function()
     return weather
 end)
 
+local clear_override_weather = ClearOverrideWeather
+local clear_weather_type_persist = ClearWeatherTypePersist
+local set_weather_type_persist = SetWeatherTypePersist
+local set_weather_type_now = SetWeatherTypeNow
+local set_weather_type_now_persist = SetWeatherTypeNowPersist
+local set_force_vehicle_trails = SetForceVehicleTrails
+local set_force_ped_footsteps_track = SetForcePedFootstepsTracks
+local wait = Wait
+
 CreateThread(function()
     while true do
-        Wait(1000)
-        ClearOverrideWeather()
-        ClearWeatherTypePersist()
-        SetWeatherTypePersist(weather)
-        SetWeatherTypeNow(weather)
-        SetWeatherTypeNowPersist(weather)
+        wait(1000)
+        clear_override_weather()
+        clear_weather_type_persist()
+        set_weather_type_persist(weather)
+        set_weather_type_now(weather)
+        set_weather_type_now_persist(weather)
 
-        SetForceVehicleTrails(weather == 'XMAS')
-        SetForcePedFootstepsTracks(weather == 'XMAS')
+        set_force_vehicle_trails(weather == 'XMAS')
+        set_force_ped_footsteps_track(weather == 'XMAS')
     end
 end)
 

@@ -18,12 +18,10 @@ local yayeetEntity = nil
 CreateThread(function()
 
 	local currentSpeed = config.speeds[index].speed
-
+	local sleepTimer = 1500
 	while true do
-			Wait(0)
-
+		Wait(0)
 			if yayeetActive then
-
 					local yoff, zoff = 0.0, 0.0
 
 					if not IsPauseMenuActive() then
@@ -73,7 +71,7 @@ CreateThread(function()
 					SetLocalPlayerVisibleLocally(true)
 					SetEntityAlpha(yayeetEntity, 50, false)
 			else
-					Wait(50)
+				Wait(sleepTimer)
 			end
 	end
 end)

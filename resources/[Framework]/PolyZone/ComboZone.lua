@@ -110,7 +110,7 @@ local function _initDebug(zone, options)
   Citizen.CreateThread(function()
     while not zone.destroyed do
       zone:draw()
-      Citizen.Wait(0)
+      Citizen.Wait(8)
     end
   end)
 end
@@ -258,7 +258,7 @@ end
 
 function ComboZone:onPointInOut(getPointCb, onPointInOutCb, waitInMS)
   -- Localize the waitInMS value for performance reasons (default of 500 ms)
-  local _waitInMS = 500
+  local _waitInMS = 1000
   if waitInMS ~= nil then _waitInMS = waitInMS end
 
   Citizen.CreateThread(function()
@@ -281,7 +281,7 @@ end
 
 function ComboZone:onPointInOutExhaustive(getPointCb, onPointInOutCb, waitInMS)
   -- Localize the waitInMS value for performance reasons (default of 500 ms)
-  local _waitInMS = 500
+  local _waitInMS = 1000
   if waitInMS ~= nil then _waitInMS = waitInMS end
 
   Citizen.CreateThread(function()

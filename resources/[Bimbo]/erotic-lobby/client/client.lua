@@ -3,105 +3,98 @@ lobbyMenuOpen = false
 local lobbyData = {
 	{
 		id = 1,
-		name = 'Southside #1',
+		name = 'Southside',
 		settings = {'FPS Mode', 'Light Recoil'},
 	},
 	  
 	{
 		id = 2,
 		name = 'FFA Bunker',
-		settings = {'FPS Mode', 'Light Recoil', 'FFA'},
+		settings = {'FFA', 'Headshots', 'Light Recoil'},
 	},
+
 	{
 		id = 3,
-		name = 'Southside #3',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+		name = 'Deluxo',
+		settings = {'Deluxo', 'Medium Recoil', 'Headshots'},
 	},
+
 	{
 		id = 4,
-		name = 'Southside #4',
+		name = 'RP 1 HS (#1)',
 		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
 	},
 	{
 		id = 5,
-		name = 'Southside #5',
-		settings = {'FPS Mode', 'Envy Recoil'},
+		name = 'RP 1 HS (#2)',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
 	},
+
 	{
 		id = 6,
-		name = 'Southside #6',
+		name = 'Envy (#1)',
 		settings = {'FPS Mode', 'Envy Recoil'},
 	},
 	{
 		id = 7,
-		name = 'Southside #7',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+		name = 'Envy (#2)',
+		settings = {'FPS Mode', 'Envy Recoil'},
 	},
+
 	{
 		id = 8,
-		name = 'Southside #8',
+		name = 'Envy HS (#1)',
 		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
 	},
 	{
 		id = 9,
-		name = 'Southside #9',
-		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
+		name = 'Envy HS (#2)',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
 	},
+
 	{
 		id = 10,
-		name = 'Southside #10',
-		settings = {'FPS Mode', 'Medium Recoil', 'Deluxo', 'Headshots'},
+		name = 'QB (#1)',
+		settings = {'FPS Mode', 'Medium Recoil'},
 	},
 	{
 		id = 11,
-		name = 'Southside #11',
-		settings = {'FPS Mode', 'Medium Recoil'},
+		name = 'QB HS (#2)',
+		settings = {'FPS Mode', 'Medium Recoil', 'Headshots'},
 	},
+
 	{
 		id = 12,
-		name = 'Southside #12',
-		settings = {'FPS Mode', 'Medium Recoil'},
+		name = 'RP 2 (#1)',
+		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
 	},
 	{
 		id = 13,
-		name = 'Southside #13',
-		settings = {'FPS Mode', 'Heavy Recoil'},
+		name = 'RP 2 (#2)',
+		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
 	},
+
 	{
 		id = 14,
-		name = 'Southside #14',
-		settings = {'FPS Mode', 'Heavy Recoil'},
+		name = 'Rena (#1)',
+		settings = {'Third Person', 'Light Recoil'},
 	},
 	{
 		id = 15,
-		name = 'Southside #15',
-		settings = {'FPS Mode', 'Heavy Recoil'},
+		name = 'Rena (#2)',
+		settings = {'Third Person', 'Light Recoil'},
 	},
+--[[
 	{
 		id = 16,
-		name = 'Southside #16',
-		settings = {'FPS Mode', 'Heavy Recoil'},
+		name = 'Overtime (BETA #1)',
+		settings = {'Third Person', 'Light Recoil'},
 	},
 	{
 		id = 17,
-		name = 'Southside #17',
+		name = 'Overtime (BETA #2)',
 		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 18,
-		name = 'Southside #18',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 19,
-		name = 'Southside #19',
-		settings = {'Third Person', 'Light Recoil'},
-	},
-	{
-		id = 20,
-		name = 'Southside #20',
-		settings = {'Third Person', 'Light Recoil'},
-	},
+	},]]
 }
 
 local function toggleNuiFrame(shouldShow)
@@ -110,6 +103,7 @@ local function toggleNuiFrame(shouldShow)
 		TriggerScreenblurFadeIn(50)
 	else
 		TriggerScreenblurFadeOut(50)
+
 	end
 	SetNuiFocus(shouldShow, shouldShow)
 	SendReactMessage("setVisible", shouldShow)
@@ -205,6 +199,8 @@ AddEventHandler('erotic-lobby:updateLobbies', function()
         type = "updateLobbies",
         lobbies = lobbyData,
     })
+
+    
     -- print('Updated lobbies:', json.encode(lobbyData))
 end)
 

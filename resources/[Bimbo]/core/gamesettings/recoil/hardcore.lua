@@ -75,30 +75,36 @@ local function getAmplitudeScale(speed, bMin, bMax, tMin, tMax)
   return (((speed - bMin) * (tMax - tMin)) / (bMax - bMin)) + tMin
 end
 
-local function setRecoilAmplitude(weapon, modifier)
-  local ped = PlayerPedId()
-  local speed = GetEntitySpeed(ped) * 1.5
-  SetWeaponRecoilShakeAmplitude(weapon,
-    (IsPedInAnyVehicle(ped, false) and getAmplitudeScale(speed, 0.0, 150.0, 1.0, 8.0) or
+local set_weapon_recoil_shake_amplitude = SetWeaponRecoilShakeAmplitude
+local get_entity_speed = GetEntitySpeed
+local is_ped_in_any_vehicle = IsPedInAnyVehicle
+local function setRecoilAmplitude(ped, weapon, modifier)
+  local speed = get_entity_speed(ped) * 1.5
+  set_weapon_recoil_shake_amplitude(weapon,
+    (is_ped_in_any_vehicle(ped, false) and getAmplitudeScale(speed, 0.0, 150.0, 1.0, 8.0) or
       getAmplitudeScale(speed, 0.0, 18.0, 1.0, 6.0)) * modifier)
 end
 
+local get_selected_ped_weapon = GetSelectedPedWeapon
+local wait = Wait
 Recoil:RegisterMode("hardcore", function()
-  if IsPedArmed(PlayerPedId(), 6) then
-    local weapon = GetSelectedPedWeapon(PlayerPedId())
-    setRecoilAmplitude(weapon, weaponRecoils[weapon] or 3.0)
-  end
+    if IsPedArmed(PlayerPed, 6) then
+        local weapon = get_selected_ped_weapon(PlayerPed)
+        setRecoilAmplitude(PlayerPed, weapon, weaponRecoils[weapon] or 3.0)
+    else
+        wait(250)
+    end
 end)
 
 Recoil:OnModeChange(function()
   for weaponName, recoil in pairs(weaponsList) do
-    SetWeaponRecoilShakeAmplitude(GetHashKey(weaponName), recoil)
+    set_weapon_recoil_shake_amplitude(GetHashKey(weaponName), recoil)
   end
 end)
 
 
 AddEventHandler("onResourceStop", function()
   for weaponName, recoil in pairs(weaponsList) do
-    SetWeaponRecoilShakeAmplitude(GetHashKey(weaponName), recoil)
+    set_weapon_recoil_shake_amplitude(GetHashKey(weaponName), recoil)
   end
 end)

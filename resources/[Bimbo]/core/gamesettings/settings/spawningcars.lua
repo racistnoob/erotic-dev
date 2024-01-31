@@ -61,7 +61,7 @@ end
 RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
     local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
-    local trickLobby = (worldID >= 9 and worldID <= 10)
+    local trickLobby = worldID == 3
     if spawningcars or trickLobby and veh == "deluxo" then
         local playerPed = PlayerPedId()
         local vehiclehash = GetHashKey(veh)

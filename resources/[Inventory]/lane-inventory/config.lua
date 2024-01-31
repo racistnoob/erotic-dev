@@ -192,7 +192,7 @@ Config.Weapons = {
     ["WEAPON_HEAVYPISTOL"] = "9mm_rounds",
     ["WEAPON_SP45"] = "9mm_rounds",
     ["WEAPON_SMG_MK2"] = "9mm_rounds",
-    ["WEAPON_CARBINERIFLE_MK2"] = "556_rounds",
+    ["WEAPON_762"] = "556_rounds",
     ["WEAPON_SPECIALCARBINE_MK2"] = "556_rounds",
     ["WEAPON_PISTOL50"] = "50cal_rounds",
     ["WEAPON_HEAVYRIFLE"] = "556_rounds",
@@ -209,7 +209,13 @@ Config.Weapons = {
     ["WEAPON_HEAVYSNIPER_MK2"] = "50cal_rounds",
     ["WEAPON_ADVANCEDRIFLE"] = "556_rounds",
     ["WEAPON_MPX"] = "9mm_rounds",
+    ["WEAPON_PISTOLXM3"] = "9mm_rounds",
+    ["WEAPON_CERAMICPISTOL"] = "9mm_rounds"
 }
+
+exports('getWeaponAmmos', function()
+    return Config.Weapons
+end)
 
 
 Config.Loadouts = {

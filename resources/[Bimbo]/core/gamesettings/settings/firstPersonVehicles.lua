@@ -2,6 +2,7 @@ local firstPersonVehicleEnabled = false
 local shakeCounter = 0
 local shakeCounter2 = 0
 local isShaking = false
+local isInVehicle = false
 
 local wait = Wait
 local is_ped_in_any_vehicle = IsPedInAnyVehicle
@@ -11,12 +12,16 @@ local is_control_pressed = IsControlPressed
 local is_using_keyboard = IsUsingKeyboard
 local is_aim_cam_active = IsAimCamActive
 local disable_aim_cam_this_update = DisableAimCamThisUpdate
-
+local is_ped_still = IsPedStill
+local is_player_free_aiming = IsPlayerFreeAiming
+local is_ped_aiming_from_cover = IsPedAimingFromCover
+local shake_gameplay_cam = ShakeGameplayCam
+local stop_gameplay_cam_shaking = StopGameplayCamShaking
 local function firstPersonVehicle()
     CreateThread(function()
         while firstPersonVehicleEnabled do
             wait(10)
-            local isInVehicle = is_ped_in_any_vehicle(PlayerPed, false)
+            isInVehicle = is_ped_in_any_vehicle(PlayerPed, false)
             local viewMode = get_follow_vehicle_cam_view_mode()
             local isAiming = (is_control_pressed(0, 25) and is_using_keyboard(0)) or is_aim_cam_active()
 
@@ -38,29 +43,28 @@ local function firstPersonVehicle()
     Citizen.CreateThread(function()
         while firstPersonVehicleEnabled do
             local plyPed = PlayerPed
-            local isAiming = IsPlayerFreeAiming(PlayerId())
+            local isAiming = is_player_free_aiming(playerID)
     
-            if IsPedInAnyVehicle(plyPed, false) then
-                -- Player is in a vehicle
-                local isPedStill = IsPedStill(plyPed)
+            if isInVehicle then
+                local isPedStill = is_ped_still(plyPed)
     
-                if isAiming and isPedStill and not IsPedAimingFromCover(plyPed) then
-                    Wait(100)
+                if isAiming and isPedStill and not is_ped_aiming_from_cover(plyPed) then
+                    wait(100)
                     shakeCounter = shakeCounter + 1
                     shakeCounter2 = 0
     
                     if shakeCounter == 5 then
                         isShaking = true
-                        ShakeGameplayCam('HAND_SHAKE', 0.2)
+                        shake_gameplay_cam('HAND_SHAKE', 0.2)
                     end
                 elseif isAiming and not isPedStill then
-                    Wait(10)
+                    wait(10)
                     shakeCounter2 = shakeCounter2 + 1
                     shakeCounter = 0
     
                     if shakeCounter2 == 5 then
                         isShaking = true
-                        ShakeGameplayCam('HAND_SHAKE', 0.9)
+                        shake_gameplay_cam('HAND_SHAKE', 0.9)
                     end
     
                     shakeCounter = 0
@@ -70,10 +74,10 @@ local function firstPersonVehicle()
                         isShaking = false
                         shakeCounter = 0
                         shakeCounter2 = 0
-                        StopGameplayCamShaking(true)
+                        stop_gameplay_cam_shaking(true)
                     end
     
-                    Wait(1000)
+                    wait(1000)
                 end
             else
                 -- Player is not in a vehicle, reset counters and shaking
@@ -81,13 +85,13 @@ local function firstPersonVehicle()
                     isShaking = false
                     shakeCounter = 0
                     shakeCounter2 = 0
-                    StopGameplayCamShaking(true)
+                    stop_gameplay_cam_shaking(true)
                 end
     
-                Wait(1000)
+                wait(1000)
             end
     
-            Wait(0)
+            wait(0)
         end
     end)
 end
@@ -97,7 +101,7 @@ function SetFirstPersonVehicleEnabled(state)
     isShaking = false
     shakeCounter = 0
     shakeCounter2 = 0
-    StopGameplayCamShaking(true)
+    stop_gameplay_cam_shaking(true)
     if state then
         firstPersonVehicle()
     end

@@ -3,91 +3,105 @@ local no_xhair = (GetResourceKvpInt("erotic_xhair") == 1) or false
 
 local toggleHud = true
 
-local weapons = {
-    snipers = {
-        177293209,
-        205991906,
-        1785463520,
-        3342088282
-    }
-}
+local disable_control_action = DisableControlAction
+local display_ammo_this_frame = DisplayAmmoThisFrame
+local get_selected_ped_weapon = GetSelectedPedWeapon
+local get_ammo_in_ped_weapon = GetAmmoInPedWeapon
+local get_ammo_in_clip = GetAmmoInClip
+local get_follow_ped_cam_view_mode = GetFollowPedCamViewMode
+local hide_hud_component_this_frame = HideHudComponentThisFrame
+local is_ped_in_any_vehicle = IsPedInAnyVehicle
+local is_control_pressed = IsControlPressed
+local is_using_keyboard = IsUsingKeyboard
+local is_aim_cam_active = IsAimCamActive
+local is_ped_armed = IsPedArmed
+local is_player_free_aiming = IsPlayerFreeAiming
+local player_ped_id = PlayerPedId
+local player_id = PlayerId
+local set_follow_ped_cam_view_mode = SetFollowPedCamViewMode
+local send_nui_message = SendNUIMessage
+local wait = Wait
 
-local COMBAT = {
-    PedCamera = function()
+COMBAT = {
+    plyPed = player_ped_id(),
+    pedWeapon = false,
+    InVehicle = false,
+    isAiming = false,
+    isArmed = false,
+    isAimingg = false,
+    Sniper = false,
+    nonstopCombat = false,
+
+    PedCamera = function(self)
         while true do
-            Citizen.Wait(250)
-            local ped = PlayerPedId()
-            local InVehicle = IsPedInAnyVehicle(ped, false)
-            local isAiming = (IsControlPressed(0, 25) and IsUsingKeyboard(0)) or IsAimCamActive()
-            local isFiring = IsPedShooting(ped)
-            local isArmed = IsPedArmed(ped, 7)
-
-            if isArmed or isAiming and not InVehicle then
-                local camMode = GetFollowPedCamViewMode()
-                if camMode == 1 or camMode == 2 or camMode == 4 then
-                    SetFollowPedCamViewMode(0)
-                elseif isAiming and camMode == 0 then
-                    DisableControlAction(1, 0, true)
+            wait(250)
+            if self.isArmed or self.isAiming and not self.InVehicle then
+                local camMode = get_follow_ped_cam_view_mode()
+                if not self.nonstopCombat and camMode == 1 or camMode == 2 or camMode == 4 then
+                    set_follow_ped_cam_view_mode(0)
+                elseif self.isAiming and camMode == 0 then
+                    disable_control_action(1, 0, true)
                 end
+            else
+                wait(500)
             end
-        end
-    end,    
-
-    InfoThread = function()
-        while true do
-            Citizen.Wait(250)
-            local plyPed = PlayerPedId()
-            local pedWeapon = GetSelectedPedWeapon(PlayerPedId()) or false;
-            local weaponMaxAmmo = pedWeapon and GetAmmoInPedWeapon(plyPed, pedWeapon) or 0;
-            local a, weaponClipAmmo = GetAmmoInClip(plyPed, pedWeapon);
-    
-            currentValues["MaxAmmo"] = weaponMaxAmmo - weaponClipAmmo
-            currentValues["ClipAmmo"] = weaponClipAmmo
-    
-            if toggleHud then
-                if IsPedArmed(plyPed, 7) and pedWeapon ~= 911657153 then
-                    SendNUIMessage({ type = "ammo", data = currentValues })
-                    SendNUIMessage({ type = "show", value = true, cross = no_xhair })
-                else
-                    SendNUIMessage({ type = "show", value = false, cross = no_xhair })
-                end
-            else
-                SendNUIMessage({ type = "show", value = false, cross = false })
-                SendNUIMessage({ type = "scope", value = false })
-            end       
-        end
-    end,    
-
-    SniperThread = function()
-        while true do 
-            Citizen.Wait(250)
-
-            local pedWeapon = GetSelectedPedWeapon(PlayerPedId()) or false;
-
-            if toggleHud then
-                if pedWeapon == 177293209 and IsPlayerFreeAiming(PlayerId()) or pedWeapon == 1785463520 and IsPlayerFreeAiming(PlayerId()) then 
-                    SendNUIMessage({ type = "scope", value = true })
-                    SendNUIMessage({ type = "ammo", data = currentValues })
-                    SendNUIMessage({ type = "show", value = false, cross = no_xhair })
-                else
-                    SendNUIMessage({ type = "scope", value = false })
-                end
-            else
-                SendNUIMessage({ type = "show", value = false, cross = false })
-                SendNUIMessage({ type = "scope", value = false })
-            end       
         end
     end,
     
+    InfoThread = function(self)
+        while true do
+            wait(1000)
+            self.plyPed = player_ped_id()
+            self.pedWeapon = get_selected_ped_weapon(self.plyPed) or false;
+
+            self.InVehicle = is_ped_in_any_vehicle(self.plyPed, false)
+            self.isAiming = (is_control_pressed(0, 25) and is_using_keyboard(0)) or is_aim_cam_active()
+            self.isArmed = is_ped_armed(self.plyPed, 7)
+            self.isAimingg = is_player_free_aiming(player_id())
+            --self.nonstopCombat = exports['core']:getNonstopCombat()
+            self.Sniper = (self.pedWeapon == 177293209 or self.pedWeapon == 1785463520)
+        end
+    end,    
+
+    AmmoThread = function(self)
+        while true do
+            wait(250)
+            if self.isArmed then
+                local weaponMaxAmmo = self.pedWeapon and get_ammo_in_ped_weapon(self.plyPed, self.pedWeapon) or 0;
+                local a, weaponClipAmmo = get_ammo_in_clip(self.plyPed, self.pedWeapon);
+        
+                currentValues["MaxAmmo"] = weaponMaxAmmo - weaponClipAmmo
+                currentValues["ClipAmmo"] = weaponClipAmmo
+        
+                if toggleHud then
+                    if self.isArmed and self.pedWeapon ~= 911657153 then
+                        send_nui_message({ type = "ammo", data = currentValues })
+                        send_nui_message({ type = "show", value = true })
+                    else
+                        send_nui_message({ type = "show", value = false })
+                    end
+                else
+                    send_nui_message({ type = "show", value = false })
+                    send_nui_message({ type = "scope", value = false })
+                    wait(1000)
+                end
+            else
+                wait(500)
+            end
+        end
+    end,
+
     HideAmmo = function(self)
         while true do
-          Wait(0)
-            HideHudComponentThisFrame(14)
-            HideHudComponentThisFrame(6)
-            HideHudComponentThisFrame(7)
-            HideHudComponentThisFrame(8)
-            HideHudComponentThisFrame(9)
-            DisplayAmmoThisFrame(false)
+            wait(1)
+            hide_hud_component_this_frame(7)
+            hide_hud_component_this_frame(9)
+            if not self.Sniper then
+                hide_hud_component_this_frame(14)
+            end
+            display_ammo_this_frame(false)
+            hide_hud_component_this_frame(6)
+            hide_hud_component_this_frame(8)
         end
     end,
 }
@@ -98,33 +112,36 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    COMBAT:InfoThread()
+    COMBAT:AmmoThread()
     Citizen.Wait(250)
 end)
 
 Citizen.CreateThread(function()
-    COMBAT:SniperThread()
+    COMBAT:InfoThread()
     Citizen.Wait(250)
 end)
 
 AddEventHandler('echorp:playerSpawned', function()
     Wait(100)
-    SendNUIMessage({ type = "xhair_colour", color = GetResourceKvpString('crosshairColor') })
+    send_nui_message({ type = "xhair_colour", color = GetResourceKvpString('crosshairColor') })
+    send_nui_message({ type = "showWatermark", value = true})
 end)
 
 exports("toggleHud", function(state)
-    SendNUIMessage({ type = "showWatermark", value = state})
+    send_nui_message({ type = "xhair", cross = not state })
+    send_nui_message({ type = "showWatermark", value = state})
     toggleHud = state
 end)
 
 RegisterCommand('cross', function(src, args, rawCommand)
     local hexArg = string.sub(rawCommand, 7)
     if #hexArg > 0 then
-        SendNUIMessage({ type = "xhair_colour", color = hexArg })
+        send_nui_message({ type = "xhair_colour", color = hexArg })
         exports['drp-notifications']:SendAlert('inform', 'Crosshair color updated')
         SetResourceKvp('crosshairColor', hexArg)
     else
         no_xhair = not no_xhair
+        send_nui_message({ type = "xhair", cross = no_xhair })
         exports['drp-notifications']:SendAlert('inform', 'Crosshair '.. (no_xhair and "Disabled" or "Enabled"))
         SetResourceKvpInt("erotic_xhair", no_xhair)
     end
@@ -134,7 +151,7 @@ RegisterCommand("top", function()
     local playerPed = PlayerPedId()
     local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
 
-    if worldID >= 9 and worldID <= 10 then
+    if worldID == 3 then
         if IsPedInAnyVehicle(playerPed, false) then
             local vehicle = GetVehiclePedIsIn(playerPed, false)
             TaskLeaveVehicle(playerPed, vehicle, 0)

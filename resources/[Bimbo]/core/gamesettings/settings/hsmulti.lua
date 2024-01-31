@@ -16,18 +16,11 @@ end
 exports("setHsMulti", SetHsMulti)
 exports("getHsMulti", GetHsMulti)
 
-local ped = 0
-Citizen.CreateThread(function()
-  while true do
-      Citizen.Wait(2500)
-      ped = PlayerPedId()
-  end
-end)
-
+local wait = Wait
+local set_ped_suffers_critical_hits = SetPedSuffersCriticalHits
 CreateThread(function()
   while true do
-    Wait(250)
-
-    SetPedSuffersCriticalHits(ped, hsmultiEnabled)
+      wait(250)
+      set_ped_suffers_critical_hits(PlayerPed, hsmultiEnabled)
   end
 end)

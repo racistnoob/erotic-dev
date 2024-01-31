@@ -24,7 +24,7 @@ local CachedPlayers = {}
 
 RegisterNetEvent('erp_adminmenu:openAdminMenu', function()
   if IsPlayerAceAllowed(source, 'erotic.mod') then
-		TriggerClientEvent('erp_adminmenu:openAdminMenu', source, GetNumPlayerIndices(), GetConvarInt("sv_maxclients", 160))
+		TriggerClientEvent('erp_adminmenu:openAdminMenu', source, GetNumPlayerIndices(), GetConvarInt("sv_maxclients", 48))
 	end
 end)
 

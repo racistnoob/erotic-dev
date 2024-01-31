@@ -104,7 +104,8 @@ RegisterNetEvent('erp_adminmenu:cancelSpectate', function()
 end)
 
 CreateThread(function()
-  while true do Wait(0)
+  while true do
+    Wait(0)
       if spectateInfo['toggled'] then
           local text = {}
           local targetPed = spectateInfo['targetPed']
@@ -139,7 +140,7 @@ CreateThread(function()
               Wait(500)
           end
       else
-          Wait(1000)
+          Wait(1500)
       end
   end
 end)
@@ -188,7 +189,7 @@ CreateThread(function()
       SetLocalPlayerVisibleLocally(true)
       SetEntityAlpha(yayeetEntity, 50, false)
     else
-      Wait(1500)
+      Wait(3000)
     end
   end
 end)

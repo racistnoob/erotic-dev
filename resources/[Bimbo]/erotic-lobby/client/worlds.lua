@@ -20,10 +20,13 @@ local worlds = {
     -- }
     -- }},
     { startID = 1, endID = 1, settings = { 
-        recoilMode = "roleplay", 
-        firstPersonVehicle = true, 
-        hsMulti = false,
+        recoilMode = "roleplay3", 
+        firstPersonVehicle = false, 
+        hsMulti = true,
+        kits = {'pistols'},
+        kit = {'pistols', 'heavypistol'},
     }},
+    
     { startID = 2, endID = 2, settings = { 
         recoilMode = "roleplay", 
         firstPersonVehicle = true, 
@@ -44,28 +47,14 @@ local worlds = {
             [12] = {x = 884.8878, y = -3211.9189, z = -98.1962, h = 143.0110},
         },                                                         
     },},
-    { startID = 3, endID = 4, settings = { 
-        recoilMode = "roleplay", 
-        firstPersonVehicle = true, 
-        nonstopCombat = false,
-        hsMulti = true 
-    }},
-    { startID = 5, endID = 6, settings = { 
-        recoilMode = "envy", 
-        firstPersonVehicle = true, 
-        hsMulti = true 
-    }},
-    { startID = 7, endID = 8, settings = { 
-        recoilMode = "envy", 
-        firstPersonVehicle = true, 
-        hsMulti = true 
-    }},
-    { startID = 9, endID = 10, settings = { 
+
+    { startID = 3, endID = 3, settings = { 
         recoilMode = "roleplay2",
         firstPersonVehicle = true, 
         hsMulti = false,
         spawningcars = false,
         CarRagdoll = true,
+        kits = {'snipers'},
         kit = {'snipers', 'trick2'},
         spawn = {
             x = 770.5748, 
@@ -74,20 +63,56 @@ local worlds = {
             h = 354.6606
         }
     }},
-    { startID = 11, endID = 12, settings = { 
+
+    { startID = 4, endID = 5, settings = { 
+        recoilMode = "roleplay", 
+        firstPersonVehicle = true, 
+        hsMulti = true 
+    }},
+
+    { startID = 6, endID = 7, settings = { 
+        recoilMode = "envy", 
+        firstPersonVehicle = true, 
+        hsMulti = false,
+        kit = {'pistols', 'sp'},
+    }},
+
+    { startID = 8, endID = 9, settings = { 
+        recoilMode = "envy", 
+        firstPersonVehicle = true, 
+        hsMulti = true ,
+        kit = {'pistols', 'sp'},
+    }},
+
+    { startID = 10, endID = 10, settings = { 
+        recoilMode = "qb", 
+        firstPersonVehicle = true, 
+        hsMulti = false 
+    }},
+
+    { startID = 11, endID = 11, settings = { 
         recoilMode = "qb", 
         firstPersonVehicle = true, 
         hsMulti = true 
     }},
-    { startID = 13, endID = 16, settings = { 
+
+    { startID = 12, endID = 13, settings = { 
         recoilMode = "roleplay2", 
         firstPersonVehicle = false, 
         hsMulti = true
     }},
-    { startID = 17, endID = 20, settings = { 
+
+    { startID = 14, endID = 15, settings = { 
         recoilMode = "roleplay3", 
         firstPersonVehicle = false, 
         hsMulti = false
+    }},
+
+    { startID = 16, endID = 17, settings = { 
+        recoilMode = "nonstop",
+        nonstopcombat = true,
+        firstPersonVehicle = true, 
+        hsMulti = true
     }},
 }
 
@@ -121,12 +146,14 @@ function switchWorld(worldID)
             else
                 exports['lane-inventory']:DoKitStuff('ars', 'hopout')
             end
+            
             exports['core']:spawningcars(false or worldSettings.spawningcars == nil)
             exports['core']:setHelmetsEnabled(worldSettings.Helmets or false)
             exports['core']:setCarRagdoll(worldSettings.CarRagdoll or false)
             exports['core']:SetRecoilMode(worldSettings.recoilMode or "roleplay")
             exports['core']:setFirstPersonVehicleEnabled(worldSettings.firstPersonVehicle or false)
             exports['core']:setHsMulti(worldSettings.hsMulti or false)
+            --exports['core']:setNonstopCombat(worldSettings.nonstopcombat or false)
 
             if LocalPlayer.state.radioChannel ~= 111 then -- global radio
                 exports['radio']:changeradio(0)
@@ -141,19 +168,33 @@ function switchWorld(worldID)
     end
 end
 
-function getCurrentWorldDeathSpot()
-    if currentWorldID then
+
+local function getLobbySettings(worldID)
+    local worldID = tonumber(worldID) or tonumber(currentWorldID)
+    if worldID then
+        local worldSettings = nil
         for _, world in pairs(worlds) do
-            if currentWorldID >= world.startID and currentWorldID <= world.endID then
-                if world.settings.RandomSpawns then
-                    return world.settings.RandomSpawns[math.random(1, #world.settings.RandomSpawns)]
-                end
-                return world.settings.spawn or defaultSpawn
+            if worldID >= world.startID and worldID <= world.endID then
+                worldSettings = world.settings
+                break
             end
         end
+        return worldSettings
+    end
+end
+
+function getCurrentWorldDeathSpot()
+    if currentWorldID then
+        local worldSettings = getLobbySettings(currentWorldID)
+        if worldSettings and worldSettings.RandomSpawns then
+            return worldSettings.RandomSpawns[math.random(1, #worldSettings.RandomSpawns)]
+        end
+        return worldSettings.spawn or defaultSpawn
     end
     return defaultSpawn
 end
+
+exports('getLobbySettings', getLobbySettings)
 
 exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
 

@@ -9,9 +9,7 @@ RegisterNUICallback('switchWorld', function(data, cb)
 end)
 
 AddEventHandler('echorp:playerSpawned', function()
-    TriggerEvent("erotic-lobby:updateLobbies")
     TriggerServerEvent('erotic-lobby:SpawnWorldTrigger');
-    exports['lane-inventory']:DoKitStuff("ars", "hopout")
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')

@@ -80,6 +80,22 @@ Kits = {
             {item = "9mm_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 30},
         },
+        ["xm3"] = {
+            {item = "WEAPON_PISTOLXM3", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
+        },
+        ["ceramic"] = {
+            {item = "WEAPON_CERAMICPISTOL", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
+        },
     },
     ["ars"] = {
         ["hopout"] = {
@@ -89,7 +105,7 @@ Kits = {
             {item = "9mm_rounds", amount = 250, slot = 15},
             {item = "556_rounds", amount = 250, slot = 16},
             {item = "joint", amount = 15, slot = 4},
-            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
+            {item = "WEAPON_762", primary = true, amount = 1, slot = 1},
             {item = "radio", amount = 1, slot = 30},
         },
         ["ak"] = {
@@ -109,7 +125,7 @@ Kits = {
             {item = "radio", amount = 1, slot = 30},
         },
         ["762"] = {
-            {item = "WEAPON_CARBINERIFLE_MK2", primary = true, amount = 1, slot = 1},
+            {item = "WEAPON_762", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 20, slot = 3},
             {item = "joint", amount = 15, slot = 4},
@@ -139,14 +155,14 @@ Kits = {
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 30},
-        },--[[ GUN JUST DOESNT WORK IDK WHY
+        },
         ["mk18"] = {
             {item = "WEAPON_MK18", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
             {item = "556_rounds", amount = 250, slot = 15},
-        },]]
+        },
         ["advrifle"] = {
             {item = "WEAPON_ADVANCEDRIFLE", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
@@ -160,7 +176,7 @@ Kits = {
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 15, slot = 3},
             {item = "joint", amount = 15, slot = 4},
-            {item = "556_rounds", amount = 250, slot = 15},
+            {item = "9mm_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 30},
         },
     },
@@ -301,6 +317,12 @@ end
 
 
 function DoKitStuff(genre, kit)
+    local worldSettings = exports['erotic-lobby']:getLobbySettings()
+    if worldSettings.kits then
+        if genre ~= worldSettings.kits[1] then
+            return
+        end
+    end
     Player.CurrentKitGenre = genre
     Player.CurrentKit = kit
     API.ClearItems()

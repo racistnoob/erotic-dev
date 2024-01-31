@@ -52,26 +52,31 @@ function playerHasWeapon()
     end
 end
 
+local wait = Wait
+local is_ped_armed = IsPedArmed
+local player_ped_id = PlayerPedId
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000)
-        playerArmed = IsPedArmed(PlayerPedId(), 4)
+      wait(1000)
+        playerArmed = is_ped_armed(player_ped_id(), 4)
     end
 end)
 
+local get_selected_ped_weapon = GetSelectedPedWeapon
+local get_ammo_in_clip = GetAmmoInClip
 CreateThread(function()
   local sleepTimer = 100
     while true do
-      Wait(sleepTimer)
+      wait(sleepTimer)
       if not playerArmed then
-        Wait(1000)
+        wait(1000)
       end
       if not quickSelectEnabled and playerArmed then
         sleepTimer = 100
-        local playerPed = PlayerPedId()
-        local currentWeapon = GetSelectedPedWeapon(playerPed)
+        local playerPed = player_ped_id()
+        local currentWeapon = get_selected_ped_weapon(playerPed)
   
-        local found, clipSize = GetAmmoInClip(playerPed, currentWeapon)
+        local found, clipSize = get_ammo_in_clip(playerPed, currentWeapon)
         if found then
           clipCache[tostring(currentWeapon)] = clipSize
         end

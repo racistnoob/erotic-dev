@@ -208,6 +208,7 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         UpdateStats(worldName)
     end
 
+    TriggerClientEvent("erotic-lobby:updateLobbies", src)
     updateAndSendPlayerCount(1) -- sends every player the new playercount of lobby 1
     Wait(1000)
     updateAndSendPlayerCount(1, true, src) -- sends every playercount only to the new player

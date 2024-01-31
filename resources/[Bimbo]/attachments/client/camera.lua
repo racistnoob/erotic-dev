@@ -82,6 +82,23 @@ local function camControl(weaponObject, coords)
     end
 end
 
+function handleBackground()
+    CreateThread(function()
+        while isOpen do
+            if not LOADING_VARIATION then
+                for k,v in pairs(GetActivePlayers()) do
+                    if v ~= PlayerId() then
+                        SetEntityLocallyInvisible(GetPlayerPed(v))
+                    end
+                end
+            end
+            HideHudAndRadarThisFrame()
+            SetUseHiDof()
+            Wait()
+        end
+    end)
+end
+
 function handleCamUpdates(weaponObject, gunHash, coords)
     CreateThread(function()
         while DoesEntityExist(weaponObject) do

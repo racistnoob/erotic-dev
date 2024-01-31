@@ -42,7 +42,8 @@ local function connectRadio(channel)
     end
     exports["pma-voice"]:setRadioChannel(channel)
 
-    exports['drp-notifications']:SendAlert('inform', ('Connected to %s MHz'):format(channel), 1500)
+    Wait(100)
+    exports['drp-notifications']:SendAlert('inform', ('Connected to %s MHz'):format(LocalPlayer.state.radioChannel), 1500)
     Wait(250)
     updateRadio()
 end

@@ -1,55 +1,67 @@
-local ped = nil
 local vehicle = nil
 
-local function GetSeatPedIsIn(ped)
-    for i=-2,GetVehicleMaxNumberOfPassengers(veh) do
-        if(GetPedInVehicleSeat(veh, i) == ped) then
+local get_vehicle_max_number_of_passengers = GetVehicleMaxNumberOfPassengers
+local get_ped_in_vehicle_seat = GetPedInVehicleSeat
+local function GetSeatPedIsIn(ped, veh)
+    for i=-2,get_vehicle_max_number_of_passengers(veh) do
+        if(get_ped_in_vehicle_seat(veh, i) == ped) then
             return i 
         end
     end
     return -2
 end
 
+local wait = Wait
+local get_vehicle_ped_is_in = GetVehiclePedIsIn
+local is_ped_in_any_vehicle = IsPedInAnyVehicle
+local is_ped_using_action_mode = IsPedUsingActionMode
+local set_ped_using_action_mode = SetPedUsingActionMode
+local is_control_pressed = IsControlPressed
+local is_entity_dead = IsEntityDead
+local set_vehicle_engine_on = SetVehicleEngineOn
+local task_leave_vehicle = TaskLeaveVehicle
+local get_seat_ped_is_in = GetSeatPedIsIn
+local get_is_task_active = GetIsTaskActive
+local set_ped_into_vehicle = SetPedIntoVehicle
+local set_ped_config_flag = SetPedConfigFlag
+
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1000)
-        if not IsPedInAnyVehicle(ped, false) then
-            if IsPedUsingActionMode(ped) then
-                SetPedUsingActionMode(ped, -1, -1, 1)
+        wait(1000)
+        local plyPed = COMBAT.plyPed
+        if not is_ped_in_any_vehicle(plyPed, false) then
+            if is_ped_using_action_mode(plyPed) then
+                set_ped_using_action_mode(plyPed, -1, -1, 1)
             end
         else
-            Citizen.Wait(3000)
+            vehicle = get_vehicle_ped_is_in(plyPed, false)
+            wait(3000)
         end
     end
 end)
 
 Citizen.CreateThread(function()
-	while true do
-		Wait(2000)
-		ped = PlayerPedId()
-		vehicle = GetVehiclePedIsIn(ped, false)
-	end
-end)
-
-Citizen.CreateThread(function()
     while true do
+        wait()
         if vehicle then
+            local plyPed = COMBAT.plyPed
             -- keep engine on
-            if IsControlPressed(2, 75) and not IsEntityDead(ped) then
-                Wait(150)
-                SetVehicleEngineOn(vehicle, true, true, false)
-                TaskLeaveVehicle(ped, vehicle, 0)
+            if is_control_pressed(2, 75) and not is_entity_dead(plyPed) then
+                wait(150)
+                set_vehicle_engine_on(vehicle, true, true, false)
+                task_leave_vehicle(plyPed, vehicle, 0)
             end
       
             -- anti shuffle
-            local seat = GetSeatPedIsIn(ped)
-            SetPedConfigFlag(ped, 184, true)
-            if GetIsTaskActive(ped, 165) == 1 then
-                SetPedIntoVehicle(ped, vehicle, seat) -- getting into car from passenger with no driver
+            local seat = get_seat_ped_is_in(plyPed, vehicle)
+            set_ped_config_flag(plyPed, 184, true)
+            if get_is_task_active(plyPed, 165) == 1 then
+                set_ped_into_vehicle(plyPed, vehicle, seat) -- getting into car from passenger with no driver
             end
+            wait(1000)
+        else
+            wait(2000)
         end
-        SetPedConfigFlag(ped, 353, true)
-        Wait(1000)
     end
 end)
 

@@ -232,35 +232,25 @@ exports("GetInvSpace", function()
     return GetWeight(), Config.DefaultWeights['player']
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        -- print(GetWeight() / Config.DefaultWeights['player'])
-        Citizen.Wait(0)
-        if inventoryData then
-            if IsDisabledControlJustPressed(0, 157) then -- 1
-                if inventoryData[1] ~= 'empty' then
-                    if CanUse(1) then TriggerServerEvent('nui:zbrp:useItem', 1) end
-                end
-            elseif IsDisabledControlJustPressed(0, 158) then -- 2
-                if inventoryData[2] ~= 'empty' then
-                    if CanUse(2) then TriggerServerEvent('nui:zbrp:useItem', 2) end
-                end
-            elseif IsDisabledControlJustPressed(0, 160) then -- 3
-                if inventoryData[3] ~= 'empty' then
-                    if CanUse(3) then TriggerServerEvent('nui:zbrp:useItem', 3) end
-                end
-            elseif IsDisabledControlJustPressed(0, 164) then -- 4
-                if inventoryData[4] ~= 'empty' then
-                    if CanUse(4) then TriggerServerEvent('nui:zbrp:useItem', 4) end
-                end
-            elseif IsDisabledControlJustPressed(0, 165) then --5
-                if inventoryData[5] ~= 'empty' then
-                    if CanUse(5) then TriggerServerEvent('nui:zbrp:useItem', 5) end
-                end
-            end
+
+RegisterCommand("slot", function(source, args)
+    if args and not args[1] or not args then
+        return
+    end
+    local slot = tonumber(args[1])
+
+    if inventoryData then
+        if inventoryData[slot] ~= 'empty' then
+            if CanUse(slot) then TriggerServerEvent('nui:zbrp:useItem', slot) end
         end
     end
-end)
+end, false)
+
+RegisterKeyMapping("slot 1", "Slot 1", "keyboard", "1")
+RegisterKeyMapping("slot 2", "Slot 2", "keyboard", "2")
+RegisterKeyMapping("slot 3", "Slot 3", "keyboard", "3")
+RegisterKeyMapping("slot 4", "Slot 4", "keyboard", "4")
+RegisterKeyMapping("slot 5", "Slot 5", "keyboard", "5")
 
 function IsWeapon(slot)
     if string.find(inventoryData[slot].item, "WEAPON") then return true end
@@ -273,22 +263,26 @@ function CanUse(slot)
     return true
 end
 
+local disable_control_action = DisableControlAction
+local block_weapon_wheel_this_frame = BlockWeaponWheelThisFrame
+local wait = Wait
+
 -- [[ WEAPON WHEEL ]] --
 CreateThread(function()
     while true do
-        Wait(0)
-        BlockWeaponWheelThisFrame()
-        DisableControlAction(0, 36, true)
-        DisableControlAction(0, 37, true)
-        DisableControlAction(0, 199, true)
+        wait(8)
+        block_weapon_wheel_this_frame()
+        disable_control_action(0, 36, true)
+        disable_control_action(0, 37, true)
+        disable_control_action(0, 199, true)
 
-        DisableControlAction(0, 199, true)
-        DisableControlAction(0, 37, true)
-        DisableControlAction(0, 140, true)
-        DisableControlAction(0, 141, true)
-        DisableControlAction(0, 142, true)
-        DisableControlAction(0, 257, true)
-        DisableControlAction(0, 263, true)
-        DisableControlAction(0, 264, true)
+        disable_control_action(0, 199, true)
+        disable_control_action(0, 37, true)
+        disable_control_action(0, 140, true)
+        disable_control_action(0, 141, true)
+        disable_control_action(0, 142, true)
+        disable_control_action(0, 257, true)
+        disable_control_action(0, 263, true)
+        disable_control_action(0, 264, true)
     end
 end)

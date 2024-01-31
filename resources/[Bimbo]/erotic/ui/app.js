@@ -2,15 +2,15 @@ window.addEventListener('message', (event) => {
     if (event.data.type === 'show') {
         let ele = document.querySelector('#combat');
         ele.style.opacity = event.data.value ? '1' : '0';
+    }
 
+    if (event.data.type === 'xhair') {
         let xhair = document.querySelector('.xhair-container');
         xhair.style.opacity = event.data.cross ? '0' : '1';
-
     }
 
     if (event.data.type === 'xhair_colour') {
         let xhair = document.querySelector('.xhair');
-        console.log(event.data.color)
         xhair.style.setProperty('background-color', event.data.color || "rgb(255, 255, 255)");
     }
 

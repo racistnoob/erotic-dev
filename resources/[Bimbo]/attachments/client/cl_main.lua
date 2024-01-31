@@ -37,6 +37,7 @@ RegisterNetEvent("erp-weaponbench:openMenu", function(data)
     isOpen = true
     SetNuiFocus(true, true)
     SetNuiFocusKeepInput(true)
+    handleBackground()
 end)
 
 RegisterNUICallback("changeAttachment", function(data, cb)

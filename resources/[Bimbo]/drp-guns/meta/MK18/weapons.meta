@@ -210,59 +210,11 @@
 					<FirstPersonDofMaxNearInFocusDistanceBlendLevel value="0.300000"/>
 					<FirstPersonScopeAttachmentData>
 						<Item>
-							<Name>COMPONENT_MK18_SCOPE_01</Name>
-							<FirstPersonScopeAttachmentFov value="45.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0187500" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>		 	 
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_02</Name>
-							<FirstPersonScopeAttachmentFov value="55.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_03</Name>
-							<FirstPersonScopeAttachmentFov value="55.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_04</Name>
-							<FirstPersonScopeAttachmentFov value="10.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0220000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
 							<Name>COMPONENT_MK18_SCOPE_05</Name>
 							<FirstPersonScopeAttachmentFov value="45.000000" />
 							<FirstPersonScopeAttachmentOffset x="-0.001000" y="0.125000" z="-0.0180000" />
 							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_06</Name>
-							<FirstPersonScopeAttachmentFov value="45.000000" />
-							<FirstPersonScopeAttachmentOffset x="-0.002500" y="0.125000" z="-0.0200000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_07</Name>
-							<FirstPersonScopeAttachmentFov value="45.000000" />
-							<FirstPersonScopeAttachmentOffset x="-0.000500" y="0.125000" z="-0.0240000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_08</Name>
-							<FirstPersonScopeAttachmentFov value="5.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0285000" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
-						<Item>
-							<Name>COMPONENT_MK18_SCOPE_09</Name>
-							<FirstPersonScopeAttachmentFov value="5.000000" />
-							<FirstPersonScopeAttachmentOffset x="0.0003000" y="0.125000" z="-0.0232500" />
-							<FirstPersonScopeAttachmentRotationOffset x="-1.500000" y="0.000000" z="0.00000" />
-						</Item>	
+						</Item>
 					</FirstPersonScopeAttachmentData>	
 					<ZoomFactorForAccurateMode value="1.300000"/>
 					<RecoilShakeHash>ASSAULT_RIFLE_RECOIL_SHAKE</RecoilShakeHash>
@@ -359,31 +311,7 @@
 							<AttachBone>WAPFlshLasr</AttachBone>
 							<Components>
 								<Item>
-									<Name>COMPONENT_MK18_FLASH_01</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_02</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_03</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_04</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_05</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_06</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_FLASH_07</Name>
+									<Name>COMPONENT_MK18_FLSH</Name>
 									<Default value="false"/>
 								</Item>
 							</Components>
@@ -392,39 +320,7 @@
 							<AttachBone>WAPScop</AttachBone>
 							<Components>
 								<Item>
-									<Name>COMPONENT_MK18_SCOPE_01</Name>
-									<Default value="true"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_02</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_03</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_04</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
 									<Name>COMPONENT_MK18_SCOPE_05</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_06</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_07</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_08</Name>
-									<Default value="false"/>
-								</Item>
-								<Item>
-									<Name>COMPONENT_MK18_SCOPE_09</Name>
 									<Default value="false"/>
 								</Item>
 							</Components>

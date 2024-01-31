@@ -1635,7 +1635,7 @@ CreateThread(function()
 				end
 			end
 		else
-			sleepTimer = 2500
+			sleepTimer = 3000
 		end
 		Wait(sleepTimer)
 	end
@@ -2102,7 +2102,7 @@ function CreatePeds(pedsData)
 						break
 					end
 				else
-					sleepTimer = 2500
+					sleepTimer = 3000
 				end
 				Wait(sleepTimer)
 			end

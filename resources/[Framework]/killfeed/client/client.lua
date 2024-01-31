@@ -9,7 +9,7 @@ local function GetWeaponName(hash)
         elseif hash == GetHashKey('WEAPON_GOLFCLUB') then return 'golfclub'
         elseif hash == GetHashKey('WEAPON_TACTICALRIFLE') then return 'tacticalrifle'
         elseif hash == GetHashKey('WEAPON_HEAVYRIFLE') then return 'heavyrifle'
-        elseif hash == GetHashKey('WEAPON_CARBINERIFLE_MK2') then return 'carbinerifle_mk2'
+        elseif hash == GetHashKey('WEAPON_762') then return 'carbinerifle_mk2'
         elseif hash == GetHashKey('WEAPON_SP45') then return 'pistol'
         elseif hash == GetHashKey('WEAPON_1911') then return 'pistol'
     end
