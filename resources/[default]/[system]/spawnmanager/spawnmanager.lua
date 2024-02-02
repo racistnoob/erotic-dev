@@ -241,7 +241,6 @@ function spawnPlayer(spawnIdx, cb)
 
         freezePlayer(PlayerId(), true)
         local ped = PlayerPedId()
-        SetEntityCoords(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
         ClearPedTasksImmediately(ped)
         RemoveAllPedWeapons(ped)
         ClearPlayerWantedLevel(PlayerId())

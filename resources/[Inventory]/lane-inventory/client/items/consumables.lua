@@ -5,7 +5,8 @@ local healing = false
 CreateThread(function()
     Item.Register("oxy", {
         func = function(item)
-            if Player.Health() == 200 or healing == true then
+            local nonstopCombat = exports['core']:getNonstopCombat()
+            if not nonstopCombat and (Player.Health() == 200 or healing == true) then
                 -- Already Full HP
                 return false
             end
@@ -17,35 +18,44 @@ CreateThread(function()
                 canShoot = true
             })
             if (finished == 100) then
-                local count = math.random(30, 60)
-                healing = true
-                while count > 0 do
-                    Wait(1000)
-                    count = count - 1
-                    healAmount = math.random(1, 4)
-                    SetEntityHealth(playerPed, GetEntityHealth(playerPed) + healAmount)
-                    if IsEntityDead(playerPed) then
-                        healing = false
-                        break
+                if nonstopCombat then
+                    exports['core']:Gauze()
+                else
+                    local count = math.random(30, 60)
+                    healing = true
+                    while count > 0 do
+                        Wait(1000)
+                        count = count - 1
+                        healAmount = math.random(1, 4)
+                        SetEntityHealth(playerPed, GetEntityHealth(playerPed) + healAmount)
+                        if IsEntityDead(playerPed) then
+                            healing = false
+                            break
+                        end
                     end
+                    healing = false
                 end
-                healing = false
+                API.RemoveItem(item, 1)
             end
         end
     })
     
     Item.Register("armour", {
         func = function(item)
-            if Player.Armour() == 100 then return false end
-            local playerPed = PlayerPedId()
+            local nonstopCombat = exports['core']:getNonstopCombat()
+            if not nonstopCombat and Player.Armour() == 100 then return false end
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 4500,
+                length = nonstopCombat and 8000 or 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
             if (finished == 100) then
-                SetPlayerMaxArmour(PlayerId(), 100)
-                AddArmourToPed(Player.Ped(), 100)
+                if nonstopCombat then
+                    exports['core']:HeavyArmor()
+                else
+                    SetPlayerMaxArmour(PlayerId(), 100)
+                    AddArmourToPed(Player.Ped(), 100)
+                end
                 API.RemoveItem(item, 1)
             end
             return true
@@ -55,20 +65,24 @@ CreateThread(function()
 
     Item.Register("armour2", {
         func = function(item)
-            if Player.Armour() == 100 then return false end
+            local nonstopCombat = exports['core']:getNonstopCombat()
+            if not nonstopCombat and Player.Armour() == 100 then return false end
             local playerPed = PlayerPedId()
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 4500,
+                length = nonstopCombat and 8000 or 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
 
             if (finished == 100) then
-                SetPlayerMaxArmour(PlayerId(), 100)
-                AddArmourToPed(Player.Ped(), 60)
+                if nonstopCombat then
+                    exports['core']:HeavyArmor()
+                else
+                    SetPlayerMaxArmour(PlayerId(), 100)
+                    AddArmourToPed(Player.Ped(), 60)
+                end
                 API.RemoveItem(item, 1)
             end
-            ClearPedTasks(playerPed)
             return true
         end,
         animClearance = true
@@ -146,8 +160,8 @@ CreateThread(function()
 
     Item.Register("joint", {
         func = function(item)
-            if Player.Armour() == 100 then return false end
-            local playerPed = PlayerPedId()
+            local nonstopCombat = exports['core']:getNonstopCombat()
+            if not nonstopCombat and Player.Armour() == 100 then return false end
             Player.InAnim = true
             local finished = exports["lane-taskbar"]:taskBar({
                 length = 2500,
@@ -155,11 +169,14 @@ CreateThread(function()
                 animation = { dict = "amb@world_human_smoking_pot@male@base", anim = "base", prop = "joint"},
                 canShoot = true
             })
-
             if (finished == 100) then
-                SetPedArmour(Player.Ped(), Player.Armour() + 15)
-                ClearPedTasks(Player.Ped())
-                DeleteEntity(jointProp)
+                if nonstopCombat then
+                    exports['core']:AddEffect("Armor", GetRandomFloatInRange(0.6, 0.9))
+                    exports['core']:AddEffect("Comfort", 0.4)
+                    exports['core']:AddEffect("Drug", 0.7)
+                else
+                    SetPedArmour(Player.Ped(), Player.Armour() + 15)
+                end
                 API.RemoveItem(item, 1)
                 Player.InAnim = false
             end

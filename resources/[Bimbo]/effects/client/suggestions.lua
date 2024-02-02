@@ -21,6 +21,6 @@ local suggestions = {
   },
 }
 
-for _, suggestion in ipairs(suggestions) do
+for _, suggestion in pairs(suggestions) do
   addSuggestion(suggestion.name, suggestion.desc, suggestion.args)
 end

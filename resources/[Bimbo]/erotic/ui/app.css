@@ -1,143 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Oswald&family=Poppins&family=Yuji+Hentaigana+Akari&display=swap');
-@keyframes fadeAnimation {
-    0%,
-    100% {
+    @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&family=Oswald&family=Poppins&family=Yuji+Hentaigana+Akari&display=swap');
+    @keyframes fadeAnimation {
+        0%,
+        100% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+    
+    .scope {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
         opacity: 0;
+        transition: opacity 0.3s ease-in-out;
     }
-    50% {
+    
+    scope img {
+        width: 100px;
+        /* Adjust the size of your scope image */
+        height: 100px;
+        /* Adjust the size of your scope image */
+        border-radius: 50%;
+        /* Make it circular */
+        box-shadow: 0 0 100vh 100vmax rgba(0, 0, 0, 0.7);
+        object-fit: contain;
+    }
+    
+    .scope.visible {
         opacity: 1;
+        transition: opacity 0.3s ease-in-out;
     }
-}
-
-.scope {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-scope img {
-    width: 100px;
-    /* Adjust the size of your scope image */
-    height: 100px;
-    /* Adjust the size of your scope image */
-    border-radius: 50%;
-    /* Make it circular */
-    box-shadow: 0 0 100vh 100vmax rgba(0, 0, 0, 0.7);
-    object-fit: contain;
-}
-
-.scope.visible {
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.fullscreen-flex-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-#combat {
-    transition: opacity .7s ease-in-out;
-    opacity: 0;
-    display: flex;
-}
-
-.WaterMark {
-    opacity: 1;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1100;
-}
-
-.WaterMark.hide {
-    opacity: 0;
-    transition: opacity .7s ease-in-out;
-}
-
-.WM-data {
-    padding: 0%;
-    margin: 0%;
-    text-shadow: 2px 2px 1px black;
-    color: gray;
-    font-family: Poppins;
-    text-align: center;
-}
-
-.WM-data-desc {
-    animation: fadeAnimation 10s infinite;
-    padding: 0%;
-    margin: 0%;
-    font-size: 10px;
-    text-shadow: 2px 2px 1px black;
-    color: white;
-    font-style: italic;
-    font-family: Poppins;
-    text-align: center;
-}
-
-.xhair-container {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.xhair {
-    border-radius: 100%;
-    border: 2px solid black;
-    width: 2px;
-    height: 2px;
-    background-color: rgb(255, 255, 255);
-}
-
-.ammo-container {
-    position: fixed;
-    top: 10px;
-    right: 30px;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;
-    text-align: right;
-    font-size: 30px;
-    font-family: Poppins, sans-serif;
-}
-
-.ammo-count {
-    margin: 4px;
-    font-weight: 600;
-    font-size: 30px;
-    font-weight: 1000;
-    color: gray;
-    display: flex;
-    text-shadow: 2px 2px 1px black;
-}
-
-.ammo-max {
-    font-weight: 600;
-    margin: 4px;
-    font-size: 30px;
-    color: white;
-    display: flex;
-    text-shadow: 2px 2px 1px black;
-}
+    
+    .fullscreen-flex-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    #combat {
+        transition: opacity .7s ease-in-out;
+        opacity: 0;
+        display: flex;
+    }
+    
+    .WaterMark {
+        font-size: 12px;
+        opacity: 1;
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        z-index: 1100;
+    }
+    
+    .WaterMark.hide {
+        opacity: 0;
+        transition: opacity .7s ease-in-out;
+    }
+    
+    .WM-data {
+        padding: 0%;
+        margin: 0%;
+        text-shadow: 2px 2px 1px black;
+        color: gray;
+        font-family: Poppins;
+        text-align: left;
+    }
+    
+    .WM-data-desc {
+        /* animation: fadeAnimation 10s infinite; */
+        padding: 0%;
+        margin: 0%;
+        margin-left: 3px;
+        font-size: 12px;
+        text-shadow: 2px 2px 1px black;
+        color: white;
+        font-family: Poppins;
+    }
+    
+    .xhair-container {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .xhair {
+        border-radius: 100%;
+        border: 2px solid black;
+        width: 2px;
+        height: 2px;
+        background-color: rgb(255, 255, 255);
+    }
+    
+    .ammo-container {
+        position: fixed;
+        top: 10px;
+        right: 30px;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 30px;
+        text-align: right;
+        font-size: 30px;
+        font-family: Poppins, sans-serif;
+    }
+    
+    .ammo-count {
+        margin: 4px;
+        font-weight: 600;
+        font-size: 30px;
+        font-weight: 1000;
+        color: gray;
+        display: flex;
+        text-shadow: 2px 2px 1px black;
+    }
+    
+    .ammo-max {
+        font-weight: 600;
+        margin: 4px;
+        font-size: 30px;
+        color: white;
+        display: flex;
+        text-shadow: 2px 2px 1px black;
+    }

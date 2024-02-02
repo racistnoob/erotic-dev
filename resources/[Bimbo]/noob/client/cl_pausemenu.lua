@@ -5,8 +5,7 @@ end)
 
 
 local open = false
-RegisterCommand('pausemenu', function()
-    Wait(250)
+local function pauseMenu()
     if (IsPauseMenuActive() or IsPauseMenuRestarting()) and not open then
         repeat
             open = true
@@ -16,6 +15,11 @@ RegisterCommand('pausemenu', function()
         until not IsPauseMenuActive()
         open = false
     end
+end
+
+RegisterCommand('pausemenu', function()
+    Wait(250)
+    pauseMenu()
 end, false)
 
 RegisterKeyMapping('pausemenu', 'Pause Menu', 'keyboard', 'ESCAPE')

@@ -6,6 +6,43 @@ local cameraDistance = 0.5
 local distanceStep = 0.05
 local distanceClamp = {min = 0.25, max = 1.0}
 
+local math_clamp = math.clamp
+local math_cos = math.cos
+local math_sin = math.sin
+local math_pi = math.pi
+local get_disabled_control_normal = GetDisabledControlNormal
+local is_disabled_control_pressed = IsDisabledControlPressed
+local does_entity_exist = DoesEntityExist
+local is_nui_focused = IsNuiFocused
+local set_nui_focus = SetNuiFocus
+local set_cam_coord = SetCamCoord
+local point_cam_at_entity = PointCamAtEntity
+local get_entity_forward_vector = GetEntityForwardVector
+local create_cam = CreateCam
+local set_cam_use_shallow_dof_mode = SetCamUseShallowDofMode
+local set_cam_near_dof = SetCamNearDof
+local set_cam_far_dof = SetCamFarDof
+local set_cam_active = SetCamActive
+local render_script_cams = RenderScriptCams
+local send_nui_message = SendNUIMessage
+local does_cam_exist = DoesCamExist
+local createthread = CreateThread
+local get_active_players = GetActivePlayers
+local set_entity_locally_invisible = SetEntityLocallyInvisible
+local get_player_ped = GetPlayerPed
+local playerid = PlayerId
+local hide_hud_and_radar_this_time = HideHudAndRadarThisFrame
+local set_use_hi_dof = SetUseHiDof
+local wait = Wait
+local disable_player_firing = DisablePlayerFiring
+local player_ped_id = PlayerPedId
+local disable_all_control_actions = DisableAllControlActions
+local is_disabled_control_just_pressed = IsDisabledControlJustPressed
+local set_nui_focus_keep_input = SetNuiFocusKeepInput
+local freeze_entity_position = FreezeEntityPosition
+local delete_entity = DeleteEntity
+local destroy_cam = DestroyCam
+local pairs = pairs
 function createWeaponCam(coords, gunHash)
     
     local weaponObject = EDIT_GUN
@@ -13,26 +50,26 @@ function createWeaponCam(coords, gunHash)
     rotationY = 10.696850389987
     cameraDistance = 0.6
 
-    local forwardVector = GetEntityForwardVector(weaponObject)
+    local forwardVector = get_entity_forward_vector(weaponObject)
     local cameraX = coords.x + cameraDistance * forwardVector.x
     local cameraY = coords.y + cameraDistance * forwardVector.y
     local cameraZ = coords.z + cameraDistance * forwardVector.z
 
-    weaponCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
-    SetCamCoord(weaponCam, cameraX, cameraY, cameraZ)
-    PointCamAtEntity(weaponCam, weaponObject, 0.0, 0.0, 0.0, true)
-    SetCamUseShallowDofMode(weaponCam, true)
-    SetCamNearDof(weaponCam, 0.1)
-    SetCamFarDof(weaponCam, 0.7)
-    SetCamActive(weaponCam, true)
-    RenderScriptCams(true, false, 0, true, true)
+    weaponCam = create_cam("DEFAULT_SCRIPTED_CAMERA", true)
+    set_cam_coord(weaponCam, cameraX, cameraY, cameraZ)
+    point_cam_at_entity(weaponCam, weaponObject, 0.0, 0.0, 0.0, true)
+    set_cam_use_shallow_dof_mode(weaponCam, true)
+    set_cam_near_dof(weaponCam, 0.1)
+    set_cam_far_dof(weaponCam, 0.7)
+    set_cam_active(weaponCam, true)
+    render_script_cams(true, false, 0, true, true)
     local hasChanged = GetWeaponBoneCoords(gunHash)
     if hasChanged then
-        SendNUIMessage({ type = "updatePos", bonePositions = BONE_POSITIONS })
+        send_nui_message({ type = "updatePos", bonePositions = BONE_POSITIONS })
     end
     handleCamUpdates(weaponObject, gunHash, coords)
-    CreateThread(function()
-        while DoesCamExist(weaponCam) do
+    createthread(function()
+        while does_cam_exist(weaponCam) do
             Wait(1)
             ShowHelpNotification(
                 'Press ~INPUT_FRONTEND_RDOWN~ Accept' ..
@@ -44,18 +81,18 @@ function createWeaponCam(coords, gunHash)
 end
 
 local function camControl(weaponObject, coords)
-    if not DoesEntityExist(weaponObject) then return end
-    if not IsNuiFocused() then
-        SetNuiFocus(true, true)
+    if not does_entity_exist(weaponObject) then return end
+    if not is_nui_focused() then
+        set_nui_focus(true, true)
     end
-    if IsDisabledControlPressed(0, 206) then
-        SetNuiFocus(false, false)
+    if is_disabled_control_pressed(0, 206) then
+        set_nui_focus(false, false)
 
-        if IsDisabledControlPressed(2, 241) then
+        if is_disabled_control_pressed(2, 241) then
             cameraDistance -= distanceStep
         end
 
-        if IsDisabledControlPressed(2, 242) then
+        if is_disabled_control_pressed(2, 242) then
             cameraDistance += distanceStep
         end
 
@@ -67,64 +104,65 @@ local function camControl(weaponObject, coords)
             cameraDistance = distanceClamp.min
         end
 
-        local mouseX = GetDisabledControlNormal(0, 1) * rotationSpeed
-        local mouseY = GetDisabledControlNormal(0, 2) * rotationSpeed
+        local mouseX = get_disabled_control_normal(0, 1) * rotationSpeed
+        local mouseY = get_disabled_control_normal(0, 2) * rotationSpeed
 
-        rotationX = math.clamp(rotationX - mouseY, -math.pi / 2, math.pi / 2)
+        rotationX = math_clamp(rotationX - mouseY, -math_pi / 2, math_pi / 2)
         rotationY = rotationY - mouseX
     
-        local camX = coords.x + cameraDistance * math.cos(rotationY) * math.cos(rotationX)
-        local camY = coords.y + cameraDistance * math.sin(rotationY) * math.cos(rotationX)
-        local camZ = coords.z + cameraDistance * math.sin(rotationX)
+        local camX = coords.x + cameraDistance * math_cos(rotationY) * math_cos(rotationX)
+        local camY = coords.y + cameraDistance * math_sin(rotationY) * math_cos(rotationX)
+        local camZ = coords.z + cameraDistance * math_sin(rotationX)
 
-        SetCamCoord(weaponCam, camX, camY, camZ)
-        PointCamAtEntity(weaponCam, weaponObject, 0.0, 0.0, 0.0, true)
+        set_cam_coord(weaponCam, camX, camY, camZ)
+        point_cam_at_entity(weaponCam, weaponObject, 0.0, 0.0, 0.0, true)
     end
 end
 
 function handleBackground()
-    CreateThread(function()
+    createthread(function()
         while isOpen do
             if not LOADING_VARIATION then
-                for k,v in pairs(GetActivePlayers()) do
-                    if v ~= PlayerId() then
-                        SetEntityLocallyInvisible(GetPlayerPed(v))
+                for k,v in pairs(get_active_players()) do
+                    if v ~= playerid() then
+                        set_entity_locally_invisible(get_player_ped(v))
                     end
                 end
             end
-            HideHudAndRadarThisFrame()
-            SetUseHiDof()
-            Wait()
+            hide_hud_and_radar_this_time()
+            set_use_hi_dof()
+            wait()
         end
     end)
 end
 
 function handleCamUpdates(weaponObject, gunHash, coords)
-    CreateThread(function()
-        while DoesEntityExist(weaponObject) do
-            Wait(0)
+    createthread(function()
+        while does_entity_exist(weaponObject) do
+            wait(0)
 
-            DisablePlayerFiring(PlayerPedId(), true)
-            DisableAllControlActions(0)
+            local plyPed = player_ped_id()
+            disable_player_firing(plyPed, true)
+            disable_all_control_actions(0)
             local hasChanged = GetWeaponBoneCoords(gunHash)
 
             if hasChanged then
-                SendNUIMessage({ type = "updatePos", bonePositions = BONE_POSITIONS })
+                send_nui_message({ type = "updatePos", bonePositions = BONE_POSITIONS })
             end
 
             camControl(weaponObject, coords)
 
-            if IsDisabledControlJustPressed(0, 191) then
+            if is_disabled_control_just_pressed(0, 191) then
                 exports["erotic"]:toggleHud(true)
                 exports["drp-hud"]:toggleNui(true)
                 exports["killfeed"]:toggleHud(true)
-                SendNUIMessage({ type = "openUI", toggle = false, gunData = {} })
-                SetNuiFocus(false, false)
-                SetNuiFocusKeepInput(false)
-                FreezeEntityPosition(PlayerPedId(), false)
-                DeleteEntity(weaponObject)
-                DestroyCam(weaponCam, true)
-                RenderScriptCams(false, false, 0, true, true)
+                send_nui_message({ type = "openUI", toggle = false, gunData = {} })
+                set_nui_focus(false, false)
+                set_nui_focus_keep_input(false)
+                freeze_entity_position(plyPed, false)
+                delete_entity(weaponObject)
+                destroy_cam(weaponCam, true)
+                render_script_cams(false, false, 0, true, true)
                 EDIT_GUN = nil
                 break
             end
@@ -133,7 +171,7 @@ function handleCamUpdates(weaponObject, gunHash, coords)
 end
 
 function destroyWeaponCamera()
-    DestroyCam(weaponCam, true)
-    RenderScriptCams(false, false, 0, true, true)
+    destroy_cam(weaponCam, true)
+    render_script_cams(false, false, 0, true, true)
     weaponCam = nil
 end

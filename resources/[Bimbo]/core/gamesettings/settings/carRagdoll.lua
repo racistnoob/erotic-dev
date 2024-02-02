@@ -26,6 +26,7 @@ local function EnableCarRagdoll()
         end
     end)
 end
+  
 
 -- Function to control the state of car ragdoll
 function SetCarRagdoll(state)

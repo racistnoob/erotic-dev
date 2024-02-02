@@ -19,7 +19,7 @@ Recoil:RegisterMode("roleplay", function()
     if is_ped_shooting(ped) then
         local _, wep = get_current_ped_weapon(ped)
         local GamePlayCam = get_follow_ped_cam_view_mode()
-        local MovementSpeed = math.ceil(get_entity_speed(ped))
+        local MovementSpeed = math_ceil(get_entity_speed(ped))
 
         if MovementSpeed > 69 then
             MovementSpeed = 69

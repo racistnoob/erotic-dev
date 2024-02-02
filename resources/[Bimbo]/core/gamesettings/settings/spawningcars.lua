@@ -8,6 +8,7 @@ local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro"
 local spawnedCar
 spawningcars = true
 
+local pairs = pairs
 local function IsVehicleWhitelisted(model)
     for _, name in pairs(whitelistedVehicles) do
         if model == GetHashKey(name) then
@@ -58,27 +59,49 @@ local function deletePreviousVehicle(playerPed)
     end
 end
 
+local createthread = CreateThread
+local tonumber = tonumber
+local get_hash_key = GetHashKey
+local get_offset_from_entity_in_world_coords = GetOffsetFromEntityInWorldCoords
+local table_unpack = table.unpack
+local has_model_loaded = HasModelLoaded
+local wait = Wait
+local request_model = RequestModel
+local create_vehicle = CreateVehicle
+local get_entity_heading = GetEntityHeading
+local does_entity_exist = DoesEntityExist
+local set_ped_into_vehicle = SetPedIntoVehicle
+local trigger_event = TriggerEvent
+local get_vehicle_number_plate_text = GetVehicleNumberPlateText
+local set_vehicle_engine_on = SetVehicleEngineOn
+local set_vehicle_dirt_level = SetVehicleDirtLevel
+local set_resource_kvp = SetResourceKvp
+local get_resource_kvp_string = GetResourceKvpString
+local tostring = tostring
+local json_decode = json.decode
+local json_encode = json.encode
+local get_entity_model = GetEntityModel
 RegisterNetEvent("drp:spawnvehicle")
 AddEventHandler("drp:spawnvehicle", function(veh)
     local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
-    local trickLobby = worldID == 3
+    local trickLobby = worldID == 4
     if spawningcars or trickLobby and veh == "deluxo" then
-        local playerPed = PlayerPedId()
-        local vehiclehash = GetHashKey(veh)
-        local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(playerPed, 0.5, 0.0, 0.0))
+        local playerPed = PlayerPed
+        local vehiclehash = get_hash_key(veh)
+        local x, y, z = table_unpack(get_offset_from_entity_in_world_coords(playerPed, 0.5, 0.0, 0.0))
 
         if not IsVehicleWhitelisted(vehiclehash) and not trickLobby then
             exports['drp-notifications']:SendAlert('error', 'This vehicle cannot be spawned.', 5000)
             return
         end
 
-        RequestModel(vehiclehash)
+        request_model(vehiclehash)
 
-        Citizen.CreateThread(function()
+        createthread(function()
             local waiting = 0
-            while not HasModelLoaded(vehiclehash) do
+            while not has_model_loaded(vehiclehash) do
                 waiting = waiting + 100
-                Citizen.Wait(100)
+                wait(100)
                 if waiting > 5000 then
                     exports['drp-notifications']:SendAlert('error', 'Failed to spawn the vehicle.', 5000)
                     return
@@ -89,20 +112,20 @@ AddEventHandler("drp:spawnvehicle", function(veh)
 
             deletePreviousVehicle(playerPed)
 
-            local car = CreateVehicle(vehiclehash, x, y, z, GetEntityHeading(playerPed), 1, 0)
-            if DoesEntityExist(car) then
-                SetPedIntoVehicle(playerPed, car, -1)
+            local car = create_vehicle(vehiclehash, x, y, z, get_entity_heading(playerPed), 1, 0)
+            if does_entity_exist(car) then
+                set_ped_into_vehicle(playerPed, car, -1)
                 exports['drp-notifications']:SendAlert('inform', 'Vehicle spawned', 5000)
-                TriggerEvent('keys:addNew', car, GetVehicleNumberPlateText(car))
-                SetVehicleEngineOn(car, true, true, false)
-                SetVehicleDirtLevel(car, 0.0)
+                trigger_event('keys:addNew', car, get_vehicle_number_plate_text(car))
+                set_vehicle_engine_on(car, true, true, false)
+                set_vehicle_dirt_level(car, 0.0)
                 spawnedCar = car
-                SetResourceKvp("last_vehicle", veh)
+                set_resource_kvp("last_vehicle", veh)
 
-                Citizen.CreateThread(function()
-                    local savedMods = GetResourceKvpString("vehicle_" .. tostring(vehiclehash) .. "_mods")
+                createthread(function()
+                    local savedMods = get_resource_kvp_string("vehicle_" .. tostring(vehiclehash) .. "_mods")
                     if savedMods then
-                        local parsedMods = json.decode(savedMods)
+                        local parsedMods = json_decode(savedMods)
                         if parsedMods then
                             exports["noob"]:SetVehicleProperties(car, parsedMods)
                         end
@@ -118,20 +141,20 @@ AddEventHandler("drp:spawnvehicle", function(veh)
 end)
 
 AddEventHandler("drp:saveVehicleModsBennys", function(veh)
-    if not DoesEntityExist(veh) then return end
+    if not does_entity_exist(veh) then return end
     local mods = exports['noob']:GetVehicleProperties(veh)
-    SetResourceKvp("vehicle_" .. tostring(GetEntityModel(veh)) .. "_mods", json.encode(mods))
+    set_resource_kvp("vehicle_" .. tostring(get_entity_model(veh)) .. "_mods", json_encode(mods))
 end)
 
 RegisterCommand("previous_vehicle", function()
-    TriggerEvent("drp:spawnvehicle", GetResourceKvpString('last_vehicle') or "revolter")
+    TriggerEvent("drp:spawnvehicle", get_resource_kvp_string('last_vehicle') or "revolter")
 end)
 
 RegisterKeyMapping("previous_vehicle", "Spawn your last spawned vehicle", "KEYBOARD", "F3")
 
 RegisterCommand("dv", function()
     if exports["noob"]:inSafeZone() then
-        deleteCurrentVehicle(PlayerPedId())
+        deleteCurrentVehicle(PlayerPed)
     end
 end)
 RegisterKeyMapping("dv", "Delete current vehicle", "KEYBOARD", "K")

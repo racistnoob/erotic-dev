@@ -41,18 +41,18 @@ for _, cmd in pairs(Config.commands) do
                     if cmd.serverevent and cmd.serverevent ~= "" then
                         eventToTrigger = cmd.serverevent
                     end
-
+                    
                     local selectedArg = args[1] or cmd.argsNil
                     local targetPlayer = source -- Default to the player who issued the command
-
+                    
                     if cmd.targetSelf then
                         targetPlayer = source  -- If targetSelf is true, only target the player who issued the command
                     end
-
+                    
                     if cmd.targetAll then
                         targetPlayer = -1  -- If targetSelf is true, only target the player who issued the command
                     end
-
+                    
                     if eventToTrigger then
                         if cmd.serverevent then
                             TriggerEvent(eventToTrigger, selectedArg)
@@ -71,3 +71,88 @@ for _, cmd in pairs(Config.commands) do
         end, false)
     end
 end
+
+local function getIdentifier(plyId, identifier)
+    local numIdentifiers = GetNumPlayerIdentifiers(plyId)	
+    for i=0, numIdentifiers -1 do
+        local currIdentifier = GetPlayerIdentifier(plyId, i)
+        if currIdentifier then
+            if string.find(currIdentifier, identifier..":") then
+                return currIdentifier
+            end
+        end
+    end
+    return ""
+end
+
+local TX_ADMINS = {}
+AddEventHandler("txAdmin:events:adminAuth", function(data)
+    if data.netid ~= -1 then
+        TX_ADMINS[tostring(data.netid)] = data.isAdmin
+    end
+end)
+
+local function sendToDisc(title, msg)
+    local embed = {
+        {
+            ["title"] = "**".. title .."**",
+            ["description"] = msg,
+        }
+    }
+    PerformHttpRequest("https://discord.com/api/webhooks/1201644493926060143/UzV2wxPv2af8uSqnXmVtKe9QApREglkTvBgC9Z78Iy12OkqabiYEsCf7HEo1mjAC3hLB", function(err, text, headers) end, 'POST', json.encode({embeds = embed}), { ['Content-Type'] = 'application/json' })
+end
+
+
+RegisterCommand("report", function(source, args, rawCommand)
+    local report = string.sub(rawCommand, 8)
+    if #report > 0 and report ~= nil then
+        local src = source
+        local name = GetPlayerName(src)
+        local discord = getIdentifier(src, "discord")
+        TriggerClientEvent('chat:addMessage', src, {
+            template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+            args = { "[REPORT]", "Report submitted."}
+        })
+
+        for adminId, admin in pairs(TX_ADMINS) do
+            if admin then
+                TriggerClientEvent('chat:addMessage', adminId, {
+                    template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+                    args = { "[REPORT]", "\n"..name..": "..report}
+                })
+            end
+        end
+        sendToDisc("Player: "..name.." ["..src.."]",
+        "**Report:** ```"..report.."```"..
+        "\n**Discord:** <@!"..discord:gsub('discord:', '')..">"..
+        "\n**Discord ID:** "..discord:gsub('discord:', ''))
+    end
+end, false)
+
+local function disp_time(time)
+    local days = math.floor(time/86400)
+    local hours = math.floor(math.fmod(time, 86400)/3600)
+    local minutes = math.floor(math.fmod(time,3600)/60)
+    local seconds = math.floor(math.fmod(time,60))
+    return string.format("%d days %02d hours %02d minutes %02d seconds",days,hours,minutes,seconds)
+end
+
+RegisterCommand("playtime", function(source, args, rawCommand)
+    local fivem = getIdentifier(source, "fivem")
+    if fivem ~= "" then
+        local api = "https://lambda.fivem.net/api/ticket/playtimes/7dvoad?identifiers[]="
+        api = api..fivem
+        
+        PerformHttpRequest(api, function (errorCode, resultData)
+            TriggerClientEvent('chat:addMessage', source, {
+                template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+                args = { "[PLAYTIME]", disp_time(json.decode(resultData)[1].seconds)}
+            })
+        end)
+    else
+        TriggerClientEvent('chat:addMessage', source, {
+            template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+            args = { "[PLAYTIME]", "FiveM identifier not connected."}
+        })
+    end
+end)

@@ -1015,6 +1015,89 @@ WEAPON_LIST = {
             options = {},
         },
     },
+    [`WEAPON_ASSAULTSMG`] = {
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_ASSAULTSMG_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_ASSAULTSMG_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 20000
+        --         },
+        --     },
+        -- },
+        {
+            label = "Flashlight",
+            bone = "WAPFlshLasr",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_FLSH",
+                    label = "Flashlight",
+                    price = 1500
+                },
+            },
+        },
+        {
+            label = "Suppressor",
+            bone = "WAPSupp",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_SUPP_02",
+                    label = "Suppressor",
+                    price = 15000
+                },
+            },
+        },
+        {
+            label = "Optic",
+            bone = "WAPScop_2",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_SCOPE_MACRO",
+                    label = "Red Dot",
+                    price = 2500
+                },
+            },
+        },
+        {
+            label = "Variation",
+            bone = "gun_root",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_ASSAULTSMG_VARMOD_LOWRIDER",
+                    label = "Deluxe",
+                    price = 5000
+                },
+            },
+        },
+        {
+            label = "Tint",
+            bone = "gun_root",
+            options = {},
+        },
+    },
     --[[@SHOTGUNS]]
     [`WEAPON_DBSHOTGUN`] = {
         {
@@ -1619,6 +1702,90 @@ WEAPON_LIST = {
             bone = "gun_root",
             options = {},
         },
+    },
+    [`WEAPON_ADVANCEDRIFLE`] = {
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_ADVANCEDRIFLE_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_ADVANCEDRIFLE_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 40000
+        --         },
+        --     },
+        -- },
+        {
+            label = "Flashlight",
+            bone = "WAPFlshLasr",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_FLSH",
+                    label = "Flashlight",
+                    price = 3500
+                },
+            },
+        },
+        {
+            label = "Suppressor",
+            bone = "WAPSupp",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_SUPP",
+                    label = "Suppressor",
+                    price = 25000
+                },
+            },
+        },
+        {
+            label = "Optic",
+            bone = "WAPScop_2",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_SCOPE_SMALL",
+                    label = "Red Dot",
+                    price = 3500
+                },
+            },
+        },
+        {
+            label = "Variation",
+            bone = "gun_root",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE",
+                    label = "Deluxe",
+                    price = 5000
+                },
+            },
+        },
+        {
+            label = "Tint",
+            bone = "gun_root",
+            options = {},
+        },
+
     },
     [`WEAPON_762`] = {
         -- {

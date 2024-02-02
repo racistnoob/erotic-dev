@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap);
-
 *,
 *::after,
 *::before {
@@ -18,8 +17,8 @@ body {
 
 .feed {
     position: absolute;
-    top: 30px;
-    left: 500px;
+    top: 90px;
+    right: 60px;
     width: 400px;
     height: 400px;
     z-index: 10;
@@ -29,8 +28,8 @@ body {
     height: 34px;
     padding-left: 20px;
     padding-right: 20px;
-    float: left;
-    border: 0.5px solid white;
+    float: right;
+    border: 0.5px solid #d698e1;
     background: radial-gradient(30% 70% at 50% 50%, rgba(42, 42, 42, 0.4) 0, rgba(47, 47, 47, 0.7) 100%);
     filter: drop-shadow(0px 0px 2px rgb(0, 0, 0));
     border-radius: 4px;
@@ -43,76 +42,63 @@ body {
     user-select: none;
 }
 
-
-
-
-
-
 .player {
     display: grid;
     /* grid-template-columns: repeat(4, 25%); */
     grid-template-columns: 25% 37.5% 15% 17.5%;
     grid-auto-rows: 100%;
     column-gap: 1%;
-    align-items:center;
+    align-items: center;
     text-align: center;
-    color:white;
-    font-family:"AXIS";
-    padding-top:1%;
+    color: white;
+    font-family: "AXIS";
+    padding-top: 1%;
     padding-bottom: 1%;
-    box-sizing: border-box; 
-
+    box-sizing: border-box;
     -webkit-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
-
 .shit {
-    position:absolute;
+    position: absolute;
     top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.player-list{
-    display:none;
-    height:60%;
+.player-list {
+    display: none;
+    height: 60%;
     position: absolute;
-    width:60%;
-    max-height:100%;
-
+    width: 60%;
+    max-height: 100%;
     background-color: #212329;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 29px 0px;
-
-    overflow-y:scroll;
-    overflow-x:hidden;
-    font-size:1vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 1vh;
     border-radius: 5px;
 }
 
-.player-list::-webkit-scrollbar{
-    width:0px;
+.player-list::-webkit-scrollbar {
+    width: 0px;
 }
 
-.player-list-text{
-    font-size:1.7vh;
+.player-list-text {
+    font-size: 1.7vh;
 }
 
-.nh{
+.nh {
     box-sizing: border-box;
-    border-bottom:0.3vh solid rgb(234, 70, 70);
+    border-bottom: 0.3vh solid rgb(234, 70, 70);
 }
 
-.player:hover{
-    
+.player:hover {
     background-color: rgb(234, 70, 70);
-    color:white;
+    color: white;
     /* height: 200px; */
 }
-
-
-
 
 
 /* botom right stats */
@@ -127,7 +113,7 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 5px;
     display: flex;
-    flex-direction: column-reverse; 
+    flex-direction: column-reverse;
     transition: left 0.4s;
 }
 
@@ -151,8 +137,8 @@ body {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 13px;          
-    color: #FFFFFF; 
+    line-height: 13px;
+    color: #FFFFFF;
     margin-right: 1px;
 }
 
@@ -165,8 +151,8 @@ body {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 13px;          
-    color: #FFFFFF; 
+    line-height: 13px;
+    color: #FFFFFF;
     margin-right: 1px;
     text-align: center;
 }
@@ -180,8 +166,8 @@ body {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 13px;          
-    color: #FFFFFF; 
+    line-height: 13px;
+    color: #FFFFFF;
     margin-right: 1px;
     text-align: center;
 }
@@ -196,30 +182,24 @@ body {
     font-size: 22px;
     width: 80px;
     text-align: center;
-    line-height: 13px;          
-    color: #FFFFFF; 
+    line-height: 13px;
+    color: #FFFFFF;
     margin-right: 1px;
 }
-
 
 .StatsInfo {
     width: 247px;
     height: 130px;
     position: fixed;
-  
     bottom: -5%;
     right: -100px;
-  
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-  
     /* background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%); */
     /* border: 1px solid rgba(0, 0, 0, 0.15); */
     border-radius: 5px;
-  
     display: flex;
     flex-direction: column;
-  
     transition: left 0.4s;
 }
 
@@ -243,7 +223,7 @@ body {
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 13px;          
+    line-height: 13px;
     color: #FFFFFF;
 }
 
@@ -251,24 +231,17 @@ body {
     background: radial-gradient(50% 50% at 50% 50%, rgba(94, 94, 94, 0.6) 0%, rgba(58, 58, 58, 0.7) 100%);
     padding: 10px;
     height: 33px;
-
     font-family: 'Oswald';
     font-style: normal;
     font-weight: 500;
     font-size: 22px;
-    line-height: 13px;          
+    line-height: 13px;
     color: #FFFFFF;
-
     margin-left: auto;
-
     &.time {
-
         position: absolute;
         left: 136px;
         text-align: right;
         width: 80px;
-
     }
-
 }
-  

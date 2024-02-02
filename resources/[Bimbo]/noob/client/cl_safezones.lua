@@ -53,37 +53,38 @@ CreateThread(function()
     end
 end)
 
-local currentSafeZoneName = nil
-
 AddEventHandler("polyzone:enter", function(name)
-    currentSafeZoneName = name  -- Store the name of the entered safezone
     if name == "casino" then
         inSafeZone = true
         SetLocalPlayerAsGhost(false)
         NetworkSetPlayerIsPassive(false)
         NetworkSetFriendlyFireOption(false)
         SetCanAttackFriendly(PlayerPedId(), false, false)
-    else
-        SetCanAttackFriendly(PlayerPedId(), false, false)
+    elseif name == "southside" then
         inSafeZone = true
         SetLocalPlayerAsGhost(true)
         NetworkSetPlayerIsPassive(true)
+        NetworkSetFriendlyFireOption(false)
+        SetCanAttackFriendly(PlayerPedId(), false, false)
     end
 end)
 
 AddEventHandler("polyzone:exit", function(name)
-    if currentSafeZoneName == name then  -- Clear the name if exiting the current safezone
-        currentSafeZoneName = nil
+    if name == "casino" or "southside" then
+        inSafeZone = false
+        SetLocalPlayerAsGhost(false)
+        NetworkSetPlayerIsPassive(false)
+        NetworkSetFriendlyFireOption(true)
+        SetCanAttackFriendly(PlayerPedId(), true, true)
     end
-    inSafeZone = false
-    SetLocalPlayerAsGhost(false)
-    NetworkSetPlayerIsPassive(false)
-    NetworkSetFriendlyFireOption(true)
-    SetCanAttackFriendly(PlayerPedId(), true, true)
 end)
 
-exports("CurrentSafezone", function()
-    return currentSafeZoneName
+exports("putInSafeZone", function(value)
+    inSafeZone = value
+    SetLocalPlayerAsGhost(value)
+    NetworkSetPlayerIsPassive(value)
+    NetworkSetFriendlyFireOption(not value)
+    SetCanAttackFriendly(PlayerPedId(), not value, not value)
 end)
 
 exports("inSafeZone", function()

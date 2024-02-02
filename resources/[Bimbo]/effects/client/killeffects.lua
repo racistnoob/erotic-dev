@@ -46,7 +46,7 @@ local killEffect = {
     onClick = playSelectedKillEffect
 }
 
-for _, option in ipairs(killEffectOptions) do
+for _, option in pairs(killEffectOptions) do
     table.insert(killEffect.options, option[1])
 end
 
@@ -78,7 +78,7 @@ end, false)
 
 -- Command handler for displaying the available kill effect options
 RegisterCommand('showkillEffects', function(source, args)
-    for i, option in ipairs(killEffectOptions) do
+    for i, option in pairs(killEffectOptions) do
         TriggerClientEvent('chatMessage', source, i .. ": " .. option[1])
     end
 end, false)

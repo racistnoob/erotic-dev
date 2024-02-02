@@ -35,7 +35,6 @@ local tonumber = tonumber
 local ipairs = ipairs
 local pairs = pairs
 local print = print
-local string_len = string.len
 local string_sub = string.sub
 local string_format = string.format
 local string_lower = string.lower
@@ -61,7 +60,7 @@ end
 
 function Queue:HexIdToSteamId(hexId)
     local cid = math_floor(tonumber(string_sub(hexId, 7), 16))
-	local steam64 = math_floor(tonumber(string_sub( cid, 2)))
+	local steam64 = math_floor(tonumber(string_sub(cid, 2)))
 	local a = steam64 % 2 == 0 and 0 or 1
 	local b = math_floor(math_abs(6561197960265728 - steam64 - a) / 2)
 	local sid = "steam_0:"..a..":"..(a == 1 and b -1 or b)

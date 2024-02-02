@@ -1,101 +1,135 @@
 lobbyMenuOpen = false
+local inZone = false
 
 local lobbyData = {
+    -- car fights
 	{
 		id = 1,
 		name = 'Southside',
 		settings = {'FPS Mode', 'Light Recoil'},
+        maxPlayers = 20
 	},
-	  
+	
+    -- ffa lobbies
 	{
 		id = 2,
-		name = 'FFA Bunker',
+		name = 'Pistol FFA',
 		settings = {'FFA', 'Headshots', 'Light Recoil'},
+        maxPlayers = 20
 	},
 
-	{
+    {
 		id = 3,
-		name = 'Deluxo',
-		settings = {'Deluxo', 'Medium Recoil', 'Headshots'},
+		name = 'AR FFA',
+		settings = {'FFA', 'Headshots', 'Light Recoil'},
+        maxPlayers = 20
 	},
 
 	{
 		id = 4,
-		name = 'RP 1 HS (#1)',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+		name = 'Deluxo',
+		settings = {'Deluxo', 'Medium Recoil', 'Headshots'},
+        maxPlayers = 20
 	},
+
+    -- rp preset 1
 	{
 		id = 5,
-		name = 'RP 1 HS (#2)',
+		name = 'RP 1 HS (#1)',
 		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+        maxPlayers = 12
 	},
-
 	{
 		id = 6,
-		name = 'Envy (#1)',
-		settings = {'FPS Mode', 'Envy Recoil'},
+		name = 'RP 1 HS (#2)',
+		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
+        maxPlayers = 12
 	},
+
+    -- envy hs
 	{
 		id = 7,
-		name = 'Envy (#2)',
-		settings = {'FPS Mode', 'Envy Recoil'},
-	},
-
-	{
-		id = 8,
 		name = 'Envy HS (#1)',
 		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 8
 	},
 	{
-		id = 9,
+		id = 8,
 		name = 'Envy HS (#2)',
 		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 8
 	},
 
 	{
+		id = 9,
+		name = 'Envy HS (#3)',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 10
+	},
+	{
 		id = 10,
-		name = 'QB (#1)',
-		settings = {'FPS Mode', 'Medium Recoil'},
+		name = 'Envy HS (#4)',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 10
 	},
 	{
 		id = 11,
-		name = 'QB HS (#2)',
-		settings = {'FPS Mode', 'Medium Recoil', 'Headshots'},
+		name = 'Envy HS (#5)',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 12
 	},
-
 	{
 		id = 12,
-		name = 'RP 2 (#1)',
-		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
-	},
-	{
-		id = 13,
-		name = 'RP 2 (#2)',
-		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
+		name = 'Envy HS (#6)',
+		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
+        maxPlayers = 12
 	},
 
+    -- rp preset 2
+	{
+		id = 13,
+		name = 'RP 2 (#1)',
+		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
+        maxPlayers = 20
+	},
 	{
 		id = 14,
-		name = 'Rena (#1)',
-		settings = {'Third Person', 'Light Recoil'},
+		name = 'RP 2 (#2)',
+		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
+        maxPlayers = 20
 	},
+
+    -- arena recoil
 	{
 		id = 15,
-		name = 'Rena (#2)',
+		name = 'Rena (#1)',
 		settings = {'Third Person', 'Light Recoil'},
+        maxPlayers = 20
 	},
---[[
 	{
 		id = 16,
-		name = 'Overtime (BETA #1)',
+		name = 'Rena (#2)',
 		settings = {'Third Person', 'Light Recoil'},
+        maxPlayers = 20
 	},
+
+    -- overtime
 	{
 		id = 17,
+		name = 'Overtime (BETA #1)',
+		settings = {'Third Person', 'Light Recoil'},
+        maxPlayers = 20
+	},
+	{
+		id = 18,
 		name = 'Overtime (BETA #2)',
 		settings = {'Third Person', 'Light Recoil'},
-	},]]
+        maxPlayers = 20
+	},
 }
+
+local is_control_just_released = IsControlJustReleased
+local wait = Wait
 
 local function toggleNuiFrame(shouldShow)
 	if shouldShow then
@@ -103,7 +137,13 @@ local function toggleNuiFrame(shouldShow)
 		TriggerScreenblurFadeIn(50)
 	else
 		TriggerScreenblurFadeOut(50)
-
+        if inZone then
+            exports['prompts']:showPrompt({
+                pressText = "Press E",
+                text = "to open lobby menu"
+            })
+            interaction()
+        end
 	end
 	SetNuiFocus(shouldShow, shouldShow)
 	SendReactMessage("setVisible", shouldShow)
@@ -114,69 +154,77 @@ function isLobbyMenuOpen()
 	return lobbyMenuOpen
 end
 
-function DrawText3D(x, y, z, text)
-	local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-	local px, py, pz = table.unpack(GetGameplayCamCoord())
-	SetTextScale(0.35, 0.35)
-	SetTextFont(4)
-	SetTextProportional(1)
-	SetTextColour(255, 255, 255, 215)
-	SetTextDropshadow(0, 0, 0, 0, 255)
-	SetTextEdge(2, 0, 0, 0, 150)
-	SetTextDropShadow()
-	SetTextOutline()
-	SetTextEntry("STRING")
-	SetTextCentre(1)
-	AddTextComponentString(text)
-	DrawText(_x, _y)
+function interaction()
+    Citizen.CreateThread(function()
+        while inZone do
+            if not lobbyMenuOpen then
+                if is_control_just_released(0, 38) then
+                    exports['prompts']:hidePrompt()
+                    toggleNuiFrame(true)
+                end
+            end
+            wait()
+        end
+    end)
 end
 
 local lobbyPed = {
 	coords = vector3(236.9479, -1390.3431, 29.548),
-	heading = 140,
+	heading = 140.0,
 	labelText = "Press E for lobby",
-	scenario = "WORLD_HUMAN_AA_SMOKE",
-	pedModel = "csb_brucie2"
+	scenario = "WORLD_HUMAN_TOURIST_MAP",
+	pedModel = "IG_LilDee"
 }
+
+CreateThread(function()
+    exports["noob"]:AddBoxZone(
+        "lobbyped",
+        lobbyPed.coords,
+        2.0, 
+        2.0, 
+        {
+            heading = lobbyPed.heading,
+            scale={1.0, 1.0, 1.0},
+            minZ = 29,
+            maxZ = 32,
+        }
+    )
+end)
+
+AddEventHandler("polyzone:enter", function(name)
+    if name == "lobbyped" then
+        exports['prompts']:hidePrompt()
+        Wait(100)
+
+        exports['prompts']:showPrompt({
+            pressText = "Press E",
+            text = "to open lobby menu"
+        })            
+        inZone = true
+        interaction()
+    end
+end)
+
+AddEventHandler("polyzone:exit", function(name)
+    if name == "lobbyped" then
+        exports['prompts']:hidePrompt()
+        inZone = false
+    end
+end)
 
 Citizen.CreateThread(function()	
 	RequestModel(lobbyPed.pedModel)
 	while not HasModelLoaded(lobbyPed.pedModel) do
-		Wait(1)
+		wait(1)
 	end
 
 	local pedCoords = lobbyPed.coords
-	local ped = CreatePed(4, lobbyPed.pedModel, pedCoords, lobbyPed.heading, false, false)
+	local ped = CreatePed(4, lobbyPed.pedModel, pedCoords, lobbyPed.heading, 0, 0)
 	SetEntityInvincible(ped, true)
 	SetPedFleeAttributes(ped, 0, false)
 	SetBlockingOfNonTemporaryEvents(ped, true)
-	TaskStartScenarioInPlace(ped, lobbyPed.scenario, 0, true)
+	TaskStartScenarioInPlace(ped, lobbyPed.scenario, -1)
 	FreezeEntityPosition(ped, true)
-
-	local sleepTimer = 3000
-	while true do
-		if exports.noob:inSafeZone() then
-			sleepTimer = 1500
-			if DoesEntityExist(ped) then
-				local playerCoords = GetEntityCoords(PlayerPedId())
-				local distance = #(playerCoords - pedCoords)
-				if distance < 5 and not lobbyMenuOpen then
-					sleepTimer = 1
-					if distance < 2 then
-						DrawText3D(pedCoords.x, pedCoords.y, pedCoords.z + 1, lobbyPed.labelText)
-						if IsControlJustReleased(0, 38) then
-							toggleNuiFrame(true)
-						end
-					end
-				end
-			else
-				break
-			end
-		else
-			sleepTimer = 3000
-		end
-		Wait(sleepTimer)
-	end
 end)
 
 RegisterNUICallback("hideFrame", function(data, cb)
@@ -184,14 +232,15 @@ RegisterNUICallback("hideFrame", function(data, cb)
 	cb({})
 end)
 
-exports('getLobbyData', function(lobby)
-	local lobbyID = lobby
+function getLobbyData(lobby)
+    local lobbyID = lobby
 	if lobbyID then
 		return lobbyData[lobbyID]
 	else -- returns all data if lobbyid isnt specified
 		return lobbyData
 	end
-end)
+end
+exports('getLobbyData', getLobbyData)
 
 RegisterNetEvent('erotic-lobby:updateLobbies')
 AddEventHandler('erotic-lobby:updateLobbies', function()
@@ -199,14 +248,12 @@ AddEventHandler('erotic-lobby:updateLobbies', function()
         type = "updateLobbies",
         lobbies = lobbyData,
     })
-
-    
     -- print('Updated lobbies:', json.encode(lobbyData))
 end)
 
---[[
+
 RegisterCommand("wds", function(source, args, rawCommand)
     TriggerEvent("erotic-lobby:updateLobbies")
-end, false)]]
+end, false)
 
 exports('openLobby', toggleNuiFrame)

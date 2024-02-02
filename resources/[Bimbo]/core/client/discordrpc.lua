@@ -1,23 +1,29 @@
 currentState = "Southside #1"
 
-RegisterNetEvent('core:updateRPC')
-AddEventHandler("core:updateRPC", function(args)
+RegisterNetEvent('core:updateLobby')
+AddEventHandler("core:updateLobby", function(args)
     local lobbyID = tonumber(args)
     if lobbyID ~= nil then
         local lobbyData = exports['erotic-lobby']:getLobbyData(lobbyID)
         currentState = (lobbyData.name)
+        TriggerEvent('erotic:changeWatermark', currentState)
     end
 end)
 
+local wait = Wait
+local set_discord_app_id = SetDiscordAppId
+local set_discord_rich_presence_action = SetDiscordRichPresenceAction
+local set_rich_presence = SetRichPresence
+local set_discord_rich_presence_asset = SetDiscordRichPresenceAsset
 Citizen.CreateThread(function()
     while true do
-        Wait(10000)
-        SetDiscordAppId(1186601487720271923)
+        wait(10000)
+        set_discord_app_id(1186601487720271923)
      
-        SetDiscordRichPresenceAction(0, "Discord", "https://discord.gg/XWjYGqyaHf")
-        SetDiscordRichPresenceAction(1, "Connect", "fivem://connect/45.43.2.17:30120")
+        set_discord_rich_presence_action(0, "Discord", "https://discord.gg/XWjYGqyaHf")
+        set_discord_rich_presence_action(1, "Connect", "fivem://connect/45.43.2.17:30120")
      
-        SetRichPresence(currentState)
-        SetDiscordRichPresenceAsset('erotic')
+        set_rich_presence(currentState)
+        set_discord_rich_presence_asset('erotic')
     end
 end)

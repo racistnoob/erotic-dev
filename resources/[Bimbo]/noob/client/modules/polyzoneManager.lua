@@ -37,6 +37,19 @@ local function doCreateZone(options)
     return true
 end
 
+exports('AddBoxZone', function(name, vectors, length, width, options)
+    if not options then options = {} end
+    options.name = name
+    options.debugPoly = debug or options.debugPoly
+    if not doCreateZone(options) then return end
+    local boxCenter = type(vectors) ~= 'vector3' and vector3(vectors.x, vectors.y, vectors.z) or vectors
+
+    local zone = BoxZone:Create(boxCenter, length, width, options)
+    addToComboZone(zone)
+    Citizen.Wait(2500)
+    return zone
+end)
+
 exports('AddPolyZone', function(name, vectors, options)
     if not options then options = {} end
     options.name = name

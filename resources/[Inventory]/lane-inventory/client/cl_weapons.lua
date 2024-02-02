@@ -53,6 +53,7 @@ function playerHasWeapon()
 end
 
 local wait = Wait
+local pairs = pairs
 local is_ped_armed = IsPedArmed
 local player_ped_id = PlayerPedId
 Citizen.CreateThread(function()

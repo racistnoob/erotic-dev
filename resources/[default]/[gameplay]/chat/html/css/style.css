@@ -205,6 +205,19 @@ textarea {
     margin-left: 10px;
 }
 
+.chat-message-report {
+    border-radius: 10px 10px 10px 10px;
+    background-color: #0091fa;
+    color: #fff;
+    margin-top: 10px;
+    padding: 8px;
+    display: inline-block;
+    line-height: 26px;
+    width: auto;
+    float: left;
+    margin-left: 10px;
+}
+
 .chat-message-dispatch {
     border-radius: 10px 10px 10px 10px;
     background-color: rgba(95, 35, 190, 0.85);

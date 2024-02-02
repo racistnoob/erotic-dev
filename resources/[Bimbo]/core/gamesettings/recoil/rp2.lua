@@ -21,7 +21,6 @@ local weaponRecoils = {
     [-774507221] = { onFoot = 1.3, onBike = 1.0 },  -- tacticalrifle
     -- SMGs
     [324215364] = { onFoot = 1.3, onBike = 1.2 },  -- microsmg
-
 }
 
 local is_ped_shooting = IsPedShooting

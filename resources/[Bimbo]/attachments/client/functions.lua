@@ -3,6 +3,7 @@ EDIT_GUN = nil
 BONE_POSITIONS = {}
 ORIGINAL_DATA = {}
 
+local pairs = pairs
 function GetWeaponBoneCoords(gunHash)
     local list = {}
     local isChange = false
@@ -11,7 +12,7 @@ function GetWeaponBoneCoords(gunHash)
         return
     end
     if gunHash ~= nil then
-        for i, v in ipairs(WEAPON_LIST[gunHash]) do
+        for i, v in pairs(WEAPON_LIST[gunHash]) do
             if v.bone then
                 local boneIndex = GetEntityBoneIndexByName(EDIT_GUN, v.bone)
                 local bonePosition = GetWorldPositionOfEntityBone(EDIT_GUN, boneIndex)

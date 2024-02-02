@@ -1,18 +1,48 @@
+
+local weaponNames = {
+    [`WEAPON_UNARMED`] = 'weapon_unarmed',
+    [`WEAPON_KNUCKLE`] = 'knuckle',
+    [`WEAPON_BOTTLE`] = 'bottle',
+    [`WEAPON_MACHETE`] = 'machete',
+    [`WEAPON_REVOLVER`] = 'revolver',
+    [`WEAPON_BAT`] = 'bat',
+    [`WEAPON_GOLFCLUB`] = 'golfclub',
+    [`WEAPON_TACTICALRIFLE`] = 'tacticalrifle',
+    [`WEAPON_HEAVYRIFLE`] = 'weapon_heavyrifle',
+    [`WEAPON_762`] = 'carbinerifle_mk2',
+    [`WEAPON_SP45`] = 'weapon_heavypistol',
+    [`WEAPON_1911`] = 'weapon_pistol_mk2',
+    [`WEAPON_HEAVYPISTOL`] = 'weapon_heavypistol',
+    [`WEAPON_PISTOL50`] = 'weapon_pistol50',
+    [`WEAPON_MARKSMANRIFLE_MK2`] = 'weapon_marksmanrifle_mk2',
+    [`WEAPON_HEAVYSNIPER_MK2`] = 'weapon_heavysniper_mk2',
+    [`WEAPON_ASSAULTSMG`] = 'weapon_assaultsmg',
+    [`WEAPON_GUSENBERG`] = 'weapon_gusenberg',
+    [`WEAPON_MINISMG`] = 'weapon_minismg',
+    [`WEAPON_MICROSMG`] = 'weapon_microsmg',
+    [`WEAPON_MPX`] = 'weapon_smg_mk2',
+    [`WEAPON_SMG_MK2`] = 'weapon_smg_mk2',
+    [`WEAPON_COMPACTRIFLE`] = 'weapon_compactrifle',
+    [`WEAPON_MACHINEPISTOL`] = 'weapon_machinepistol',
+    [`WEAPON_COMBATMG`] = 'weapon_combatmg',
+    [`WEAPON_ADVANCEDRIFLE`] = 'weapon_advancedrifle',
+    [`WEAPON_MK18`] = 'carbinerifle_mk2',
+    [`WEAPON_SPECIALCARBINE`] = 'weapon_specialcarbine',
+    [`WEAPON_SCARH`] = 'weapon_scarh',
+    [`WEAPON_ASSAULTRIFLE`] = 'weapon_assaultrifle',
+    [`WEAPON_APPISTOL`] = 'weapon_appistol',
+    [`WEAPON_CERAMICPISTOL`] = 'weapon_ceramicpistol',
+    [`WEAPON_PISTOLXM3`] = 'weapon_ceramicpistol',
+    [`WEAPON_GLOCK18C`] = 'weapon_appistol',
+    [`WEAPON_GLOCK17`] = 'weapon_glock',
+    [`WEAPON_FNX45`] = 'pistol',
+    [`WEAPON_USP45`] = 'weapon_heavypistol',
+    [`WEAPON_VINTAGEPISTOL`] = 'weapon_vintagepistol',
+    [`WEAPON_COMBATPISTOL`] = 'weapon_combatpistol',
+}
+
 local function GetWeaponName(hash)
-    hash = hash.weaponhash
-    if hash == GetHashKey('WEAPON_UNARMED') then return 'unarmed'
-        elseif hash == GetHashKey('WEAPON_KNUCKLE') then return 'knuckle'
-        elseif hash == GetHashKey('WEAPON_BOTTLE') then return 'bottle'
-        elseif hash == GetHashKey('WEAPON_MACHETE') then return 'machete'
-        elseif hash == GetHashKey('WEAPON_REVOLVER') then return 'revolver'
-        elseif hash == GetHashKey('WEAPON_BAT') then return 'bat'
-        elseif hash == GetHashKey('WEAPON_GOLFCLUB') then return 'golfclub'
-        elseif hash == GetHashKey('WEAPON_TACTICALRIFLE') then return 'tacticalrifle'
-        elseif hash == GetHashKey('WEAPON_HEAVYRIFLE') then return 'heavyrifle'
-        elseif hash == GetHashKey('WEAPON_762') then return 'carbinerifle_mk2'
-        elseif hash == GetHashKey('WEAPON_SP45') then return 'pistol'
-        elseif hash == GetHashKey('WEAPON_1911') then return 'pistol'
-    end
+    return weaponNames[hash.weaponhash] or 'unknown'
 end
 
 toggleHud = true

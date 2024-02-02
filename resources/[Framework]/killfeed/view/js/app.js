@@ -31,7 +31,7 @@ function GenerateExtendedStats(stats) {
     for (let x = 0; x < 5; x++) {
         $('.ExtendedInformation').append(`
         <div class="ExtendedlabelValue">
-            <div class="NameLabel">${stats[x].Name}</div>
+            <div class="NameLabel">${truncate(stats[x].Name,16)}</div>
             <div class="KillLabel">${stats[x].Kills}</div>
             <div class="DeathLabel">${stats[x].Deaths}</div>
             <div class="DamageLabel">${stats[x].Damage}</div>

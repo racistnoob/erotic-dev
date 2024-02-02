@@ -214,6 +214,7 @@ AddEventHandler('zbrp:itemNotification', function(name, formatname, count)
     SendNUIMessage({action = 'itemNotification', name = name, formatname = formatname, count = count})
 end)
 
+local pairs = pairs
 local function GetWeight()
     local weight = 0.0 
     if inventoryData then 

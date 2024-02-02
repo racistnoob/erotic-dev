@@ -1,22 +1,6 @@
 RegisterNetEvent('baseevents:onPlayerDied')
 RegisterNetEvent('baseevents:onPlayerKilled')
 RegisterNetEvent('baseevents:onPlayerWasted')
-RegisterNetEvent('baseevents:enteringVehicle')
-RegisterNetEvent('baseevents:enteringAborted')
-RegisterNetEvent('baseevents:enteredVehicle')
-RegisterNetEvent('baseevents:leftVehicle')
-
-AddEventHandler('baseevents:enteredVehicle', function(...)
-	TriggerClientEvent('baseevents:enteredVehicle', source, ...)
-end)
-
-AddEventHandler('baseevents:leftVehicle', function(...)
-	TriggerClientEvent('baseevents:leftVehicle', source, ...)
-end)
-
-AddEventHandler('baseevents:enteringVehicle', function(...)
-	TriggerClientEvent('baseevents:enteringVehicle', source, ...)
-end)
 
 local Weapons = {
     --[[ Melee Weapons ]]--
@@ -83,6 +67,7 @@ local Weapons = {
     [`weapon_assaultrifle_mk2`] = {['weaponName'] = 'Assault Rifle Mk II', ['type'] = 'Rifle'},
     [`weapon_carbinerifle`] = {['weaponName'] = 'Carbine Rifle', ['type'] = 'Rifle'},
     [`weapon_carbinerifle_mk2`] = {['weaponName'] = 'Carbine Rifle Mk II', ['type'] = 'Rifle'},
+    [`weapon_762`] = {['weaponName'] = 'Carbine Rifle Mk II', ['type'] = 'Rifle'},
     [`weapon_advancedrifle`] = {['weaponName'] = 'Advanced Rifle', ['type'] = 'Rifle'},
     [`weapon_specialcarbine`] = {['weaponName'] = 'Special Carbine', ['type'] = 'Rifle'},
     [`weapon_specialcarbine_mk2`] = {['weaponName'] = 'Special Carbine Mk II', ['type'] = 'Rifle'},

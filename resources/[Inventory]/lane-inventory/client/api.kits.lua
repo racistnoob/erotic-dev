@@ -96,6 +96,14 @@ Kits = {
             {item = "9mm_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 30},
         },
+        ["ap"] = {
+            {item = "WEAPON_APPISTOL", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 30, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "9mm_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
+        }
     },
     ["ars"] = {
         ["hopout"] = {
@@ -268,6 +276,7 @@ Kits = {
     }
 }
 
+local pairs = pairs
 local kitNames = {}
 for k,v in pairs(Kits) do
     local categoryNames = {}
@@ -318,8 +327,21 @@ end
 
 function DoKitStuff(genre, kit)
     local worldSettings = exports['erotic-lobby']:getLobbySettings()
+    local isGenreAllowed = true
     if worldSettings.kits then
-        if genre ~= worldSettings.kits[1] then
+        isGenreAllowed = false
+        for _, kit in ipairs(worldSettings.kits) do
+            if genre == kit then
+                isGenreAllowed = true
+                break
+            end
+        end
+    
+        if not isGenreAllowed then
+            TriggerEvent('chat:addMessage', {
+                template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+                args = { "[EROTIC]", "This gun category is disabled in this lobby." }
+            })
             return
         end
     end

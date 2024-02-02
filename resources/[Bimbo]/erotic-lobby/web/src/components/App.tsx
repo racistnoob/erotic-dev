@@ -7,6 +7,7 @@ interface Lobby {
   name: string;
   settings: string[];
   playerCount: number;
+  maxPlayers: number;
 }
 
 const App: React.FC = () => {
@@ -24,7 +25,7 @@ const App: React.FC = () => {
 
             if (existingLobby) {
                 // Lobby already exists, update only properties that need to be changed
-                return { ...existingLobby, name: receivedLobby.name, settings: receivedLobby.settings };
+                return { ...existingLobby, name: receivedLobby.name, settings: receivedLobby.settings, maxPlayers: receivedLobby.maxPlayers};
             } else {
                 // Lobby doesn't exist, add it to the array
                 return receivedLobby;
@@ -149,7 +150,7 @@ const App: React.FC = () => {
                   <p key={index} className="lobby-setting">{setting}</p>
                 ))}
               </div>
-              <p className="lobby-player-count">🧑‍🤝‍🧑:&nbsp;&nbsp;{lobby.playerCount || 0}</p>
+              <p className="lobby-player-count">🧑‍🤝‍🧑:&nbsp;&nbsp;{lobby.playerCount || 0} / {lobby.maxPlayers || 20}</p>
             </div>
           ))}
         </div>

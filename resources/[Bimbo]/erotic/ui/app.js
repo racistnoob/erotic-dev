@@ -1,41 +1,32 @@
 window.addEventListener('message', (event) => {
-    if (event.data.type === 'show') {
-        let ele = document.querySelector('#combat');
-        ele.style.opacity = event.data.value ? '1' : '0';
-    }
-
-    if (event.data.type === 'xhair') {
-        let xhair = document.querySelector('.xhair-container');
-        xhair.style.opacity = event.data.cross ? '0' : '1';
-    }
-
-    if (event.data.type === 'xhair_colour') {
-        let xhair = document.querySelector('.xhair');
-        xhair.style.setProperty('background-color', event.data.color || "rgb(255, 255, 255)");
-    }
-
-    if (event.data.type === 'ammo') {
-        updateAmmoDisplay(event.data.data);
-    }
-
-    var scopeElement = document.querySelector('.scope');
-
     var item = event.data;
-    if (item.type === "scope") {
-        if (item.value === true) {
-            scopeElement.classList.add('visible');
-        } else {
-            scopeElement.classList.remove('visible');
-        }
-    }
+    switch (item.type) {
+        case 'show':
+            document.querySelector('#combat').style.opacity = item.value ? '1' : '0';
+            break;
 
-    var watermark = document.querySelector('.WaterMark');
-    if (item.type === "showWatermark") {
-        if (item.value === true) {
-            watermark.classList.remove('hide');
-        } else {
-            watermark.classList.add('hide');
-        }
+        case 'xhair':
+            document.querySelector('.xhair-container').style.opacity = item.cross ? '0' : '1';
+            break;
+
+        case 'xhair_colour':
+            document.querySelector('.xhair').style.setProperty('background-color', item.color || 'rgb(255, 255, 255)');
+            break;
+
+        case 'ammo':
+            updateAmmoDisplay(item.data);
+            break;
+
+        case 'scope':
+            document.querySelector('.scope').classList.toggle('visible', item.value === true);
+            break;
+
+        case 'showWatermark':
+            document.querySelector('.WaterMark').classList.toggle('hide', item.value !== true);
+            break;
+
+        case 'updateWatermark':
+            document.querySelector('.WM-data-desc').textContent = item.value;
     }
 });
 

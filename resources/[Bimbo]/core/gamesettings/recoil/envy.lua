@@ -22,7 +22,7 @@ local WeaponRecoil = {
     [`WEAPON_GLOCK18`] = {
         vertical = .80,
         horizontal = .20
-    },
+    }, 
     [`weapon_minismg`] = {
         vertical = .80,
     },
@@ -94,7 +94,7 @@ local GroupRecoil = {
 
 local function GetStressRecoil()
     
-    return 1
+    return 0.95
     
 end
 

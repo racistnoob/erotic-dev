@@ -58,11 +58,12 @@ COMBAT = {
             self.isAiming = (is_control_pressed(0, 25) and is_using_keyboard(0)) or is_aim_cam_active()
             self.isArmed = is_ped_armed(self.plyPed, 7)
             self.isAimingg = is_player_free_aiming(player_id())
-            --self.nonstopCombat = exports['core']:getNonstopCombat()
+            self.nonstopCombat = exports['core']:getNonstopCombat()
             self.Sniper = (self.pedWeapon == 177293209 or self.pedWeapon == 1785463520)
         end
     end,    
 
+    --[[
     AmmoThread = function(self)
         while true do
             wait(250)
@@ -89,19 +90,19 @@ COMBAT = {
                 wait(500)
             end
         end
-    end,
+    end,]]
 
     HideAmmo = function(self)
         while true do
             wait(1)
             hide_hud_component_this_frame(7)
             hide_hud_component_this_frame(9)
+            --display_ammo_this_frame(false)
+            hide_hud_component_this_frame(6)
+            hide_hud_component_this_frame(8)
             if not self.Sniper then
                 hide_hud_component_this_frame(14)
             end
-            display_ammo_this_frame(false)
-            hide_hud_component_this_frame(6)
-            hide_hud_component_this_frame(8)
         end
     end,
 }
@@ -111,14 +112,20 @@ Citizen.CreateThread(function()
     Citizen.Wait(250)
 end)
 
+--[[
 Citizen.CreateThread(function()
     COMBAT:AmmoThread()
     Citizen.Wait(250)
-end)
+end)]]
 
 Citizen.CreateThread(function()
     COMBAT:InfoThread()
     Citizen.Wait(250)
+end)
+
+RegisterNetEvent('erotic:changeWatermark')
+AddEventHandler('erotic:changeWatermark', function(lobbyName)
+    send_nui_message({ type = "updateWatermark", value = lobbyName})
 end)
 
 AddEventHandler('echorp:playerSpawned', function()
@@ -130,7 +137,7 @@ end)
 exports("toggleHud", function(state)
     send_nui_message({ type = "xhair", cross = not state })
     send_nui_message({ type = "showWatermark", value = state})
-    toggleHud = state
+    --toggleHud = state
 end)
 
 RegisterCommand('cross', function(src, args, rawCommand)
@@ -151,7 +158,7 @@ RegisterCommand("top", function()
     local playerPed = PlayerPedId()
     local worldID = tonumber(exports['erotic-lobby']:getCurrentWorld())
 
-    if worldID == 3 then
+    if worldID == 4 then
         if IsPedInAnyVehicle(playerPed, false) then
             local vehicle = GetVehiclePedIsIn(playerPed, false)
             TaskLeaveVehicle(playerPed, vehicle, 0)

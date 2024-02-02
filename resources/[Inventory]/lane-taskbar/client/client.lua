@@ -210,7 +210,6 @@ local function taskBar(data)
     Wait(500)
   end
 
-  if LocalPlayer.state.caffeinated then length = length * 0.7 end
   if animation and animation['dict'] then
     dict = animation['dict']
     anim = animation['anim']

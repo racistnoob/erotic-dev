@@ -17,8 +17,9 @@ local is_player_free_aiming = IsPlayerFreeAiming
 local is_ped_aiming_from_cover = IsPedAimingFromCover
 local shake_gameplay_cam = ShakeGameplayCam
 local stop_gameplay_cam_shaking = StopGameplayCamShaking
+local createthread = CreateThread
 local function firstPersonVehicle()
-    CreateThread(function()
+    createthread(function()
         while firstPersonVehicleEnabled do
             wait(10)
             isInVehicle = is_ped_in_any_vehicle(PlayerPed, false)
@@ -40,7 +41,7 @@ local function firstPersonVehicle()
         end
     end)
 
-    Citizen.CreateThread(function()
+    createthread(function()
         while firstPersonVehicleEnabled do
             local plyPed = PlayerPed
             local isAiming = is_player_free_aiming(playerID)

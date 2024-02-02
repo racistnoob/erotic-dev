@@ -35,9 +35,15 @@ AddEventHandler('weaponDamageEvent', function(sender, data)
     
         local lobby = exports['erotic-lobby']:GetWorld(_src)
         exports['erotic-lobby']:UpdateLobbyStats(_src, lobby, "Damage", {damage = damage})
+    else
+        -- cancels all damage coming from a gun that isnt going towards a player except for tires
+        if data.tyreIndex == 0 then
+            CancelEvent()
+        end
     end
 end)
 
+local pairs = pairs
 RegisterServerEvent("Grab:Leaderboard")
 AddEventHandler("Grab:Leaderboard", function()
     local src = source
@@ -45,7 +51,7 @@ AddEventHandler("Grab:Leaderboard", function()
     local Database = {}
     local players = GetPlayers()
 
-    for _, playerId in ipairs(players) do
+    for _, playerId in pairs(players) do
         local Steam = GetIdentifier("steam", playerId)
         if Steam then
             local Character = exports.oxmysql:fetchSync("SELECT id, Kills, Deaths FROM users WHERE identifier=:identifier AND deleted='0'", { identifier = Steam })
@@ -78,7 +84,11 @@ AddEventHandler('killfeed:server:playerWasKilled', function(killerId, weaponName
     local KillerSteam = GetIdentifier("steam", Killer)
     local VictimSteam = GetIdentifier("steam", Victim)
 
-    TriggerClientEvent('killfeed:client:feed', -1, lobby, '<strong>' .. tostring(GetPlayerName(killerId)) .. '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>' .. tostring(GetPlayerName(source)) .. '</strong>')
+    local picture = '</strong> <img src="img/'.. tostring(weaponName) ..'.png" width="30px" style="transform: rotate(-30deg);;"> <strong>'
+    if weaponName == 'unknown' then
+        picture = '<img src="img/skull.png" width="15px" style="margin: 2px;"> <strong>'
+    end
+    TriggerClientEvent('killfeed:client:feed', -1, lobby, '<strong>' .. tostring(GetPlayerName(killerId)) .. picture .. tostring(GetPlayerName(source)) .. '</strong>')
 
     if KillerSteam then
         exports.oxmysql:execute("UPDATE users SET Kills = Kills + 1 WHERE identifier=:identifier", { identifier = KillerSteam }, function(result)

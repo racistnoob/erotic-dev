@@ -186,8 +186,8 @@ AddEventHandler('playerDropped', function (reason)
     end
 end)
 
-RegisterNetEvent('erotic-lobby:SpawnWorldTrigger')
-AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
+RegisterServerEvent("echorp:playerSpawned")
+AddEventHandler('echorp:playerSpawned', function()
     local src = source
     local ids = ExtractIdentifiers(src)
 
@@ -204,7 +204,7 @@ AddEventHandler('erotic-lobby:SpawnWorldTrigger', function()
         local worldName = WorldTracker[ids.license].World
         local coords = Config.Worlds[worldName][2]
         SetPlayerRoutingBucket(src, Config.Worlds[worldName][1])
-        TriggerClientEvent("core:updateRPC", src, Config.Worlds[worldName])
+        TriggerClientEvent("core:updateLobby", src, Config.Worlds[worldName])
         UpdateStats(worldName)
     end
 
@@ -237,10 +237,9 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
                 Deaths = 0,
                 Damage = 0,
             }
-            TriggerClientEvent("core:updateRPC", src, Config.Worlds[worldName])
             UpdateStats(worldName)
             UpdateStats(oldWorld)
-            TriggerClientEvent("core:updateRPC", src, worldName)
+            TriggerClientEvent("core:updateLobby", src, worldName)
             updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
             updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby
             -- Changed worlds ...
