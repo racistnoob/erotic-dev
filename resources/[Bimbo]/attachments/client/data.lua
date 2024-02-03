@@ -656,6 +656,74 @@ WEAPON_LIST = {
             options = {},
         },
     },
+    [`WEAPON_HEAVYPISTOL`] = {
+        -- {
+        --     label = "Mag",
+        --     bone = "WAPClip",
+        --     options = {
+        --         {
+        --             attachment = "COMPONENT_HEAVYPISTOL_CLIP_01",
+        --             label = "Standard Mag",
+        --             price = 0
+        --         },
+        --         {
+        --             attachment = "COMPONENT_HEAVYPISTOL_CLIP_02",
+        --             label = "Extended Mag",
+        --             price = 100
+        --         },
+        --     },
+        -- },
+        {
+            label = "Flashlight",
+            bone = "WAPFlshLasr",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_PI_FLSH",
+                    label = "Flashlight",
+                    price = 100
+                },
+            },
+        },
+        {
+            label = "Suppressor",
+            bone = "WAPSupp_2",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_PI_SUPP",
+                    label = "Suppressor",
+                    price = 100
+                },
+            },
+        },
+        {
+            label = "Variation",
+            bone = "gun_root",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_HEAVYPISTOL_VARMOD_LUXE",
+                    label = "Deluxe",
+                    price = 10000
+                },
+            },
+        },
+        {
+            label = "Tint",
+            bone = "gun_root",
+            options = {},
+        },
+    },
     --[[@SMG]]
     [`WEAPON_MACHINEPISTOL`] = {
         -- {

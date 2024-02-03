@@ -361,8 +361,15 @@ exports("DoKitStuff", DoKitStuff)
 
 function API.FindPrimaryWeapon(kit)
     local result = "WEAPON_UNARMED"
-    for k,v in pairs(kit) do 
-        if v.primary then result = v.item end
+    local worldSettings = exports['erotic-lobby']:getLobbySettings()
+    for k,v in pairs(kit) do
+        if v.primary then
+            if v.item == "WEAPON_M45A1" or v.item == "WEAPON_HEAVYPISTOL" then
+                local carfightrecoil = worldSettings.recoilMode == "roleplay3"
+                v.item = carfightrecoil and "WEAPON_M45A1" or not carfightrecoil and "WEAPON_HEAVYPISTOL"
+            end
+            result = v.item
+        end
     end
     return result 
 end
@@ -380,7 +387,12 @@ end
 
 function API.GiveKit()
     local kit = Kits[Player.CurrentKitGenre][Player.CurrentKit]
+    local worldSettings = exports['erotic-lobby']:getLobbySettings()
     for k,v in pairs(kit) do
+        if v.item == "WEAPON_M45A1" or v.item == "WEAPON_HEAVYPISTOL" then
+            local carfightrecoil = worldSettings.recoilMode == "roleplay3"
+            v.item = carfightrecoil and "WEAPON_M45A1" or not carfightrecoil and "WEAPON_HEAVYPISTOL"
+        end
         API.GiveItem(v.item, v.amount, v.slot)
     end
     local primary = API.FindPrimaryWeapon(kit)
