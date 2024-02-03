@@ -379,7 +379,7 @@ end
 --[[ Functions ]]--
 function TakeDamage(amount, bone, weapon)
     local ped = PlayerPed
-	set_entity_health(ped, 1000 - amount)
+	set_entity_health(ped, get_entity_health(ped) - amount)
 	trigger_event("gameEventTriggered", "CEventNetworkEntityDamage", { ped, ped, 0, 0, 0, bone or 0, weapon })
 end
 
@@ -517,19 +517,15 @@ function Gauze()
 
         -- random clot affect (either gauze or bandage)
         info.clotted = math_random() > 0.5 and math_max((info.clotted or 0.0), 0.5) or clotted
+        UpdateInfo()
 	end
 	if effective then
 		exports['drp-notifications']:SendAlert('inform', "That seems to be helping!", 1500)
 	else
 		exports['drp-notifications']:SendAlert('inform', 'It does not seem to be helping!', 1500)
-
 	end
-	UpdateInfo()
 end
 exports("Gauze", Gauze)
-exports("HeavyArmor", function()
-	ArmorUp(1.0, 1)
-end)
 
 function DamageBone(bone, damage, injury)
 	local bodyPart = Config.BodyParts[bone]
@@ -545,15 +541,6 @@ function DamageBone(bone, damage, injury)
 
 	local boneInfo = Info.bones[bone]
 	local boneDamage = boneInfo.damage or 0
-
-	if boneInfo.armor and boneInfo.armor > 0.0 then
-		boneInfo.armor = boneInfo.armor - damage*1.5
-		if boneInfo.armor <= 0.0 then
-			boneInfo.armor = nil
-		else
-			damage = 0.0
-		end
-	end
 
 	boneDamage = math_max(boneDamage + damage, 0.0)
 	boneInfo.damage = boneDamage
@@ -745,7 +732,7 @@ function nonstop_damageHandler()
         end
     
         -- Finally set health.
-        set_entity_health(ped, maxHealth)
+        --set_entity_health(ped, maxHealth)
     
         local injuries = nil
         if type(injury) == "table" then

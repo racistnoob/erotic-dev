@@ -23,7 +23,6 @@ function UndeadedPlayer(x, y, z, h)
     TriggerServerEvent('baseevents:revived')
     if nonstopcombat then
         ResurrectPed()
-        ArmorUp(1.0, 1)
     end
 end
 

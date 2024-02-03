@@ -43,19 +43,15 @@ CreateThread(function()
     Item.Register("armour", {
         func = function(item)
             local nonstopCombat = exports['core']:getNonstopCombat()
-            if not nonstopCombat and Player.Armour() == 100 then return false end
+            if nonstopCombat or Player.Armour() == 100 then return false end
             local finished = exports["lane-taskbar"]:taskBar({
-                length = nonstopCombat and 8000 or 4500,
+                length = 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
             if (finished == 100) then
-                if nonstopCombat then
-                    exports['core']:HeavyArmor()
-                else
-                    SetPlayerMaxArmour(PlayerId(), 100)
-                    AddArmourToPed(Player.Ped(), 100)
-                end
+                SetPlayerMaxArmour(PlayerId(), 100)
+                AddArmourToPed(Player.Ped(), 100)
                 API.RemoveItem(item, 1)
             end
             return true
@@ -66,21 +62,16 @@ CreateThread(function()
     Item.Register("armour2", {
         func = function(item)
             local nonstopCombat = exports['core']:getNonstopCombat()
-            if not nonstopCombat and Player.Armour() == 100 then return false end
-            local playerPed = PlayerPedId()
+            if nonstopCombat or Player.Armour() == 100 then return false end
             local finished = exports["lane-taskbar"]:taskBar({
-                length = nonstopCombat and 8000 or 4500,
+                length = 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
 
             if (finished == 100) then
-                if nonstopCombat then
-                    exports['core']:HeavyArmor()
-                else
-                    SetPlayerMaxArmour(PlayerId(), 100)
-                    AddArmourToPed(Player.Ped(), 60)
-                end
+                SetPlayerMaxArmour(PlayerId(), 100)
+                AddArmourToPed(Player.Ped(), 60)
                 API.RemoveItem(item, 1)
             end
             return true

@@ -30,10 +30,9 @@ function nonstop_Effects()
 	Citizen.CreateThread(function()
 		local lastUpdate = get_game_timer()
 		local interval = 1000.0
-		
-		while nonstopcombat do
-			Affliction = 0.0
-			
+        Affliction = 0.0
+
+		while nonstopcombat do			
 			local delta = (get_game_timer() - lastUpdate) / 1000.0
 			local notified = false
 			

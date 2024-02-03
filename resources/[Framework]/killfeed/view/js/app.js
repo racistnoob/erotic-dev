@@ -45,7 +45,7 @@ function GenerateStats(stats) {
     for (let x = 0; x < 3; x++) {
         $('.information').append(`
             <div class='labelValue'>
-                    <div class='label'>${truncate(stats[x].Name,19)}</div>
+                    <div class='label'>${truncate(stats[x].Name,13)}</div>
                     <div class='value'>${stats[x].Kills}</div>
             </div>
         `);

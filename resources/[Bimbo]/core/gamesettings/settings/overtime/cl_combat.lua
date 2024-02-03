@@ -71,7 +71,7 @@ local function nonstop_weaponDamage()
             
             local weapon = get_selected_ped_weapon(ped)
     
-            
+            --[[
             if weaponDamages[weapon] then
                 local _, bone = get_ped_last_damage_bone(ped)
                 local damageMultiplier = 1.0
@@ -86,7 +86,7 @@ local function nonstop_weaponDamage()
     
                 modifiedDamage[weapon] = totalDamageMultiplier
                 set_weapon_damage_modifier(weapon, totalDamageMultiplier)
-            end
+            end]]
     
             if is_ped_jumping(ped) then
                 LastJump = get_game_timer()
@@ -102,9 +102,6 @@ function setNonstopCombat(state)
     nonstopcombat = state
     exports["drp-hud"]:toggleNui(not state, true)
     if not state then
-        for i, v in pairs(modifiedDamage) do
-            set_weapon_damage_modifier(i, 1.0)
-        end
         if damageEventHandler ~= nil then
             RemoveEventHandler(damageEventHandler)
         end
@@ -117,7 +114,6 @@ function setNonstopCombat(state)
         nonstop_damageHandler()
         
         HealPed()
-        ArmorUp(1.0, 1)
     end
     SendNUIMessage({
         visible = state
