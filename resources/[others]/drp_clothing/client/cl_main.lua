@@ -833,6 +833,7 @@ local function LoadPed(data)
     SetPedHairColor(plyPed, tonumber(data.hairColor[1]), tonumber(data.hairColor[2]))
     SetPedHeadBlend(data.headBlend)
     SetHeadStructure(data.headStructure)
+    SetHeadOverlayData(data.headOverlay)
 end
 
 local function GetPedHeadBlendData()
@@ -970,6 +971,34 @@ function GetHeadOverlayData()
         end
     end
     return headData
+end
+
+function SetHeadOverlayData(data)
+	if json.encode(data) ~= "[]" then
+			for i = 1, #head_overlays do
+					if data[i] then
+							if data[i].name == "eyecolor" then
+									SetPedEyeColor(plyPed, tonumber(data[i].val))
+							else
+									SetPedHeadOverlay(plyPed,  i-1, tonumber(data[i].overlayValue),  tonumber(data[i].overlayOpacity))
+							end
+					end
+					-- SetPedHeadOverlayColor(plyPed, i-1, data[i].colourType, data[i].firstColour, data[i].secondColour)
+			end
+
+			SetPedHeadOverlayColor(plyPed, 0, 0, tonumber(data[1].firstColour), tonumber(data[1].secondColour))
+			SetPedHeadOverlayColor(plyPed, 1, 1, tonumber(data[2].firstColour), tonumber(data[2].secondColour))
+			SetPedHeadOverlayColor(plyPed, 2, 1, tonumber(data[3].firstColour), tonumber(data[3].secondColour))
+			SetPedHeadOverlayColor(plyPed, 3, 0, tonumber(data[4].firstColour), tonumber(data[4].secondColour))
+			SetPedHeadOverlayColor(plyPed, 4, 2, tonumber(data[5].firstColour), tonumber(data[5].secondColour))
+			SetPedHeadOverlayColor(plyPed, 5, 2, tonumber(data[6].firstColour), tonumber(data[6].secondColour))
+			SetPedHeadOverlayColor(plyPed, 6, 0, tonumber(data[7].firstColour), tonumber(data[7].secondColour))
+			SetPedHeadOverlayColor(plyPed, 7, 0, tonumber(data[8].firstColour), tonumber(data[8].secondColour))
+			SetPedHeadOverlayColor(plyPed, 8, 2, tonumber(data[9].firstColour), tonumber(data[9].secondColour))
+			SetPedHeadOverlayColor(plyPed, 9, 0, tonumber(data[10].firstColour), tonumber(data[10].secondColour))
+			SetPedHeadOverlayColor(plyPed, 10, 1, tonumber(data[11].firstColour), tonumber(data[11].secondColour))
+			SetPedHeadOverlayColor(plyPed, 11, 0, tonumber(data[12].firstColour), tonumber(data[12].secondColour))
+	end
 end
 
 function GetHeadOverlayTotals()
@@ -1585,6 +1614,7 @@ AddEventHandler("drp_clothing:setpedfeatures", function(data)
     SetPedHeadBlendData(plyPed, tonumber(head['shapeFirst']), tonumber(head['shapeSecond']), tonumber(head['shapeThird']), tonumber(head['skinFirst']), tonumber(head['skinSecond']), tonumber(head['skinThird']), tonumber(head['shapeMix']), tonumber(head['skinMix']), tonumber(head['thirdMix']), false)
     SetHeadStructure(data.headStructure)
     SetPedHairColor(plyPed, tonumber(haircolor[1]), tonumber(haircolor[2]))
+    SetHeadOverlayData(data.headOverlay)
 end)
 
 RegisterNetEvent("drp_clothing:setclothes")
