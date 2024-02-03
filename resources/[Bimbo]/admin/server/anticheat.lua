@@ -761,6 +761,12 @@ AddEventHandler("explosionEvent", function(sender, ev)
     
     explosionCounts[playerId][explosionType].count = explosionCounts[playerId][explosionType].count + 1
     
+    if explosionType == "12" then
+        maxExplosions = 15
+    else
+        maxExplosions = 5
+    end
+    
     if explosionCounts[playerId][explosionType].count > maxExplosions then
         CancelEvent()
         exports["discord-screenshot"]:requestCustomClientScreenshotUploadToDiscord(

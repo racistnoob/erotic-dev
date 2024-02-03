@@ -92,14 +92,16 @@ AddEventHandler("txAdmin:events:adminAuth", function(data)
     end
 end)
 
-local function sendToDisc(title, msg)
+local report_Logs = "https://discord.com/api/webhooks/1201644493926060143/UzV2wxPv2af8uSqnXmVtKe9QApREglkTvBgC9Z78Iy12OkqabiYEsCf7HEo1mjAC3hLB"
+local txadmin_Logs = "https://discord.com/api/webhooks/1202340309019922433/CqNYAmo_bLhXpy4ywfRnhOO_mN8dgHWlTlEuuS3OrUbtY3R7Fumd063xf715n5lGJHVX"
+local function sendToDisc(webhook, title, msg)
     local embed = {
         {
             ["title"] = "**".. title .."**",
             ["description"] = msg,
         }
     }
-    PerformHttpRequest("https://discord.com/api/webhooks/1201644493926060143/UzV2wxPv2af8uSqnXmVtKe9QApREglkTvBgC9Z78Iy12OkqabiYEsCf7HEo1mjAC3hLB", function(err, text, headers) end, 'POST', json.encode({embeds = embed}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({embeds = embed}), { ['Content-Type'] = 'application/json' })
 end
 
 
@@ -122,7 +124,7 @@ RegisterCommand("report", function(source, args, rawCommand)
                 })
             end
         end
-        sendToDisc("Player: "..name.." ["..src.."]",
+        sendToDisc(report_Logs, "Player: "..name.." ["..src.."]",
         "**Report:** ```"..report.."```"..
         "\n**Discord:** <@!"..discord:gsub('discord:', '')..">"..
         "\n**Discord ID:** "..discord:gsub('discord:', ''))
@@ -156,3 +158,30 @@ RegisterCommand("playtime", function(source, args, rawCommand)
         })
     end
 end)
+
+RegisterCommand("sendtolobby", function(source, args, rawCommand)
+    local src = source
+    local message = "No permission to use this command"
+    if TX_ADMINS[tostring(src)] then
+        if #args == 2 then
+            local targetPlayer = args[1]
+            local lobbyID = args[2]
+            local playerName = GetPlayerName(targetPlayer)
+                
+            sendToDisc(txadmin_Logs, 'Player sent to lobby', "Name: **" .. playerName .. "** \nAdmin: **" .. GetPlayerName(src) .. "** \nLobby: **" .. lobbyID .. "**")
+            TriggerClientEvent("erotic-lobby:forceworld", targetPlayer, lobbyID, true)
+            message = "Sent "..playerName.." to lobby: "..lobbyID
+
+            TriggerClientEvent('chat:addMessage', targetPlayer, {
+                template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+                args = { "[ADMIN]", "You have been sent to lobby: "..lobbyID}
+            })
+        else
+            message = "/sendtolobby <playerid> <lobbyid>"
+        end
+    end
+    TriggerClientEvent('chat:addMessage', src, {
+        template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+        args = { "[ADMIN]", message}
+    })
+end, false)
