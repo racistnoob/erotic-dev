@@ -7,6 +7,7 @@ local weaponRecoils = {
     [`WEAPON_USP45`] = { onFoot = 1.0, onBike = 1.3 }, -- usp
     [-2060501776] = { onFoot = 0.8, onBike = 1.8 }, -- m1911
     [-771403250] = { onFoot = 0.4, onBike = 1.8 }, -- heavypistol
+    [`WEAPON_M45A1`] = { onFoot = 0.4, onBike = 1.8 }, -- heavypistol
     [1303514201] = { onFoot = 0.8, onBike = 1.8 }, -- glock18c
     [-1882382516] = { onFoot = 0.5, onBike = 1.8 }, -- glock17
     

@@ -240,7 +240,7 @@ RegisterCommand("inv", function(source,args,rawcommand)
 
     INVENTORY.MAIN.Player[source] = {
         [1] = {item = "WEAPON_ASSAULTRIFLE", itemdata = {weight=0.5}, quantity = 1},
-        [2] = {item = "WEAPON_HEAVYPISTOL", itemdata = {weight=0.5}, quantity = 1},
+        [2] = {item = "WEAPON_M45A1", itemdata = {weight=0.5}, quantity = 1},
         [3] = 'empty',
         [4] = 'empty',
         [5] = 'empty',

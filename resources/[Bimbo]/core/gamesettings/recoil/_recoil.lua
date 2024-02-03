@@ -131,13 +131,12 @@ function SetRecoilMode(player, mode)
 
     if not recoilModes[mode] then
         local modesList = table.concat(table.keys(recoilModes), ", ")
-        print("^1Invalid mode. Available modes: " .. modesList)
+        --print("^1Invalid mode. Available modes: " .. modesList)
         return
     end
 
     Recoil:SetMode(mode)
-    print("^2Recoil set: " .. mode)
-
+    --print("^2Recoil set: " .. mode)
 end
 
 RegisterNetEvent('settings:ChangeRecoilMode')

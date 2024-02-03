@@ -39,6 +39,7 @@ local weaponNames = {
     [`WEAPON_USP45`] = 'weapon_heavypistol',
     [`WEAPON_VINTAGEPISTOL`] = 'weapon_vintagepistol',
     [`WEAPON_COMBATPISTOL`] = 'weapon_combatpistol',
+    [`WEAPON_M45A1`] = 'weapon_combatpistol',
 }
 
 local function GetWeaponName(hash)

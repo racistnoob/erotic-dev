@@ -603,7 +603,7 @@ WEAPON_LIST = {
             options = {},
         },
     },
-    [`WEAPON_HEAVYPISTOL`] = {
+    [`WEAPON_M45A1`] = {
         -- {
         --     label = "Mag",
         --     bone = "WAPClip",
@@ -629,7 +629,7 @@ WEAPON_LIST = {
                     price = 0
                 },
                 {
-                    attachment = "COMPONENT_AT_PI_FLSH",
+                    attachment = "COMPONENT_M45A1_FLSH_01",
                     label = "Flashlight",
                     price = 100
                 },
@@ -637,31 +637,16 @@ WEAPON_LIST = {
         },
         {
             label = "Suppressor",
-            bone = "WAPSupp_2",
+            bone = "WAPSupp",
             options = {
                 {
                     label = "None",
                     price = 0
                 },
                 {
-                    attachment = "COMPONENT_AT_PI_SUPP",
+                    attachment = "COMPONENT_M45A1_SUPP_01",
                     label = "Suppressor",
                     price = 100
-                },
-            },
-        },
-        {
-            label = "Variation",
-            bone = "gun_root",
-            options = {
-                {
-                    label = "None",
-                    price = 0
-                },
-                {
-                    attachment = "COMPONENT_HEAVYPISTOL_VARMOD_LUXE",
-                    label = "Deluxe",
-                    price = 10000
                 },
             },
         },

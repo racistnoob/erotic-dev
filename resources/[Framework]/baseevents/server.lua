@@ -32,6 +32,7 @@ local Weapons = {
     [`weapon_snspistol`] = {['weaponName'] = 'SNS Pistol', ['type'] = 'Pistol'},
     [`weapon_snspistol_mk2`] = {['weaponName'] = 'SNS Pistol Mk II', ['type'] = 'Pistol'},
     [`weapon_heavypistol`] = {['weaponName'] = 'Heavy Pistol', ['type'] = 'Pistol'},
+    [`WEAPON_M45A1`] = {['weaponName'] = 'Heavy Pistol', ['type'] = 'Pistol'},
     [`weapon_vintagepistol`] = {['weaponName'] = 'Vintage Pistol', ['type'] = 'Pistol'},
     [`weapon_flaregun`] = {['weaponName'] = 'Flare Gun', ['type'] = 'Pistol'},
     [`weapon_marksmanpistol`] = {['weaponName'] = 'Marksman Pistol', ['type'] = 'Pistol'},

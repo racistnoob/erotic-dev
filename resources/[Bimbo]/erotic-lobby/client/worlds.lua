@@ -24,7 +24,7 @@ local worlds = {
         firstPersonVehicle = false, 
         hsMulti = true,
         kits = {'pistols'},
-        kit = {'pistols', 'sp'},
+        kit = {'pistols', 'heavypistol'},
     }},
     
     { startID = 2, endID = 2, settings = { 

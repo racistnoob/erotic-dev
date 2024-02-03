@@ -9,7 +9,7 @@ Kits = {
             {item = "radio", amount = 1, slot = 30},
         },
         ["heavypistol"] = {
-            {item = "WEAPON_HEAVYPISTOL", primary = true, amount = 1, slot = 1},
+            {item = "WEAPON_M45A1", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
             {item = "oxy", amount = 30, slot = 3},
             {item = "joint", amount = 15, slot = 4},

@@ -3,6 +3,7 @@ local recentShots = 0
 local nonstopWeaponsList = {
     ["WEAPON_COMBATPISTOL"] = { recoil = 1.1 },
     ["WEAPON_HEAVYPISTOL"] = { recoil = 1.3 },
+    ["WEAPON_M45A1"] = { recoil = 1.3 },
     ["WEAPON_PISTOL"] = { recoil = 1.0 },
     ["WEAPON_PISTOL_MK2"] = { recoil = 1.3 },
     ["WEAPON_PISTOL50"] = { recoil = 1.4 },
