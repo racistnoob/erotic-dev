@@ -70,7 +70,7 @@ AddEventHandler("polyzone:enter", function(name)
 end)
 
 AddEventHandler("polyzone:exit", function(name)
-    if name == "casino" or "southside" then
+    if name == "casino" or name == "southside" then
         inSafeZone = false
         SetLocalPlayerAsGhost(false)
         NetworkSetPlayerIsPassive(false)
