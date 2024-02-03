@@ -29,7 +29,6 @@ Config = {
     },
 }
 
-
 local function ExtractIdentifiers(src)
     local identifiers = {
         steam = "",

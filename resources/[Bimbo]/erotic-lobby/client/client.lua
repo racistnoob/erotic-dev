@@ -1,142 +1,22 @@
 lobbyMenuOpen = false
 local inZone = false
-
-local lobbyData = {
-    -- car fights
-	{
-		id = 1,
-		name = 'Southside',
-		settings = {'FPS Mode', 'Light Recoil'},
-        maxPlayers = 20
-	},
-	
-    -- ffa lobbies
-	{
-		id = 2,
-		name = 'Pistol FFA',
-		settings = {'FFA', 'Headshots', 'Light Recoil'},
-        maxPlayers = 20
-	},
-
-    {
-		id = 3,
-		name = 'AR FFA',
-		settings = {'FFA', 'Headshots', 'Light Recoil'},
-        maxPlayers = 20
-	},
-
-	{
-		id = 4,
-		name = 'Deluxo',
-		settings = {'Deluxo', 'Medium Recoil', 'Headshots'},
-        maxPlayers = 20
-	},
-
-    -- rp preset 1
-	{
-		id = 5,
-		name = 'RP 1 HS (#1)',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
-        maxPlayers = 12
-	},
-	{
-		id = 6,
-		name = 'RP 1 HS (#2)',
-		settings = {'FPS Mode', 'Light Recoil', 'Headshots'},
-        maxPlayers = 12
-	},
-
-    -- envy hs
-	{
-		id = 7,
-		name = 'Envy HS (#1)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 8
-	},
-	{
-		id = 8,
-		name = 'Envy HS (#2)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 8
-	},
-
-	{
-		id = 9,
-		name = 'Envy HS (#3)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 10
-	},
-	{
-		id = 10,
-		name = 'Envy HS (#4)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 10
-	},
-	{
-		id = 11,
-		name = 'Envy HS (#5)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 12
-	},
-	{
-		id = 12,
-		name = 'Envy HS (#6)',
-		settings = {'FPS Mode', 'Envy Recoil', 'Headshots'},
-        maxPlayers = 12
-	},
-
-    -- rp preset 2
-	{
-		id = 13,
-		name = 'RP 2 (#1)',
-		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
-        maxPlayers = 20
-	},
-	{
-		id = 14,
-		name = 'RP 2 (#2)',
-		settings = {'Third Person', 'Heavy Recoil', 'Headshots'},
-        maxPlayers = 20
-	},
-
-    -- arena recoil
-	{
-		id = 15,
-		name = 'Rena (#1)',
-		settings = {'Third Person', 'Light Recoil'},
-        maxPlayers = 20
-	},
-	{
-		id = 16,
-		name = 'Rena (#2)',
-		settings = {'Third Person', 'Light Recoil'},
-        maxPlayers = 20
-	},
-
-    -- overtime
-	{
-		id = 17,
-		name = 'Overtime (BETA #1)',
-		settings = {'Third Person', 'Light Recoil'},
-        maxPlayers = 20
-	},
-	{
-		id = 18,
-		name = 'Overtime (BETA #2)',
-		settings = {'Third Person', 'Light Recoil'},
-        maxPlayers = 20
-	},
-}
-
 local is_control_just_released = IsControlJustReleased
 local wait = Wait
+local lobbyData = GetWorldsData()
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(2500)
+        RemoveEmptyCustomLobbies()
+    end
+end)
 
 local function toggleNuiFrame(shouldShow)
-	if shouldShow then
-		TriggerEvent("erotic-lobby:updateLobbies")
-		TriggerScreenblurFadeIn(50)
-	else
-		TriggerScreenblurFadeOut(50)
+    if shouldShow then
+        TriggerEvent("erotic-lobby:updateLobbies")
+        TriggerScreenblurFadeIn(50)
+    else
+        TriggerScreenblurFadeOut(50)
         if inZone then
             exports['prompts']:showPrompt({
                 pressText = "Press E",
@@ -144,11 +24,47 @@ local function toggleNuiFrame(shouldShow)
             })
             interaction()
         end
-	end
-	SetNuiFocus(shouldShow, shouldShow)
-	SendReactMessage("setVisible", shouldShow)
-	lobbyMenuOpen = shouldShow
+    end
+    SetNuiFocus(shouldShow, shouldShow)
+    SendReactMessage("setVisible", shouldShow)
+    lobbyMenuOpen = shouldShow
+    
+	SendNUIMessage({
+		type = 'closePasswordPrompt' and 'closeCustomLobbyPrompt'
+	})
 end
+
+function RemoveEmptyCustomLobbies()
+    local i = 1
+    while i <= #worlds do
+        local lobby = worlds[i]
+        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
+            table.remove(worlds, i)
+            print("Removed empty custom lobby:", json.encode(lobby))
+        else
+            i = i + 1
+        end
+    end
+end
+
+RegisterNUICallback('createCustomLobby', function(data, cb)
+    local customLobbySettings = data
+
+    print('Received custom lobby settings:')
+    print(json.encode(customLobbySettings))
+
+    TriggerEvent('customLobbyCreate', customLobbySettings)
+    
+    cb({ success = true })
+end)
+
+AddEventHandler('customLobbyCreate', function(customLobbySettings)
+    toggleNuiFrame(false)
+    print('Custom lobby created:')
+    print(json.encode(customLobbySettings))
+    AddCustomLobby(customLobbySettings)
+    TriggerEvent("erotic-lobby:updateLobbies")
+end)
 
 function isLobbyMenuOpen()
 	return lobbyMenuOpen
@@ -241,19 +157,5 @@ function getLobbyData(lobby)
 	end
 end
 exports('getLobbyData', getLobbyData)
-
-RegisterNetEvent('erotic-lobby:updateLobbies')
-AddEventHandler('erotic-lobby:updateLobbies', function()
-    SendNUIMessage({
-        type = "updateLobbies",
-        lobbies = lobbyData,
-    })
-    -- print('Updated lobbies:', json.encode(lobbyData))
-end)
-
-
-RegisterCommand("wds", function(source, args, rawCommand)
-    TriggerEvent("erotic-lobby:updateLobbies")
-end, false)
 
 exports('openLobby', toggleNuiFrame)

@@ -3,76 +3,105 @@ import './App.css';
 import { fetchNui } from '../utils/fetchNui';
 
 interface Lobby {
-  id: number;
-  name: string;
-  settings: string[];
+  ID: number;
+  custom?: boolean;
   playerCount: number;
-  maxPlayers: number;
+  settings: {
+    name: string;
+    recoilMode: string;
+    tags?: string[];
+    firstPersonVehicle: boolean;
+    hsMulti: boolean;
+    spawningcars?: boolean;
+    RandomSpawns?: { x: number; y: number; z: number; h: number }[];
+    maxPlayers: number;
+    passwordProtected: boolean;
+    password?: string;
+  }
 }
 
 const App: React.FC = () => {
-  const lobbiesRef = useRef<Lobby[]>([
-
-  ]);
+  const [lobbies, setLobbies] = useState<Lobby[]>([]);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [selectedLobby, setSelectedLobby] = useState<Lobby | null>(null);
+  const [tab, setTab] = useState<'Normal' | 'Custom'>('Normal');
+  const [showCustomLobbyPrompt, setShowCustomLobbyPrompt] = useState(false);
+  const [customLobbySettings, setCustomLobbySettings] = useState<{
+    name: string;
+    maxPlayers: number;
+    recoilMode: string;
+    firstPersonVehicle: boolean;
+    hsMulti: boolean;
+    passwordProtected: boolean;
+    password?: string;
+  }>({
+    maxPlayers: 12,
+    name: '',
+    recoilMode: 'roleplay',
+    firstPersonVehicle: false,
+    hsMulti: false,
+    passwordProtected: true,
+    password: ''
+  });
 
   const handleUpdateLobbies = (event: MessageEvent) => {
     if (event.data.type === 'updateLobbies') {
-        const receivedLobbies: Lobby[] = event.data.lobbies;
+      const receivedLobbies: Lobby[] = event.data.lobbies;
 
-        // Preserve existing player counts
+      setLobbies(prevLobbies => {
         const updatedLobbies = receivedLobbies.map((receivedLobby: Lobby) => {
-            const existingLobby = lobbiesRef.current.find(lobby => lobby.id === receivedLobby.id);
-
-            if (existingLobby) {
-                // Lobby already exists, update only properties that need to be changed
-                return { ...existingLobby, name: receivedLobby.name, settings: receivedLobby.settings, maxPlayers: receivedLobby.maxPlayers};
-            } else {
-                // Lobby doesn't exist, add it to the array
-                return receivedLobby;
-            }
+          const existingLobbyIndex = prevLobbies.findIndex(lobby => lobby.ID === receivedLobby.ID);
+    
+          if (existingLobbyIndex !== -1) {
+            return {
+              ...prevLobbies[existingLobbyIndex],
+              custom: receivedLobby.custom,
+              name: receivedLobby.settings.name,
+              settings: receivedLobby.settings,
+            };
+          } else {
+            return {
+              ...receivedLobby,
+              custom: receivedLobby.custom,
+            };
+          }
         });
-
-        lobbiesRef.current = updatedLobbies;
-
-        // Update filteredLobbies to display all lobbies
-        setFilteredLobbies(updatedLobbies);
+        return updatedLobbies;
+      });
     }
-};
-  
+  };  
+
   const handlePlayerCountUpdate = (event: MessageEvent) => {
-    //console.log('Received Player Count Update:', event.data);
-
     if (event.data.type === 'updatePlayerCount') {
-        const newPlayerCount = event.data.count;
-        const worldID = event.data.worldId;
-
-        lobbiesRef.current = lobbiesRef.current.map((lobby) => {
-            if (lobby.id === worldID) {
-                return { ...lobby, playerCount: newPlayerCount };
-            }
-            return lobby;
+      const newPlayerCount = event.data.count;
+      const worldID = event.data.worldId;
+  
+      setLobbies(prevLobbies => {
+        return prevLobbies.map((lobby) => {
+          if (lobby.ID === worldID) {
+            return { ...lobby, playerCount: newPlayerCount };
+          }
+          return lobby;
         });
-
-        setFilteredLobbies((prevFilteredLobbies) =>
-            prevFilteredLobbies.map((lobby) => {
-                if (lobby.id === worldID) {
-                    return { ...lobby, playerCount: newPlayerCount };
-                }
-                return lobby;
-            })
-        );
-
-        // Log lobby data before sending to NUI
-        //console.log('Updated Lobby Data:', lobbiesRef.current);
+      });
     }
   };
-
+  
   const handleJoinLobby = (lobbyId: number) => {
-    fetchNui('switchWorld', { worldId: lobbyId })
+    const lobby = lobbies.find(lobby => lobby.ID === lobbyId);
+    if (lobby && lobby.settings.passwordProtected) {
+      setSelectedLobby(lobby);
+      setShowPasswordPrompt(true);
+    } else {
+      joinLobby(lobbyId, '');
+    }
+  };  
+
+  const joinLobby = (lobbyId: number, password: string) => {
+    fetchNui('switchWorld', { worldId: lobbyId, password })
       .then((response) => {
-        if (response.success) {
-          // console.log('Joined lobby successfully!');
-        } else {
+        if (!response.success) {
           console.error('Failed to join the lobby:', response.error);
         }
       })
@@ -81,80 +110,182 @@ const App: React.FC = () => {
       });
   };
 
-  type FilterSettings = { [key: string]: boolean };
-  const [filterSettings, setFilterSettings] = useState<FilterSettings>({
-    'FPS Mode': false,
-    'Deluxo': false,
-    'FFA': false,
-    'Third Person': false,
-    'Headshots': false,
-  });
-  const [selectedRecoil, setSelectedRecoil] = useState('');
-
-  const handleFilterChange = (setting: string) => {
-    setFilterSettings({ ...filterSettings, [setting]: !filterSettings[setting] });
+  const handlePasswordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordInput(e.target.value);
   };
 
-  const handleRecoilChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedRecoil(e.target.value);
+  const handlePasswordSubmit = () => {
+    if (selectedLobby) {
+      if (passwordInput.trim() === selectedLobby.settings.password) {
+        joinLobby(selectedLobby.ID, passwordInput);
+        setShowPasswordPrompt(false);
+        setPasswordInput('');
+        setSelectedLobby(null);
+      } else {
+        setShowPasswordPrompt(false);
+        setPasswordInput('');
+        setSelectedLobby(null);
+      }
+    }
+  };  
+
+  const handleCancel = () => {
+    setShowPasswordPrompt(false);
+    setPasswordInput('');
+    setSelectedLobby(null);
   };
 
-  const [filteredLobbies, setFilteredLobbies] = useState<Lobby[]>([]);
+window.addEventListener('message', (event) => {
+  if (event.data.type === 'createCustomLobby') {
+      const customLobbySettings = event.data.customLobbySettings;
+      console.log('Received custom lobby settings:', customLobbySettings);
+  }
+});
+
+const handleCreateCustomLobby = () => {
+  fetchNui('createCustomLobby', customLobbySettings)
+      .then(response => {
+          if (response.success) {
+              console.log('Custom lobby created successfully!');
+
+          } else {
+              console.error('Failed to create custom lobby:', response.error);
+
+          }
+      })
+      .catch(error => {
+          console.error('Error creating custom lobby:', error);
+
+      });
+  setShowCustomLobbyPrompt(false);
+};
 
   useEffect(() => {
     window.addEventListener('message', handleUpdateLobbies);
-
-    // Cleanup function
     return () => {
       window.removeEventListener('message', handleUpdateLobbies);
     };
-  }, []); // Make sure to have an empty dependency array to run the effect only once on mount
+  }, []);
 
   useEffect(() => {
     window.addEventListener('message', handlePlayerCountUpdate);
-  
-    // Cleanup function
     return () => {
       window.removeEventListener('message', handlePlayerCountUpdate);
     };
-  }, []); // Make sure to have an empty dependency array to run the effect only once on mount  
+  }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'closeCustomLobbyPrompt') {
+        setShowCustomLobbyPrompt(false);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'closePasswordPrompt') {
+        setShowPasswordPrompt(false);
+        setPasswordInput('');
+        setSelectedLobby(null);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
+  const lobbys = tab === 'Normal' ? lobbies.filter(lobby => !lobby.custom) : lobbies.filter(lobby => lobby.custom);
 
   return (
     <div className='overlay'>
       <div className="lobby-container">
-        <div className="options">
-        {Object.keys(filterSettings).map(setting => (
-          <label key={setting}>
-            <input className='lobby-checkbox'
-              type="checkbox"
-              checked={filterSettings[setting]}
-              onChange={() => handleFilterChange(setting)}
-            />
-            {setting}
-          </label>
-        ))}
-        <select value={selectedRecoil} onChange={handleRecoilChange} className='lobby-select'> 
-          <option value="">All Recoils</option>
-          <option value="Envy Recoil">Envy Recoil</option>
-          <option value="Light Recoil">Light Recoil</option>
-          <option value="Medium Recoil">Medium Recoil</option>
-          <option value="High Recoil">High Recoil</option>
-        </select>
+        <div className="tab-container">
+          <button className={tab === 'Normal' ? 'active-tab' : ''} onClick={() => setTab('Normal')}>Normal</button>
+          <button className={tab === 'Custom' ? 'active-tab' : ''} onClick={() => setTab('Custom')}>Custom</button>
+        </div>
+        <div className="custom-lobby">
+        {tab === 'Custom' && <button className='custom-lobby-button' onClick={() => setShowCustomLobbyPrompt(true)}>Create lobby</button>}
         </div>
         <div className="lobby-list">
-          {filteredLobbies.map((lobby) => (
-            <div key={lobby.id} className="lobby-item" onClick={() => handleJoinLobby(lobby.id)}>
-              <h3 className="lobby-title">{lobby.name}</h3>
+          {lobbys.map((lobby) => (
+            <div key={lobby.ID} className="lobby-item" onClick={() => handleJoinLobby(lobby.ID)}>
+              <h3 className="lobby-title">{lobby.settings.name}</h3>
               <div className="lobby-settings">
-                {lobby.settings.map((setting, index) => (
-                  <p key={index} className="lobby-setting">{setting}</p>
+                {lobby.settings.tags?.map((tag, index) => (
+                  <p key={index} className="lobby-setting">{tag}</p>
                 ))}
               </div>
-              <p className="lobby-player-count">🧑‍🤝‍🧑:&nbsp;&nbsp;{lobby.playerCount || 0} / {lobby.maxPlayers || 20}</p>
+              <p className="lobby-player-count">
+                {lobby.settings.passwordProtected && <span>🔒</span>}
+                🧑‍🤝‍🧑:&nbsp;&nbsp;{lobby.playerCount || 0} / {lobby.settings.maxPlayers || 20}
+              </p>
             </div>
           ))}
         </div>
       </div>
+      {showPasswordPrompt && (
+        <div className="modal-background">
+          <div className="password-prompt">
+            <input
+              type="password"
+              value={passwordInput}
+              onChange={handlePasswordInputChange}
+              placeholder="Enter password"
+            />
+            <div className="button-container">
+              <button onClick={handleCancel}>Cancel</button>
+              <button onClick={handlePasswordSubmit}>Submit</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Render custom lobby prompt when showCustomLobbyPrompt is true */}
+      {showCustomLobbyPrompt && (
+        <div className="modal-background">
+          <div className="custom-lobby-prompt">
+            <h2>Create Custom Lobby</h2>
+            {/* Remove the label and input for the name field */}
+            {/* Example checkboxes for custom lobby settings */}
+            <label>
+              <input type="checkbox" checked={customLobbySettings.firstPersonVehicle} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, firstPersonVehicle: e.target.checked })} /> First Person Vehicle
+            </label>
+            <label>
+              <input type="checkbox" checked={customLobbySettings.hsMulti} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, hsMulti: e.target.checked })} /> HeadShots
+            </label>
+            {/* Example dropdown for custom lobby settings */}
+            <label>Recoil Mode:</label>
+            <select value={customLobbySettings.recoilMode} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, recoilMode: e.target.value })}>
+              <option value="roleplay">Normal</option>
+              <option value="envy">Envy</option>
+              <option value="frenzy">Frenzy</option>
+            </select>
+            {/* Add password settings */}
+            <label>Password Protected:</label>
+            <input type="checkbox" checked={customLobbySettings.passwordProtected} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, passwordProtected: e.target.checked })} />
+            {customLobbySettings.passwordProtected && ( // Render password input only if lobby is password protected
+              <>
+                <label>Password:</label>
+                <input type="password" value={customLobbySettings.password} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, password: e.target.value })} />
+              </>
+            )}
+            {/* Button container */}
+            <div className="button-container">
+              <button onClick={() => setShowCustomLobbyPrompt(false)}>Cancel</button>
+              <button onClick={() => handleCreateCustomLobby()}>Create Lobby</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
