@@ -23,6 +23,9 @@ function UndeadedPlayer(x, y, z, h)
     TriggerServerEvent('baseevents:revived')
     if nonstopcombat then
         ResurrectPed()
+        Wait(250)
+        ResetPedMovementClipset(PlayerPedId(), 1.0)
+        ClearEffects()
     end
 end
 

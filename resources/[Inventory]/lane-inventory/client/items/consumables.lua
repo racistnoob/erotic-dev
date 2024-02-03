@@ -20,21 +20,21 @@ CreateThread(function()
             if (finished == 100) then
                 if nonstopCombat then
                     exports['core']:Gauze()
-                else
-                    local count = math.random(30, 60)
-                    healing = true
-                    while count > 0 do
-                        Wait(1000)
-                        count = count - 1
-                        healAmount = math.random(1, 4)
-                        SetEntityHealth(playerPed, GetEntityHealth(playerPed) + healAmount)
-                        if IsEntityDead(playerPed) then
-                            healing = false
-                            break
-                        end
-                    end
-                    healing = false
                 end
+                local count = nonstopCombat and math.random(5,10) or math.random(30, 60)
+                healing = true
+                while count > 0 do
+                    Wait(1000)
+                    count = count - 1
+                    local healAmount = nonstopCombat and math.random(8,15) or math.random(1, 4)
+                    SetEntityHealth(playerPed, GetEntityHealth(playerPed) + healAmount)
+                    exports['core']:DoOxy()
+                    if IsEntityDead(playerPed) then
+                        healing = false
+                        break
+                    end
+                end
+                healing = false
                 API.RemoveItem(item, 1)
             end
         end
@@ -43,15 +43,19 @@ CreateThread(function()
     Item.Register("armour", {
         func = function(item)
             local nonstopCombat = exports['core']:getNonstopCombat()
-            if nonstopCombat or Player.Armour() == 100 then return false end
+            if not nonstopCombat and Player.Armour() == 100 then return false end
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 4500,
+                length = nonstopCombat and 8000 or 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
             if (finished == 100) then
-                SetPlayerMaxArmour(PlayerId(), 100)
-                AddArmourToPed(Player.Ped(), 100)
+                if nonstopcombat then
+                    exports['core']:Edible()
+                else
+                    SetPlayerMaxArmour(PlayerId(), 100)
+                    AddArmourToPed(Player.Ped(), 100)
+                end
                 API.RemoveItem(item, 1)
             end
             return true
@@ -64,14 +68,18 @@ CreateThread(function()
             local nonstopCombat = exports['core']:getNonstopCombat()
             if nonstopCombat or Player.Armour() == 100 then return false end
             local finished = exports["lane-taskbar"]:taskBar({
-                length = 4500,
+                length = nonstopCombat and 8000 or 4500,
                 text = "Heavy Armour",
                 animation = { dict = "clothingtie", anim = "try_tie_negative_a" }
               })
 
             if (finished == 100) then
-                SetPlayerMaxArmour(PlayerId(), 100)
-                AddArmourToPed(Player.Ped(), 60)
+                if nonstopcombat then
+                    exports['core']:Edible()
+                else
+                    SetPlayerMaxArmour(PlayerId(), 100)
+                    AddArmourToPed(Player.Ped(), 60)
+                end
                 API.RemoveItem(item, 1)
             end
             return true
@@ -162,11 +170,9 @@ CreateThread(function()
             })
             if (finished == 100) then
                 if nonstopCombat then
-                    exports['core']:AddEffect("Armor", GetRandomFloatInRange(0.6, 0.9))
-                    exports['core']:AddEffect("Comfort", 0.4)
-                    exports['core']:AddEffect("Drug", 0.7)
+                    exports['core']:Joint()
                 else
-                    SetPedArmour(Player.Ped(), Player.Armour() + 15)
+                    SetPedArmour(Player.Ped(), Player.Armour() + 25)
                 end
                 API.RemoveItem(item, 1)
                 Player.InAnim = false

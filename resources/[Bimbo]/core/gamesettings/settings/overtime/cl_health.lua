@@ -434,7 +434,7 @@ function HealPed()
 	Info.isHemorrhaging = false
 
 	ClearEffects()
-	-- UpdateInfo()
+	UpdateInfo()
 
 	SetCustomWalkStyle("reset")
 end
@@ -478,51 +478,66 @@ function Impact(intensity)
 		local startTime = get_game_timer()
 		while get_game_timer() - startTime < math_ceil(2000 * intensity) do
 			for k, v in pairs({ 21, 22, 23, 24, 25, 26, 71, 72, 73, 75, 86, 87, 88, 89, 90, 91, 92, 102 }) do
-				disable_control_action(0, v)
+				disable_control_action(0, v, true)
 			end
 			wait(0)
 		end
 	end)
 end
 
+function Edible()
+    for bone, info in pairs(Info.bones) do
+        if info.damage and info.damage > 0.3 then
+            info.damage = 0.0
+        end
+    end
+    ResurrectPed()
+    local ped = PlayerPedId()
+	local health = get_ped_max_health(ped)
+	set_entity_health(ped, health)
+    UpdateInfo()
+end
+exports("Edible", Edible)
+
+function Joint()
+    ResetPedMovementClipset(PlayerPed, 1.0)
+    exports['core']:AddEffect("Armor", GetRandomFloatInRange(0.6, 0.9))
+    exports['core']:AddEffect("Comfort", GetRandomFloatInRange(0.4, 0.8))
+    exports['core']:AddEffect("Drug", 0.7)
+    UpdateInfo()
+end
+exports("Joint", Joint)
+
+function DoOxy()
+    for bone, info in pairs(Info.bones) do
+        if info.damage and info.damage > 0.1 then
+            info.damage = math_max(info.damage - get_random_float_in_range(Config.Bandaging.InstantHealth[1], Config.Bandaging.InstantHealth[2]), 0.0)
+        end
+    end
+end
+exports("DoOxy", DoOxy)
+
 function Gauze()
-	local effective = false
 	for bone, info in pairs(Info.bones) do
-        -- bandage
         if info.damage and info.damage > 0.5 and info.damage < Config.Healing.MaxDamage then
-			info.damage = math_max(info.damage - get_random_float_in_range(Config.Bandaging.InstantHealth[1], Config.Bandaging.InstantHealth[2]), 0.0)
-			effective = true
-		end
+            info.damage = math_max(info.damage - get_random_float_in_range(Config.Bandaging.InstantHealth[1], Config.Bandaging.InstantHealth[2]), 0.0)
+        end
 
-		local clotted = info.clotted or 0.0
-		if clotted < 1.5 then
-			effective = true
-		end
-
-		clotted = clotted + (1.0 / (clotted + 1.0))
-
-        -- gauze
         if info.bleed and info.bleed > 0.05 then
-			effective = true
-			info.bleed = math_max(info.bleed - 0.1, 0.0)
-		end
+            info.bleed = math_max(info.bleed - 0.1, 0.0)
+        end
 
-		if info.hemorrhaging and info.hemorrhaging > 0.0 then
-			info.hemorrhaging = info.hemorrhaging - 0.5
-			if info.hemorrhaging <= 0.0 then
-				info.hemorrhaging = nil
-			end
-			effective = true
-		end
+        if info.hemorrhaging and info.hemorrhaging > 0.0 then
+            info.hemorrhaging = info.hemorrhaging - 0.5
+            if info.hemorrhaging <= 0.0 then
+                info.hemorrhaging = nil
+            end
+        end
 
-        -- random clot affect (either gauze or bandage)
-        info.clotted = math_random() > 0.5 and math_max((info.clotted or 0.0), 0.5) or clotted
+        local clotted = info.clotted or 0.0
+        info.clotted = clotted + (1.0 / (clotted + 1.5))
+
         UpdateInfo()
-	end
-	if effective then
-		exports['drp-notifications']:SendAlert('inform', "That seems to be helping!", 1500)
-	else
-		exports['drp-notifications']:SendAlert('inform', 'It does not seem to be helping!', 1500)
 	end
 end
 exports("Gauze", Gauze)

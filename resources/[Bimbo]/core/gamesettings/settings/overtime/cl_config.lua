@@ -26,7 +26,7 @@ Config = {
 		UnclotRate = 1.0 / 300.0,
 	},
 	Bandaging = {
-		InstantHealth = {0.0, 0.1},
+		InstantHealth = {0.0, 0.5},
 		Action = {
 			duration = 6000,
 			label = "Using Bandage...",
