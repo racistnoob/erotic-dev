@@ -683,6 +683,7 @@ local blacklistedModels = {
 
 local whitelistedModels = { 
     [`prop_sh_joint_01`] = true,
+
 }
 
 local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro", "toros", "omnisegt", "paragon",
@@ -836,7 +837,7 @@ AddEventHandler('entityCreating', function(entity)
                     sendToDiscord("**Cheating (Blocked entity):** ".. GetPlayerName(owner), "**Spawned blacklisted object:** "..model)
                     return
                 end
-                if not whitelistedModels[model] or blacklistedModels[model] then
+                if not whitelistedModels[model] and blacklistedModels[model] then
                     CancelEvent()
                 end
                 
