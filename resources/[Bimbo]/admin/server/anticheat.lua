@@ -681,11 +681,6 @@ local blacklistedModels = {
     [`BLIMP`] = true
 }
 
-local whitelistedModels = { 
-    [`prop_sh_joint_01`] = true,
-
-}
-
 local whitelistedVehicles = {"revolter", "sheava", "issi7", "cyclone", "shotaro", "toros", "omnisegt", "paragon",
 "sultanrs", "neon", "streiter", "raiden", "tulip", "buffalo", "buffalo1", "buffalo2",
 "buffalo3", "seven70", "massacro", "guardian", "vigero2", "coquette4", "jester", "jester3",
@@ -827,20 +822,18 @@ AddEventHandler('entityCreating', function(entity)
             return
         end
 
-        if model ~= 0 then
+        if model ~= 0 and model ~= -1199910959 then
             local coords = GetEntityCoords(entity)
             
             if type == 3 then -- objects
+                CancelEvent()
                 if blacklistedModels[model] then
                     CancelEvent()
                     DropPlayer("Spawned blacklisted object")
                     sendToDiscord("**Cheating (Blocked entity):** ".. GetPlayerName(owner), "**Spawned blacklisted object:** "..model)
                     return
                 end
-                if not whitelistedModels[model] and blacklistedModels[model] then
-                    CancelEvent()
-                end
-                
+
                 local formattedCoords = "vector3("..tonumber(string.format("%.2f", coords["x"]))..", "..tonumber(string.format("%.2f", coords["y"]))..", "..tonumber(string.format("%.2f", coords["z"]))..")"
                 local message = typeString..' with the name **'..model..'** was created\nSpawned at: **'..formattedCoords..'**'
                 
