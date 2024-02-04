@@ -23,17 +23,17 @@ local MirrorPark = {
 local worlds = {
     { ID = 1, custom = false, playerCount = 0, settings = {
         name = 'Southside #1',
-        tags = {'ThirdPerson Mode', 'Pistols'},
+        tags = {'Pistols'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true,
         hsMulti = false,
         maxPlayers = 30,
         kits = {'pistols'},
-        kit = {'pistols', 'heavypistol'},
+        kit = {'pistols', 'sp'},
     }},
     { ID = 2, custom = false, playerCount = 0, settings = {
         name = 'Southside #2',
-        tags = {'FPS Mode', 'ARs'},
+        tags = {'FPS Mode', 'ARS'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true,
         hsMulti = false,
@@ -120,6 +120,36 @@ AddEventHandler('RemoveEmptyCustomLobby', function(lobbyID)
     end
 end)
 
+local recoilModeTags = {
+    roleplay = "RP Preset #1",
+    envy = "Envy",
+    hardcore = "Hardcore",
+    roleplay3 = "Rena",
+    roleplay2 = "RP Preset #2",
+    qb = "qb"
+}
+
+function generateTags(settings)
+    local tags = {}
+
+    -- Check and add "FPS Mode" tag
+    if settings.firstPersonVehicle then
+        table.insert(tags, "FPS Mode")
+    end
+
+    -- Check and add "Headshots" tag
+    if settings.hsMulti then
+        table.insert(tags, "Headshots")
+    end
+
+    local recoilModeTag = recoilModeTags[settings.recoilMode]
+    if recoilModeTag then
+        table.insert(tags, recoilModeTag)
+    end
+
+    return tags
+end
+
 
 RegisterNetEvent('AddCustomLobby')
 AddEventHandler('AddCustomLobby', function(customLobbySettings)
@@ -127,11 +157,12 @@ AddEventHandler('AddCustomLobby', function(customLobbySettings)
 
     if playerName then
         customLobbySettings.name = playerName .. "'s Lobby"
+        customLobbySettings.tags = generateTags(customLobbySettings)
         local customLobby = {
             ID = #worlds + 1,
             custom = true,
             settings = customLobbySettings,
-            playerCount = 1
+            playerCount = 1,
         }
         table.insert(worlds, customLobby)
         print("Added custom lobby:", json.encode(customLobby))
