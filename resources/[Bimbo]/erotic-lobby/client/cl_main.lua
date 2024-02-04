@@ -36,12 +36,25 @@ local function getLobbySettings(worldID)
     end
 end
 
+local backgroundActive = false
+local function background()
+    Citizen.CreateThread(function()
+        while backgroundActive do
+            Citizen.Wait()
+            DrawSprite("", "", 0.5, 0.5, 1.0, 1.0, 0, 144, 138, 255, 100)
+        end
+    end)
+end
+
 local function toggleNuiFrame(shouldShow)
     if shouldShow then
         RemoveEmptyCustomLobbies()
         TriggerServerEvent("RequestWorldsData")
+        backgroundActive = true
+        background()
         TriggerScreenblurFadeIn(50)
     else
+        backgroundActive = false
         TriggerScreenblurFadeOut(50)
         if inZone then
             exports['prompts']:showPrompt({
@@ -132,7 +145,7 @@ function switchWorld(worldID, force)
             TriggerServerEvent('erotic-lobby:ChangeWorld', worldID)
             
             exports['drp-notifications']:SendAlert('inform', 'Changed Worlds', 5000)
-            if worldID ~= "2" or worldID ~= "3" then
+            if worldID ~= "4" or worldID ~= "5" then
                 exports['noob']:putInSafeZone(true)
             end
         end
