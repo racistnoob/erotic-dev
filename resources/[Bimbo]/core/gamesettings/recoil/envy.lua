@@ -53,7 +53,7 @@ local WeaponRecoil = {
     [`weapon_microsmg`] = {
         vertical = .48,
     },
-    [`weapon_carbinerifle_mk2`] = {
+    [`weapon_762`] = {
         vertical = .30,
         horizontal = .14
     },

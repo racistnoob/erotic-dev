@@ -63,7 +63,7 @@ function GetWorldsData()
     return worlds
 end
 
-function switchWorld(worldID)
+function switchWorld(worldID, force)
     local worldID = tonumber(worldID)
     if worldID then
         local worldSettings, worldSpawn = nil, nil
@@ -71,9 +71,10 @@ function switchWorld(worldID)
             if world.ID == worldID then
                 worldSettings = world.settings
 
-                if getLobbyPlayerCount(worldID) >= world.settings.maxPlayers then
+                if not force and getLobbyPlayerCount(worldID) >= world.settings.maxPlayers then
                     return exports['drp-notifications']:SendAlert('error', 'Lobby is full!', 3000)
                 end
+
                 worldSpawn = worldSettings.spawn or defaultSpawn
 
                 if worldSettings.RandomSpawns then
@@ -122,6 +123,9 @@ function switchWorld(worldID)
         end
     end
 end
+
+RegisterNetEvent("erotic-lobby:forceworld")
+AddEventHandler("erotic-lobby:forceworld", switchWorld)
 
 local function getLobbySettings(worldID)
     local worldID = tonumber(worldID) or tonumber(currentWorldID)
