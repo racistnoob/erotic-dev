@@ -1182,6 +1182,88 @@ WEAPON_LIST = {
         },
     },
     --[[@RIFLES]]
+    [`WEAPON_BULLPUPRIFLE`] = {
+        {
+            label = "Flashlight",
+            bone = "WAPFlshLasr",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_FLSH",
+                    label = "Flashlight",
+                    price = 2500
+                },
+            },
+        },
+        {
+            label = "Optic",
+            bone = "WAPScop",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_SCOPE_SMALL",
+                    label = "Acog Scope",
+                    price = 3500
+                },
+            },
+        },
+        {
+            label = "Suppressor",
+            bone = "WAPSupp",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_SUPP",
+                    label = "Suppressor",
+                    price = 25000
+                },
+            },
+        },
+        {
+            label = "Grip",
+            bone = "WAPGrip",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_AT_AR_AFGRIP",
+                    label = "Foregrip",
+                    price = 12000
+                },
+            },
+        },
+        {
+            label = "Tint",
+            bone = "gun_root",
+            options = {},
+        },
+        {
+            label = "Variation",
+            bone = "gun_root",
+            options = {
+                {
+                    label = "None",
+                    price = 0
+                },
+                {
+                    attachment = "COMPONENT_BULLPUPRIFLE_VARMOD_LOW",
+                    label = "Deluxe",
+                    price = 5000
+                },
+            }
+        }
+    },
     [`WEAPON_CARBINERIFLE`] = {
         -- {
         --     label = "Mag",
