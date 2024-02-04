@@ -13,6 +13,7 @@ end)
 
 local function toggleNuiFrame(shouldShow)
     if shouldShow then
+        RemoveEmptyCustomLobbies()
         TriggerEvent("erotic-lobby:updateLobbies")
         TriggerScreenblurFadeIn(50)
     else
