@@ -131,7 +131,7 @@ AddEventHandler('AddCustomLobby', function(customLobbySettings)
             ID = #worlds + 1,
             custom = true,
             settings = customLobbySettings,
-            playerCount = 0
+            playerCount = 1
         }
         table.insert(worlds, customLobby)
         print("Added custom lobby:", json.encode(customLobby))

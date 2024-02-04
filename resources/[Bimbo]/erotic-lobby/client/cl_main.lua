@@ -97,7 +97,6 @@ end
 function GetWorldsData()
     return worlds
 end
-local lobbyData = GetWorldsData()
 
 function switchWorld(worldID, force)
     local worldID = tonumber(worldID)
