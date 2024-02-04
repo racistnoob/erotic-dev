@@ -23,7 +23,7 @@ local MirrorPark = {
 local worlds = {
     { ID = 1, custom = false, playerCount = 0, settings = {
         name = 'Southside #1',
-        tags = {'Pistols'},
+        tags = {'Pistols', 'RP Preset #1'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true,
         hsMulti = false,
@@ -33,7 +33,7 @@ local worlds = {
     }},
     { ID = 2, custom = false, playerCount = 0, settings = {
         name = 'Southside #2',
-        tags = {'FPS Mode', 'ARS'},
+        tags = {'FPS Mode', 'ARS', 'RP Preset #1'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true,
         hsMulti = false,
@@ -43,7 +43,7 @@ local worlds = {
     }},
     { ID = 3, custom = false, playerCount = 0, settings = {
         name = 'Car Fights',
-        tags = {'Pistols'},
+        tags = {'Pistols', 'Rena'},
         recoilMode = 'roleplay3',
         firstPersonVehicle = false, 
         hsMulti = false,
@@ -53,7 +53,7 @@ local worlds = {
     }},
     { ID = 4, custom = false, playerCount = 0, settings = {
         name = 'Pistol FFA',
-        tags = {'FFA', 'Pistols'},
+        tags = {'FFA', 'Pistols', 'RP Preset #1'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true, 
         hsMulti = false,
@@ -64,7 +64,7 @@ local worlds = {
     }},
     { ID = 5, custom = false, playerCount = 0, settings = {
         name = 'AR FFA',
-        tags = {'FFA', 'ARs'},
+        tags = {'FFA', 'ARs', 'RP Preset #1'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true, 
         hsMulti = true,
@@ -75,7 +75,7 @@ local worlds = {
     }},
     { ID = 6, custom = false, playerCount = 0, settings = {
         name = 'Envy',
-        tags = {'FPS Mode', 'Headshots'},
+        tags = {'FPS Mode', 'Headshots', 'Envy'},
         recoilMode = 'envy',
         firstPersonVehicle = true, 
         hsMulti = true,
@@ -97,7 +97,7 @@ local worlds = {
     }},
     { ID = 8, custom = false, playerCount = 0, settings = {
         name = 'Overtime (BETA)',
-        tags = {'Overtime Combat', 'Headshots', 'FPS Mode'},
+        tags = {'Headshots', 'FPS Mode', 'OT Combat', 'OT Recoil'},
         recoilMode = 'nonstop',
         nonstopcombat = true,
         firstPersonVehicle = true,
@@ -113,7 +113,7 @@ AddEventHandler('RemoveEmptyCustomLobby', function(lobbyID)
         local lobby = worlds[i]
         if lobby.ID == lobbyID and lobby.custom and getLobbyPlayerCount(lobbyID) == 0 then
             table.remove(worlds, i)
-            print("Removed empty custom lobby:", json.encode(lobby))
+            --print("Removed empty custom lobby:", json.encode(lobby))
             TriggerClientEvent('UpdateLobbies', -1, worlds)
             break
         end
@@ -165,7 +165,7 @@ AddEventHandler('AddCustomLobby', function(customLobbySettings)
             playerCount = 1,
         }
         table.insert(worlds, customLobby)
-        print("Added custom lobby:", json.encode(customLobby))
+        --print("Added custom lobby:", json.encode(customLobby))
         TriggerClientEvent('updateLobbies', -1, worlds)
         TriggerSwitchWorldToClient(source, customLobby.ID)
     end

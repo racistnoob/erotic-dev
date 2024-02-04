@@ -228,8 +228,8 @@ end)
 RegisterNUICallback('createCustomLobby', function(data, cb)
     local customLobbySettings = data
 
-    print('Received custom lobby settings:')
-    print(json.encode(customLobbySettings))
+    -- print('Received custom lobby settings:')
+    -- print(json.encode(customLobbySettings))
 
     TriggerEvent('customLobbyCreate', customLobbySettings)
     
@@ -255,8 +255,8 @@ end)
 
 AddEventHandler('customLobbyCreate', function(customLobbySettings)
     toggleNuiFrame(false)
-    print('Custom lobby created:')
-    print(json.encode(customLobbySettings))
+    -- print('Custom lobby created:')
+    -- print(json.encode(customLobbySettings))
     AddCustomLobby(customLobbySettings)
     TriggerEvent("erotic-lobby:updateLobbies")
 end)
@@ -304,7 +304,7 @@ end)
 RegisterNetEvent('SwitchWorldData')
 AddEventHandler('SwitchWorldData', function(worldID, force)
     switchWorld(worldID, force)
-    print(worldID)
+    -- print(worldID)
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')
