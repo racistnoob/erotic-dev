@@ -111,7 +111,7 @@ RegisterServerEvent('RemoveEmptyCustomLobby')
 AddEventHandler('RemoveEmptyCustomLobby', function(lobbyID)
     for i = #worlds, 1, -1 do
         local lobby = worlds[i]
-        if lobby.ID == lobbyID and lobby.custom and getLobbyPlayerCount() then
+        if lobby.ID == lobbyID and lobby.custom and getLobbyPlayerCount(lobbyID) == 0 then
             table.remove(worlds, i)
             print("Removed empty custom lobby:", json.encode(lobby))
             TriggerClientEvent('UpdateLobbies', -1, worlds)

@@ -57,7 +57,7 @@ local function ExtractIdentifiers(src)
     return identifiers
 end
 
-local function getLobbyPlayerCount(worldID)
+function getLobbyPlayerCount(worldID)
     worldID = tostring(worldID)
     local playerCount = 0
 
@@ -216,38 +216,35 @@ end)
 RegisterNetEvent('erotic-lobby:ChangeWorld')
 AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
     local src = source;
-    if Config.Worlds[worldName] ~= nil then 
-        local permission = Config.Worlds[worldName][3];
-        local coords = Config.Worlds[worldName][2];
-        local ids = ExtractIdentifiers(src);
-        if not permission then
-            local oldWorld = 1
-            if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
-                oldWorld = Config.Worlds[WorldTracker[ids.license].World][1]
-            end
-
-            SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
-            exports.noob:toggleLocals(Config.Worlds[worldName][1], false)
-            WorldTracker[ids.license] = {
-                OldLobby = WorldTracker[ids.license] and WorldTracker[ids.license].World or worldName,
-                World = worldName,
-                src = src,
-                Name = GetPlayerName(src),
-                Kills = 0,
-                Deaths = 0,
-                Damage = 0,
-            }
-            UpdateStats(worldName)
-            UpdateStats(oldWorld)
-            TriggerClientEvent("core:updateLobby", src, worldName)
-            updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
-            updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby
-            -- Changed worlds ...
-            return;
-        end
-    else 
-        -- This world does not exist...
+    if Config.Worlds[worldName] == nil then
+        Config.Worlds[worldName] = { tonumber(worldName), false }
     end
+
+    local coords = Config.Worlds[worldName][2];
+    local ids = ExtractIdentifiers(src);
+    local oldWorld = 1
+    if (WorldTracker[ids.license] and WorldTracker[ids.license].World ~= nil) then 
+        oldWorld = Config.Worlds[WorldTracker[ids.license].World][1]
+    end
+
+    SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
+    exports.noob:toggleLocals(Config.Worlds[worldName][1], false)
+    WorldTracker[ids.license] = {
+        OldLobby = WorldTracker[ids.license] and WorldTracker[ids.license].World or worldName,
+        World = worldName,
+        src = src,
+        Name = GetPlayerName(src),
+        Kills = 0,
+        Deaths = 0,
+        Damage = 0,
+    }
+    UpdateStats(worldName)
+    UpdateStats(oldWorld)
+    TriggerClientEvent("core:updateLobby", src, worldName)
+    updateAndSendPlayerCount(Config.Worlds[worldName][1]) -- sends plr count of new lobby
+    updateAndSendPlayerCount(oldWorld) -- updates plr count of old lobby
+    -- Changed worlds ...
+    return;
 end)
 
 exports('getLobbyPlayerCount', getLobbyPlayerCount)
