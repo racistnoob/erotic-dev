@@ -1,11 +1,9 @@
 local currentWorldID = 1
 local worlds = {}
 local playerCounts = {}
-lobbyMenuOpen = false
 local inZone = false
 local is_control_just_released = IsControlJustReleased
 local wait = Wait
-local lobbyData = GetWorldsData()
 local defaultSpawn = {
     x = 233.5797,
     y = -1393.9111,
@@ -19,6 +17,10 @@ local lobbyPed = {
 	scenario = "WORLD_HUMAN_TOURIST_MAP",
 	pedModel = "IG_LilDee"
 }
+
+lobbyMenuOpen = false
+
+--## LOCAL FUNCTIONS ##--
 
 local function getLobbySettings(worldID)
     local worldID = tonumber(worldID) or tonumber(currentWorldID)
@@ -58,6 +60,8 @@ local function toggleNuiFrame(shouldShow)
 	})
 end
 
+--## FUNCTIONS ##--
+
 function getLobbyPlayerCount(worldID)
     if playerCounts[worldID] ~= nil then
         return playerCounts[worldID]
@@ -72,6 +76,7 @@ end
 function GetWorldsData()
     return worlds
 end
+local lobbyData = GetWorldsData()
 
 function switchWorld(worldID, force)
     local worldID = tonumber(worldID)
