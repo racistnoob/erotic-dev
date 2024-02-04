@@ -28,19 +28,6 @@ local function toggleNuiFrame(shouldShow)
 	})
 end
 
-function RemoveEmptyCustomLobbies()
-    local i = 1
-    while i <= #worlds do
-        local lobby = worlds[i]
-        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
-            table.remove(worlds, i)
-            print("Removed empty custom lobby:", json.encode(lobby))
-        else
-            i = i + 1
-        end
-    end
-end
-
 RegisterNUICallback('createCustomLobby', function(data, cb)
     local customLobbySettings = data
 

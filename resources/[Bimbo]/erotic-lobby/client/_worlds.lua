@@ -29,9 +29,7 @@ local MirrorPark = {
     h = 354.6606
 }
 
-worlds = {}
-
-worlds = {
+local worlds = {
     { ID = 1, custom = false, playerCount = 0, settings = {
         name = 'Southside #1',
         tags = {'ThirdPerson Mode', 'Pistols'},
@@ -117,6 +115,19 @@ worlds = {
         maxPlayers = 30,
     }}
 }
+
+function RemoveEmptyCustomLobbies()
+    local i = 1
+    while i <= #worlds do
+        local lobby = worlds[i]
+        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
+            table.remove(worlds, i)
+            print("Removed empty custom lobby:", json.encode(lobby))
+        else
+            i = i + 1
+        end
+    end
+end
 
 function AddCustomLobby(customLobbySettings, playerName)
     local playerName = GetPlayerName(PlayerId())
