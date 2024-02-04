@@ -107,20 +107,19 @@ local worlds = {
     }}
 }
 
--- RegisterNetEvent('RemoveEmptyCustomLobbies')
--- AddEventHandler('RemoveEmptyCustomLobbies', function()
---     local i = 1
---     while i <= #worlds do
---         local lobby = worlds[i]
---         if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
---             table.remove(worlds, i)
---             print("Removed empty custom lobby:", json.encode(lobby))
---             TriggerClientEvent('updateLobbies', -1, worlds)
---         else
---             i = i + 1
---         end
---     end
--- end)
+RegisterServerEvent('RemoveEmptyCustomLobby')
+AddEventHandler('RemoveEmptyCustomLobby', function(lobbyID)
+    for i = #worlds, 1, -1 do
+        local lobby = worlds[i]
+        if lobby.ID == lobbyID and lobby.custom then
+            table.remove(worlds, i)
+            print("Removed empty custom lobby:", json.encode(lobby))
+            TriggerClientEvent('UpdateLobbies', -1, worlds)
+            break
+        end
+    end
+end)
+
 
 RegisterNetEvent('AddCustomLobby')
 AddEventHandler('AddCustomLobby', function(customLobbySettings)
