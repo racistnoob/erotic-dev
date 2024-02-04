@@ -1,49 +1,77 @@
 local currentWorldID = 1
-
+local worlds = {}
+local playerCounts = {}
+lobbyMenuOpen = false
+local inZone = false
+local is_control_just_released = IsControlJustReleased
+local wait = Wait
+local lobbyData = GetWorldsData()
 local defaultSpawn = {
     x = 233.5797,
     y = -1393.9111,
     z = 30.5152,
     h = 143.0110
 }
+local lobbyPed = {
+	coords = vector3(236.9479, -1390.3431, 29.548),
+	heading = 140.0,
+	labelText = "Press E for lobby",
+	scenario = "WORLD_HUMAN_TOURIST_MAP",
+	pedModel = "IG_LilDee"
+}
 
-local worlds = {}
+local function getLobbySettings(worldID)
+    local worldID = tonumber(worldID) or tonumber(currentWorldID)
+    if worldID then
+        local worldSettings = nil
+        for _, world in pairs(worlds) do
+            if world.ID == worldID then
+                worldSettings = world.settings
+                break
+            end
+        end
+        return worldSettings
+    end
+end
 
-RegisterNetEvent('ReceiveWorldsData')
-AddEventHandler('ReceiveWorldsData', function(receivedWorlds)
-    worlds = receivedWorlds
-    SendNUIMessage({
-        type = "updateLobbies",
-        lobbies = worlds,
-    })
-end)
+local function toggleNuiFrame(shouldShow)
+    if shouldShow then
+        RemoveEmptyCustomLobbies()
+        TriggerServerEvent("RequestWorldsData")
+        TriggerScreenblurFadeIn(50)
+    else
+        TriggerScreenblurFadeOut(50)
+        if inZone then
+            exports['prompts']:showPrompt({
+                pressText = "Press E",
+                text = "to open lobby menu"
+            })
+            interaction()
+        end
+    end
+    SetNuiFocus(shouldShow, shouldShow)
+    SendReactMessage("setVisible", shouldShow)
+    lobbyMenuOpen = shouldShow
+    
+	SendNUIMessage({
+		type = 'closePasswordPrompt' and 'closeCustomLobbyPrompt'
+	})
+end
 
-RegisterNetEvent('updateLobbies')
-AddEventHandler('updateLobbies', function(updatedWorlds)
-    worlds = updatedWorlds
-end)
+function getLobbyPlayerCount(worldID)
+    if playerCounts[worldID] ~= nil then
+        return playerCounts[worldID]
+    end
+    return 0
+end
 
 function AddCustomLobby(customLobbySettings)
     TriggerServerEvent('AddCustomLobby', customLobbySettings)
 end
 
-RegisterNetEvent('erotic-lobby:updateLobbies')
-AddEventHandler('erotic-lobby:updateLobbies', function()
-    SendNUIMessage({
-        type = "updateLobbies",
-        lobbies = worlds,
-    })
-end)
-
 function GetWorldsData()
     return worlds
 end
-
-RegisterNetEvent('SwitchWorldData')
-AddEventHandler('SwitchWorldData', function(worldID, force)
-    switchWorld(worldID, force)
-    print(worldID)
-end)
 
 function switchWorld(worldID, force)
     local worldID = tonumber(worldID)
@@ -106,20 +134,11 @@ function switchWorld(worldID, force)
     end
 end
 
-RegisterNetEvent("erotic-lobby:forceworld")
-AddEventHandler("erotic-lobby:forceworld", switchWorld)
-
-local function getLobbySettings(worldID)
-    local worldID = tonumber(worldID) or tonumber(currentWorldID)
-    if worldID then
-        local worldSettings = nil
-        for _, world in pairs(worlds) do
-            if world.ID == worldID then
-                worldSettings = world.settings
-                break
-            end
+function RemoveEmptyCustomLobbies()
+    for _, lobby in ipairs(worlds) do
+        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
+            TriggerServerEvent('RemoveEmptyCustomLobby', lobby.ID)
         end
-        return worldSettings
     end
 end
 
@@ -136,75 +155,6 @@ function getCurrentWorldDeathSpot()
     end
     return defaultSpawn
 end
-
-exports('AddCustomLobby', AddCustomLobby)
-
-exports('getLobbySettings', getLobbySettings)
-
-exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
-
-exports("switchWorld", switchWorld)
-
-exports("getCurrentWorld", function()
-    return currentWorldID
-end)
-
-lobbyMenuOpen = false
-local inZone = false
-local is_control_just_released = IsControlJustReleased
-local wait = Wait
-local lobbyData = GetWorldsData()
-
-local function toggleNuiFrame(shouldShow)
-    if shouldShow then
-        RemoveEmptyCustomLobbies()
-        TriggerServerEvent("RequestWorldsData")
-        TriggerScreenblurFadeIn(50)
-    else
-        TriggerScreenblurFadeOut(50)
-        if inZone then
-            exports['prompts']:showPrompt({
-                pressText = "Press E",
-                text = "to open lobby menu"
-            })
-            interaction()
-        end
-    end
-    SetNuiFocus(shouldShow, shouldShow)
-    SendReactMessage("setVisible", shouldShow)
-    lobbyMenuOpen = shouldShow
-    
-	SendNUIMessage({
-		type = 'closePasswordPrompt' and 'closeCustomLobbyPrompt'
-	})
-end
-
-function RemoveEmptyCustomLobbies()
-    for _, lobby in ipairs(worlds) do
-        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
-            TriggerServerEvent('RemoveEmptyCustomLobby', lobby.ID)
-        end
-    end
-end
-
-RegisterNUICallback('createCustomLobby', function(data, cb)
-    local customLobbySettings = data
-
-    print('Received custom lobby settings:')
-    print(json.encode(customLobbySettings))
-
-    TriggerEvent('customLobbyCreate', customLobbySettings)
-    
-    cb({ success = true })
-end)
-
-AddEventHandler('customLobbyCreate', function(customLobbySettings)
-    toggleNuiFrame(false)
-    print('Custom lobby created:')
-    print(json.encode(customLobbySettings))
-    AddCustomLobby(customLobbySettings)
-    TriggerEvent("erotic-lobby:updateLobbies")
-end)
 
 function isLobbyMenuOpen()
 	return lobbyMenuOpen
@@ -224,13 +174,7 @@ function interaction()
     end)
 end
 
-local lobbyPed = {
-	coords = vector3(236.9479, -1390.3431, 29.548),
-	heading = 140.0,
-	labelText = "Press E for lobby",
-	scenario = "WORLD_HUMAN_TOURIST_MAP",
-	pedModel = "IG_LilDee"
-}
+--## Threads ##--
 
 CreateThread(function()
     exports["noob"]:AddBoxZone(
@@ -245,27 +189,6 @@ CreateThread(function()
             maxZ = 32,
         }
     )
-end)
-
-AddEventHandler("polyzone:enter", function(name)
-    if name == "lobbyped" then
-        exports['prompts']:hidePrompt()
-        Wait(100)
-
-        exports['prompts']:showPrompt({
-            pressText = "Press E",
-            text = "to open lobby menu"
-        })            
-        inZone = true
-        interaction()
-    end
-end)
-
-AddEventHandler("polyzone:exit", function(name)
-    if name == "lobbyped" then
-        exports['prompts']:hidePrompt()
-        inZone = false
-    end
 end)
 
 Citizen.CreateThread(function()	
@@ -283,12 +206,23 @@ Citizen.CreateThread(function()
 	FreezeEntityPosition(ped, true)
 end)
 
+--## RegisterNUICallback ##--
+
+RegisterNUICallback('createCustomLobby', function(data, cb)
+    local customLobbySettings = data
+
+    print('Received custom lobby settings:')
+    print(json.encode(customLobbySettings))
+
+    TriggerEvent('customLobbyCreate', customLobbySettings)
+    
+    cb({ success = true })
+end)
+
 RegisterNUICallback("hideFrame", function(data, cb)
 	toggleNuiFrame(false)
 	cb({})
 end)
-
-exports('openLobby', toggleNuiFrame)
 
 RegisterNUICallback('switchWorld', function(data, cb)
     if data.worldId then
@@ -300,9 +234,59 @@ RegisterNUICallback('switchWorld', function(data, cb)
     end
 end)
 
+--## AddEventHandler ##--
+
+AddEventHandler('customLobbyCreate', function(customLobbySettings)
+    toggleNuiFrame(false)
+    print('Custom lobby created:')
+    print(json.encode(customLobbySettings))
+    AddCustomLobby(customLobbySettings)
+    TriggerEvent("erotic-lobby:updateLobbies")
+end)
+
+AddEventHandler("polyzone:enter", function(name)
+    if name == "lobbyped" then
+        exports['prompts']:hidePrompt()
+        Wait(100)
+
+        exports['prompts']:showPrompt({
+            pressText = "Press E",
+            text = "to open lobby menu"
+        })            
+        inZone = true
+        interaction()
+    end
+end)
+
 AddEventHandler('echorp:playerSpawned', function()
     exports['erotic-lobby']:openLobby(true)
     exports['erotic-lobby']:switchWorld(1)
+end)
+
+AddEventHandler("polyzone:exit", function(name)
+    if name == "lobbyped" then
+        exports['prompts']:hidePrompt()
+        inZone = false
+    end
+end)
+
+--## RegisterNetEvent ##--
+
+RegisterNetEvent("erotic-lobby:forceworld")
+AddEventHandler("erotic-lobby:forceworld", switchWorld)
+
+RegisterNetEvent('erotic-lobby:updateLobbies')
+AddEventHandler('erotic-lobby:updateLobbies', function()
+    SendNUIMessage({
+        type = "updateLobbies",
+        lobbies = worlds,
+    })
+end)
+
+RegisterNetEvent('SwitchWorldData')
+AddEventHandler('SwitchWorldData', function(worldID, force)
+    switchWorld(worldID, force)
+    print(worldID)
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')
@@ -314,15 +298,19 @@ RegisterNetEvent("erotic-lobby:ChangeCoords")
 AddEventHandler("erotic-lobby:ChangeCoords", function(x, y, z)
     SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false);
 end)
+RegisterNetEvent('ReceiveWorldsData')
+AddEventHandler('ReceiveWorldsData', function(receivedWorlds)
+    worlds = receivedWorlds
+    SendNUIMessage({
+        type = "updateLobbies",
+        lobbies = worlds,
+    })
+end)
 
-local playerCounts = {}
-function getLobbyPlayerCount(worldID)
-    if playerCounts[worldID] ~= nil then
-        return playerCounts[worldID]
-    end
-    return 0
-end
-exports("getLobbyPlayerCount", getLobbyPlayerCount)
+RegisterNetEvent('updateLobbies')
+AddEventHandler('updateLobbies', function(updatedWorlds)
+    worlds = updatedWorlds
+end)
 
 RegisterNetEvent('erotic-lobby:sendPlayerCount')
 AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount, worldID)
@@ -332,4 +320,14 @@ AddEventHandler('erotic-lobby:sendPlayerCount', function(playerCount, worldID)
         count = playerCount,
         worldId = worldID,
     })
+end)
+
+exports("getLobbyPlayerCount", getLobbyPlayerCount)
+exports('openLobby', toggleNuiFrame)
+exports('AddCustomLobby', AddCustomLobby)
+exports('getLobbySettings', getLobbySettings)
+exports("getCurrentWorldDeathSpot", getCurrentWorldDeathSpot)
+exports("switchWorld", switchWorld)
+exports("getCurrentWorld", function()
+    return currentWorldID
 end)
