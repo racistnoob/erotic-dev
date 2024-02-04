@@ -275,7 +275,7 @@ AddEventHandler("polyzone:enter", function(name)
     end
 end)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     exports['erotic-lobby']:openLobby(true)
     exports['erotic-lobby']:switchWorld(1)
 end)

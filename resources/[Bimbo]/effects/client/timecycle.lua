@@ -41,7 +41,7 @@ end)
 
 
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     local kvpValue = GetResourceKvpString("graphics_timecycle")
         
     if kvpValue then

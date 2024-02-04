@@ -1,12 +1,6 @@
 ## Grab Player on spawn ##
-RegisterNetEvent('echorp:playerSpawned')
-AddEventHandler('echorp:playerSpawned', function()
-
-end)
-
-## Grab Player on logout ##
-RegisterNetEvent('echorp:doLogout')
-AddEventHandler('echorp:doLogout', function()
+RegisterNetEvent('erotic:playerSpawned')
+AddEventHandler('erotic:playerSpawned', function()
 
 end)
 

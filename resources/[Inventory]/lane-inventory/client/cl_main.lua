@@ -11,7 +11,7 @@ RegisterNUICallback('nui:zbrp:mounted', function()
     TriggerServerEvent('SETUPINVENTORY')
 end)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     TriggerEvent("Inv:load:components")
 end)
 

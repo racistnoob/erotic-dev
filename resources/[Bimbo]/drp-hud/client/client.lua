@@ -157,7 +157,7 @@ RegisterCommand("resethud", function(source, args, rawCommand)
     SendReactMessage('setHudPosition', { x = 0, y = 0 })
 end, false)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     Wait(500)
     HUD:ToggleNui(true)
 end)

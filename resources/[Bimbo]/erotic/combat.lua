@@ -128,7 +128,7 @@ AddEventHandler('erotic:changeWatermark', function(lobbyName)
     send_nui_message({ type = "updateWatermark", value = lobbyName})
 end)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     Wait(100)
     send_nui_message({ type = "xhair_colour", color = GetResourceKvpString('crosshairColor') })
     send_nui_message({ type = "showWatermark", value = true})

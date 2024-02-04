@@ -41,8 +41,8 @@ local function GetPlayerByEntityID(id)
     return nil
 end
 
-RegisterNetEvent('echorp:playerSpawned') -- Use this to grab player info on spawn.
-AddEventHandler('echorp:playerSpawned', function() 
+RegisterNetEvent('erotic:playerSpawned') -- Use this to grab player info on spawn.
+AddEventHandler('erotic:playerSpawned', function() 
     validPlayer = does_entity_exist(plyPed)
 end)
 

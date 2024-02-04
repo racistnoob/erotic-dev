@@ -1,7 +1,7 @@
 -- local boostEnabled = false
 -- local ped = 0
 
--- AddEventHandler('echorp:playerSpawned', function()
+-- AddEventHandler('erotic:playerSpawned', function()
 --     local kvpValue = GetResourceKvpInt("graphics_fpsboost")
 
 --     if kvpValue then

@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'EchoRP | Framework'
+description 'Erotic | Framework'
 version '2.0'
 
 lua54 'yes'

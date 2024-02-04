@@ -91,7 +91,7 @@ AddEventHandler('set-weather', function(params)
     end
 end)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     local kvpValue = GetResourceKvpString("graphics_weather")
         
     if kvpValue then

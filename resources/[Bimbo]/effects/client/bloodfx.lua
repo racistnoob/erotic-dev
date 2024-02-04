@@ -56,7 +56,7 @@ AddEventHandler("blood:changeEffect", function(params)
     end
 end)
 
-AddEventHandler('echorp:playerSpawned', function()
+AddEventHandler('erotic:playerSpawned', function()
     local kvpValue = GetResourceKvpString("graphics_bloodfx")
         
     if kvpValue then

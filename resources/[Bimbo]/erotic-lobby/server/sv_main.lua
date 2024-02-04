@@ -185,8 +185,8 @@ AddEventHandler('playerDropped', function (reason)
     end
 end)
 
-RegisterServerEvent("echorp:playerSpawned")
-AddEventHandler('echorp:playerSpawned', function()
+RegisterServerEvent("erotic:playerSpawned")
+AddEventHandler('erotic:playerSpawned', function()
     local src = source
     local ids = ExtractIdentifiers(src)
 
