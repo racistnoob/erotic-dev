@@ -277,7 +277,8 @@ end)
 
 AddEventHandler('erotic:playerSpawned', function()
     exports['erotic-lobby']:openLobby(true)
-    exports['erotic-lobby']:switchWorld(1)
+    Wait(250)
+    TriggerEvent("erotic-lobby:forceworld", 1)
 end)
 
 AddEventHandler("polyzone:exit", function(name)
