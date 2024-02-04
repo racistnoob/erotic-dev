@@ -66,13 +66,14 @@ end
 function switchWorld(worldID)
     local worldID = tonumber(worldID)
     if worldID then
-        if getLobbyPlayerCount(worldID) >= getLobbyData(worldID).settings.maxPlayers then
-            return exports['drp-notifications']:SendAlert('error', 'Lobby is full!', 3000)
-        end
         local worldSettings, worldSpawn = nil, nil
         for _, world in pairs(worlds) do
             if world.ID == worldID then
                 worldSettings = world.settings
+
+                if getLobbyPlayerCount(worldID) >= world.settings.maxPlayers then
+                    return exports['drp-notifications']:SendAlert('error', 'Lobby is full!', 3000)
+                end
                 worldSpawn = worldSettings.spawn or defaultSpawn
 
                 if worldSettings.RandomSpawns then

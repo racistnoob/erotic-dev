@@ -1,11 +1,11 @@
-currentState = "Southside #1"
+currentState = "Connecting"
 
 RegisterNetEvent('core:updateLobby')
 AddEventHandler("core:updateLobby", function(args)
     local lobbyID = tonumber(args)
     if lobbyID ~= nil then
-        local lobbyData = exports['erotic-lobby']:getLobbyData(lobbyID)
-        currentState = (lobbyData.name)
+        local lobbySettings = exports['erotic-lobby']:getLobbySettings(lobbyID)
+        currentState = (lobbySettings.name)
         TriggerEvent('erotic:changeWatermark', currentState)
     end
 end)

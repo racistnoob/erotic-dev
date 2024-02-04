@@ -149,14 +149,4 @@ RegisterNUICallback("hideFrame", function(data, cb)
 	cb({})
 end)
 
-function getLobbyData(lobby)
-    local lobbyID = lobby
-	if lobbyID then
-		return lobbyData[lobbyID]
-	else -- returns all data if lobbyid isnt specified
-		return lobbyData
-	end
-end
-exports('getLobbyData', getLobbyData)
-
 exports('openLobby', toggleNuiFrame)
