@@ -6,8 +6,8 @@ local lobbyData = GetWorldsData()
 
 local function toggleNuiFrame(shouldShow)
     if shouldShow then
-        RemoveEmptyCustomLobbies()
-        TriggerEvent("erotic-lobby:updateLobbies")
+        -- RemoveEmptyCustomLobbies()
+        TriggerServerEvent("RequestWorldsData")
         TriggerScreenblurFadeIn(50)
     else
         TriggerScreenblurFadeOut(50)
@@ -26,6 +26,10 @@ local function toggleNuiFrame(shouldShow)
 	SendNUIMessage({
 		type = 'closePasswordPrompt' and 'closeCustomLobbyPrompt'
 	})
+end
+
+function RemoveEmptyCustomLobbies()
+    TriggerServerEvent('RemoveEmptyCustomLobbies')
 end
 
 RegisterNUICallback('createCustomLobby', function(data, cb)
