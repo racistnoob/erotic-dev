@@ -46,14 +46,24 @@ worlds = {
         name = 'Southside #2',
         tags = {'FPS Mode', 'ARs'},
         recoilMode = 'roleplay',
-        firstPersonVehicle = true, 
+        firstPersonVehicle = false, 
         hsMulti = false,
         maxPlayers = 30,
         kit = {'ars', '762'},
         kits = {'ars'}
     }},
     { ID = 3, custom = false, playerCount = 0, settings = {
-        name = 'FFA Bunker',
+        name = 'Car Fights',
+        tags = {'Pistols'},
+        recoilMode = 'roleplay3',
+        firstPersonVehicle = false, 
+        hsMulti = true,
+        maxPlayers = 30,
+        kit = {'pistols', 'heavypistol'},
+        kits = {'pistols'},
+    }},
+    { ID = 4, custom = false, playerCount = 0, settings = {
+        name = 'Pistol FFA',
         tags = {'FFA', 'Pistols'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true, 
@@ -63,8 +73,8 @@ worlds = {
         kits = {'pistols'},
         RandomSpawns = FFABUNKER
     }},
-    { ID = 4, custom = false, playerCount = 0, settings = {
-        name = 'FFA Bunker',
+    { ID = 5, custom = false, playerCount = 0, settings = {
+        name = 'AR FFA',
         tags = {'FFA', 'ARs'},
         recoilMode = 'roleplay',
         firstPersonVehicle = true, 
@@ -74,8 +84,8 @@ worlds = {
         kits = {'ars'},
         RandomSpawns = FFABUNKER
     }},
-    { ID = 5, custom = false, playerCount = 0, settings = {
-        name = 'ENVY 💎',
+    { ID = 6, custom = false, playerCount = 0, settings = {
+        name = 'Envy',
         tags = {'FPS Mode', 'Headshots'},
         recoilMode = 'envy',
         firstPersonVehicle = true, 
@@ -84,8 +94,8 @@ worlds = {
         kit = {'pistols', 'sp'},
         kits = {'ars','pistols','smgs'},
     }},
-    { ID = 6, custom = false, playerCount = 0, settings = {
-        name = 'DELUXO PVP',
+    { ID = 7, custom = false, playerCount = 0, settings = {
+        name = 'Deluxo',
         tags = {'Deluxo', 'Snipers'},
         recoilMode = 'roleplay2',
         firstPersonVehicle = true, 
@@ -96,9 +106,9 @@ worlds = {
         kit = {'snipers', 'trick2'},
         spawn = MirrorPark
     }},
-    { ID = 7, custom = false, playerCount = 0, settings = {
-        name = 'Illusion (BETA)',
-        tags = {'Illusion Combat', 'Headshots', 'FPS Mode'},
+    { ID = 8, custom = false, playerCount = 0, settings = {
+        name = 'Overtime (BETA)',
+        tags = {'Overtime Combat', 'Headshots', 'FPS Mode'},
         recoilMode = 'nonstop',
         nonstopcombat = true,
         firstPersonVehicle = true,

@@ -227,6 +227,7 @@ AddEventHandler('erotic-lobby:ChangeWorld', function(worldName)
             end
 
             SetPlayerRoutingBucket(src, Config.Worlds[worldName][1]);
+            exports.noob:toggleLocals(Config.Worlds[worldName][1], false)
             WorldTracker[ids.license] = {
                 OldLobby = WorldTracker[ids.license] and WorldTracker[ids.license].World or worldName,
                 World = worldName,
