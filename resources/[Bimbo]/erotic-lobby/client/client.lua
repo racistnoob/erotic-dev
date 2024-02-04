@@ -4,13 +4,6 @@ local is_control_just_released = IsControlJustReleased
 local wait = Wait
 local lobbyData = GetWorldsData()
 
-Citizen.CreateThread(function()
-    while true do
-        Wait(2500)
-        RemoveEmptyCustomLobbies()
-    end
-end)
-
 local function toggleNuiFrame(shouldShow)
     if shouldShow then
         RemoveEmptyCustomLobbies()

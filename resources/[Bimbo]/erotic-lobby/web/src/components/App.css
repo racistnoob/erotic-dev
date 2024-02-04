@@ -44,7 +44,46 @@
     background-color: #555;
     border-radius: 4px;
     outline: none;
-    text-align: center; /* Center the text */
+    text-align: center;
+}
+
+.password-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-input-container label {
+    margin-right: 10px;
+}
+
+.password-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid grey;
+    background-color: #555;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+}
+
+.password-icon {
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.password-input::placeholder {
+    text-align: center;
+    color: white;
+    opacity: 50%;
 }
 
 .password-prompt input[type="password"]::placeholder {
@@ -146,8 +185,9 @@ body::-webkit-scrollbar {
 }
 
 .custom-lobby-prompt input[type="password"] {
+    font-size: 1em;
     width: 100%;
-    padding: 12px 20px;
+    padding: 6px 10px;
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -182,73 +222,80 @@ body::-webkit-scrollbar {
 .custom-lobby-prompt {
     display: flex;
     flex-direction: column;
-    background: #333;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    align-items: flex-start; /* Adjusted alignment */
+    background: #222;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
+    max-width: 500px;
+    margin: auto;
 }
 
 .custom-lobby-prompt h2 {
-    font-size: 1.5rem;
+    font-size: 24px;
     margin-bottom: 20px;
+    color: #fff;
     text-align: center;
-    color: white;
 }
-
 .custom-lobby-prompt label {
-    font-size: 1rem;
-    color: white;
-    margin-bottom: 10px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .custom-lobby-prompt input[type="text"],
-.custom-lobby-prompt input[type="checkbox"],
+.custom-lobby-prompt input[type="password"],
 .custom-lobby-prompt select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid grey;
-    background-color: #555;
-    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: #444;
+    color: #fff;
+    border-radius: 6px;
     outline: none;
-    color: white;
 }
 
-.custom-lobby-prompt input[type="text"]::placeholder,
 .custom-lobby-prompt select {
-    color: white;
+    appearance: none;
+    /* Remove default arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23FFFFFF" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M8.59 16.59L13 12.17 15.41 14.59 16.83 13.17 12 8.34 7.17 13.17z"/><path fill="none" d="M0 0h24v24H0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
 }
 
 .custom-lobby-prompt .checkbox-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 10px;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-lobby-prompt .checkbox-container label {
+    font-size: 16px;
+    color: #fff;
 }
 
 .custom-lobby-prompt .button-container {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
 }
 
 .custom-lobby-prompt button {
-    padding: 10px 20px;
-    background-color: #555;
-    color: white;
+    padding: 12px 24px;
+    background-color: #0056b3;
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
     outline: none;
 }
 
 .custom-lobby-prompt button:hover {
-    background-color: #0056b3;
-}
-
-.custom-lobby-prompt button:last-child {
-    margin-left: 10px;
+    background-color: #004080;
 }
 
 .lobby-item.locked .lobby-player-count span {
@@ -352,4 +399,99 @@ body::-webkit-scrollbar {
 .lobby-checkbox:hover {
     opacity: 50%;
     cursor: pointer;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px; /* Adjusted spacing */
+}
+
+.toggle-switch label {
+    margin-right: 10px; /* Adjusted spacing */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 8.5px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    bottom: 1.5px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(8px);
+    -ms-transform: translateX(8px);
+    transform: translateX(8px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 8.5px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.custom-lobby-prompt .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.create-lobby-button {
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    outline: none;
+}
+
+.create-lobby-button:hover {
+    background-color: #0056b3;
 }

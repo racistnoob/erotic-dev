@@ -17,7 +17,7 @@ worlds = {
     { ID = 1, custom = false, playerCount = 0, settings = {
         name = 'Normal PVP',
         tags = {'FPS Mode', 'Light Recoil'},
-        recoilMode = "envy",
+        recoilMode = "roleplay",
         firstPersonVehicle = true, 
         hsMulti = false,
         maxPlayers = 15,

@@ -214,7 +214,7 @@ const handleCreateCustomLobby = () => {
           <button className={tab === 'Custom' ? 'active-tab' : ''} onClick={() => setTab('Custom')}>Custom</button>
         </div>
         <div className="custom-lobby">
-        {tab === 'Custom' && <button className='custom-lobby-button' onClick={() => setShowCustomLobbyPrompt(true)}>Create lobby</button>}
+          {tab === 'Custom' && <button className='custom-lobby-button' onClick={() => setShowCustomLobbyPrompt(true)}>Create lobby</button>}
         </div>
         <div className="lobby-list">
           {lobbys.map((lobby) => (
@@ -236,16 +236,20 @@ const handleCreateCustomLobby = () => {
       {showPasswordPrompt && (
         <div className="modal-background">
           <div className="password-prompt">
-            <input
-              type="password"
-              value={passwordInput}
-              onChange={handlePasswordInputChange}
-              placeholder="Enter password"
-            />
-            <div className="button-container">
-              <button onClick={handleCancel}>Cancel</button>
-              <button onClick={handlePasswordSubmit}>Submit</button>
-            </div>
+              <div className="password-input-container">
+                  <input
+                      type="password"
+                      value={passwordInput}
+                      onChange={handlePasswordInputChange}
+                      placeholder="Enter password"
+                      maxLength={6}
+                      className="password-input"
+                  />
+              </div>
+              <div className="button-container">
+                  <button onClick={handleCancel}>Cancel</button>
+                  <button onClick={handlePasswordSubmit}>Submit</button>
+              </div>
           </div>
         </div>
       )}
@@ -254,31 +258,40 @@ const handleCreateCustomLobby = () => {
         <div className="modal-background">
           <div className="custom-lobby-prompt">
             <h2>Create Custom Lobby</h2>
-            {/* Remove the label and input for the name field */}
-            {/* Example checkboxes for custom lobby settings */}
-            <label>
-              <input type="checkbox" checked={customLobbySettings.firstPersonVehicle} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, firstPersonVehicle: e.target.checked })} /> First Person Vehicle
-            </label>
-            <label>
-              <input type="checkbox" checked={customLobbySettings.hsMulti} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, hsMulti: e.target.checked })} /> HeadShots
-            </label>
-            {/* Example dropdown for custom lobby settings */}
+            <div className="toggle-switch">
+                <label>First Person Vehicle:</label>
+                <label className="switch">
+                    <input type="checkbox" checked={customLobbySettings.firstPersonVehicle} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, firstPersonVehicle: e.target.checked })} />
+                    <span className="slider round"></span>
+                </label>
+            </div>
+            <div className="toggle-switch">
+                <label>Headshots:</label>
+                <label className="switch">
+                    <input type="checkbox" checked={customLobbySettings.hsMulti} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, hsMulti: e.target.checked })} />
+                    <span className="slider round"></span>
+                </label>
+            </div>
             <label>Recoil Mode:</label>
             <select value={customLobbySettings.recoilMode} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, recoilMode: e.target.value })}>
-              <option value="roleplay">Normal</option>
+              <option value="roleplay">Default</option>
               <option value="envy">Envy</option>
-              <option value="frenzy">Frenzy</option>
+              <option value="hardcore">Hardcore</option>
+              <option value="roleplay3">Third Person Recoil</option>
+              <option value="roleplay2">roleplay2</option>
+              <option value="qb">qb</option>
             </select>
-            {/* Add password settings */}
-            <label>Password Protected:</label>
-            <input type="checkbox" checked={customLobbySettings.passwordProtected} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, passwordProtected: e.target.checked })} />
-            {customLobbySettings.passwordProtected && ( // Render password input only if lobby is password protected
-              <>
-                <label>Password:</label>
-                <input type="password" value={customLobbySettings.password} onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, password: e.target.value })} />
-              </>
-            )}
-            {/* Button container */}
+            <div className="password-input-container">
+              <input
+                  type="password"
+                  value={customLobbySettings.password}
+                  onChange={(e) => setCustomLobbySettings({ ...customLobbySettings, password: e.target.value })}
+                  placeholder="Enter password"
+                  className="password-input"
+                  maxLength={6}
+              />
+              <p className='password-icon'>🔒</p>
+          </div>
             <div className="button-container">
               <button onClick={() => setShowCustomLobbyPrompt(false)}>Cancel</button>
               <button onClick={() => handleCreateCustomLobby()}>Create Lobby</button>
@@ -287,7 +300,7 @@ const handleCreateCustomLobby = () => {
         </div>
       )}
     </div>
-  );
+  );  
 };
 
 export default App;
