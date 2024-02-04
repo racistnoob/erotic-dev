@@ -75,6 +75,14 @@ end
 
 --## FUNCTIONS ##--
 
+function RemoveEmptyCustomLobbies()
+    for _, lobby in ipairs(worlds) do
+        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
+            TriggerServerEvent('RemoveEmptyCustomLobby', lobby.ID)
+        end
+    end
+end
+
 function getLobbyPlayerCount(worldID)
     if playerCounts[worldID] ~= nil then
         return playerCounts[worldID]
@@ -148,14 +156,6 @@ function switchWorld(worldID, force)
             if worldID ~= "4" or worldID ~= "5" then
                 exports['noob']:putInSafeZone(true)
             end
-        end
-    end
-end
-
-function RemoveEmptyCustomLobbies()
-    for _, lobby in ipairs(worlds) do
-        if lobby.custom and getLobbyPlayerCount(lobby.ID) == 0 then
-            TriggerServerEvent('RemoveEmptyCustomLobby', lobby.ID)
         end
     end
 end
