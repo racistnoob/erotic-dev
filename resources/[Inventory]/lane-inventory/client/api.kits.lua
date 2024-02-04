@@ -164,6 +164,14 @@ Kits = {
             {item = "556_rounds", amount = 250, slot = 15},
             {item = "radio", amount = 1, slot = 30},
         },
+        ["bullpup"] = {
+            {item = "WEAPON_BULLPUPRIFLE", primary = true, amount = 1, slot = 1},
+            {item = "armour", amount = 5, slot = 2},
+            {item = "oxy", amount = 15, slot = 3},
+            {item = "joint", amount = 15, slot = 4},
+            {item = "556_rounds", amount = 250, slot = 15},
+            {item = "radio", amount = 1, slot = 30},
+        },
         ["mk18"] = {
             {item = "WEAPON_MK18", primary = true, amount = 1, slot = 1},
             {item = "armour", amount = 5, slot = 2},
