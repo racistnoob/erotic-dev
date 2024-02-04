@@ -159,25 +159,27 @@ RegisterCommand("playtime", function(source, args, rawCommand)
     end
 end)
 
-RegisterCommand("sendtolobby", function(source, args, rawCommand)
-    local src = source
+RegisterCommand("forcelobby", function(source, args, rawCommand)
+    local src = source  
     local message = "No permission to use this command"
     if TX_ADMINS[tostring(src)] then
-        if #args == 2 then
-            local targetPlayer = args[1]
-            local lobbyID = args[2]
+        if #args >= 1 then
+            local targetPlayer = (#args == 2) and args[1] or src
+            local lobbyID = (#args == 1) and args[1] or args[2]
             local playerName = GetPlayerName(targetPlayer)
                 
             sendToDisc(txadmin_Logs, 'Player sent to lobby', "Name: **" .. playerName .. "** \nAdmin: **" .. GetPlayerName(src) .. "** \nLobby: **" .. lobbyID .. "**")
             TriggerClientEvent("erotic-lobby:forceworld", targetPlayer, lobbyID, true)
             message = "Sent "..playerName.." to lobby: "..lobbyID
 
-            TriggerClientEvent('chat:addMessage', targetPlayer, {
-                template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
-                args = { "[ADMIN]", "You have been sent to lobby: "..lobbyID}
-            })
+            if targetPlayer ~= src then
+                TriggerClientEvent('chat:addMessage', targetPlayer, {
+                    template = '<div class="chat-message-report"><b>{0}:</b> {1}</div>',
+                    args = { "[ADMIN]", "You have been sent to lobby: "..lobbyID}
+                })
+            end
         else
-            message = "/sendtolobby <playerid> <lobbyid>"
+            message = "Usage: forcelobby <playerid> <lobbyid> / forcelobby <lobbyid>"
         end
     end
     TriggerClientEvent('chat:addMessage', src, {
