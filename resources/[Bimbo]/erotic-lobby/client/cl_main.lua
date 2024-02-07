@@ -228,7 +228,11 @@ end)
 RegisterNUICallback('createCustomLobby', function(data, cb)
     local customLobbySettings = data
 
+    -- print('Received custom lobby settings:')
+    -- print(json.encode(customLobbySettings))
+
     TriggerEvent('customLobbyCreate', customLobbySettings)
+    
     cb({ success = true })
 end)
 
@@ -251,6 +255,8 @@ end)
 
 AddEventHandler('customLobbyCreate', function(customLobbySettings)
     toggleNuiFrame(false)
+    -- print('Custom lobby created:')
+    -- print(json.encode(customLobbySettings))
     AddCustomLobby(customLobbySettings)
     TriggerEvent("erotic-lobby:updateLobbies")
 end)
@@ -295,9 +301,10 @@ AddEventHandler('erotic-lobby:updateLobbies', function()
     })
 end)
 
-RegisterNetEvent('erotic-switchlobby')
-AddEventHandler('erotic-switchlobby', function(worldID)
-    exports['erotic-lobby']:switchWorld(worldID)
+RegisterNetEvent('SwitchWorldData')
+AddEventHandler('SwitchWorldData', function(worldID, force)
+    switchWorld(worldID, force)
+    -- print(worldID)
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')
@@ -309,7 +316,6 @@ RegisterNetEvent("erotic-lobby:ChangeCoords")
 AddEventHandler("erotic-lobby:ChangeCoords", function(x, y, z)
     SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false);
 end)
-
 RegisterNetEvent('ReceiveWorldsData')
 AddEventHandler('ReceiveWorldsData', function(receivedWorlds)
     worlds = receivedWorlds
