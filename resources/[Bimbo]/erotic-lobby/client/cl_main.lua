@@ -302,9 +302,8 @@ AddEventHandler('erotic-lobby:updateLobbies', function()
 end)
 
 RegisterNetEvent('SwitchWorldData')
-AddEventHandler('SwitchWorldData', function(worldID, force)
-    switchWorld(worldID, force)
-    -- print(worldID)
+AddEventHandler('SwitchWorldData', function(worldID)
+    switchWorld(worldID)
 end)
 
 RegisterNetEvent('erotic-lobby:KillPlayer')

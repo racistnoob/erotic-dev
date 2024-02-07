@@ -150,26 +150,33 @@ function generateTags(settings)
     return tags
 end
 
-
 RegisterNetEvent('AddCustomLobby')
 AddEventHandler('AddCustomLobby', function(customLobbySettings)
     local playerName = GetPlayerName(source)
 
     if playerName then
+        for _, lobby in ipairs(worlds) do
+            if lobby.custom and lobby.settings.name == playerName .. "'s Lobby" then
+                TriggerClientEvent('Notify', source, 'You already have a custom lobby.')
+                return
+            end
+        end
+
         customLobbySettings.name = playerName .. "'s Lobby"
         customLobbySettings.tags = generateTags(customLobbySettings)
         local customLobby = {
             ID = #worlds + 1,
             custom = true,
+            playerCount = 0,
             settings = customLobbySettings,
-            playerCount = 1,
         }
         table.insert(worlds, customLobby)
-        --print("Added custom lobby:", json.encode(customLobby))
+
         TriggerClientEvent('updateLobbies', -1, worlds)
         TriggerSwitchWorldToClient(source, customLobby.ID)
     end
 end)
+
 
 function TriggerSwitchWorldToClient(source, worldID)
     TriggerClientEvent('SwitchWorldData',source, worldID)
