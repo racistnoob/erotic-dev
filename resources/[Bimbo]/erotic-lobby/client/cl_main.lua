@@ -152,9 +152,6 @@ function switchWorld(worldID, force)
             TriggerServerEvent('erotic-lobby:ChangeWorld', worldID)
             
             exports['drp-notifications']:SendAlert('inform', 'Changed Worlds', 5000)
-            if worldID ~= "4" or worldID ~= "5" then
-                exports['noob']:putInSafeZone(true)
-            end
         end
     end
 end
