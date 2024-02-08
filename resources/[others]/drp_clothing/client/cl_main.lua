@@ -1469,7 +1469,7 @@ CreateThread(function()
     
     for i=1, #clothingShops do
         if clothingShops[i]['blip'] then
-            exports['drp']:createBlip({
+            exports['core']:createBlip({
                 resource = GetCurrentResourceName(),
                 group = "Clothing",
                 coords = clothingShops[i]['coords'],
@@ -1484,7 +1484,7 @@ CreateThread(function()
     
     for i=1, #barberShops do
         if barberShops[i]['blip'] then
-            exports['drp']:createBlip({
+            exports['core']:createBlip({
                 resource = GetCurrentResourceName(),
                 group = "Barber",
                 coords = barberShops[i]['coords'],
@@ -1499,7 +1499,7 @@ CreateThread(function()
     
     for i=1, #tattoosShops do
         if tattoosShops[i]['blip'] then
-            exports['drp']:createBlip({
+            exports['core']:createBlip({
                 resource = GetCurrentResourceName(),
                 group = "Tattoo",
                 coords = tattoosShops[i]['coords'],
