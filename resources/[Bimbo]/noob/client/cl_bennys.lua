@@ -1503,7 +1503,6 @@ LSC_Config.prices = {
         },
         {
             name = "Mudslinger",
-            wtype = 4,
             modtype = 23,
             wtype = 4,
             mod = 1,
