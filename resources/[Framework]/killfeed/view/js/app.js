@@ -41,17 +41,17 @@ function GenerateExtendedStats(stats) {
 }
 
 function GenerateStats(stats) {
-    $(".StatsInfo").show()
-    for (let x = 0; x < 3; x++) {
+    $(".StatsInfo").show();
+    stats.slice(0, 3).forEach(stat => {
         $('.information').append(`
             <div class='labelValue'>
-                    <div class='label'>${truncate(stats[x].Name,13)}</div>
-                    <div class='value'>${stats[x].Kills}</div>
+                <div class='label'>${truncate(stat.Name, 13)}</div>
+                <div class='value'>${stat.Kills}</div>
             </div>
         `);
-    }
-
+    });
 }
+
 
 function GenerateList(players) {
     $(".player-list").show()
