@@ -28,16 +28,16 @@ function GenerateExtendedStats(stats) {
             <div class="DamageLabel">DMG</div>
         </div>
     `);
-    for (let x = 0; x < 5; x++) {
+    stats.slice(0, 5).forEach(stat => {
         $('.ExtendedInformation').append(`
         <div class="ExtendedlabelValue">
-            <div class="NameLabel">${truncate(stats[x].Name,16)}</div>
-            <div class="KillLabel">${stats[x].Kills}</div>
-            <div class="DeathLabel">${stats[x].Deaths}</div>
-            <div class="DamageLabel">${stats[x].Damage}</div>
+            <div class="NameLabel">${truncate(stat.Name, 16)}</div>
+            <div class="KillLabel">${stat.Kills}</div>
+            <div class="DeathLabel">${stat.Deaths}</div>
+            <div class="DamageLabel">${stat.Damage}</div>
         </div>
     `);
-    }
+    });
 }
 
 function GenerateStats(stats) {
