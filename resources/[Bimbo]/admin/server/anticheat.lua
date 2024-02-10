@@ -857,7 +857,7 @@ AddEventHandler("explosionEvent", function(sender, ev)
                 embeds = {
                     {
                         title = "**Detected cheating:** ".. GetPlayerName(sender),
-                        description = "Exceeded explosion limit for type: **"..explosionName.."**\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**",
+                        description = "Exceeded explosion limit for type: **"..explosionName.."** [ID: "..explosionType.."]\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**",
                     }
                 }
             },
@@ -866,7 +866,7 @@ AddEventHandler("explosionEvent", function(sender, ev)
                 if error then
                     sendToDiscord(
                         "**Detected cheating:** ".. GetPlayerName(sender),
-                        "Exceeded explosion limit for type: **"..explosionName.."**\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**"
+                        "Exceeded explosion limit for type: **"..explosionName.."** [ID: "..explosionType.."]\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**"
                     )
                     return
                 end
@@ -879,7 +879,7 @@ AddEventHandler("explosionEvent", function(sender, ev)
         if not allowedExplosions[tonumber(explosionType)] then
             CancelEvent() -- explosions still appear for the originating player but not for others
             local explosionName = explosionTypes[tonumber(explosionType)] or "Unknown"
-            sendToDiscord("Explosion by: ".. GetPlayerName(sender), "Explosion Type: **"..explosionName.."**\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**")
+            sendToDiscord("Explosion by: ".. GetPlayerName(sender), "Explosion Type: **"..explosionName.."** [ID: "..explosionType.."]\nCreated at: **"..ev.posX..", "..ev.posY..", "..ev.posZ.."**")
         end
     end
 end)
